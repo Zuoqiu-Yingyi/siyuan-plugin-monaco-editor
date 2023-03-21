@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, ref } from "vue";
 
 import Breadcrumb from "./components/Breadcrumb.vue";
 
@@ -10,15 +10,37 @@ import { IData } from "./types/data";
 const client = inject("client") as Client;
 const siyuan = inject("siyuan") as ISiyuan;
 const data = inject("data") as IData;
+const editable = ref(false);
 </script>
 
 <template>
     <a-layout class="layout">
-        <a-layout-header>
-            <breadcrumb
-                :paths="data.paths"
-                :hpaths="data.hpaths"
-            />
+        <a-layout-header class="header">
+            <a-row>
+                <a-col flex="none">
+                    <breadcrumb
+                        :paths="data.paths"
+                        :hpaths="data.hpaths"
+                    />
+                </a-col>
+                <a-col flex="auto">
+                    <div>auto</div>
+                </a-col>
+                <a-col flex="none">
+                    <a-switch
+                        v-model:model-value="editable"
+                        :title="$t('editable')"
+                        type="circle"
+                    >
+                        <template #checked-icon>
+                            <icon-edit />
+                        </template>
+                        <template #unchecked-icon>
+                            <icon-eye />
+                        </template>
+                    </a-switch>
+                </a-col>
+            </a-row>
         </a-layout-header>
         <a-layout>
             <a-layout-content>Content</a-layout-content>
@@ -40,6 +62,7 @@ const data = inject("data") as IData;
     }
     :deep(.arco-layout-header),
     :deep(.arco-layout-footer) {
+        padding: 0.5em;
     }
 
     :deep(.arco-layout-sider) {
