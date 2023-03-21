@@ -1,24 +1,51 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import { inject } from "vue";
+
+import Breadcrumb from "./components/Breadcrumb.vue";
+
+import { Client } from "./client/Client";
+import { ISiyuan } from "./types/siyuan/siyuan";
+import { IData } from "./types/data";
+
+const client = inject("client") as Client;
+const siyuan = inject("siyuan") as ISiyuan;
+const data = inject("data") as IData;
 </script>
 
 <template>
-    <HelloWorld msg="Vite + Vue" />
+    <a-layout class="layout">
+        <a-layout-header>
+            <breadcrumb
+                :paths="data.paths"
+                :hpaths="data.hpaths"
+            />
+        </a-layout-header>
+        <a-layout>
+            <a-layout-content>Content</a-layout-content>
+        </a-layout>
+        <a-layout-footer>Footer</a-layout-footer>
+    </a-layout>
 </template>
 
-<style scoped>
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
+<style scoped lang="less">
+.layout {
+    :deep(.arco-layout-header),
+    :deep(.arco-layout-footer),
+    :deep(.arco-layout-sider-children),
+    :deep(.arco-layout-content) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    :deep(.arco-layout-header),
+    :deep(.arco-layout-footer) {
+    }
 
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
+    :deep(.arco-layout-sider) {
+    }
 
-.logo.vue:hover {
-    filter: drop-shadow(0 0 2em #42b883aa);
+    :deep(.arco-layout-content) {
+    }
 }
 </style>

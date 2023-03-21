@@ -2,14 +2,20 @@ import "@arco-design/web-vue/dist/arco.css";
 
 import "./style.css";
 
-import { createApp } from "vue";
+import { createApp, shallowReactive } from "vue";
 import { createI18n } from "vue-i18n";
 import ArcoVue from "@arco-design/web-vue";
 import ArcoVueIcon from "@arco-design/web-vue/es/icon";
 
 import App from "./App.vue";
 
+import { Client } from "./client/Client";
 import { mapLang } from "./utils/language";
+import { setThemeMode } from "./utils/theme";
+
+/* 类型 */
+import { ISiyuan } from "./types/siyuan/siyuan";
+import { IData, IAL } from "./types/data";
 
 /* 语言包 */
 import en from "./locales/en.json";
@@ -22,28 +28,104 @@ const messages = {
     "zh-Hant": zh_Hant,
 };
 
-const siyuan = (globalThis.top as any)?.siyuan;
-const locale = mapLang(siyuan.config.lang);
-const fallbackLocale = "en";
 
-const i18n = createI18n({
-    locale, // set locale
-    fallbackLocale, // set fallback locale
-    messages,
-});
+(async () => {
+    /* 配置 */
+    const data: IData = {
+        url: new URL(globalThis.location.href),
+        doc_id: "",
+        block_id: "",
+        element: globalThis.document.documentElement,
+        paths: [],
+        hpaths: [],
+        ial: shallowReactive<IAL>({}),
+    }
 
-const app = createApp(App);
-app.provide("i18n", i18n); // 提供全局依赖
+    const client = new Client();
 
-// REF [应用实例 API | Vue.js](https://cn.vuejs.org/api/application.html#app-config-performance)
-app.config.performance = true; // 启用开发模式的性能分析
+    if (import.meta.env.DEV) { // 开发环境
+        client.update(
+            new URL(import.meta.env.VITE_SIYUAN_SERVE),
+            import.meta.env.VITE_SIYUAN_TOKEN,
+        )
+    }
 
-app.use(i18n); // 国际化
-app.use(ArcoVue); // Arco 组件库
-app.use(ArcoVueIcon); // Arco 组件库图标
+    var siyuan: ISiyuan;
+    if (globalThis.frameElement) { // 以 widget 或者 iframe 模式加载
+        /* 获取思源应用对象 */
+        siyuan = (globalThis.top as any).siyuan;
 
-/* 添加 #app 元素 */
-const id = "app";
-globalThis.document.documentElement.insertAdjacentHTML("beforeend", `<div id="${id}"></div>`);
-app.mount(`#${id}`);
+        /* 获取 iframe 元素 */
+        data.element = globalThis.frameElement;
+        const block = data.element.parentElement!.parentElement;
+
+        /* 获取挂件块 ID */
+        data.block_id = block!.dataset.nodeId!;
+    }
+    else {
+        /* 获取思源应用对象 */
+        const config = (await client.getConf()).data.conf;
+        const notebooks = (await client.lsNotebooks()).data.notebooks;
+        siyuan = {
+            config,
+            notebooks,
+        };
+
+        /* 获取挂件块 ID */
+        data.block_id = data.url.searchParams.get('id')!;
+    }
+
+    /* 获取文档块 ID */
+    const doc_info = (await client.getDocInfo({ id: data.block_id })).data;
+    data.doc_id = doc_info.ial.id;
+
+    /* 获取文档 IAL */
+    Object.assign(data.ial, doc_info.ial);
+
+    /* 获取文档路径 */
+    const doc_data = (await client.sql({
+        stmt: `SELECT box, path, hpath, created FROM blocks WHERE id = '${data.doc_id}';`,
+    })).data[0];
+    data.paths.push(...`${doc_data.box}${doc_data.path.slice(0, -3)}`.split('/'));
+    data.hpaths.push(...`${siyuan.notebooks.find(notebook => notebook.id === doc_data.box)?.name}${doc_data.hpath}`.split('/'));
+    data.ial.created = doc_data.created;
+
+    /* 设置主题 */
+    setThemeMode(siyuan.config.appearance.mode);
+
+    /* 本地化 */
+    const locale = mapLang(siyuan.config.lang); // 语言
+    const fallbackLocale = "en"; // 回退语言
+
+    const i18n = createI18n({
+        locale, // set locale
+        fallbackLocale, // set fallback locale
+        messages,
+    });
+
+    const app = createApp(App);
+
+    /* 注入全局依赖 */
+    app.provide("i18n", i18n);
+    app.provide("client", client);
+    app.provide("siyuan", siyuan);
+    app.provide("data", data);
+
+    if (import.meta.env.DEV) { // 开发环境
+        console.log(data);
+    }
+
+    // REF [应用实例 API | Vue.js](https://cn.vuejs.org/api/application.html#app-config-performance)
+    app.config.performance = true; // 启用开发模式的性能分析
+
+    app.use(i18n); // 国际化
+    app.use(ArcoVue); // Arco 组件库
+    app.use(ArcoVueIcon); // Arco 组件库图标
+
+    /* 添加 #app 元素挂载 */
+    const id = "app";
+    globalThis.document.body.insertAdjacentHTML("beforeend", `<div id="${id}"></div>`);
+    app.mount(`#${id}`);
+})();
+
 
