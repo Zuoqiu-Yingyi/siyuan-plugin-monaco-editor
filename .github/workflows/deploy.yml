@@ -1,0 +1,33 @@
+name: Deploy
+on:
+  #监听 push 操作
+  push:
+    branches:
+      # 推送 main 分支触发以下任务
+      - main
+
+jobs:
+  # 任务ID
+  build-and-deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+    # 步骤
+    steps:
+      # 将代码拉取到虚拟机
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 安装依赖、打包
+      - name: Install and Build
+        run: |
+          npm install pnpm -g
+          pnpm install
+          pnpm run build
+
+      - name: Github Pages Deploy Action
+        uses: avinal/github-pages-deploy-action@v0.9
+        with:
+          # 部署 dist 目录下的内容
+          folder: dist
+          # 提交到 publish 分支
+          branch: publish
