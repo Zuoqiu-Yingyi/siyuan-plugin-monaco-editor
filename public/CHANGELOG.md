@@ -1,5 +1,7 @@
 # 更改日志 | CHANGE LOG
 
+- 完善 `README.md` | Improve `README.md`.
+
 ## v0.1.0 | 2023-03-22
 
 - 项目初始化 | Project initialization.
