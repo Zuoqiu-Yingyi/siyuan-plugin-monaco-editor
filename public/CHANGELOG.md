@@ -1,5 +1,7 @@
 # 更改日志 | CHANGE LOG
 
+## v0.1.0 | 2023-03-22
+
 - 项目初始化 | Project initialization.
 - 添加文档面包屑 | Add document breadcrumb.
 - 添加只读/编辑切换开关 | Add read-only/edit switch.

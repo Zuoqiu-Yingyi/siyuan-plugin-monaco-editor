@@ -1,4 +1,5 @@
 .env.development
+SyncSettings.ffs_gui
 
 # Editor directories and files
 .vscode/*
