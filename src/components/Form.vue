@@ -88,6 +88,29 @@ function renameDoc(value: string): void {
     }
 }
 
+/* 保存原生属性 */
+function saveNativeAttrs(key: string, value: string | string[]): void {
+    const v = Array.isArray(value) ? value.join(",") : value;
+
+    if (props.data.ial[key] !== v) {
+        props.client
+            .setBlockAttrs({
+                id: props.data.doc_id,
+                attrs: {
+                    [key]: v,
+                },
+            })
+            .then(() => {
+                console.log(`Form.saveNativeAttrs ${key}=${v}`);
+                props.data.ial[key] = v;
+                updated();
+            });
+    }
+}
+
+/* 设置自定义属性 */
+function setCustomAttrs(): void {}
+
 /* 组件更新 */
 onUpdated(() => {
     console.log("Form.onUpdated");
@@ -180,6 +203,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.name"
+                                @change="value => saveNativeAttrs('name', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -196,7 +220,8 @@ onUpdated(() => {
                                 {{ $t("help.alias") }}
                             </template>
                             <a-input-tag
-                                v-model:default-value="form.alias"
+                                v-model:model-value="form.alias"
+                                @change="value => saveNativeAttrs('alias', value as string[])"
                                 style="text-align: left"
                                 allow-clear
                             />
@@ -214,9 +239,11 @@ onUpdated(() => {
                                 {{ $t("help.tags") }}
                             </template>
                             <a-input-tag
-                                v-model:default-value="form.tags"
+                                v-model:model-value="form.tags"
+                                @change="value => saveNativeAttrs('tags', value as string[])"
                                 style="text-align: left"
                                 allow-clear
+                                unique-value
                             />
                         </a-form-item>
                     </a-col>
@@ -229,7 +256,8 @@ onUpdated(() => {
                                 {{ $t("help.bookmark") }}
                             </template>
                             <a-select
-                                v-model:default-value="form.bookmark"
+                                v-model:model-value="form.bookmark"
+                                @change="value => saveNativeAttrs('bookmark', value as string)"
                                 allow-create
                                 allow-search
                             >
@@ -245,7 +273,8 @@ onUpdated(() => {
                                 {{ $t("help.memo") }}
                             </template>
                             <a-textarea
-                                v-model:default-value="form.memo"
+                                v-model:model-value="form.memo"
+                                @change="value => saveNativeAttrs('memo', value)"
                                 auto-size
                             />
                         </a-form-item>
@@ -351,6 +380,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.icon"
+                                @change="value => saveNativeAttrs('icon', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -368,6 +398,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form['title-img']"
+                                @change="value => saveNativeAttrs('title-img', value)"
                                 allow-clear
                             />
                         </a-form-item>

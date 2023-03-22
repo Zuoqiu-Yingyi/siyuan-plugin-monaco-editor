@@ -15,10 +15,12 @@ const editable = ref(false);
 
 /* 调整高度 */
 function changeHeight(): void {
-    const height = document.getElementById("main")?.scrollHeight;
-    if (height && data.element) {
-        data.element.style.height = `${height + 2}px`;
-    }
+    setTimeout(() => {
+        const height = document.getElementById("main")?.scrollHeight;
+        if (height && data.element) {
+            data.element.style.height = `${height + 2}px`;
+        }
+    }, 0);
 }
 
 /* 重新加载 */
@@ -29,7 +31,7 @@ function reload(): void {
 /* 组件挂载 */
 onMounted(() => {
     console.log("APP.onMounted");
-    setTimeout(changeHeight, 0);
+    changeHeight();
 });
 </script>
 
@@ -64,7 +66,7 @@ onMounted(() => {
                     <a-switch
                         v-model:model-value="editable"
                         :title="$t('editable')"
-                        style="margin-top: -4px;"
+                        style="margin-top: -4px"
                         type="circle"
                     >
                         <template #checked-icon>

@@ -7,6 +7,7 @@ import listDocsByPath from "./../types/siyuan/listDocsByPath";
 import lsNotebooks from "./../types/siyuan/lsNotebooks";
 import renameDoc from "./../types/siyuan/renameDoc";
 import searchDocs from "./../types/siyuan/searchDocs";
+import setBlockAttrs from "./../types/siyuan/setBlockAttrs";
 import siyuan from "./../types/siyuan/siyuan";
 import sql from "./../types/siyuan/sql";
 import version from "./../types/siyuan/version";
@@ -36,6 +37,12 @@ export class Client {
         this.url = url;
         this.token = token;
         this.headers.Authorization = `Token ${this.token}`;
+    }
+
+    /* 设置块属性 */
+    public async setBlockAttrs(payload: setBlockAttrs.IPayload): Promise<setBlockAttrs.IResponse> {
+        const response = await this._request("/api/attr/setBlockAttrs", payload) as setBlockAttrs.IResponse;
+        return response;
     }
 
     /* 获得指定块的面包屑 */
