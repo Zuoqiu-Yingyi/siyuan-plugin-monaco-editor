@@ -24,10 +24,13 @@ jobs:
           pnpm install
           pnpm run build
 
-      - name: Github Pages Deploy Action
-        uses: avinal/github-pages-deploy-action@v0.9
+      - name: Deploy to Publish Branch
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
         with:
           # 部署 dist 目录下的内容
-          folder: dist
+          build_dir: dist
           # 提交到 publish 分支
-          branch: publish
+          target_branch: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
