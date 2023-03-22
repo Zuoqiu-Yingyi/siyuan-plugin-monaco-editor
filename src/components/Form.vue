@@ -74,7 +74,7 @@ props.client
 
 /* 时间戳格式化 */
 function timestampFormat(timestamp: string): string {
-    return moment(timestamp, "YYYYMMDDHHmmss").format("YYYY-MM-DD HH:mm:ss");
+    return moment(timestamp, "YYYYMMDDHHmmss").format("YYYY-MM-DD  HH:mm:ss  ddd");
 }
 
 /* token 分割 */
@@ -331,8 +331,9 @@ onUpdated(() => {
             >
                 <a-row :gutter="16">
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :sm="12"
+                        :xl="6"
                     >
                         <a-form-item field="created">
                             <template #label>
@@ -349,8 +350,9 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :sm="12"
+                        :xl="6"
                     >
                         <a-form-item field="updated">
                             <template #label>
@@ -367,8 +369,9 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :sm="12"
+                        :xl="6"
                     >
                         <a-form-item field="title">
                             <template #label>
@@ -385,8 +388,9 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :sm="12"
+                        :xl="6"
                     >
                         <a-form-item field="name">
                             <template #label>
@@ -472,6 +476,7 @@ onUpdated(() => {
                             <a-textarea
                                 v-model:model-value="form.memo"
                                 @change="value => updateNativeAttr('memo', value)"
+                                class="textarea"
                                 auto-size
                             />
                         </a-form-item>
@@ -537,6 +542,7 @@ onUpdated(() => {
                             <a-textarea
                                 v-model:model-value="attr.value"
                                 @change="updateCustomAttrValue(index)"
+                                class="textarea"
                                 auto-size
                             />
                         </a-form-item>
@@ -651,6 +657,9 @@ onUpdated(() => {
             }
             .divider {
                 margin: 0.5em;
+            }
+
+            .textarea {
             }
         }
     }

@@ -8,3 +8,4 @@
 - 添加书签列表查询功能 | Add bookmark list query function.
 - 添加浏览位置属性编辑功能 | Add browser location attribute edit function.
 - 添加自定义属性编辑功能 | Add custom attributes edit function.
+- 调整响应式布局样式 | Adjust responsive layout style.
