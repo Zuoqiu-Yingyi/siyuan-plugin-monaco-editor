@@ -7,9 +7,11 @@ export interface IAL {
 export interface IData {
     url: URL;
     doc_id: string;
+    doc_path: string;
+    doc_notebook: string;
     block_id: string;
-    element: Element;
+    element?: HTMLElement;
     paths: string[];
     hpaths: string[];
-    ial: ShallowReactive<IAL>;
+    ial: IAL;
 }

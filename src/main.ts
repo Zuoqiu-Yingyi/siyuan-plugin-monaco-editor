@@ -2,45 +2,53 @@ import "@arco-design/web-vue/dist/arco.css";
 
 import "./style.css";
 
-import { createApp, shallowReactive } from "vue";
+import { createApp, reactive } from "vue";
 import { createI18n } from "vue-i18n";
 import ArcoVue from "@arco-design/web-vue";
 import ArcoVueIcon from "@arco-design/web-vue/es/icon";
 
+/* 组件 */
 import App from "./App.vue";
 
 import { Client } from "./client/Client";
-import { mapLang } from "./utils/language";
+import {
+    mapLang,
+    mapLocal,
+} from "./utils/language";
 import { setThemeMode } from "./utils/theme";
 
 /* 类型 */
 import { ISiyuan } from "./types/siyuan/siyuan";
-import { IData, IAL } from "./types/data";
+import {
+    IData,
+    IAL,
+} from "./types/data";
 
 /* 语言包 */
 import en from "./locales/en.json";
 import zh_Hans from "./locales/zh-Hans.json";
 import zh_Hant from "./locales/zh-Hant.json";
 
-const messages = {
-    "en": en,
-    "zh-Hans": zh_Hans,
-    "zh-Hant": zh_Hant,
-};
-
-
 (async () => {
+    const messages = {
+        "en": en,
+        "zh-Hans": zh_Hans,
+        "zh-Hant": zh_Hant,
+    };
+
     /* 配置 */
-    const data: IData = {
+    const data = reactive<IData>({
         url: new URL(globalThis.location.href),
         doc_id: "",
+        doc_path: "",
+        doc_notebook: "",
         block_id: "",
-        element: globalThis.document.documentElement,
         paths: [],
         hpaths: [],
-        ial: shallowReactive<IAL>({}),
-    }
+        ial: {},
+    });
 
+    /* 客户端 */
     const client = new Client();
 
     if (import.meta.env.DEV) { // 开发环境
@@ -51,12 +59,13 @@ const messages = {
     }
 
     var siyuan: ISiyuan;
+
     if (globalThis.frameElement) { // 以 widget 或者 iframe 模式加载
         /* 获取思源应用对象 */
         siyuan = (globalThis.top as any).siyuan;
 
         /* 获取 iframe 元素 */
-        data.element = globalThis.frameElement;
+        data.element = globalThis.frameElement as HTMLElement;
         const block = data.element.parentElement!.parentElement;
 
         /* 获取挂件块 ID */
@@ -75,6 +84,9 @@ const messages = {
         data.block_id = data.url.searchParams.get('id')!;
     }
 
+    /* 设置主题 */
+    setThemeMode(siyuan.config.appearance.mode);
+
     /* 获取文档块 ID */
     const doc_info = (await client.getDocInfo({ id: data.block_id })).data;
     data.doc_id = doc_info.ial.id;
@@ -86,12 +98,11 @@ const messages = {
     const doc_data = (await client.sql({
         stmt: `SELECT box, path, hpath, created FROM blocks WHERE id = '${data.doc_id}';`,
     })).data[0];
+    data.doc_path = doc_data.path;
+    data.doc_notebook = doc_data.box;
     data.paths.push(...`${doc_data.box}${doc_data.path.slice(0, -3)}`.split('/'));
     data.hpaths.push(...`${siyuan.notebooks.find(notebook => notebook.id === doc_data.box)?.name}${doc_data.hpath}`.split('/'));
     data.ial.created = doc_data.created;
-
-    /* 设置主题 */
-    setThemeMode(siyuan.config.appearance.mode);
 
     /* 本地化 */
     const locale = mapLang(siyuan.config.lang); // 语言
@@ -127,5 +138,3 @@ const messages = {
     globalThis.document.body.insertAdjacentHTML("beforeend", `<div id="${id}"></div>`);
     app.mount(`#${id}`);
 })();
-
-

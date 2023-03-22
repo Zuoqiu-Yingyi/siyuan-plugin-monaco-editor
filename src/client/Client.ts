@@ -5,6 +5,7 @@ import getDocInfo from "./../types/siyuan/getDocInfo";
 import getRecentDocs from "./../types/siyuan/getRecentDocs";
 import listDocsByPath from "./../types/siyuan/listDocsByPath";
 import lsNotebooks from "./../types/siyuan/lsNotebooks";
+import renameDoc from "./../types/siyuan/renameDoc";
 import searchDocs from "./../types/siyuan/searchDocs";
 import siyuan from "./../types/siyuan/siyuan";
 import sql from "./../types/siyuan/sql";
@@ -37,15 +38,51 @@ export class Client {
         this.headers.Authorization = `Token ${this.token}`;
     }
 
-    /* 获得内核版本 */
-    public async version(): Promise<version.IResponse> {
-        const response = await this._request("/api/system/version") as version.IResponse;
+    /* 获得指定块的面包屑 */
+    public async getBlockBreadcrumb(payload: getBlockBreadcrumb.IPayload): Promise<getBlockBreadcrumb.IResponse> {
+        const response = await this._request("/api/block/getBlockBreadcrumb", payload) as getBlockBreadcrumb.IResponse;
+        return response;
+    }
+
+    /* 获得指定块所在文档信息 */
+    public async getDocInfo(payload: getDocInfo.IPayload): Promise<getDocInfo.IResponse> {
+        const response = await this._request("/api/block/getDocInfo", payload) as getDocInfo.IResponse;
+        return response;
+    }
+
+    /* 查询子文档 */
+    public async listDocsByPath(payload: listDocsByPath.IPayload): Promise<listDocsByPath.IResponse> {
+        const response = await this._request("/api/filetree/listDocsByPath", payload) as listDocsByPath.IResponse;
+        return response;
+    }
+
+    /* 文档重命名 */
+    public async renameDoc(payload: renameDoc.IPayload): Promise<renameDoc.IResponse> {
+        const response = await this._request("/api/filetree/renameDoc", payload) as renameDoc.IResponse;
+        return response;
+    }
+
+    /* 搜索文档 */
+    public async searchDocs(payload: searchDocs.IPayload): Promise<searchDocs.IResponse> {
+        const response = await this._request("/api/filetree/searchDocs", payload) as searchDocs.IResponse;
         return response;
     }
 
     /* 列出笔记本信息 */
     public async lsNotebooks(): Promise<lsNotebooks.IResponse> {
         const response = await this._request("/api/notebook/lsNotebooks") as lsNotebooks.IResponse;
+        return response;
+    }
+
+    /* SQL 查询 */
+    public async sql(payload: sql.IPayload): Promise<sql.IResponse> {
+        const response = await this._request("/api/query/sql", payload) as sql.IResponse;
+        return response;
+    }
+
+    /* 全局搜索 */
+    public async fullTextSearchBlock(payload: fullTextSearchBlock.IPayload): Promise<fullTextSearchBlock.IResponse> {
+        const response = await this._request("/api/search/fullTextSearchBlock", payload) as fullTextSearchBlock.IResponse;
         return response;
     }
 
@@ -61,39 +98,9 @@ export class Client {
         return response;
     }
 
-    /* 全局搜索 */
-    public async fullTextSearchBlock(payload: fullTextSearchBlock.IPayload): Promise<fullTextSearchBlock.IResponse> {
-        const response = await this._request("/api/search/fullTextSearchBlock", payload) as fullTextSearchBlock.IResponse;
-        return response;
-    }
-
-    /* 获得指定块的面包屑 */
-    public async getBlockBreadcrumb(payload: getBlockBreadcrumb.IPayload): Promise<getBlockBreadcrumb.IResponse> {
-        const response = await this._request("/api/block/getBlockBreadcrumb", payload) as getBlockBreadcrumb.IResponse;
-        return response;
-    }
-
-    /* 获得指定块所在文档信息 */
-    public async getDocInfo(payload: getDocInfo.IPayload): Promise<getDocInfo.IResponse> {
-        const response = await this._request("/api/block/getDocInfo", payload) as getDocInfo.IResponse;
-        return response;
-    }
-
-    /* 搜索文档 */
-    public async searchDocs(payload: searchDocs.IPayload): Promise<searchDocs.IResponse> {
-        const response = await this._request("/api/filetree/searchDocs", payload) as searchDocs.IResponse;
-        return response;
-    }
-
-    /* 查询子文档 */
-    public async listDocsByPath(payload: listDocsByPath.IPayload): Promise<listDocsByPath.IResponse> {
-        const response = await this._request("/api/filetree/listDocsByPath", payload) as listDocsByPath.IResponse;
-        return response;
-    }
-
-    /* SQL 查询 */
-    public async sql(payload: sql.IPayload): Promise<sql.IResponse> {
-        const response = await this._request("/api/query/sql", payload) as sql.IResponse;
+    /* 获得内核版本 */
+    public async version(): Promise<version.IResponse> {
+        const response = await this._request("/api/system/version") as version.IResponse;
         return response;
     }
 

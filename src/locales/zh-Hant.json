@@ -1,3 +1,31 @@
 {
-    "editable": "可編輯"
+    "alias": "別名",
+    "attributes": {
+        "basic": "基本屬性",
+        "custom": "自定義屬性",
+        "other": "其他屬性"
+    },
+    "bookmark": "文檔書籤",
+    "created": "創建",
+    "editable": "可編輯",
+    "help": {
+        "alias": "文檔別名",
+        "bookmark": "文檔書籤",
+        "created": "文檔創建時間",
+        "icon": "文檔圖標",
+        "memo": "文檔備註",
+        "name": "文檔命名",
+        "tags": "文檔標籤",
+        "title": "文檔標題",
+        "title-img": "文檔封面圖",
+        "updated": "文檔更新時間"
+    },
+    "icon": "圖標",
+    "memo": "備註",
+    "name": "命名",
+    "tags": "標籤",
+    "title": "標題",
+    "title-img": "封面圖",
+    "updated": "更新",
+    "reload": "重新加載"
 }

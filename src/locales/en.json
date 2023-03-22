@@ -1,3 +1,31 @@
 {
-    "editable": "Editable"
+    "alias": "Alias",
+    "attributes": {
+        "basic": "Basic Attributes",
+        "custom": "Custom Attributes",
+        "other": "Other Attributes"
+    },
+    "bookmark": "Bookmark",
+    "created": "Created",
+    "editable": "Editable",
+    "help": {
+        "alias": "Document Alias",
+        "bookmark": "Document Bookmark",
+        "created": "Document Creation Time",
+        "icon": "Document Icon",
+        "memo": "Document Memo",
+        "name": "Document Name",
+        "tags": "Document Tags",
+        "title": "Document Title",
+        "title-img": "Document Cover Image",
+        "updated": "Document Update Time"
+    },
+    "icon": "Icon",
+    "memo": "Memo",
+    "name": "Name",
+    "tags": "Tags",
+    "title": "Title",
+    "title-img": "Cover Image",
+    "updated": "Updated",
+    "reload": "Reload"
 }

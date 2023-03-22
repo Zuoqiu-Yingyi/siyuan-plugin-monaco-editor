@@ -1,3 +1,31 @@
 {
-    "editable": "可编辑"
+    "alias": "别名",
+    "attributes": {
+        "basic": "基本属性",
+        "custom": "自定义属性",
+        "other": "其他属性"
+    },
+    "bookmark": "书签",
+    "created": "创建",
+    "editable": "可编辑",
+    "help": {
+        "alias": "文档别名",
+        "bookmark": "文档书签",
+        "created": "文档创建时间",
+        "icon": "文档图标",
+        "memo": "文档备注",
+        "name": "文档命名",
+        "tags": "文档标签",
+        "title": "文档标题",
+        "title-img": "文档题头图",
+        "updated": "文档更新时间"
+    },
+    "icon": "图标",
+    "memo": "备注",
+    "name": "命名",
+    "tags": "标签",
+    "title": "标题",
+    "title-img": "题头图",
+    "updated": "更新",
+    "reload": "重新加载"
 }
