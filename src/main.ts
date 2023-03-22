@@ -116,12 +116,6 @@ import zh_Hant from "./locales/zh-Hant.json";
 
     const app = createApp(App);
 
-    /* 注入全局依赖 */
-    app.provide("i18n", i18n);
-    app.provide("client", client);
-    app.provide("siyuan", siyuan);
-    app.provide("data", data);
-
     if (import.meta.env.DEV) { // 开发环境
         console.log(data);
     }
@@ -132,6 +126,12 @@ import zh_Hant from "./locales/zh-Hant.json";
     app.use(i18n); // 国际化
     app.use(ArcoVue); // Arco 组件库
     app.use(ArcoVueIcon); // Arco 组件库图标
+
+    /* 注入全局依赖 */
+    app.provide("i18n", i18n);
+    app.provide("client", client);
+    app.provide("siyuan", siyuan);
+    app.provide("data", data);
 
     /* 添加 #app 元素挂载 */
     const id = "app";

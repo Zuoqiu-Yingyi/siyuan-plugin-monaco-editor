@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated } from "vue";
+import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated } from "vue";
+import { Notification } from "@arco-design/web-vue";
+import { I18n, VueI18nTranslation } from "vue-i18n";
+
 import moment from "moment";
 
 import { Client } from "./../client/Client";
 import { IForm, IAttr } from "./../types/form";
 import { IData } from "./../types/data";
+
+const i18n = inject("i18n") as I18n;
+const t = i18n.global.t as VueI18nTranslation;
 
 const props = defineProps<{
     editable: boolean;
@@ -16,17 +22,55 @@ const emits = defineEmits<{
     (e: "updated"): void; // 界面更新
 }>();
 
-const loading = ref(true); // 书签选项是否加载完成
-const options = shallowRef<string[]>([]); // 书签选项
-props.client.getBookmarkLabels().then(labels => {
-    loading.value = false;
-    options.value = labels.data;
-});
-
-/* 状态更新完成 */
+/* 组件更新完成 */
 function updated(): void {
     emits("updated");
 }
+
+/* 通知 */
+function notify(content: string, status?: string, duration: number = 8000): void {
+    var handler: CallableFunction;
+    var title: string;
+
+    switch (status) {
+        case "I":
+            handler = Notification.info;
+            title = "INFO";
+            break;
+        case "S":
+            handler = Notification.success;
+            title = "SUCCESS";
+            break;
+        case "W":
+            handler = Notification.warning;
+            title = "WARNING";
+            break;
+        case "E":
+        default:
+            handler = Notification.error;
+            title = "ERROR";
+            break;
+    }
+
+    handler({
+        title,
+        content,
+        duration,
+        closable: true,
+    });
+}
+
+const loading = ref(true); // 书签选项是否加载完成
+const options = shallowRef<string[]>([]); // 书签选项
+props.client
+    .getBookmarkLabels()
+    .then(labels => {
+        loading.value = false;
+        options.value = labels.data;
+    })
+    .catch(error => {
+        notify(error.toString());
+    });
 
 /* 时间戳格式化 */
 function timestampFormat(timestamp: string): string {
@@ -53,32 +97,25 @@ const form = reactive<IForm>({
 
     customs: Object.keys(props.data.ial)
         .filter(k => k.startsWith("custom-"))
-        .map(k => ({ key: k.substring(7), value: props.data.ial[k] })),
+        .map(k => {
+            const key = k.replace(/^custom-/, "");
+            return {
+                key,
+                _key: key,
+                value: props.data.ial[k],
+            };
+        }),
 
+    id: props.data.ial.id ?? "",
     icon: props.data.ial.icon ?? "",
     scroll: props.data.ial.scroll ?? "",
     "title-img": props.data.ial["title-img"] ?? "",
 });
 
-/* 添加自定义属性 */
-function onclickAdd(_: MouseEvent): void {
-    form.customs.unshift(
-        shallowReactive<IAttr>({
-            key: "",
-            value: "",
-        }),
-    );
-}
-
-/* 删除自定义属性 */
-function onclickDel(index: number): void {
-    form.customs.splice(index, 1);
-}
-
 /* 文档重命名 */
-var title = toRaw(form.title);
 function renameDoc(value: string): void {
-    if (title !== value) {
+    const title = props.data.ial.title;
+    if (value !== title) {
         /* 仅在文档名发生变化时重命名 */
         props.client
             .renameDoc({
@@ -87,14 +124,20 @@ function renameDoc(value: string): void {
                 title: value,
             })
             .then(() => {
+                if (import.meta.env.DEV) {
+                    console.log(`Form.renameDoc ${title} => ${value}`);
+                }
+                props.data.ial.title = value;
                 props.data.hpaths.splice(-1, 1, value);
-                title = value;
+            })
+            .catch(error => {
+                notify(error.toString());
             });
     }
 }
 
-/* 保存原生属性 */
-function saveNativeAttrs(key: string, value: string | string[]): void {
+/* 更新指定原生属性 */
+function updateNativeAttr(key: string, value: string | string[]): void {
     const v = Array.isArray(value) ? value.join(",") : value;
 
     if (props.data.ial[key] !== v) {
@@ -106,19 +149,165 @@ function saveNativeAttrs(key: string, value: string | string[]): void {
                 },
             })
             .then(() => {
-                console.log(`Form.saveNativeAttrs ${key}=${v}`);
+                if (import.meta.env.DEV) {
+                    console.log(`Form.updateNativeAttr ${key}=${v}`);
+                }
                 props.data.ial[key] = v;
-                updated();
+            })
+            .catch(error => {
+                notify(error.toString());
             });
     }
 }
 
-/* 设置自定义属性 */
-function setCustomAttrs(): void {}
+/* 添加自定义属性 */
+function onclickAdd(_: MouseEvent): void {
+    form.customs.unshift(
+        shallowReactive<IAttr>({
+            key: "",
+            _key: "",
+            value: "",
+        }),
+    );
+}
+
+/* 判断自定义属性名是否有效 */
+function isCustomAttrKeyValid(key: string): boolean {
+    const valid = /^[\-0-9a-zA-Z]+$/.test(key);
+    return valid;
+}
+
+/* 删除自定义属性 */
+function onclickDel(index: number): void {
+    const custom = form.customs[index];
+    const key = `custom-${custom.key}`;
+    if (isCustomAttrKeyValid(custom.key)) {
+        props.client
+            .setBlockAttrs({
+                id: props.data.doc_id,
+                attrs: {
+                    [key]: null,
+                },
+            })
+            .then(() => {
+                if (import.meta.env.DEV) {
+                    console.log(`Form.onclickDel ${key}`);
+                }
+                form.customs.splice(index, 1);
+            })
+            .catch(error => {
+                notify(error.toString());
+            });
+    } else {
+        form.customs.splice(index, 1);
+    }
+}
+
+/* 更新指定自定义属性名 */
+async function updateCustomAttrKey(index: number): Promise<void> {
+    const custom = form.customs[index];
+    const _key = `custom-${custom._key}`;
+    const key = `custom-${custom.key}`;
+
+    try {
+        /* 自定义属性名是否发生更改 */
+        if (custom.key !== custom._key) {
+            /* 原自定义属性名有效 */
+            if (isCustomAttrKeyValid(custom._key)) {
+                await props.client.setBlockAttrs({
+                    id: props.data.doc_id,
+                    attrs: {
+                        [_key]: null,
+                    },
+                });
+                delete props.data.ial[_key];
+
+                /* 更新属性名 */
+                custom._key = "";
+            }
+
+            /* 新自定义属性名有效 */
+            if (isCustomAttrKeyValid(custom.key)) {
+                await props.client.setBlockAttrs({
+                    id: props.data.doc_id,
+                    attrs: {
+                        [key]: custom.value,
+                    },
+                });
+
+                if (import.meta.env.DEV) {
+                    console.log(`Form.updateCustomAttrKey ${_key} => ${key}`);
+                }
+                /* 设置该属性 */
+                props.data.ial[key] = custom.value;
+
+                /* 更新属性名 */
+                custom._key = toRaw(custom.key);
+            } else {
+                notify(t("notification.attribute-key-invalid"), "W");
+            }
+        }
+    } catch (error) {
+        notify((error as Error).toString());
+    }
+}
+
+/* 更新指定自定义属性值 */
+function updateCustomAttrValue(index: number): void {
+    const custom = form.customs[index];
+    const key = `custom-${custom.key}`;
+    if (custom.key.length > 0 && custom.value !== props.data.ial[key]) {
+        props.client
+            .setBlockAttrs({
+                id: props.data.doc_id,
+                attrs: {
+                    [key]: custom.value,
+                },
+            })
+            .then(() => {
+                if (import.meta.env.DEV) {
+                    console.log(`Form.updateCustomAttrValue ${key}=${custom.value}`);
+                }
+                props.data.ial[key] = custom.value;
+            })
+            .catch(error => {
+                notify(error.toString());
+            });
+    }
+}
+
+/* 保存所有自定义属性 */
+function saveAllCustomAttrs(): void {
+    const attrs = form.customs
+        .filter(custom => custom.key.length > 0)
+        .reduce((attrs, custom) => {
+            attrs[`custom-${custom.key}`] = custom.value;
+            return attrs;
+        }, {} as Record<string, string>);
+
+    props.client
+        .setBlockAttrs({
+            id: props.data.doc_id,
+            attrs,
+        })
+        .then(() => {
+            if (import.meta.env.DEV) {
+                console.log(`Form.setCustomAttrs`, attrs);
+            }
+            Object.keys(attrs).forEach(key => {
+                props.data.ial[key] = attrs[key];
+            });
+        })
+        .catch(error => {
+            notify(error.toString());
+        });
+}
 
 /* 组件更新 */
 onUpdated(() => {
-    console.log("Form.onUpdated");
+    if (import.meta.env.DEV) {
+        console.log("Form.onUpdated");
+    }
     updated();
 });
 </script>
@@ -208,7 +397,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.name"
-                                @change="value => saveNativeAttrs('name', value)"
+                                @change="value => updateNativeAttr('name', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -226,7 +415,7 @@ onUpdated(() => {
                             </template>
                             <a-input-tag
                                 v-model:model-value="form.alias"
-                                @change="value => saveNativeAttrs('alias', value as string[])"
+                                @change="value => updateNativeAttr('alias', value as string[])"
                                 style="text-align: left"
                                 allow-clear
                             />
@@ -245,7 +434,7 @@ onUpdated(() => {
                             </template>
                             <a-input-tag
                                 v-model:model-value="form.tags"
-                                @change="value => saveNativeAttrs('tags', value as string[])"
+                                @change="value => updateNativeAttr('tags', value as string[])"
                                 style="text-align: left"
                                 allow-clear
                                 unique-value
@@ -262,9 +451,10 @@ onUpdated(() => {
                             </template>
                             <a-select
                                 v-model:model-value="form.bookmark"
-                                @change="value => saveNativeAttrs('bookmark', value as string)"
+                                @change="value => updateNativeAttr('bookmark', value as string)"
                                 :loading="loading"
                                 :options="options"
+                                allow-clear
                                 allow-create
                                 allow-search
                             >
@@ -281,7 +471,7 @@ onUpdated(() => {
                             </template>
                             <a-textarea
                                 v-model:model-value="form.memo"
-                                @change="value => saveNativeAttrs('memo', value)"
+                                @change="value => updateNativeAttr('memo', value)"
                                 auto-size
                             />
                         </a-form-item>
@@ -306,8 +496,8 @@ onUpdated(() => {
                         </template>
                     </a-button>
                 </template>
+
                 <a-row :gutter="16">
-                    <!-- 存在的元素 -->
                     <a-col
                         v-for="(attr, index) of form.customs"
                         :span="24"
@@ -336,6 +526,7 @@ onUpdated(() => {
                             <template #help>
                                 <a-input
                                     v-model:model-value="attr.key"
+                                    @change="updateCustomAttrKey(index)"
                                     allow-clear
                                 >
                                     <template #prepend>custom-</template>
@@ -345,6 +536,7 @@ onUpdated(() => {
 
                             <a-textarea
                                 v-model:model-value="attr.value"
+                                @change="updateCustomAttrValue(index)"
                                 auto-size
                             />
                         </a-form-item>
@@ -357,7 +549,28 @@ onUpdated(() => {
                 :key="3"
             >
                 <a-row :gutter="16">
-                    <a-col :span="24">
+                    <a-col
+                        :sm="12"
+                        :xs="24"
+                    >
+                        <a-form-item field="icon">
+                            <template #label>
+                                {{ $t("id") }}
+                            </template>
+                            <template #help>
+                                {{ $t("help.id") }}
+                            </template>
+                            <a-input
+                                v-model:model-value="form.id"
+                                disabled
+                            />
+                        </a-form-item>
+                    </a-col>
+
+                    <a-col
+                        :sm="12"
+                        :xs="24"
+                    >
                         <a-form-item field="icon">
                             <template #label>
                                 {{ $t("icon") }}
@@ -367,7 +580,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.icon"
-                                @change="value => saveNativeAttrs('icon', value)"
+                                @change="value => updateNativeAttr('icon', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -383,7 +596,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.scroll"
-                                @change="value => saveNativeAttrs('scroll', value)"
+                                @change="value => updateNativeAttr('scroll', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -399,7 +612,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form['title-img']"
-                                @change="value => saveNativeAttrs('title-img', value)"
+                                @change="value => updateNativeAttr('title-img', value)"
                                 allow-clear
                             />
                         </a-form-item>

@@ -15,6 +15,7 @@
         "bookmark": "Document Bookmark",
         "created": "Document Creation Time",
         "icon": "Document Icon",
+        "id": "Document ID",
         "memo": "Document Memo",
         "name": "Document Name",
         "scroll": "Document Browse Location",
@@ -24,8 +25,12 @@
         "updated": "Document Update Time"
     },
     "icon": "Icon",
+    "id": "ID",
     "memo": "Memo",
     "name": "Name",
+    "notification": {
+        "attribute-key-invalid": "The custom attribute name is not valid!"
+    },
     "reload": "Reload",
     "scroll": "Location",
     "tags": "Tags",

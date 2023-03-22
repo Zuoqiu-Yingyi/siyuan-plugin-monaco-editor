@@ -30,7 +30,9 @@ function reload(): void {
 
 /* 组件挂载 */
 onMounted(() => {
-    console.log("APP.onMounted");
+    if (import.meta.env.DEV) {
+        console.log("APP.onMounted");
+    }
     changeHeight();
 });
 </script>

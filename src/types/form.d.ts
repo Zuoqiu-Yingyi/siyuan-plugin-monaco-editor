@@ -2,6 +2,7 @@ import { ShallowReactive } from "vue";
 
 export interface IAttr {
     key: string;
+    _key: string;
     value: string;
 }
 
@@ -17,6 +18,7 @@ export interface IForm {
 
     customs: IAttr[];
 
+    id: string;
     icon: string;
     scroll: string;
     "title-img": string;

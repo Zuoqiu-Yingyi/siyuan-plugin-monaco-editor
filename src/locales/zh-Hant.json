@@ -15,6 +15,7 @@
         "bookmark": "文檔書籤",
         "created": "文檔創建時間",
         "icon": "文檔圖標",
+        "id": "文檔 ID",
         "memo": "文檔備註",
         "name": "文檔命名",
         "scroll": "文檔瀏覽位置",
@@ -24,8 +25,12 @@
         "updated": "文檔更新時間"
     },
     "icon": "圖標",
+    "id": "ID",
     "memo": "備註",
     "name": "命名",
+    "notification": {
+        "attribute-key-invalid": "自定義屬性名無效！"
+    },
     "reload": "重新加載",
     "scroll": "位置",
     "tags": "標籤",
