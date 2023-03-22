@@ -20,8 +20,8 @@ const loading = ref(true); // 书签选项是否加载完成
 const options = shallowRef<string[]>([]); // 书签选项
 props.client.getBookmarkLabels().then(labels => {
     loading.value = false;
-    options.value = labels.data
-})
+    options.value = labels.data;
+});
 
 /* 状态更新完成 */
 function updated(): void {
@@ -51,15 +51,12 @@ const form = reactive<IForm>({
     bookmark: props.data.ial.bookmark ?? "",
     memo: props.data.ial.memo ?? "",
 
-    custom: {
-        key: "",
-        value: "",
-    },
     customs: Object.keys(props.data.ial)
         .filter(k => k.startsWith("custom-"))
         .map(k => ({ key: k.substring(7), value: props.data.ial[k] })),
 
     icon: props.data.ial.icon ?? "",
+    scroll: props.data.ial.scroll ?? "",
     "title-img": props.data.ial["title-img"] ?? "",
 });
 
@@ -67,12 +64,10 @@ const form = reactive<IForm>({
 function onclickAdd(_: MouseEvent): void {
     form.customs.unshift(
         shallowReactive<IAttr>({
-            key: toRaw(form.custom.key),
-            value: toRaw(form.custom.value),
+            key: "",
+            value: "",
         }),
     );
-    form.custom.key = "";
-    form.custom.value = "";
 }
 
 /* 删除自定义属性 */
@@ -298,47 +293,29 @@ onUpdated(() => {
                 :header="$t('attributes.custom')"
                 :key="2"
             >
+                <template #extra>
+                    <a-button
+                        @click.stop="onclickAdd"
+                        :disabled="!editable"
+                        :title="$t('attributes.add')"
+                        size="mini"
+                        type="outline"
+                    >
+                        <template #icon>
+                            <icon-plus />
+                        </template>
+                    </a-button>
+                </template>
                 <a-row :gutter="16">
-                    <!-- 待添加的元素 -->
-                    <a-col :span="24">
-                        <a-form-item
-                            class="form-item-custom"
-                            field="custom"
-                        >
-                            <template #label>
-                                <a-button
-                                    @click="onclickAdd"
-                                    type="outline"
-                                >
-                                    <template #icon>
-                                        <icon-plus />
-                                    </template>
-                                </a-button>
-                            </template>
-
-                            <template #help>
-                                <a-input
-                                    v-model:model-value="form.custom.key"
-                                    allow-clear
-                                >
-                                    <template #prepend>custom-</template>
-                                </a-input>
-                                <a-divider class="divider" />
-                            </template>
-
-                            <a-textarea
-                                v-model:model-value="form.custom.value"
-                                auto-size
-                            />
-                        </a-form-item>
-                    </a-col>
-
                     <!-- 存在的元素 -->
                     <a-col
                         v-for="(attr, index) of form.customs"
                         :span="24"
                     >
-                        <a-divider class="divider" />
+                        <a-divider
+                            v-if="index !== 0"
+                            class="divider"
+                        />
                         <a-form-item
                             class="form-item-custom"
                             :field="`custom-${attr.key}`"
@@ -346,6 +323,7 @@ onUpdated(() => {
                             <template #label>
                                 <a-button
                                     @click="onclickDel(index)"
+                                    :title="$t('attributes.del')"
                                     type="outline"
                                     status="warning"
                                 >
@@ -379,10 +357,7 @@ onUpdated(() => {
                 :key="3"
             >
                 <a-row :gutter="16">
-                    <a-col
-                        :sm="12"
-                        :xs="24"
-                    >
+                    <a-col :span="24">
                         <a-form-item field="icon">
                             <template #label>
                                 {{ $t("icon") }}
@@ -397,10 +372,24 @@ onUpdated(() => {
                             />
                         </a-form-item>
                     </a-col>
-                    <a-col
-                        :sm="12"
-                        :xs="24"
-                    >
+
+                    <a-col :span="24">
+                        <a-form-item field="scroll">
+                            <template #label>
+                                {{ $t("scroll") }}
+                            </template>
+                            <template #help>
+                                {{ $t("help.scroll") }}
+                            </template>
+                            <a-input
+                                v-model:model-value="form.scroll"
+                                @change="value => saveNativeAttrs('scroll', value)"
+                                allow-clear
+                            />
+                        </a-form-item>
+                    </a-col>
+
+                    <a-col :span="24">
                         <a-form-item field="title-img">
                             <template #label>
                                 {{ $t("title-img") }}
@@ -427,8 +416,8 @@ onUpdated(() => {
         .collapse-item {
             // 折叠面板的标题
             :deep(.arco-collapse-item-header) {
-                padding-top: 0.25em;
-                padding-bottom: 0.25em;
+                padding-top: 0;
+                padding-bottom: 0;
             }
 
             // 调整只读模式下的文本颜色

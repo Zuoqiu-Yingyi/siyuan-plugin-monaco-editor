@@ -1,8 +1,10 @@
 {
     "alias": "Alias",
     "attributes": {
+        "add": "Add Custom Attribute",
         "basic": "Basic Attributes",
         "custom": "Custom Attributes",
+        "del": "Delete Custom Attribute",
         "other": "Other Attributes"
     },
     "bookmark": "Bookmark",
@@ -15,6 +17,7 @@
         "icon": "Document Icon",
         "memo": "Document Memo",
         "name": "Document Name",
+        "scroll": "Document Browse Location",
         "tags": "Document Tags",
         "title": "Document Title",
         "title-img": "Document Cover Image",
@@ -23,9 +26,10 @@
     "icon": "Icon",
     "memo": "Memo",
     "name": "Name",
+    "reload": "Reload",
+    "scroll": "Location",
     "tags": "Tags",
     "title": "Title",
     "title-img": "Cover Image",
-    "updated": "Updated",
-    "reload": "Reload"
+    "updated": "Updated"
 }

@@ -1,8 +1,10 @@
 {
     "alias": "別名",
     "attributes": {
+        "add": "添加自定義屬性",
         "basic": "基本屬性",
         "custom": "自定義屬性",
+        "del": "刪除自定義屬性",
         "other": "其他屬性"
     },
     "bookmark": "文檔書籤",
@@ -15,6 +17,7 @@
         "icon": "文檔圖標",
         "memo": "文檔備註",
         "name": "文檔命名",
+        "scroll": "文檔瀏覽位置",
         "tags": "文檔標籤",
         "title": "文檔標題",
         "title-img": "文檔封面圖",
@@ -23,9 +26,10 @@
     "icon": "圖標",
     "memo": "備註",
     "name": "命名",
+    "reload": "重新加載",
+    "scroll": "位置",
     "tags": "標籤",
     "title": "標題",
     "title-img": "封面圖",
-    "updated": "更新",
-    "reload": "重新加載"
+    "updated": "更新"
 }

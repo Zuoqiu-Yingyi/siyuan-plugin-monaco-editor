@@ -15,9 +15,9 @@ export interface IForm {
     bookmark: string;
     memo: string;
 
-    custom: IAttr;
     customs: IAttr[];
 
     icon: string;
+    scroll: string;
     "title-img": string;
 }
