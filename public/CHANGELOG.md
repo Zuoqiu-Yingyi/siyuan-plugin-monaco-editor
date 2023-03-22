@@ -5,3 +5,4 @@
 - 添加只读/编辑切换开关 | Add read-only/edit switch.
 - 添加文档重命名功能 | Add document rename function.
 - 添加原生属性保存功能 | Add native attribute save function.
+- 添加书签列表查询功能 | Add bookmark list query function.

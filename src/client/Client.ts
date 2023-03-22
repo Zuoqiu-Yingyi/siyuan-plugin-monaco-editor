@@ -1,5 +1,6 @@
 import fullTextSearchBlock from "../types/siyuan/fullTextSearchBlock";
 import getBlockBreadcrumb from "./../types/siyuan/getBlockBreadcrumb";
+import getBookmarkLabels from "./../types/siyuan/getBookmarkLabels";
 import getConf from "./../types/siyuan/getConf";
 import getDocInfo from "./../types/siyuan/getDocInfo";
 import getRecentDocs from "./../types/siyuan/getRecentDocs";
@@ -37,6 +38,12 @@ export class Client {
         this.url = url;
         this.token = token;
         this.headers.Authorization = `Token ${this.token}`;
+    }
+
+    /* 获取所有书签 */
+    public async getBookmarkLabels(): Promise<getBookmarkLabels.IResponse> {
+        const response = await this._request("/api/attr/getBookmarkLabels") as getBookmarkLabels.IResponse;
+        return response;
     }
 
     /* 设置块属性 */

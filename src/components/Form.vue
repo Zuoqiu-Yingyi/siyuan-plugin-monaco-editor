@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, shallowReactive, toRaw, onUpdated } from "vue";
+import { ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated } from "vue";
 import moment from "moment";
 
 import { Client } from "./../client/Client";
@@ -16,14 +16,24 @@ const emits = defineEmits<{
     (e: "updated"): void; // 界面更新
 }>();
 
+const loading = ref(true); // 书签选项是否加载完成
+const options = shallowRef<string[]>([]); // 书签选项
+props.client.getBookmarkLabels().then(labels => {
+    loading.value = false;
+    options.value = labels.data
+})
+
+/* 状态更新完成 */
 function updated(): void {
     emits("updated");
 }
 
+/* 时间戳格式化 */
 function timestampFormat(timestamp: string): string {
     return moment(timestamp, "YYYYMMDDHHmmss").format("YYYY-MM-DD HH:mm:ss");
 }
 
+/* token 分割 */
 function tokenSplit(token: string): string[] {
     return token
         .replaceAll("\\,", "\n")
@@ -258,6 +268,8 @@ onUpdated(() => {
                             <a-select
                                 v-model:model-value="form.bookmark"
                                 @change="value => saveNativeAttrs('bookmark', value as string)"
+                                :loading="loading"
+                                :options="options"
                                 allow-create
                                 allow-search
                             >
