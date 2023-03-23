@@ -8,8 +8,10 @@
         "other": "其他屬性"
     },
     "bookmark": "文檔書籤",
+    "collapse": "摺疊",
     "created": "創建",
     "editable": "可編輯",
+    "expand": "展開",
     "help": {
         "alias": "文檔別名",
         "bookmark": "文檔書籤",

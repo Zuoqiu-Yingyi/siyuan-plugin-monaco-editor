@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated } from "vue";
+import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, watch } from "vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import moment from "moment";
 
@@ -16,11 +16,37 @@ const props = defineProps<{
     editable: boolean;
     client: Client;
     data: IData;
+    activeKey: number[];
 }>();
 
 const emits = defineEmits<{
     (e: "updated", form: IForm): void; // 界面更新
+    (e: "update:activeKey", activeKey: number[]): void; // 折叠面板更新
 }>();
+
+const active_key = ref(props.activeKey);
+
+/* 监听更改 */
+watch(
+    () => props.activeKey,
+    (value) => {
+        active_key.value = value;
+    },
+    {
+        flush: "post",
+    },
+);
+
+/* 推送更改 */
+watch(
+    active_key,
+    (value) => {
+        emits("update:activeKey", value);
+    },
+    {
+        flush: "post",
+    },
+);
 
 /* 组件更新完成 */
 function updated(): void {
@@ -287,7 +313,7 @@ onUpdated(() => {
     if (import.meta.env.DEV) {
         console.log("Form.onUpdated");
     }
-    updated();
+    setTimeout(updated, 250);
 });
 </script>
 
@@ -301,7 +327,7 @@ onUpdated(() => {
     >
         <a-collapse
             class="collapse"
-            :default-active-key="[1, 2]"
+            v-model:active-key="active_key"
         >
             <a-collapse-item
                 class="collapse-item"
@@ -489,6 +515,7 @@ onUpdated(() => {
                         <a-divider
                             v-if="index !== 0"
                             class="divider"
+                            margin="0.5em"
                         />
                         <a-form-item
                             class="form-item-custom"
@@ -515,7 +542,10 @@ onUpdated(() => {
                                 >
                                     <template #prepend>custom-</template>
                                 </a-input>
-                                <a-divider class="divider" />
+                                <a-divider
+                                    class="divider"
+                                    margin="0.5em"
+                                />
                             </template>
 
                             <a-textarea
@@ -635,7 +665,6 @@ onUpdated(() => {
                 }
             }
             .divider {
-                margin: 0.5em;
             }
 
             .textarea {

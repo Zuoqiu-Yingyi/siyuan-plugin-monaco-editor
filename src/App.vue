@@ -16,10 +16,15 @@ const client = inject("client") as Client;
 const siyuan = inject("siyuan") as ISiyuan;
 const data = inject("data") as IData;
 const editable = ref(false);
+const active_key = ref([1, 2]);
 
 /* 更新文档 */
 function updated(form?: IForm): void {
     setTimeout(() => {
+        if (import.meta.env.DEV) {
+            console.log("APP.updated");
+        }
+
         /* 调整高度 */
         const height = document.getElementById("main")?.scrollHeight;
         if (height && data.element) {
@@ -66,12 +71,21 @@ function saveMetadata(form: IForm): void {
                 notify(error.toString());
             });
     }
-
 }
 
 /* 重新加载 */
 function reload(): void {
     globalThis.location.reload();
+}
+
+/* 折叠所有面板 */
+function collapse(): void {
+    active_key.value = [];
+}
+
+/* 展开所有面板 */
+function expand(): void {
+    active_key.value = [1, 2, 3];
 }
 
 /* 组件挂载 */
@@ -110,7 +124,40 @@ onMounted(() => {
                             <icon-refresh />
                         </template>
                     </a-button>
-                    <a-divider direction="vertical" />
+                    <a-divider
+                        class="divider-vertical"
+                        direction="vertical"
+                        margin="0.5em"
+                        :size="2"
+                    />
+                    <a-button
+                        v-if="active_key.length === 0"
+                        @click="expand"
+                        :title="$t('expand')"
+                        size="mini"
+                        type="secondary"
+                    >
+                        <template #icon>
+                            <icon-expand />
+                        </template>
+                    </a-button>
+                    <a-button
+                        v-else
+                        @click="collapse"
+                        :title="$t('collapse')"
+                        size="mini"
+                        type="secondary"
+                    >
+                        <template #icon>
+                            <icon-shrink />
+                        </template>
+                    </a-button>
+                    <a-divider
+                        class="divider-vertical"
+                        direction="vertical"
+                        margin="0.5em"
+                        :size="2"
+                    />
                     <a-switch
                         v-model:model-value="editable"
                         :title="$t('editable')"
@@ -131,6 +178,7 @@ onMounted(() => {
             <a-layout-content>
                 <Form
                     @updated="updated"
+                    v-model:active-key="active_key"
                     :client="client"
                     :data="data"
                     :editable="editable"
@@ -161,6 +209,9 @@ onMounted(() => {
     }
 
     :deep(.arco-layout-content) {
+    }
+
+    .divider-vertical {
     }
 }
 </style>

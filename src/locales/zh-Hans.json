@@ -8,8 +8,10 @@
         "other": "其他属性"
     },
     "bookmark": "书签",
+    "collapse": "折叠",
     "created": "创建",
     "editable": "可编辑",
+    "expand": "展开",
     "help": {
         "alias": "文档别名",
         "bookmark": "文档书签",

@@ -1,6 +1,7 @@
 # 更改日志 | CHANGE LOG
 
 - 转义文档别名中的 `,` | Escape `,` in document alias.
+- 添加折叠/展开按钮 | Add collapse/expand button.
 
 ## v0.1.1 | 2023-03-23
 

@@ -8,8 +8,10 @@
         "other": "Other Attributes"
     },
     "bookmark": "Bookmark",
+    "collapse": "Collapse",
     "created": "Created",
     "editable": "Editable",
+    "expand": "Expand",
     "help": {
         "alias": "Document Alias",
         "bookmark": "Document Bookmark",
