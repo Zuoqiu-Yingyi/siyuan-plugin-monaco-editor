@@ -1,6 +1,7 @@
 # 更改日志 | CHANGE LOG
 
 - 完善 `README.md` | Improve `README.md`.
+- 实现文档块属性 `YFM` 序列化方法 | Implement document block attribute `YFM` serialization method.
 
 ## v0.1.0 | 2023-03-22
 

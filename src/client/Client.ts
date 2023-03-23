@@ -1,4 +1,5 @@
 import fullTextSearchBlock from "../types/siyuan/fullTextSearchBlock";
+import getBlockAttrs from "./../types/siyuan/getBlockAttrs";
 import getBlockBreadcrumb from "./../types/siyuan/getBlockBreadcrumb";
 import getBookmarkLabels from "./../types/siyuan/getBookmarkLabels";
 import getConf from "./../types/siyuan/getConf";
@@ -38,6 +39,12 @@ export class Client {
         this.url = url;
         this.token = token;
         this.headers.Authorization = `Token ${this.token}`;
+    }
+
+    /* 获取块属性 */
+    public async getBlockAttrs(payload: getBlockAttrs.IPayload): Promise<getBlockAttrs.IResponse> {
+        const response = await this._request("/api/attr/getBlockAttrs", payload) as getBlockAttrs.IResponse;
+        return response;
     }
 
     /* 获取所有书签 */

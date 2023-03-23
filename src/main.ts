@@ -43,6 +43,7 @@ import zh_Hant from "./locales/zh-Hant.json";
         doc_path: "",
         doc_notebook: "",
         block_id: "",
+        block_ial: {},
         paths: [],
         hpaths: [],
         ial: {},
@@ -103,6 +104,10 @@ import zh_Hant from "./locales/zh-Hant.json";
     data.paths.push(...`${doc_data.box}${doc_data.path.slice(0, -3)}`.split('/'));
     data.hpaths.push(...`${siyuan.notebooks.find(notebook => notebook.id === doc_data.box)?.name}${doc_data.hpath}`.split('/'));
     data.ial.created = doc_data.created;
+
+    /* 获取挂件块属性 */
+    const block_ial = (await client.getBlockAttrs({ id: data.block_id })).data;
+    Object.assign(data.block_ial, block_ial);
 
     /* 本地化 */
     const locale = mapLang(siyuan.config.lang); // 语言

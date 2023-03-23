@@ -5,22 +5,68 @@ import Breadcrumb from "./components/Breadcrumb.vue";
 import Form from "./components/Form.vue";
 
 import { Client } from "./client/Client";
+import { notify } from "./utils/notify";
+import { dump } from "./utils/export";
+
 import { ISiyuan } from "./types/siyuan/siyuan";
 import { IData } from "./types/data";
+import { IForm } from "./types/form";
 
 const client = inject("client") as Client;
 const siyuan = inject("siyuan") as ISiyuan;
 const data = inject("data") as IData;
 const editable = ref(false);
 
-/* 调整高度 */
-function changeHeight(): void {
+/* 更新文档 */
+function updated(form?: IForm): void {
     setTimeout(() => {
+        /* 调整高度 */
         const height = document.getElementById("main")?.scrollHeight;
         if (height && data.element) {
             data.element.style.height = `${height + 2}px`;
         }
+
+        /* 保存元数据 */
+        // if (form) {
+        //     saveMetadata(form);
+        // }
     }, 0);
+}
+
+/* 保存元数据 */
+function saveMetadata(form: IForm): void {
+    const yaml = dump(form);
+
+    const metadata: string[] = [];
+
+    metadata.push("---");
+    metadata.push("\n");
+    metadata.push(yaml);
+    metadata.push("---");
+
+    const markdown = metadata.join("");
+    if (import.meta.env.DEV) {
+        console.log(markdown);
+    }
+
+    if (markdown !== data.block_ial["data-export-md"]) {
+        client
+            .setBlockAttrs({
+                id: data.block_id,
+                attrs: {
+                    "data-export-md": markdown,
+                },
+            })
+            .then(() => {
+                if (import.meta.env.DEV) {
+                    console.log(`Form.saveMetadata\n${markdown}`);
+                }
+            })
+            .catch(error => {
+                notify(error.toString());
+            });
+    }
+
 }
 
 /* 重新加载 */
@@ -33,7 +79,7 @@ onMounted(() => {
     if (import.meta.env.DEV) {
         console.log("APP.onMounted");
     }
-    changeHeight();
+    updated();
 });
 </script>
 
@@ -84,7 +130,7 @@ onMounted(() => {
         <a-layout>
             <a-layout-content>
                 <Form
-                    @updated="changeHeight"
+                    @updated="updated"
                     :client="client"
                     :data="data"
                     :editable="editable"

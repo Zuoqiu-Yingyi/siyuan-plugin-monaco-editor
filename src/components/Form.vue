@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated } from "vue";
-import { Notification } from "@arco-design/web-vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
-
 import moment from "moment";
 
 import { Client } from "./../client/Client";
+import { notify } from "./../utils/notify";
+
 import { IForm, IAttr } from "./../types/form";
 import { IData } from "./../types/data";
 
@@ -19,45 +19,12 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "updated"): void; // 界面更新
+    (e: "updated", form: IForm): void; // 界面更新
 }>();
 
 /* 组件更新完成 */
 function updated(): void {
-    emits("updated");
-}
-
-/* 通知 */
-function notify(content: string, status?: string, duration: number = 8000): void {
-    var handler: CallableFunction;
-    var title: string;
-
-    switch (status) {
-        case "I":
-            handler = Notification.info;
-            title = "INFO";
-            break;
-        case "S":
-            handler = Notification.success;
-            title = "SUCCESS";
-            break;
-        case "W":
-            handler = Notification.warning;
-            title = "WARNING";
-            break;
-        case "E":
-        default:
-            handler = Notification.error;
-            title = "ERROR";
-            break;
-    }
-
-    handler({
-        title,
-        content,
-        duration,
-        closable: true,
-    });
+    emits("updated", form);
 }
 
 const loading = ref(true); // 书签选项是否加载完成
