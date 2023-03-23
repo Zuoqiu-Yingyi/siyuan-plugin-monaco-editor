@@ -5,7 +5,6 @@
 - [v0.1.0 <=> v0.1.1](https://github.com/Zuoqiu-Yingyi/widget-metadata/compare/v0.1.0...v0.1.1)
 - 完善 `README.md` | Improve `README.md`.
 - 实现文档块属性 `YFM` 序列化方法 | Implement document block attributes `YFM` serialization method.
-- 添加许可证文件 `LICENSE` | Add license file `LICENSE`.
 
 ## v0.1.0 | 2023-03-22
 
