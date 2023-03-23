@@ -11,25 +11,19 @@ import ArcoVueIcon from "@arco-design/web-vue/es/icon";
 import App from "./App.vue";
 
 import { Client } from "./client/Client";
-import {
-    mapLang,
-    mapLocal,
-} from "./utils/language";
+import { mapLang } from "./utils/language";
 import { setThemeMode } from "./utils/theme";
 
 /* 类型 */
 import { ISiyuan } from "./types/siyuan/siyuan";
-import {
-    IData,
-    IAL,
-} from "./types/data";
+import { IData } from "./types/data";
 
 /* 语言包 */
 import en from "./locales/en.json";
 import zh_Hans from "./locales/zh-Hans.json";
 import zh_Hant from "./locales/zh-Hant.json";
 
-(async () => {
+async function init() {
     const messages = {
         "en": en,
         "zh-Hans": zh_Hans,
@@ -142,4 +136,14 @@ import zh_Hant from "./locales/zh-Hant.json";
     const id = "app";
     globalThis.document.body.insertAdjacentHTML("beforeend", `<div id="${id}"></div>`);
     app.mount(`#${id}`);
-})();
+
+    return app;
+}
+
+init().catch(error => {
+    console.warn(error);
+
+    if (import.meta.env.PROD) { // 生产环境
+        setTimeout(() => globalThis.location.reload(), 1000); // 重新加载
+    }
+})
