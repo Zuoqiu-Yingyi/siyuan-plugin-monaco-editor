@@ -1,5 +1,8 @@
 # 更改日志 | CHANGE LOG
 
+## v0.1.1 | 2023-03-23
+
+- [v0.1.0 <=> v0.1.1](https://github.com/Zuoqiu-Yingyi/siyuan-theme-dark-plus/compare/v0.1.0...v0.1.1)
 - 完善 `README.md` | Improve `README.md`.
 - 实现文档块属性 `YFM` 序列化方法 | Implement document block attribute `YFM` serialization method.
 
