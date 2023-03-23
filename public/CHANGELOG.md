@@ -1,5 +1,7 @@
 # 更改日志 | CHANGE LOG
 
+- 转义文档别名中的 `,` | Escape `,` in document alias.
+
 ## v0.1.1 | 2023-03-23
 
 - [v0.1.0 <=> v0.1.1](https://github.com/Zuoqiu-Yingyi/widget-metadata/compare/v0.1.0...v0.1.1)

@@ -105,7 +105,19 @@ function renameDoc(value: string): void {
 
 /* 更新指定原生属性 */
 function updateNativeAttr(key: string, value: string | string[]): void {
-    const v = Array.isArray(value) ? value.join(",") : value;
+    const v = (() => {
+        switch (key) {
+            case "alias":
+                return (value as string[]).map(a => a.replaceAll(",", "\\,")).join(",");
+
+            default:
+                if (Array.isArray(value)) {
+                    return value.join(",");
+                } else {
+                    return value;
+                }
+        }
+    })();
 
     if (props.data.ial[key] !== v) {
         props.client
