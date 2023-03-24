@@ -10,8 +10,10 @@
     "bookmark": "Bookmark",
     "collapse": "Collapse",
     "created": "Created",
+    "edit": "Edit",
     "editable": "Editable",
     "expand": "Expand",
+    "export": "Export",
     "help": {
         "alias": "Document Alias",
         "bookmark": "Document Bookmark",

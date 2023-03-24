@@ -16,18 +16,18 @@ const KEYS_ORDER = [
 
 export function dump(form: IForm): string {
     const attrs: Record<string, any> = {
-        title: form.title,
-        id: form.id,
-        date: moment(form.created, "YYYYMMDDHHmmss").toDate(),
-        lastmod: moment(form.updated, "YYYYMMDDHHmmss").toDate(),
-        // date: moment(form.created, "YYYYMMDDHHmmss").utc().format(),
-        // lastmod: moment(form.updated, "YYYYMMDDHHmmss").utc().format(),
+        title: form.basics.title,
+        id: form.others.id,
+        date: moment(form.basics.created, "YYYYMMDDHHmmss").toDate(),
+        lastmod: moment(form.basics.updated, "YYYYMMDDHHmmss").toDate(),
+        // date: moment(form.basics.created, "YYYYMMDDHHmmss").utc().format(),
+        // lastmod: moment(form.basics.updated, "YYYYMMDDHHmmss").utc().format(),
     };
 
-    if (form.name) attrs.name = form.name;
-    if (form.memo) attrs.memo = form.memo;
-    if (form.tags.length > 0) attrs.tags = form.tags;
-    if (form.alias.length > 0) attrs.alias = form.alias;
+    if (form.basics.name) attrs.name = form.basics.name;
+    if (form.basics.memo) attrs.memo = form.basics.memo;
+    if (form.basics.tags.length > 0) attrs.tags = form.basics.tags;
+    if (form.basics.alias.length > 0) attrs.alias = form.basics.alias;
 
     form.customs.reduce((attrs, custom) => {
         attrs[custom.key] = custom.value;

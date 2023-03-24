@@ -2,6 +2,7 @@
 import { inject, ref, onMounted } from "vue";
 
 import Breadcrumb from "./components/Breadcrumb.vue";
+import Export from "./components/Export.vue";
 import Form from "./components/Form.vue";
 
 import { Client } from "./client/Client";
@@ -102,6 +103,7 @@ onMounted(() => {
         id="main"
         class="layout"
     >
+        <!-- 页眉 -->
         <a-layout-header class="header">
             <a-row>
                 <a-col flex="none">
@@ -174,17 +176,41 @@ onMounted(() => {
                 </a-col>
             </a-row>
         </a-layout-header>
-        <a-layout>
-            <a-layout-content>
-                <Form
-                    @updated="updated"
-                    v-model:active-key="active_key"
-                    :client="client"
-                    :data="data"
-                    :editable="editable"
-                />
-            </a-layout-content>
-        </a-layout>
+
+        <!-- 主体 -->
+        <a-layout-content class="content">
+            <a-tabs
+                class="tags"
+                size="mini"
+                type="card-gutter"
+            >
+                <!-- 属性编辑 -->
+                <a-tab-pane :key="1">
+                    <template #title>
+                        <icon-edit />
+                        {{ $t("edit") }}
+                    </template>
+
+                    <Form
+                        @updated="updated"
+                        v-model:active-key="active_key"
+                        :client="client"
+                        :data="data"
+                        :editable="editable"
+                    />
+                </a-tab-pane>
+
+                <!-- 属性导出 -->
+                <a-tab-pane :key="2">
+                    <template #title>
+                        <icon-edit />
+                        {{ $t("export") }}
+                    </template>
+
+                    <Export />
+                </a-tab-pane>
+            </a-tabs>
+        </a-layout-content>
         <!-- <a-layout-footer>Footer</a-layout-footer> -->
     </a-layout>
 </template>
@@ -212,6 +238,17 @@ onMounted(() => {
     }
 
     .divider-vertical {
+    }
+
+    /* 主体 */
+    .content {
+        /* 标签页 */
+        .tags {
+            /* 标签页内容 */
+            :deep(.arco-tabs-content) {
+                padding: 0;
+            }
+        }
     }
 }
 </style>

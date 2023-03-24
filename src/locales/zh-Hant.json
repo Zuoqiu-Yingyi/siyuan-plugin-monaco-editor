@@ -10,8 +10,10 @@
     "bookmark": "文檔書籤",
     "collapse": "摺疊",
     "created": "創建",
+    "edit": "編輯",
     "editable": "可編輯",
     "expand": "展開",
+    "export": "匯出",
     "help": {
         "alias": "文檔別名",
         "bookmark": "文檔書籤",
