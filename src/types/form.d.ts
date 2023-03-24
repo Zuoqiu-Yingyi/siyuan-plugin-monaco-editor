@@ -6,7 +6,7 @@ export interface IAttr {
     value: string;
 }
 
-export interface IForm {
+export interface IBasicAttrs {
     created: string;
     updated: string;
     title: string;
@@ -15,11 +15,27 @@ export interface IForm {
     tags: string[];
     bookmark: string;
     memo: string;
+}
 
-    customs: IAttr[];
-
+export interface IOtherAttrs {
     id: string;
     icon: string;
     scroll: string;
     "title-img": string;
+
+    [key: string]: string;
+}
+
+export interface IUnknownsAttrs {
+    [key: string]: string;
+}
+
+export interface IForm {
+    basics: IBasicAttrs;
+
+    customs: IAttr[];
+
+    others: IOtherAttrs;
+
+    unknowns: IUnknownsAttrs;
 }
