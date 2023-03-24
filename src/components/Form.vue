@@ -470,8 +470,8 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :md="12"
                     >
                         <a-form-item field="alias">
                             <template #label>
@@ -491,8 +491,8 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col
-                        :sm="12"
                         :xs="24"
+                        :md="12"
                     >
                         <a-form-item field="tags">
                             <template #label>
@@ -760,6 +760,8 @@ onUpdated(() => {
                 line-height: 1.5;
                 text-align: right;
             }
+
+            /* 表单标签中的属性键名 */
             .attr-key {
                 color: var(--color-text-4);
             }

@@ -3,6 +3,8 @@
 - 转义文档别名中的 `,` | Escape `,` in document alias.
 - 添加折叠/展开按钮 | Add collapse/expand button.
 - 新插入的挂件块支持自动重新加载 | Newly inserted widget block supports automatic reloading.
+- 添加未知属性编辑功能 | Add edit function for unknown attribute.
+- 调整响应式布局样式 | Adjust responsive layout style.
 
 ## v0.1.1 | 2023-03-23
 
