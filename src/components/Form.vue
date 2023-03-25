@@ -6,7 +6,7 @@ import moment from "moment";
 import { Client } from "./../client/Client";
 import { notify } from "./../utils/notify";
 
-import { IForm, IAttr, IBasicAttrs, IOtherAttrs, IUnknownsAttrs } from "./../types/form";
+import { IForm, IAttr } from "./../types/form";
 import { IData } from "./../types/data";
 
 const i18n = inject("i18n") as I18n;

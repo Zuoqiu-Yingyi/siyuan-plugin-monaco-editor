@@ -24,12 +24,6 @@ import zh_Hans from "./locales/zh-Hans.json";
 import zh_Hant from "./locales/zh-Hant.json";
 
 async function init() {
-    const messages = {
-        "en": en,
-        "zh-Hans": zh_Hans,
-        "zh-Hant": zh_Hant,
-    };
-
     /* 配置 */
     const data = reactive<IData>({
         url: new URL(globalThis.location.href),
@@ -106,6 +100,12 @@ async function init() {
     /* 本地化 */
     const locale = mapLang(siyuan.config.lang); // 语言
     const fallbackLocale = "en"; // 回退语言
+
+    const messages = {
+        "en": en,
+        "zh-Hans": zh_Hans,
+        "zh-Hant": zh_Hant,
+    };
 
     const i18n = createI18n({
         locale, // set locale

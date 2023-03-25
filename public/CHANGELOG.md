@@ -6,6 +6,7 @@
 - 添加未知属性编辑功能 | Add edit function for unknown attribute.
 - 调整响应式布局样式 | Adjust responsive layout style.
 - 添加导出标签页 | Add export tab.
+- 启用 Arco 组件的国际化功能 | Enable internationalization of Arco components.
 
 ## v0.1.1 | 2023-03-23
 
