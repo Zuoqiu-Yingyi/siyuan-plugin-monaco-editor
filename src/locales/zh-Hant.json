@@ -5,7 +5,9 @@
         "basic": "基本屬性",
         "custom": "自定義屬性",
         "del": "刪除自定義屬性",
-        "other": "其他屬性"
+        "name": "屬性名",
+        "other": "其他屬性",
+        "value": "屬性值"
     },
     "bookmark": "文檔書籤",
     "collapse": "摺疊",
@@ -37,6 +39,7 @@
     },
     "reload": "重新加載",
     "scroll": "位置",
+    "sort": "排序",
     "tags": "標籤",
     "title": "標題",
     "title-img": "封面圖",

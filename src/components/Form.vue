@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, watch } from "vue";
+import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, watch, toRef } from "vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import moment from "moment";
 
 import { Client } from "./../client/Client";
 import { notify } from "./../utils/notify";
+import { tokenSplit } from "./../utils/string";
 
 import { IForm, IAttr } from "./../types/form";
-import { IData } from "./../types/data";
+import { IData, IAL } from "./../types/data";
 
 const i18n = inject("i18n") as I18n;
 const t = i18n.global.t as VueI18nTranslation;
@@ -20,9 +21,14 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "updated", form: IForm): void; // 界面更新
+    (e: "updated"): void; // 界面更新
     (e: "update:activeKey", activeKey: number[]): void; // 折叠面板更新
 }>();
+
+/* 推送组件更新 */
+function updated(): void {
+    emits("updated");
+}
 
 const active_key = ref(props.activeKey);
 
@@ -47,11 +53,6 @@ watch(
         flush: "post",
     },
 );
-
-/* 推送组件更新 */
-function updated(): void {
-    emits("updated", form);
-}
 
 /* 属性表单 */
 const form = reactive(
@@ -145,14 +146,6 @@ props.client
 /* 时间戳格式化 */
 function timestampFormat(timestamp: string): string {
     return moment(timestamp, "YYYYMMDDHHmmss").format("YYYY-MM-DD  HH:mm:ss  ddd");
-}
-
-/* token 分割 */
-function tokenSplit(token: string): string[] {
-    return token
-        .replaceAll("\\,", "\n")
-        .split(",")
-        .map(t => t.replaceAll("\n", ","));
 }
 
 /* 文档重命名 */
@@ -358,6 +351,16 @@ function saveAllCustomAttrs(): void {
         });
 }
 
+/* 折叠所有面板 */
+function collapse(): void {
+    active_key.value = [];
+}
+
+/* 展开所有面板 */
+function expand(): void {
+    active_key.value = [1, 2, 3];
+}
+
 /* 组件更新 */
 onUpdated(() => {
     if (import.meta.env.DEV) {
@@ -384,6 +387,30 @@ onUpdated(() => {
                 :header="$t('attributes.basic')"
                 :key="1"
             >
+                <template #extra>
+                    <a-button
+                        v-if="active_key.length === 0"
+                        :title="$t('expand')"
+                        @click.stop="expand"
+                        size="mini"
+                        type="primary"
+                    >
+                        <template #icon>
+                            <icon-expand />
+                        </template>
+                    </a-button>
+                    <a-button
+                        v-else
+                        :title="$t('collapse')"
+                        @click.stop="collapse"
+                        size="mini"
+                        type="primary"
+                    >
+                        <template #icon>
+                            <icon-shrink />
+                        </template>
+                    </a-button>
+                </template>
                 <a-row :gutter="8">
                     <a-col
                         :xs="24"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, unref, onMounted } from "vue";
+import { inject, ref, unref, onMounted, watch } from "vue";
 import { I18n } from "vue-i18n";
 
 import Breadcrumb from "./components/Breadcrumb.vue";
@@ -8,11 +8,11 @@ import Form from "./components/Form.vue";
 
 import { Client } from "./client/Client";
 import { notify } from "./utils/notify";
-import { dump } from "./utils/export";
+import { dumpForm } from "./utils/export";
 import { getArcoLang } from "./utils/language";
 
 import { ISiyuan } from "./types/siyuan/siyuan";
-import { IData } from "./types/data";
+import { IData, IAL } from "./types/data";
 import { IForm } from "./types/form";
 
 const client = inject("client") as Client;
@@ -20,12 +20,15 @@ const siyuan = inject("siyuan") as ISiyuan;
 const data = inject("data") as IData;
 const i18n = inject("i18n") as I18n;
 
-const editable = ref(false);
-const active_key = ref([1, 2]);
+const editable = ref(false); // 是否可编辑
+const active_key_collapse = ref([1, 2]); // 属性编辑页签展开的列表
+const active_key_tags = ref(1); // 选中的页签
 const arch_lang = getArcoLang(unref(i18n.global.locale));
 
+watch(active_key_tags, updated, { flush: "post" });
+
 /* 更新文档 */
-function updated(form?: IForm): void {
+function updated(): void {
     setTimeout(() => {
         if (import.meta.env.DEV) {
             console.log("APP.updated");
@@ -36,17 +39,12 @@ function updated(form?: IForm): void {
         if (height && data.element) {
             data.element.style.height = `${height + 2}px`;
         }
-
-        /* 保存元数据 */
-        // if (form) {
-        //     saveMetadata(form);
-        // }
     }, 0);
 }
 
 /* 保存元数据 */
 function saveMetadata(form: IForm): void {
-    const yaml = dump(form);
+    const yaml = dumpForm(form);
 
     const metadata: string[] = [];
 
@@ -82,16 +80,6 @@ function saveMetadata(form: IForm): void {
 /* 重新加载 */
 function reload(): void {
     globalThis.location.reload();
-}
-
-/* 折叠所有面板 */
-function collapse(): void {
-    active_key.value = [];
-}
-
-/* 展开所有面板 */
-function expand(): void {
-    active_key.value = [1, 2, 3];
 }
 
 /* 组件挂载 */
@@ -136,39 +124,12 @@ onMounted(() => {
                             margin="0.5em"
                             :size="2"
                         />
-                        <a-button
-                            v-if="active_key.length === 0"
-                            @click="expand"
-                            :title="$t('expand')"
-                            size="mini"
-                            type="secondary"
-                        >
-                            <template #icon>
-                                <icon-expand />
-                            </template>
-                        </a-button>
-                        <a-button
-                            v-else
-                            @click="collapse"
-                            :title="$t('collapse')"
-                            size="mini"
-                            type="secondary"
-                        >
-                            <template #icon>
-                                <icon-shrink />
-                            </template>
-                        </a-button>
-                        <a-divider
-                            class="divider-vertical"
-                            direction="vertical"
-                            margin="0.5em"
-                            :size="2"
-                        />
                         <a-switch
                             v-model:model-value="editable"
                             :title="$t('editable')"
                             style="margin-top: -4px"
                             type="circle"
+                            size="medium"
                         >
                             <template #checked-icon>
                                 <icon-check />
@@ -184,6 +145,7 @@ onMounted(() => {
             <!-- 主体 -->
             <a-layout-content class="content">
                 <a-tabs
+                    v-model:active-key="active_key_tags"
                     class="tags"
                     size="mini"
                     type="card-gutter"
@@ -196,11 +158,11 @@ onMounted(() => {
                         </template>
 
                         <Form
-                            @updated="updated"
-                            v-model:active-key="active_key"
+                            v-model:active-key="active_key_collapse"
                             :client="client"
                             :data="data"
                             :editable="editable"
+                            @updated="updated"
                         />
                     </a-tab-pane>
 
@@ -211,7 +173,11 @@ onMounted(() => {
                             {{ $t("export") }}
                         </template>
 
-                        <Export />
+                        <Export
+                            :client="client"
+                            :ial="data.ial"
+                            @updated="updated"
+                        />
                     </a-tab-pane>
                 </a-tabs>
             </a-layout-content>

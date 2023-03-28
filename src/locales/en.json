@@ -5,7 +5,9 @@
         "basic": "Basic Attributes",
         "custom": "Custom Attributes",
         "del": "Delete Custom Attribute",
-        "other": "Other Attributes"
+        "name": "Attribute Name",
+        "other": "Other Attributes",
+        "value": "Attribute Value"
     },
     "bookmark": "Bookmark",
     "collapse": "Collapse",
@@ -37,6 +39,7 @@
     },
     "reload": "Reload",
     "scroll": "Location",
+    "sort": "Sort",
     "tags": "Tags",
     "title": "Title",
     "title-img": "Cover Image",

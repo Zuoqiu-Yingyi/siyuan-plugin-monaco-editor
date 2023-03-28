@@ -5,7 +5,10 @@
         "basic": "基本属性",
         "custom": "自定义属性",
         "del": "删除自定义属性",
-        "other": "其他属性"
+        "key": "导出属性名",
+        "name": "属性名",
+        "other": "其他属性",
+        "value": "属性值"
     },
     "bookmark": "书签",
     "collapse": "折叠",
@@ -37,6 +40,7 @@
     },
     "reload": "重新加载",
     "scroll": "位置",
+    "sort": "排序",
     "tags": "标签",
     "title": "标题",
     "title-img": "题头图",
