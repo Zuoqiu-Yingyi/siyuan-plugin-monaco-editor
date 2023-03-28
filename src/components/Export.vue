@@ -17,6 +17,7 @@ const props = defineProps<{
     ial: IAL;
     // data: IData;
     client: Client;
+    activate: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -28,9 +29,10 @@ function updated(): void {
     emits("updated");
 }
 
-const yaml = ref("");
-const ial = shallowRef<TableData[]>([]);
-const row_keys = shallowRef<string[]>([]);
+const yaml = ref(""); // YFM 文本
+const ial = shallowRef<TableData[]>([]); // IAL 列表
+const selected_keys = shallowRef<string[]>([]); // 选中的行
+const metadata_retain = ref(false); // 导出时是否显示元数据
 
 /* 表格配置 */
 const table = reactive<{
@@ -97,12 +99,12 @@ function onChange(data: TableData[]): void {
 }
 
 /* 选择发生更改 */
-function onSelectionCchange(rowKeys: string[]): void {
+function onSelectionChange(rowKeys: string[]): void {
     if (import.meta.env.DEV) {
-        console.log("Export.onSelectionCchange");
+        console.log("Export.onSelectionChange");
     }
 
-    row_keys.value = rowKeys;
+    selected_keys.value = rowKeys;
     updateIAL();
 }
 
@@ -113,7 +115,7 @@ function onInputChange(value: string) {
 
 /* 更新需要导出的 IAL */
 function updateIAL() {
-    ial.value = table.data.filter(a => row_keys.value.includes(a.key as string));
+    ial.value = table.data.filter(a => selected_keys.value.includes(a.key as string));
 }
 
 /* 更新文本框 */
@@ -134,6 +136,7 @@ watch(
     },
     {
         immediate: true,
+        flush: "post",
     },
 );
 
@@ -147,38 +150,80 @@ onUpdated(() => {
 </script>
 
 <template>
-    <a-table
-        :columns="table.columns"
-        :data="table.data"
-        :row-selection="table.rowSelection"
-        :draggable="table.draggable"
-        :pagination="false"
-        :bordered="{ cell: true }"
-        @change="onChange"
-        @selection-change="rowKeys => onSelectionCchange(rowKeys as string[])"
-        column-resizable
-        size="mini"
-        class="table"
+    <a-space
+        :size="0"
+        direction="vertical"
+        fill
     >
-        <template #_key="{ record, rowIndex }">
-            <a-input
+        <!-- 控件 -->
+        <a-space
+            v-show="props.activate"
+            class="control"
+        >
+            <a-button
+                :title="$t('metadata.save')"
+                type="primary"
                 size="mini"
-                v-model="record._key"
-                @change="onInputChange"
-            />
-        </template>
-        <template #value="{ record, rowIndex }">
-            <pre class="value">{{ record.value }}</pre>
-        </template>
-    </a-table>
+            >
+                <template #icon>
+                    <icon-save />
+                </template>
+            </a-button>
+            <a-switch
+                v-model:model-value="metadata_retain"
+                :title="$t('metadata.retain')"
+                type="circle"
+                size="small"
+            >
+                <template #checked-icon>
+                    <icon-check />
+                </template>
+                <template #unchecked-icon>
+                    <icon-close />
+                </template>
+            </a-switch>
+        </a-space>
 
-    <a-textarea
-        v-model:model-value="yaml"
-        auto-size
-    />
+        <a-table
+            :default-selected-keys="selected_keys"
+            :columns="table.columns"
+            :data="table.data"
+            :row-selection="table.rowSelection"
+            :draggable="table.draggable"
+            :pagination="false"
+            :bordered="{ cell: true }"
+            @change="onChange"
+            @selection-change="rowKeys => onSelectionChange(rowKeys as string[])"
+            column-resizable
+            size="mini"
+            class="table"
+        >
+            <template #_key="{ record, rowIndex }">
+                <a-input
+                    size="mini"
+                    v-model="record._key"
+                    @change="onInputChange"
+                />
+            </template>
+            <template #value="{ record, rowIndex }">
+                <pre class="value">{{ record.value }}</pre>
+            </template>
+        </a-table>
+
+        <a-textarea
+            v-model:model-value="yaml"
+            auto-size
+        />
+    </a-space>
 </template>
 
 <style scoped lang="less">
+.control {
+    position: absolute;
+    top: 23px;
+    right: 3px;
+    z-index: 1;
+}
 .table {
     pre.value {
         margin: 0;

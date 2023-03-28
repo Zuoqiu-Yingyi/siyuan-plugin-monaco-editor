@@ -33,6 +33,10 @@
     "icon": "圖標",
     "id": "ID",
     "memo": "備註",
+    "metadata": {
+        "retain": "導出时是否保留元數據",
+        "save": "保存元數據"
+    },
     "name": "命名",
     "notification": {
         "attribute-key-invalid": "自定義屬性名無效！"

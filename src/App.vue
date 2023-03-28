@@ -176,6 +176,7 @@ onMounted(() => {
                         <Export
                             :client="client"
                             :ial="data.ial"
+                            :activate="active_key_tags === 2"
                             @updated="updated"
                         />
                     </a-tab-pane>

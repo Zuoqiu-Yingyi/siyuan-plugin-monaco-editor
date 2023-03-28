@@ -33,6 +33,10 @@
     "icon": "Icon",
     "id": "ID",
     "memo": "Memo",
+    "metadata": {
+        "retain": "Whether Metadata is Retained when Exporting",
+        "save": "Save Metadata"
+    },
     "name": "Name",
     "notification": {
         "attribute-key-invalid": "The custom attribute name is not valid!"

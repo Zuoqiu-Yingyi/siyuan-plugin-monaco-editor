@@ -8,6 +8,7 @@
 - 添加导出标签页 | Add export tab.
 - 启用 Arco 组件的国际化功能 | Enable internationalization of Arco components.
 - 实现导出标签页 | Implement export tab.
+- 添加元数据控件 | Add a metadata control.
 
 ## v0.1.1 | 2023-03-23
 

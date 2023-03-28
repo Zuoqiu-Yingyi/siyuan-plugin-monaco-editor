@@ -34,6 +34,10 @@
     "icon": "图标",
     "id": "ID",
     "memo": "备注",
+    "metadata": {
+        "retain": "导出时是否保留元数据",
+        "save": "保存元数据"
+    },
     "name": "命名",
     "notification": {
         "attribute-key-invalid": "自定义属性名无效！"
