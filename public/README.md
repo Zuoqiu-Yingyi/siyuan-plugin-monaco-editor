@@ -67,6 +67,22 @@ A Widget of document block metadata for [SiYuan Note](https://github.com/siyuan-
     You can sort the attributes on export.
   - 可预览导出的内容  
     You can preview the exported content.
+  - 可选择自定义属性值的解析器  
+    You can select the parser of custom attributes value.
+    - `string`
+      - 解析为字符串 | Parse as string
+    - `JSON`
+      - 解析为 JSON 对象 | Parse as JSON object
+      - 有效值 | Valid value
+        - `JSON` 字符串 | `JSON` string
+        - `JSON5` 字符串 | `JSON5` string
+        - `JavaScript Object` | `JavaScript Object`
+        - `JavaScript` 自执行函数 | `JavaScript` self-executing function
+    - `YAML`
+      - 解析为 YAML 对象 | Parse as YAML object
+      - 有效值 | Valid value
+        - `YAML` 字符串 | `YAML` string
+        - `JSON` 字符串 | `JSON` string
 
 
 ## 开始 | START

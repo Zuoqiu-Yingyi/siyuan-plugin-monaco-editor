@@ -1,6 +1,7 @@
 # 更改日志 | CHANGE LOG
 
 - 新增自定义属性值解析器功能 | Add custom attribute value parser function.
+- 完善 `README.md` | Improve `README.md`.
 
 ## v0.2.0 | 2023-03-29
 
