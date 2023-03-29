@@ -7,7 +7,8 @@
         "del": "Delete Custom Attribute",
         "name": "Attribute Name",
         "other": "Other Attributes",
-        "value": "Attribute Value"
+        "value": "Attribute Value",
+        "parser": "Attribute Value Parser"
     },
     "bookmark": "Bookmark",
     "collapse": "Collapse",

@@ -5,7 +5,8 @@ import { TableColumnData, TableData, TableDraggable, TableRowSelection } from "@
 
 import { Client } from "./../client/Client";
 import { notify } from "./../utils/notify";
-import { dumpIAL } from "./../utils/export";
+import { Parser, dumpIAL } from "./../utils/export";
+import { isCustomAttrKey } from "./../utils/string";
 
 import { IMetadata } from "./../types/metadata";
 import { IData, IAL } from "./../types/data";
@@ -47,7 +48,16 @@ const key_map = new Map<string, string>(
         });
         return map;
     })(),
-);
+); // 自定义属性名
+const parser_map = new Map<string, Parser>(
+    (() => {
+        const map: [string, Parser][] = [];
+        props.data.block_config.rows.forEach(row => {
+            if (row.parser) map.push([row.key, row.parser]);
+        });
+        return map;
+    })(),
+); // 自定义属性值解析器
 
 /* 表格配置 */
 const table = reactive<{
@@ -72,6 +82,11 @@ const table = reactive<{
             dataIndex: "value",
             slotName: "value",
         },
+        {
+            title: t("attributes.parser"),
+            dataIndex: "parser",
+            slotName: "parser",
+        },
     ],
     data: [],
     draggable: {
@@ -84,41 +99,50 @@ const table = reactive<{
     },
 });
 
-watch(
-    props.data.ial,
-    ial => {
-        const attrs: TableData[] = [];
-        for (const key in ial) {
-            attrs.push({
-                key,
-                _key: (() => {
-                    /* 如果存在自定义的属性名 */
-                    const _key = key_map.get(key);
-                    if (_key) {
-                        return _key;
-                    } else {
-                        return key.startsWith("custom-") ? key.replace(/^custom-/, "") : key;
-                    }
-                })(),
-                value: ial[key],
-            });
-        }
+watch(props.data.ial, ial => {
+    updateTable(ial);
+    updateSelectedRows();
+});
 
-        /* 排序 */
-        attrs.sort((a1, a2) => {
-            const i1 = props.data.block_config.rows.findIndex(row => row.key === a1.key);
-            const i2 = props.data.block_config.rows.findIndex(row => row.key === a2.key);
-            if (i1 === -1 && i2 === -1) return a1.key!.localeCompare(a2.key!);
-            if (i1 === -1) return 1;
-            if (i2 === -1) return -1;
-            return i1 - i2;
+updateTable(props.data.ial);
+
+/* 更新表格 */
+function updateTable(ial: IAL): void {
+    const attrs: TableData[] = [];
+    for (const key in ial) {
+        attrs.push({
+            key,
+            _key: (() => {
+                /* 如果存在自定义的属性名 */
+                const _key = key_map.get(key);
+                if (_key) {
+                    return _key;
+                } else {
+                    return isCustomAttrKey(key) ? key.replace(/^custom-/, "") : key;
+                }
+            })(),
+            value: ial[key],
+            parser: (() => {
+                /* 如果存在自定义的解析器 */
+                if (isCustomAttrKey(key)) {
+                    return parser_map.get(key) ?? Parser.string;
+                }
+                return undefined;
+            })(),
         });
-        table.data = attrs;
-    },
-    {
-        immediate: true,
-    },
-);
+    }
+
+    /* 排序 */
+    attrs.sort((a1, a2) => {
+        const i1 = props.data.block_config.rows.findIndex(row => row.key === a1.key);
+        const i2 = props.data.block_config.rows.findIndex(row => row.key === a2.key);
+        if (i1 === -1 && i2 === -1) return a1.key!.localeCompare(a2.key!);
+        if (i1 === -1) return 1;
+        if (i2 === -1) return -1;
+        return i1 - i2;
+    });
+    table.data = attrs;
+}
 
 /* 排序发生更改 */
 function onChange(data: TableData[]): void {
@@ -147,7 +171,7 @@ function onChangeInput(record: TableData, value: string) {
         console.log("Export.onChangeInput");
     }
 
-    const _key = record.key?.startsWith("custom-") ? `custom-${value}` : value;
+    const _key = isCustomAttrKey(record.key!) ? `custom-${value}` : value;
 
     if (record.key === _key) {
         // 非自定义映射
@@ -155,6 +179,17 @@ function onChangeInput(record: TableData, value: string) {
     } else {
         key_map.set(record.key!, value);
     }
+
+    updateSelectedRows();
+}
+
+/* 选择框发生更改 */
+function onChangeSelect(record: TableData, value: Parser) {
+    if (import.meta.env.DEV) {
+        console.log("Export.onChangeSelect");
+    }
+
+    parser_map.set(record.key!, value);
 
     updateSelectedRows();
 }
@@ -170,12 +205,16 @@ watch(
     rows => {
         /* 更新文本域中显示的 YFM */
         if (rows.length > 0) {
-            const metadata: string[] = [];
-            metadata.push("---");
-            metadata.push("\n");
-            metadata.push(dumpIAL(rows as IMetadata[]));
-            metadata.push("---");
-            yaml.value = metadata.join("");
+            try {
+                const metadata: string[] = [];
+                metadata.push("---");
+                metadata.push("\n");
+                metadata.push(dumpIAL(rows as IMetadata[]));
+                metadata.push("---");
+                yaml.value = metadata.join("");
+            } catch (error) {
+                notify((error as Error).toString());
+            }
         } else {
             yaml.value = "";
         }
@@ -230,6 +269,7 @@ function onClickSave(e: MouseEvent): void {
             key: row.key!,
             _key: key_map.get(row.key!),
             activate: selected_keys.value.includes(row.key!),
+            parser: parser_map.get(row.key!),
         };
     });
 
@@ -314,10 +354,21 @@ onUpdated(() => {
             <template #value="{ record, rowIndex }">
                 <pre class="value">{{ record.value }}</pre>
             </template>
+            <template #parser="{ record, rowIndex }">
+                <a-select
+                    v-if="record.parser !== undefined"
+                    v-model:model-value="record.parser"
+                    :options="Object.values(Parser)"
+                    @change="value => onChangeSelect(record, value as Parser)"
+                    size="mini"
+                >
+                </a-select>
+            </template>
         </a-table>
 
         <a-textarea
             v-model:model-value="yaml"
+            spellcheck="false"
             auto-size
         />
     </a-space>

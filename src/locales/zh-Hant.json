@@ -7,7 +7,8 @@
         "del": "刪除自定義屬性",
         "name": "屬性名",
         "other": "其他屬性",
-        "value": "屬性值"
+        "value": "屬性值",
+        "parser": "屬性值解析器"
     },
     "bookmark": "文檔書籤",
     "collapse": "摺疊",

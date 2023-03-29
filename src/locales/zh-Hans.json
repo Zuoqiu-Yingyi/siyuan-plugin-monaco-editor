@@ -8,7 +8,8 @@
         "key": "导出属性名",
         "name": "属性名",
         "other": "其他属性",
-        "value": "属性值"
+        "value": "属性值",
+        "parser": "属性值解析器"
     },
     "bookmark": "书签",
     "collapse": "折叠",

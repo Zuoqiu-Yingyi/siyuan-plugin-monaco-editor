@@ -1,6 +1,8 @@
 # 更改日志 | CHANGE LOG
 
-## v0.2.0 | 2023-03-23
+- 新增自定义属性值解析器功能 | Add custom attribute value parser function.
+
+## v0.2.0 | 2023-03-29
 
 - [v0.1.1 <=> v0.2.0](https://github.com/Zuoqiu-Yingyi/widget-metadata/compare/v0.1.1...v0.2.0)
 - 转义文档别名中的 `,` | Escape `,` in document alias.

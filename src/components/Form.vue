@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { Client } from "./../client/Client";
 import { notify } from "./../utils/notify";
-import { tokenSplit } from "./../utils/string";
+import { tokenSplit, isCustomAttrKey } from "./../utils/string";
 
 import { IForm, IAttr } from "./../types/form";
 import { IData, IAL } from "./../types/data";
@@ -107,7 +107,7 @@ const form = reactive(
                 default:
                     switch (true) {
                         /* 自定义属性 */
-                        case key.startsWith("custom-"):
+                        case isCustomAttrKey(key):
                             const _key = key.replace(/^custom-/, "");
                             form.customs.push({
                                 _key,
