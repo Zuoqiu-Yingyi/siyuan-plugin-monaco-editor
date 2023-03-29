@@ -57,6 +57,17 @@ A Widget of document block metadata for [SiYuan Note](https://github.com/siyuan-
     - 文档浏览位置 | Document Browse Location
   - `title-img`
     - 文档题头图 | Document Cover Image
+- 导出文档块的元数据  
+  Export metadata for document blocks
+  - 可选择部分属性导出  
+    You can select partial attributes to export.
+  - 可在导出时重命名属性  
+    You can rename the attributes on export.
+  - 可在导出时对属性排序  
+    You can sort the attributes on export.
+  - 可预览导出的内容  
+    You can preview the exported content.
+
 
 ## 开始 | START
 
