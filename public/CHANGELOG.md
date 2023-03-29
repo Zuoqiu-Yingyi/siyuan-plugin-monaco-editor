@@ -1,5 +1,8 @@
 # 更改日志 | CHANGE LOG
 
+## v0.2.0 | 2023-03-23
+
+- [v0.1.1 <=> v0.2.0](https://github.com/Zuoqiu-Yingyi/widget-metadata/compare/v0.1.1...v0.2.0)
 - 转义文档别名中的 `,` | Escape `,` in document alias.
 - 添加折叠/展开按钮 | Add collapse/expand button.
 - 新插入的挂件块支持自动重新加载 | Newly inserted widget block supports automatic reloading.
