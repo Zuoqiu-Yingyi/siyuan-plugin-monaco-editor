@@ -16,6 +16,7 @@
 - 完善 `README.md` | Improve `README.md`.
 - 更新 NPM 依赖 | Update NPM dependencies.
 - 更换预览图片 | Change the preview image.
+- 修复 CD 问题 | Fix CD issues.
 
 ## v0.1.1 | 2023-03-23
 
