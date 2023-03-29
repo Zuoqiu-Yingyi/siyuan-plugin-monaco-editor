@@ -1,4 +1,5 @@
 import { ShallowReactive } from "vue";
+import { IConfig } from "./config";
 
 export interface IAL {
     [key: string]: string;
@@ -11,6 +12,7 @@ export interface IData {
     doc_notebook: string;
     block_id: string;
     block_ial: IAL;
+    block_config: IConfig;
     element?: HTMLElement;
     paths: string[];
     hpaths: string[];

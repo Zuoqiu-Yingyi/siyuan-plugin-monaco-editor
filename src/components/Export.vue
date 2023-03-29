@@ -8,16 +8,15 @@ import { notify } from "./../utils/notify";
 import { dumpIAL } from "./../utils/export";
 
 import { IMetadata } from "./../types/metadata";
-import { IAL } from "./../types/data";
+import { IData, IAL } from "./../types/data";
 
 const i18n = inject("i18n") as I18n;
 const t = i18n.global.t as VueI18nTranslation;
 
 const props = defineProps<{
-    ial: IAL;
-    // data: IData;
+    data: IData;
     client: Client;
-    activate: boolean;
+    activate: boolean; // 是否激活面板的控件
 }>();
 
 const emits = defineEmits<{
@@ -29,10 +28,26 @@ function updated(): void {
     emits("updated");
 }
 
-const yaml = ref(""); // YFM 文本
-const ial = shallowRef<TableData[]>([]); // IAL 列表
-const selected_keys = shallowRef<string[]>([]); // 选中的行
-const metadata_retain = ref(false); // 导出时是否显示元数据
+const yaml = ref(props.data.block_ial["custom-metadata"] ?? ""); // YFM 文本
+const selected_rows = shallowRef<TableData[]>([]); // 选中的表格行
+const selected_keys = shallowRef<string[]>(
+    (() => {
+        const keys: string[] = [];
+        props.data.block_config.rows.forEach(row => {
+            if (row.activate) keys.push(row.key);
+        });
+        return keys;
+    })(),
+); // 选中的行的键列表
+const key_map = new Map<string, string>(
+    (() => {
+        const map: [string, string][] = [];
+        props.data.block_config.rows.forEach(row => {
+            if (row._key) map.push([row.key, row._key]);
+        });
+        return map;
+    })(),
+);
 
 /* 表格配置 */
 const table = reactive<{
@@ -70,16 +85,34 @@ const table = reactive<{
 });
 
 watch(
-    props.ial,
+    props.data.ial,
     ial => {
         const attrs: TableData[] = [];
         for (const key in ial) {
             attrs.push({
                 key,
-                _key: key.startsWith("custom-") ? key.replace(/^custom-/, "") : key,
+                _key: (() => {
+                    /* 如果存在自定义的属性名 */
+                    const _key = key_map.get(key);
+                    if (_key) {
+                        return _key;
+                    } else {
+                        return key.startsWith("custom-") ? key.replace(/^custom-/, "") : key;
+                    }
+                })(),
                 value: ial[key],
             });
         }
+
+        /* 排序 */
+        attrs.sort((a1, a2) => {
+            const i1 = props.data.block_config.rows.findIndex(row => row.key === a1.key);
+            const i2 = props.data.block_config.rows.findIndex(row => row.key === a2.key);
+            if (i1 === -1 && i2 === -1) return a1.key!.localeCompare(a2.key!);
+            if (i1 === -1) return 1;
+            if (i2 === -1) return -1;
+            return i1 - i2;
+        });
         table.data = attrs;
     },
     {
@@ -95,7 +128,7 @@ function onChange(data: TableData[]): void {
 
     table.data = data;
 
-    updateIAL();
+    updateSelectedRows();
 }
 
 /* 选择发生更改 */
@@ -105,47 +138,119 @@ function onSelectionChange(rowKeys: string[]): void {
     }
 
     selected_keys.value = rowKeys;
-    updateIAL();
+    updateSelectedRows();
 }
 
 /* 输入框发生更改 */
-function onInputChange(value: string) {
-    updateIAL();
+function onChangeInput(record: TableData, value: string) {
+    if (import.meta.env.DEV) {
+        console.log("Export.onChangeInput");
+    }
+
+    const _key = record.key?.startsWith("custom-") ? `custom-${value}` : value;
+
+    if (record.key === _key) {
+        // 非自定义映射
+        key_map.delete(record.key);
+    } else {
+        key_map.set(record.key!, value);
+    }
+
+    updateSelectedRows();
 }
 
-/* 更新需要导出的 IAL */
-function updateIAL() {
-    ial.value = table.data.filter(a => selected_keys.value.includes(a.key as string));
+/* 更新选中的行 */
+function updateSelectedRows() {
+    selected_rows.value = table.data.filter(a => selected_keys.value.includes(a.key as string));
 }
 
 /* 更新文本框 */
 watch(
-    ial,
-    ial => {
-        /* 优化 IAL */
-        if (ial.length > 0) {
+    selected_rows,
+    rows => {
+        /* 更新文本域中显示的 YFM */
+        if (rows.length > 0) {
             const metadata: string[] = [];
             metadata.push("---");
             metadata.push("\n");
-            metadata.push(dumpIAL(ial as IMetadata[]));
+            metadata.push(dumpIAL(rows as IMetadata[]));
             metadata.push("---");
             yaml.value = metadata.join("");
         } else {
             yaml.value = "";
         }
+
+        setTimeout(updated, 250);
     },
     {
-        immediate: true,
         flush: "post",
     },
 );
+
+/* 保存 */
+function save(attrs: Record<string, string | null>, then?: (response: any) => void): void {
+    /* 保存配置 */
+    props.client
+        .setBlockAttrs({
+            id: props.data.block_id,
+            attrs,
+        })
+        .then(response => {
+            if (import.meta.env.DEV) {
+                console.log(`Export.onClickSave`, attrs);
+            }
+
+            if (then) then(response);
+        })
+        .catch(error => {
+            notify(error.toString());
+        });
+}
+
+/* 导出时是否保留元数据 */
+watch(
+    () => props.data.block_config.retain,
+    retain => {
+        const attrs = {
+            "custom-config": JSON.stringify(props.data.block_config),
+            "data-export-md": props.data.block_config.retain ? yaml.value : "\n",
+        };
+
+        save(attrs, _r => {
+            Object.assign(props.data.block_ial, attrs);
+        });
+    },
+);
+
+/* 点击保存按钮 */
+function onClickSave(e: MouseEvent): void {
+    /* 更新配置 */
+    props.data.block_config.rows = table.data.map(row => {
+        return {
+            key: row.key!,
+            _key: key_map.get(row.key!),
+            activate: selected_keys.value.includes(row.key!),
+        };
+    });
+
+    const attrs = {
+        "custom-config": JSON.stringify(props.data.block_config),
+        "custom-metadata": yaml.value,
+        "data-export-md": props.data.block_config.retain ? yaml.value : "\n",
+    };
+
+    save(attrs, _r => {
+        Object.assign(props.data.block_ial, attrs);
+        notify(t("notification.metadata-save-success"), "S", 2000);
+    });
+}
 
 /* 组件更新 */
 onUpdated(() => {
     if (import.meta.env.DEV) {
         console.log("Export.onUpdated");
     }
-    setTimeout(updated, 250);
+    // setTimeout(updated, 250);
 });
 </script>
 
@@ -162,6 +267,7 @@ onUpdated(() => {
         >
             <a-button
                 :title="$t('metadata.save')"
+                @click="onClickSave"
                 type="primary"
                 size="mini"
             >
@@ -170,7 +276,7 @@ onUpdated(() => {
                 </template>
             </a-button>
             <a-switch
-                v-model:model-value="metadata_retain"
+                v-model:model-value="props.data.block_config.retain"
                 :title="$t('metadata.retain')"
                 type="circle"
                 size="small"
@@ -202,7 +308,7 @@ onUpdated(() => {
                 <a-input
                     size="mini"
                     v-model="record._key"
-                    @change="onInputChange"
+                    @change="value => onChangeInput(record, value)"
                 />
             </template>
             <template #value="{ record, rowIndex }">

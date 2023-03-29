@@ -39,7 +39,8 @@
     },
     "name": "命名",
     "notification": {
-        "attribute-key-invalid": "自定義屬性名無效！"
+        "attribute-key-invalid": "自定義屬性名無效！",
+        "metadata-save-success": "元數據保存成功！"
     },
     "reload": "重新加載",
     "scroll": "位置",

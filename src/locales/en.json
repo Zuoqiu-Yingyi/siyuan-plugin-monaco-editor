@@ -39,7 +39,8 @@
     },
     "name": "Name",
     "notification": {
-        "attribute-key-invalid": "The custom attribute name is not valid!"
+        "attribute-key-invalid": "The custom attribute name is not valid!",
+        "metadata-save-success": "Metadata saved successfully!"
     },
     "reload": "Reload",
     "scroll": "Location",

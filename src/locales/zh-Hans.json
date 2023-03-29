@@ -40,7 +40,8 @@
     },
     "name": "命名",
     "notification": {
-        "attribute-key-invalid": "自定义属性名无效！"
+        "attribute-key-invalid": "自定义属性名无效！",
+        "metadata-save-success": "元数据保存成功！"
     },
     "reload": "重新加载",
     "scroll": "位置",

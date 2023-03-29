@@ -32,6 +32,10 @@ async function init() {
         doc_notebook: "",
         block_id: "",
         block_ial: {},
+        block_config: {
+            rows: [],
+            retain: false,
+        },
         paths: [],
         hpaths: [],
         ial: {},
@@ -96,6 +100,9 @@ async function init() {
     /* 获取挂件块属性 */
     const block_ial = (await client.getBlockAttrs({ id: data.block_id })).data;
     Object.assign(data.block_ial, block_ial);
+
+    /* 读取保存在挂件块属性中的配置 */
+    Object.assign(data.block_config, JSON.parse(block_ial["custom-config"] ?? null));
 
     /* 本地化 */
     const locale = mapLang(siyuan.config.lang); // 语言

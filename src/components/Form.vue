@@ -241,6 +241,7 @@ function onclickDel(index: number): void {
                 if (import.meta.env.DEV) {
                     console.log(`Form.onclickDel ${key}`);
                 }
+                delete props.data.ial[key];
                 form.customs.splice(index, 1);
             })
             .catch(error => {

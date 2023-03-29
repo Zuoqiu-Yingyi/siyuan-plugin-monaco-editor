@@ -42,41 +42,6 @@ function updated(): void {
     }, 0);
 }
 
-/* 保存元数据 */
-function saveMetadata(form: IForm): void {
-    const yaml = dumpForm(form);
-
-    const metadata: string[] = [];
-
-    metadata.push("---");
-    metadata.push("\n");
-    metadata.push(yaml);
-    metadata.push("---");
-
-    const markdown = metadata.join("");
-    if (import.meta.env.DEV) {
-        console.log(markdown);
-    }
-
-    if (markdown !== data.block_ial["data-export-md"]) {
-        client
-            .setBlockAttrs({
-                id: data.block_id,
-                attrs: {
-                    "data-export-md": markdown,
-                },
-            })
-            .then(() => {
-                if (import.meta.env.DEV) {
-                    console.log(`Form.saveMetadata\n${markdown}`);
-                }
-            })
-            .catch(error => {
-                notify(error.toString());
-            });
-    }
-}
-
 /* 重新加载 */
 function reload(): void {
     globalThis.location.reload();
@@ -175,7 +140,7 @@ onMounted(() => {
 
                         <Export
                             :client="client"
-                            :ial="data.ial"
+                            :data="data"
                             :activate="active_key_tags === 2"
                             @updated="updated"
                         />
