@@ -71,6 +71,8 @@ const table = reactive<{
             title: t("attributes.name"),
             dataIndex: "key",
             slotName: "key",
+            ellipsis: true,
+            tooltip: true,
         },
         {
             title: t("attributes.key"),
@@ -81,6 +83,7 @@ const table = reactive<{
             title: t("attributes.value"),
             dataIndex: "value",
             slotName: "value",
+            ellipsis: true,
         },
         {
             title: t("attributes.parser"),

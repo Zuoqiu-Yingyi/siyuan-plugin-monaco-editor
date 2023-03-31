@@ -1,5 +1,7 @@
 # 更改日志 | CHANGE LOG
 
+- 导出面板属性名与属性值文本省略与提示 | Export panel attribute name and attribute value text ellipsis and tooltip.
+
 ## v0.2.1 | 2023-03-30
 
 - [v0.2.0 ... v0.2.1](https://github.com/Zuoqiu-Yingyi/widget-metadata/compare/v0.2.0...v0.2.1)
