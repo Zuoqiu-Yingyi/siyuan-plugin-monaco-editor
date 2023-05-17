@@ -1,0 +1,20 @@
+{
+    "name": "workspace",
+    "private": true,
+    "author": "Zuoqiu Yingyi",
+    "repository": "https://github.com/Zuoqiu-Yingyi/siyuan-plugins-dev",
+    "license": "AGPL-3.0-or-later",
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    },
+    "devDependencies": {
+        "@workspace/eslint-config-custom": "workspace:*",
+        "@workspace/vite-config-custom": "workspace:*",
+        "eslint": "^7.32.0",
+        "prettier": "^2.8.8",
+        "turbo": "^1.9.6"
+    }
+}

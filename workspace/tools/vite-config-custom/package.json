@@ -1,0 +1,13 @@
+{
+    "name": "@workspace/vite-config-custom",
+    "version": "0.0.0",
+    "private": true,
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^2.2.0",
+        "@vitejs/plugin-vue": "^4.2.3",
+        "vite": "^4.3.7"
+    }
+}
