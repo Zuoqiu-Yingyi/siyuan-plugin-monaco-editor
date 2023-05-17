@@ -1,0 +1,85 @@
+/* 思源样式 */
+
+:root {
+    // 面包屑高度
+    --custom-breadcrumb-height: 2rem;
+    // jupyter 主题色
+    --custom-jupyter-theme-color: #F37726;
+}
+
+/* 👇代码块与输出块样式👇 */
+.protyle-wysiwyg {
+    // 文档提示
+    &[custom-prompt]::after {
+        content: "\00A0" attr(custom-prompt)"\00A0";
+        font-size: 0.75em;
+        border: 1px solid var(--custom-jupyter-theme-color);
+        position: absolute;
+        top: var(--custom-breadcrumb-height);
+        right: 1em;
+        z-index: 1;
+    }
+
+    [data-node-id][custom-jupyter-index] {
+        &::before {
+            /* 运行序号 */
+            content: "[" attr(custom-jupyter-index)"]:";
+            font-size: 85%;
+            position: absolute;
+            top: 0;
+            left: 0.25em !important;
+            z-index: 1;
+            font-weight: bolder;
+        }
+
+        // 代码块
+        &.code-block {
+
+            &::before {
+                /* 运行完成 */
+                color: var(--b3-card-success-color);
+            }
+
+            &::after {
+                /* 运行时间 */
+                content: attr(custom-jupyter-time);
+                font-size: 85%;
+                position: absolute;
+                bottom: 0;
+                left: 3.75em;
+                z-index: 1;
+                color: var(--b3-theme-on-surface);
+            }
+
+            &[linenumber="true"]::after {
+                /* 运行时间-显示行号 */
+                left: 3.75em;
+            }
+
+            &[linenumber="false"]::after {
+                /* 运行时间-不显示行号 */
+                left: 0.25em;
+            }
+        }
+
+        // 输出块
+        &.sb {
+            font-family: var(--b3-font-family-code); // 输出内容使用等宽字体
+
+            &::before {
+                /* 运行结果 */
+                color: var(--b3-card-info-color);
+            }
+
+            &[custom-jupyter-index="E"]::before {
+                /* 运行结果有误 */
+                color: var(--b3-card-error-color);
+            }
+        }
+
+        &[custom-jupyter-index="*"]::before {
+            /* 正在运行 */
+            color: var(--b3-card-warning-color);
+        }
+    }
+}

@@ -15,7 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// update: 2023-05-16 10:17 +08:00
+/**
+ * update: 2023-05-16 10:17 +08:00
+ * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
+ */
+
 type TEventBus = "ws-main"
 
 interface IObject {
