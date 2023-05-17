@@ -5,7 +5,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "devDependencies": {
+    "dependencies": {
         "@sveltejs/vite-plugin-svelte": "^2.2.0",
         "@vitejs/plugin-vue": "^4.2.3",
         "vite": "^4.3.7"
