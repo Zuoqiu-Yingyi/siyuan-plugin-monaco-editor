@@ -6,3 +6,4 @@
 - 初始化 `jupyter-client` 插件 | Initialize `jupyter-client` plugin.
 - 为 `jupyter-client` 插件提供 `svelte-i18n` 支持 | Provides `svelte-i18n` support for `jupyter-client` plugin.
 - 添加附属仓库 `siyuan-plugin-open-api` | Add sub-repository `siyuan-plugin-open-api`.
+- `open-api` 插件实现将插件 API 暴露至全局变量的功能 | The 'open-api' plugin implement the function exposes the plugin API to global variables.
