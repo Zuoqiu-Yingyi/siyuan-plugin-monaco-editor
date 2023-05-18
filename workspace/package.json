@@ -12,13 +12,13 @@
     },
     "dependencies": {
         "@workspace/eslint-config-custom": "workspace:*",
-        "@workspace/vite-config-custom": "workspace:*",
-        "@workspace/tsconfig": "workspace:*"
+        "@workspace/tsconfig": "workspace:*",
+        "@workspace/vite-config-custom": "workspace:*"
     },
     "devDependencies": {
         "eslint": "^7.32.0",
         "prettier": "^2.8.8",
-        "turbo": "^1.9.6",
+        "turbo": "^1.9.7",
         "zhi-siyuan-api": "^1.1.1"
     }
 }

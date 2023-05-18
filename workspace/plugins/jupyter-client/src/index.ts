@@ -40,8 +40,6 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
     }
 
     onload() {
-
-
         /* 添加标题栏按钮 */
         this.top_bar_element = this.addTopBar({
             icon: this.ICON,
