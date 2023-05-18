@@ -7,5 +7,9 @@
     },
     "devDependencies": {
         "parse-data-url": "^5.0.0"
+    },
+    "dependencies": {
+        "@workspace/tsconfig": "workspace:^",
+        "@workspace/types": "workspace:^"
     }
 }

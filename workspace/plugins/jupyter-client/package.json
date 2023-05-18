@@ -23,6 +23,7 @@
         "vite": "^4.3.7"
     },
     "dependencies": {
+        "@workspace/types": "workspace:^",
         "@workspace/utils": "workspace:^",
         "siyuan": "workspace:^"
     }

@@ -20,8 +20,7 @@ import "./index.less";
 import siyuan from "siyuan";
 import { dataURL2svg } from "@workspace/utils/dataurl";
 
-import manifest from "./../public/plugin.json";
-import App from './App.svelte'
+import Global from './Global.svelte'
 import icon from "./assets/jupyter-icon.svg";
 
 
@@ -67,7 +66,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
             content: `<div id="${this.SETTINGS_DIALOG_ID}"/>`,
             width: siyuan.isMobile() ? "92vw" : "520px",
         });
-        const app = new App({
+        const global = new Global({
             target: dialog.element.querySelector(`#${this.SETTINGS_DIALOG_ID}`),
         });
     }
@@ -84,7 +83,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
 
         /* 添加文档设置菜单项 */
         menu.addItem({
-            icon: "iconSettings",
+            icon: "iconFile",
             label: this.i18n.document_settings,
             click: () => {
                 new siyuan.Dialog({

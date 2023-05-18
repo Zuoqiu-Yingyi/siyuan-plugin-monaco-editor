@@ -12,7 +12,8 @@
     },
     "dependencies": {
         "@workspace/eslint-config-custom": "workspace:*",
-        "@workspace/vite-config-custom": "workspace:*"
+        "@workspace/vite-config-custom": "workspace:*",
+        "@workspace/tsconfig": "workspace:*"
     },
     "devDependencies": {
         "eslint": "^7.32.0",

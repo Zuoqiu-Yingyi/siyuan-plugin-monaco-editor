@@ -1,21 +1,37 @@
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 /* 思源样式 */
 
 :root {
     // 面包屑高度
-    --custom-breadcrumb-height: 2rem;
+    --jupyter-client-breadcrumb-height: 2rem;
     // jupyter 主题色
-    --custom-jupyter-theme-color: #F37726;
+    --jupyter-client-jupyter-theme-color: #F37726;
 }
 
 /* 👇代码块与输出块样式👇 */
 .protyle-wysiwyg {
+
     // 文档提示
     &[custom-prompt]::after {
         content: "\00A0" attr(custom-prompt)"\00A0";
         font-size: 0.75em;
-        border: 1px solid var(--custom-jupyter-theme-color);
+        border: 1px solid var(--jupyter-client-jupyter-theme-color);
         position: absolute;
-        top: var(--custom-breadcrumb-height);
+        top: var(--jupyter-client-breadcrumb-height);
         right: 1em;
         z-index: 1;
     }

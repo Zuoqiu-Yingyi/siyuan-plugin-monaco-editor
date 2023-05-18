@@ -7,6 +7,9 @@ importers:
       '@workspace/eslint-config-custom':
         specifier: workspace:*
         version: link:tools/eslint-config-custom
+      '@workspace/tsconfig':
+        specifier: workspace:*
+        version: link:tools/tsconfig
       '@workspace/vite-config-custom':
         specifier: workspace:*
         version: link:tools/vite-config-custom
@@ -29,6 +32,13 @@ importers:
   packages/types: {}
 
   packages/utils:
+    dependencies:
+      '@workspace/tsconfig':
+        specifier: workspace:^
+        version: link:../../tools/tsconfig
+      '@workspace/types':
+        specifier: workspace:^
+        version: link:../types
     devDependencies:
       parse-data-url:
         specifier: ^5.0.0
@@ -36,6 +46,9 @@ importers:
 
   plugins/jupyter-client:
     dependencies:
+      '@workspace/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       '@workspace/utils':
         specifier: workspace:^
         version: link:../../packages/utils
