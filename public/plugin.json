@@ -1,0 +1,27 @@
+{
+    "name": "open-api",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api",
+    "version": "0.0.0",
+    "displayName": {
+        "default": "Open API",
+        "zh_CN": "开放 API",
+        "zh_CHT": "開放 API"
+    },
+    "description": {
+        "default": "Open the plugin's API to the global variable \"globalThis.openAPI\".",
+        "zh_CN": "将插件的 API 开放至全局变量 \"globalThis.openAPI\"。",
+        "zh_CHT": "將插件的 API 開放至全局變量 \"globalThis.openAPI\"。"
+    },
+    "readme": {
+        "default": "README.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu"
+        ]
+    }
+}
