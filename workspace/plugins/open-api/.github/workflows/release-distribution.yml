@@ -40,7 +40,7 @@ jobs:
       # Get timestamp
       # REF https://github.com/marketplace/actions/get-timestamp-action
       - name: Get timestamp
-        uses: nanzm/get-time-action@v1
+        uses: nanzm/get-time-action@v1.1
         id: timestamp
         with:
           ## 时区 | time zone

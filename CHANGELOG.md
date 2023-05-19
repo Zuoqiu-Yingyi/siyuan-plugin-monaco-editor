@@ -12,6 +12,7 @@
 - 更新 `release-please.yml` CD 配置 | Update `release-please.yml` CD configuration.
 - 添加 `split.ps1` 脚本 | Add `split.ps1` script.
 - 修复 `build.yml` CD 配置 | Fix `build.yml` CD configuration.
+- 修复 `release-distribution.yml` CD 配置 | Fix `release-distribution.yml` CD configuration.
 
 ## 2023-05-19
 
