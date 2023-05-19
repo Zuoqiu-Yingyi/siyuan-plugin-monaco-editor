@@ -3,6 +3,7 @@
 name: release-distribution
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - publish
