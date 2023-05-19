@@ -19,3 +19,7 @@ English
 # Open API
 
 Open the plugin's API to the global variable `globalThis.openAPI` / `window.openAPI` / `openAPI` to help developers test APIs.
+
+## PREVIEW
+
+[preview](./preview.png)
