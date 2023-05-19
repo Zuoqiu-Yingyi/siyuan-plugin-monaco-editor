@@ -2,11 +2,11 @@
     "name": "open-api",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "displayName": {
         "default": "🛠 Open API",
-        "zh_CN": "🛠 开放的 API",
-        "zh_CHT": "🛠 開放的 API"
+        "zh_CN": "🛠 开放 API",
+        "zh_CHT": "🛠 開放 API"
     },
     "description": {
         "default": "Open the plugin's API to the global variable <code class='fn__code'>globalThis.openAPI</code> to help developers test APIs.",
