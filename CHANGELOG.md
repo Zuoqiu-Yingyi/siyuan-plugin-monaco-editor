@@ -4,6 +4,7 @@
 
 - 新增附属仓库的的 `CHANGELOG.md` | Added `CHANGELOG.md` for sub-repository.
 - 调整更改日志格式 | Adjust the format of the change log.
+- 添加 `release-please.yml` CD 配置 | Add `release-please.yml` CD configuration.
 
 ## 2023-05-18
 
