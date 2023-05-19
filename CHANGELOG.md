@@ -13,6 +13,7 @@
 - 添加 `build.yml` CD 配置 | Add `build.yml` CD configuration.
 - 添加 `release-distribution.yml` CD 配置 | Add `release-distribution.yml` CD configuration.
 - 更改 `build.yml` 触发条件 | Change the trigger condition of `build.yml`.
+- 新增发行步骤 | Added release steps.
 
 ## 2023-05-18
 
