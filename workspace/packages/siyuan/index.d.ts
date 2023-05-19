@@ -16,14 +16,31 @@
  */
 
 /**
- * update: 2023-05-16 10:17 +08:00
  * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
+ * update: 2023-05-16 15:02 +08:00
+ * commit: https://github.com/siyuan-note/plugin-sample/blob/481bdcab5822b9584d540f159ce5b5572a11d11e/src/siyuan.d.ts
  */
 
-type TEventBus = "ws-main"
+type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf"
+
+declare global {
+    interface Window {
+        Lute: Lute
+    }
+}
 
 interface IObject {
     [key: string]: string;
+}
+
+interface ILuteNode {
+    TokensStr: () => string;
+    __internal_object__: {
+        Parent: {
+            Type: number,
+        },
+        HeadingLevel: string,
+    };
 }
 
 interface IWebSocketData {
@@ -56,6 +73,7 @@ interface IMenuItemOption {
     iconHTML?: string
     current?: boolean
     bind?: (element: HTMLElement) => void
+    index?: number
 }
 
 export function fetchPost(url: string, data?: any, cb?: (response: IWebSocketData) => void, headers?: IObject): void;
@@ -110,6 +128,8 @@ export abstract class Plugin {
 
     onunload(): void;
 
+    onLayoutReady(): void;
+
     /*
      * @param {string} [options.position=right]
      */
@@ -149,6 +169,14 @@ export abstract class Plugin {
         update?: () => void,
         init: () => void
     }): any
+
+    addFloatLayer(options: {
+        ids: string[],
+        defIds?: string[],
+        x?: number,
+        y?: number,
+        targetElement?: HTMLElement
+    }): void
 }
 
 export class EventBus {
@@ -188,7 +216,7 @@ export class Menu {
 
     addItem(options: IMenuItemOption): HTMLElement;
 
-    addSeparator(): void;
+    addSeparator(index?: number): void;
 
     open(options: { x: number, y: number, h?: number, w?: number, isLeft?: boolean }): void;
 
@@ -198,4 +226,110 @@ export class Menu {
     fullscreen(position?: "bottom" | "all"): void;
 
     close(): void;
+}
+
+declare class Lute {
+    public static WalkStop: number;
+    public static WalkSkipChildren: number;
+    public static WalkContinue: number;
+    public static Version: string;
+    public static Caret: string;
+
+    public static New(): Lute;
+
+    public static EChartsMindmapStr(text: string): string;
+
+    public static NewNodeID(): string;
+
+    public static Sanitize(html: string): string;
+
+    public static EscapeHTMLStr(str: string): string;
+
+    public static UnEscapeHTMLStr(str: string): string;
+
+    public static GetHeadingID(node: ILuteNode): string;
+
+    public static BlockDOM2Content(html: string): string;
+
+    private constructor();
+
+    public BlockDOM2Content(text: string): string;
+
+    public BlockDOM2EscapeMarkerContent(text: string): string;
+
+    public SetTextMark(enable: boolean): void;
+
+    public SetHeadingID(enable: boolean): void;
+
+    public SetProtyleMarkNetImg(enable: boolean): void;
+
+    public SetSpellcheck(enable: boolean): void;
+
+    public SetFileAnnotationRef(enable: boolean): void;
+
+    public SetSetext(enable: boolean): void;
+
+    public SetYamlFrontMatter(enable: boolean): void;
+
+    public SetChineseParagraphBeginningSpace(enable: boolean): void;
+
+    public SetRenderListStyle(enable: boolean): void;
+
+    public SetImgPathAllowSpace(enable: boolean): void;
+
+    public SetKramdownIAL(enable: boolean): void;
+
+    public BlockDOM2Md(html: string): string;
+
+    public BlockDOM2StdMd(html: string): string;
+
+    public SetGitConflict(enable: boolean): void;
+
+    public SetSuperBlock(enable: boolean): void;
+
+    public SetTag(enable: boolean): void;
+
+    public SetMark(enable: boolean): void;
+
+    public SetSub(enable: boolean): void;
+
+    public SetSup(enable: boolean): void;
+
+    public SetBlockRef(enable: boolean): void;
+
+    public SetSanitize(enable: boolean): void;
+
+    public SetHeadingAnchor(enable: boolean): void;
+
+    public SetImageLazyLoading(imagePath: string): void;
+
+    public SetInlineMathAllowDigitAfterOpenMarker(enable: boolean): void;
+
+    public SetToC(enable: boolean): void;
+
+    public SetIndentCodeBlock(enable: boolean): void;
+
+    public SetParagraphBeginningSpace(enable: boolean): void;
+
+    public SetFootnotes(enable: boolean): void;
+
+    public SetLinkRef(enalbe: boolean): void;
+
+    public SetEmojiSite(emojiSite: string): void;
+
+    public PutEmojis(emojis: IObject): void;
+
+    public SpinBlockDOM(html: string): string;
+
+    public Md2BlockDOM(html: string): string;
+
+    public SetProtyleWYSIWYG(wysiwyg: boolean): void;
+
+    public MarkdownStr(name: string, md: string): string;
+
+    public IsValidLinkDest(text: string): boolean;
+
+    public BlockDOM2InlineBlockDOM(html: string): string;
+
+    public BlockDOM2HTML(html: string): string;
 }
