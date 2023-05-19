@@ -24,6 +24,10 @@ jobs:
           release-type: node
           package-name: release-please-action
 
+          ## A GitHub secret token, the action defaults to using the special secrets.GITHUB_TOKEN
+          ## REF https://github.com/marketplace/actions/release-please-action#github-credentials
+          token: ${{ secrets.GITHUB_PAT_ACTIONS }}
+
           ## branch to open pull release PR against (detected by default)
           default-branch: main
 
