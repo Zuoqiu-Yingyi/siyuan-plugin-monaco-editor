@@ -84,7 +84,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v3
         with:
           ## 构建产物目录 | directory of build artifacts
-          build_dir: dist
+          build_dir: ${{ env.PACKAGE_PATH }}/dist
 
           ## 提交到目标分支
           target_branch: publish
