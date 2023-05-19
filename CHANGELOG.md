@@ -1,5 +1,13 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-05-20
+
+- 添加 `build.yml` CD 配置 | Add `build.yml` CD configuration.
+- 添加 `release-distribution.yml` CD 配置 | Add `release-distribution.yml` CD configuration.
+- 更改 `build.yml` 触发条件 | Change the trigger condition of `build.yml`.
+- 新增发行步骤 | Added release steps.
+- 添加 `package.json` | Add `package.json`.
+
 ## 2023-05-19
 
 - 新增附属仓库的的 `CHANGELOG.md` | Added `CHANGELOG.md` for sub-repository.
@@ -10,11 +18,6 @@
 - 更新 `open-api` 插件描述信息 | Update `open-api` plugin description.
 - 更新 `release-please.yml` CD 配置 | Update `release-please.yml` CD configuration.
 - 更新思源插件 API 定义文件 | Update SiYuan plugin API definition file.
-- 添加 `build.yml` CD 配置 | Add `build.yml` CD configuration.
-- 添加 `release-distribution.yml` CD 配置 | Add `release-distribution.yml` CD configuration.
-- 更改 `build.yml` 触发条件 | Change the trigger condition of `build.yml`.
-- 新增发行步骤 | Added release steps.
-- 添加 `package.json` | Add `package.json`.
 
 ## 2023-05-18
 
