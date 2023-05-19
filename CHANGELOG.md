@@ -8,6 +8,7 @@
 - 更新依赖 | Update dependencies.
 - 更新 subtree 管理脚本 | Update subtree management scripts.
 - 更新 `open-api` 插件描述信息 | Update `open-api` plugin description.
+- 更新 `release-please.yml` CD 配置 | Update `release-please.yml` CD configuration.
 
 ## 2023-05-18
 
