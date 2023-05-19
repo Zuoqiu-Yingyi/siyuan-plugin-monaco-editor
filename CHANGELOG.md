@@ -8,6 +8,7 @@
 - 添加 `package.json` | Add `package.json`.
 - CD `release-please.yml` 支持触发其他 CD 工作流 | CD `release-please.yml` supports triggering other CD workflows.
   - REF: [GitHub credentials](https://github.com/marketplace/actions/release-please-action#github-credentials)
+- 更新 `README.md` | Update `README.md`.
 
 ## 2023-05-19
 
