@@ -13,6 +13,7 @@
 - 添加 `split.ps1` 脚本 | Add `split.ps1` script.
 - 修复 `build.yml` CD 配置 | Fix `build.yml` CD configuration.
 - 修复 `release-distribution.yml` CD 配置 | Fix `release-distribution.yml` CD configuration.
+- CI/CD 支持手动触发 | CI/CD supports manual triggering.
 
 ## 2023-05-19
 

@@ -3,6 +3,7 @@
 name: build
 
 on:
+  workflow_dispatch:
   push:
     tags:
       # REF https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
