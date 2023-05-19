@@ -5,9 +5,9 @@
 ### Release Steps
 
 1. Update the version number in `<subrepo-root-dir>/package.json` and `<subrepo-root-dir>/public/plugin.json` and commit the changes in [monorepo](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo).
-2. Run script `./scripts/git-subtree/open-api/pull.ps1` with the folowing command in **monorepo root dir** to push the subtree to sub-repository (`dev` branch).
+2. Run script `./scripts/git-subtree/open-api/push.ps1` with the folowing command in **monorepo root dir** to push the subtree to sub-repository (`dev` branch).
    ```powershell
-   pwsh -f "./scripts/git-subtree/open-api/pull.ps1"
+   pwsh -f "./scripts/git-subtree/open-api/push.ps1"
    ```
 3. Create a pull request from `dev` branch to `main` branch in sub-repository.
 4. Merge the pull request.
