@@ -89,4 +89,4 @@ jobs:
           ## 提交到目标分支
           target_branch: publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_ACTIONS }}
