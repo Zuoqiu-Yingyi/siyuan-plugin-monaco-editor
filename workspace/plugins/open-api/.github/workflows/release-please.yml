@@ -40,7 +40,7 @@ jobs:
           bump-patch-for-minor-pre-major: false
 
           ## If set, create releases that are pre-major or pre-release version marked as pre-release on GitHub. Defaults false
-          prerelease: false
+          prerelease: true
 
           ## header used within the release PR body, defaults to using :robot: I have created a release *beep* *boop*
           pull-request-header: ":robot: A new release will be created"

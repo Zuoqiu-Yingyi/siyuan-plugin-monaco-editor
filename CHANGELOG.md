@@ -16,6 +16,7 @@
 - CI/CD 支持手动触发 | CI/CD supports manual triggering.
 - 修复 `split.ps1` 脚本 | Fix `split.ps1` script.
 - 更新依赖 | Update dependencies.
+- 更新 `release-please.yml` CD 配置使其生成 pre-release | Update `release-please.yml` CD configuration to generate pre-release.
 
 ## 2023-05-19
 
