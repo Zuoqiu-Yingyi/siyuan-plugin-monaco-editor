@@ -22,7 +22,7 @@ Open the plugin's API to the global variable `globalThis.openAPI` / `window.open
 
 ## PREVIEW
 
-[preview image](./preview.png)
+![preview image](./preview.png)
 
 ## INTRODUCTION
 
