@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./icon.png" style="width: 8em; height: 8em;">
+<img alt="icon" src="./icon.png" style="width: 8em; height: 8em;">
 
 ---
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Zuoqiu-Yingyi/siyuan-plugin-open-api?include_prereleases&style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api/releases/latest)
@@ -11,7 +11,7 @@
 [![GitHub all releases](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-open-api/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api/releases)
 
 ---
-English
+[简体中文](./README_zh_CN.md) \| English
 
 ---
 </div>
@@ -22,4 +22,14 @@ Open the plugin's API to the global variable `globalThis.openAPI` / `window.open
 
 ## PREVIEW
 
-[preview](./preview.png)
+[preview image](./preview.png)
+
+## INTRODUCTION
+
+- `openAPI`: Global variable
+  - `plugin`: Plugin object
+  - `siyuan`: SiYuan plugin api interface
+
+## CHANGELOG
+
+[CHANGE LOG](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api/blob/main/CHANGELOG.md)
