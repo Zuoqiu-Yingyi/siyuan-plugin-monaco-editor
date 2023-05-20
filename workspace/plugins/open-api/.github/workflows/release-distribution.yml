@@ -73,6 +73,9 @@ jobs:
           # REF https://semver.org/
           tag_name: ${{ steps.latest-release.outputs.release }}+${{ steps.timestamp.outputs.time }}
 
+          ## 标签关联的提交/分支 | The commit/branch associated with the tag
+          target_commitish: publish
+
           ## 附件列表 | attachment list
           files: |
             package.zip
