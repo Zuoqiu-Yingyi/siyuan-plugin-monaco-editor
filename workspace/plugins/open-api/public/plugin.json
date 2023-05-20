@@ -15,8 +15,8 @@
     },
     "readme": {
         "default": "README.md",
-        "zh_CN": "README.zh_CN.md",
-        "zh_CHT": "README.zh_CN.md"
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
     },
     "funding": {
         "openCollective": "",

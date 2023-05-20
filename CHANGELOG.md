@@ -21,6 +21,7 @@
 - 运行 `build.yml` 完成后调用 `release-distribution.yml` | Call `release-distribution.yml` after `build.yml` is completed.
 - 修复 `release-distribution.yml` 打包时目标分支错误问题 | Fix the issue of wrong target branch when `release-distribution.yml` is packaged.
 - 修复 `release-distribution.yml` 发布时标签关联分支错误问题 | Fix the issue of wrong branch associated with tag when `release-distribution.yml` is released.
+- 修复清单文件中 `readme` 项文件名称错误 | Fix the file name error of the `readme` item in the manifest file.
 
 ## 2023-05-19
 
