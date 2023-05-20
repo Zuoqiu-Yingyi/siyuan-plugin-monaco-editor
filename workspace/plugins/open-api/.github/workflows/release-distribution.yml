@@ -4,6 +4,12 @@ name: release-distribution
 
 on:
   workflow_dispatch:
+  # REF https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
   push:
     branches:
       - publish

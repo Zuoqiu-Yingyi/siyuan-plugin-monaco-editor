@@ -18,6 +18,7 @@
 - 更新依赖 | Update dependencies.
 - 更新 `release-please.yml` CD 配置使其生成 pre-release | Update `release-please.yml` CD configuration to generate pre-release.
 - 更新 `README*.md` | Update `README*.md`.
+- 运行 `build.yml` 完成后调用 `release-distribution.yml` | Call `release-distribution.yml` after `build.yml` is completed.
 
 ## 2023-05-19
 
