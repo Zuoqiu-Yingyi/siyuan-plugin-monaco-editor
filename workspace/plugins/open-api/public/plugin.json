@@ -2,7 +2,7 @@
     "name": "open-api",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-open-api",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "displayName": {
         "default": "🛠 Open API",
         "zh_CN": "🛠 开放 API",
