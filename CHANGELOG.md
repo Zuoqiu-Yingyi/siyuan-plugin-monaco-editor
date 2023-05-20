@@ -15,6 +15,7 @@
 - 修复 `release-distribution.yml` CD 配置 | Fix `release-distribution.yml` CD configuration.
 - CI/CD 支持手动触发 | CI/CD supports manual triggering.
 - 修复 `split.ps1` 脚本 | Fix `split.ps1` script.
+- 更新依赖 | Update dependencies.
 
 ## 2023-05-19
 
