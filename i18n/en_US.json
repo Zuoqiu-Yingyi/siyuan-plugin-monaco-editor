@@ -1,3 +1,8 @@
 {
-  "addTopBarIcon": "open quickSnippets menu"
+  "addTopBarIcon": "open quickSnippets menu",
+  "browserTabLoaded": "browserTab plugin is loaded",
+  "goBackOnePage": "Go back one page",
+  "goForwardOnePage": "Go forward one page",
+  "reloadCurrentPage": "Reload current page",
+  "stopLoadingThisPage": "Stop loading this page"
 }

@@ -1,3 +1,8 @@
 {
-  "addTopBarIcon": "打开菜单"
+  "addTopBarIcon": "打开菜单",
+  "browserTabLoaded": "浏览器页签插件已加载",
+  "goBackOnePage": "转到上一页",
+  "goForwardOnePage": "转到下一页",
+  "reloadCurrentPage": "刷新当前页面",
+  "stopLoadingThisPage": "停止加载此页面"
 }
