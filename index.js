@@ -70,17 +70,18 @@ function BrowserTabContainerFactory(pluginContext) {
             this.element.innerHTML = panelHTML;
             this.urlInputter = this.element.querySelector("input")
             this.urlInputter.value = this.data.url
-            this.frame = this.element.querySelector("webview")
+            this.webview = this.element.querySelector("webview")
 
             /* 非 Electron 环境回退到 iframe */
             if (!globalThis.require) {
-                this.frame.outerHTML = iframeHTML
-                this.frame = this.element.querySelector('iframe')
-                this.frame.reload = () => { this.frame.src = this.frame.src }
+                this.webview.outerHTML = iframeHTML
+                this.webview = this.element.querySelector('iframe')
+                this.webview.reload = () => { this.webview.src = this.webview.src }
             }
+
             // console.debug(this)
             this.browser_tab_manager = new BrowserTabManager(
-                this.frame,
+                this.webview,
                 this.element.querySelector('.btnBack'),
                 this.element.querySelector('.btnForward'),
                 this.element.querySelector('.btnRefresh'),
@@ -96,7 +97,7 @@ function BrowserTabContainerFactory(pluginContext) {
 
 /**
  * 页签管理器
- * @params {HTMLElement} view: webview / iframe HTML 元素
+ * @params {HTMLElement} webview: webview/iframe HTML 元素
  * @params {HTMLElement} btnBack: 返回按钮 HTML 元素
  * @params {HTMLElement} btnForward: 前进按钮 HTML 元素
  * @params {HTMLElement} btnRefresh: 刷新按钮 HTML 元素
@@ -107,7 +108,7 @@ function BrowserTabContainerFactory(pluginContext) {
  */
 class BrowserTabManager {
     constructor(
-        view,
+        webview,
         btnBack,
         btnForward,
         btnRefresh,
@@ -116,7 +117,7 @@ class BrowserTabManager {
         tabContext,
         pluginContext,
     ) {
-        this.view = view
+        this.webview = webview
         this.button_back = btnBack
         this.buttom_forward = btnForward
         this.button_refrash = btnRefresh
@@ -126,7 +127,7 @@ class BrowserTabManager {
         this.context_tab = tabContext
         this.context_plugin = pluginContext
 
-        this.isWebview = this.view.localName === "webview"
+        this.isWebview = this.webview.localName === "webview"
 
         this.init()
     }
@@ -154,7 +155,7 @@ class BrowserTabManager {
              */
             // this.view.addEventListener('will-navigate', e => {
             // this.view.addEventListener('did-start-navigation', e => {
-            this.view.addEventListener('load-commit', e => {
+            this.webview.addEventListener('load-commit', e => {
                 // console.debug(e)
                 if (e.isMainFrame) {
                     this.input_address.value = decodeURI(e.url)
@@ -163,18 +164,18 @@ class BrowserTabManager {
 
                 /* 是否可后退 */
                 // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewcangoback
-                this.updateBackButtonStatus(this.view.canGoBack());
+                this.updateBackButtonStatus(this.webview.canGoBack());
 
                 /* 是否可前进 */
                 // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewcangoback
-                this.updateForwardButtonStatus(this.view.canGoForward());
+                this.updateForwardButtonStatus(this.webview.canGoForward());
             })
 
             /**
              * 更改页签标题
              * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#%E4%BA%8B%E4%BB%B6-page-title-updated
             */
-            this.view.addEventListener('page-title-updated', e => {
+            this.webview.addEventListener('page-title-updated', e => {
                 // console.debug(e)
                 // console.debug(this.context_tab)
                 this.context_tab.parent.updateTitle(e.title)
@@ -186,12 +187,12 @@ class BrowserTabManager {
              * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-did-stop-loading
              */
             /* 开始加载 */
-            this.view.addEventListener('did-start-loading', e => {
+            this.webview.addEventListener('did-start-loading', e => {
                 // console.debug(e)
                 this.updateRefreshButtonStatus(true)
             })
             /* 停止加载 */
-            this.view.addEventListener('did-stop-loading', e => {
+            this.webview.addEventListener('did-stop-loading', e => {
                 // console.debug(e)
                 this.updateRefreshButtonStatus(false)
             })
@@ -208,51 +209,51 @@ class BrowserTabManager {
         }
         else { // 浏览器环境
             /* 页面加载完成 */
-            this.view.addEventListener('load', e => {
+            this.webview.addEventListener('load', e => {
                 /* 是否可后退 */
                 // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-                this.updateBackButtonStatus(this.view.getCanGoBack?.());
+                this.updateBackButtonStatus(this.webview.getCanGoBack?.());
 
                 /* 是否可前进 */
                 // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-                this.updateForwardButtonStatus(this.view.getCanGoForward?.());
+                this.updateForwardButtonStatus(this.webview.getCanGoForward?.());
             })
         }
     }
     backButtonClickEventListener = () => {
         if (this.isWebview) {
             // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewcangoback
-            if (this.view.canGoBack()) {
+            if (this.webview.canGoBack()) {
                 // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewgoback
-                this.view.goBack()
+                this.webview.goBack()
             }
         }
         else {
             // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-            if (this.view.getCanGoBack?.()) {
-                this.view.goBack?.()
+            if (this.webview.getCanGoBack?.()) {
+                this.webview.goBack?.()
             }
         }
     }
     forwardButtonClickEventListener = () => {
         if (this.isWebview) {
             // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewcangoforward
-            if (this.view.canGoForward()) {
+            if (this.webview.canGoForward()) {
                 // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewgoforward
-                this.view.goForward()
+                this.webview.goForward()
             }
         }
         else {
             // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-            if (this.view.getCanGoForward?.()) {
-                this.view.goForward?.()
+            if (this.webview.getCanGoForward?.()) {
+                this.webview.goForward?.()
             }
         }
     }
     stopButtonClickEventListener = () => {
         // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewstop
         // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-        this.view.stop()
+        this.webview.stop()
     }
     reloadButtonClickEventListener = () => {
         this.reload()
@@ -292,12 +293,12 @@ class BrowserTabManager {
         }
     }
     loadURL(url) {
-        this.view.src = url
+        this.webview.src = url
     }
     reload() {
         // REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#webviewreload
         // REF https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLIFrameElement#%E6%B5%8F%E8%A7%88%E5%99%A8_api_%E6%96%B9%E6%B3%95
-        this.view.reload?.();
+        this.webview.reload?.();
     }
 }
 //反向链接等官方编辑器接口再移植
@@ -340,15 +341,22 @@ module.exports = class BrowserTabPlugin extends siyuan.Plugin {
                 return false;
         }
     }
+    static isElection() {
+        return !!globalThis.require;
+    }
 
     onload() {
-        // console.debug(this.i18n.browserTabLoaded);
-        this.custom_tab = this.addTab(BrowserTabContainerFactory(this));
-        globalThis.addEventListener("click", this.linkClientEventListener, true);
+        // console.debug(this);
+        if (BrowserTabPlugin.isElection()) {
+            this.custom_tab = this.addTab(BrowserTabContainerFactory(this));
+            globalThis.addEventListener("click", this.linkClientEventListener, true);
+        }
     }
 
     onunload() {
-        globalThis.removeEventListener("click", this.linkClientEventListener, true);
+        if (BrowserTabPlugin.isElection()) {
+            globalThis.removeEventListener("click", this.linkClientEventListener, true);
+        }
     }
 
     linkClientEventListener = e => {
