@@ -3,6 +3,7 @@
 ## 2023-05-23
 
 - 添加附属仓库 `siyuan-plugin-webview` | Add sub-repository `siyuan-plugin-webview`.
+- 添加附属仓库 `webview` 的管理脚本 | Add management scripts for sub-repository `webview`.
 
 ## 2023-05-20
 
