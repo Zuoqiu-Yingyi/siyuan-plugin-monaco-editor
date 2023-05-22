@@ -1,0 +1,8 @@
+{
+  "addTopBarIcon": "打開菜單",
+  "browserTabLoaded": "瀏覽器頁簽插件已加載",
+  "goBackOnePage": "轉到上一頁",
+  "goForwardOnePage": "轉到下一頁",
+  "reloadCurrentPage": "重載當前頁面",
+  "stopLoadingThisPage": "停止加載此頁面"
+}
