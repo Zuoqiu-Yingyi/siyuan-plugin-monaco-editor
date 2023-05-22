@@ -18,7 +18,7 @@
 import "./index.less";
 
 import siyuan from "siyuan";
-import { dataURL2svg } from "@workspace/utils/dataurl";
+import { dataURL2svg } from "@workspace/utils/misc/dataurl";
 
 import Global from './Global.svelte'
 import icon from "./assets/jupyter-icon.svg";

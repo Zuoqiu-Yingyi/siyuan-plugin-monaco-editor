@@ -1,0 +1,33 @@
+{
+    "name": "webview",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview",
+    "version": "0.0.1",
+    "displayName": {
+        "default": "Web Page View",
+        "zh_CN": "网页视图",
+        "zh_CHT": "網頁視圖"
+    },
+    "description": {
+        "default": "Provide multi-tab/multi-window web page view for SiYuan",
+        "zh_CN": "为思源提供多页签/多窗口的网页视图",
+        "zh_CHT": "為思源提供多頁簽/多窗口的網頁視圖"
+    },
+    "readme": {
+        "default": "README.md"
+    },
+    "i18n": [
+        "en_US",
+        "zh_CN",
+        "zh_CHT"
+    ],
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}

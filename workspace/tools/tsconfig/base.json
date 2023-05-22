@@ -1,6 +1,10 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
         "composite": false,
         "declaration": true,
         "declarationMap": true,
@@ -17,6 +21,7 @@
     },
     "display": "Default",
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "temp"
     ]
 }

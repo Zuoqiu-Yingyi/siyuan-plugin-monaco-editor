@@ -17,7 +17,7 @@
 
 /**
  * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
- * update: 2023-05-16 15:02 +08:00
+ * update: 2023-05-19 15:02 +08:00
  * commit: https://github.com/siyuan-note/plugin-sample/blob/481bdcab5822b9584d540f159ce5b5572a11d11e/src/siyuan.d.ts
  */
 

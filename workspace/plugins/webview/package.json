@@ -1,0 +1,19 @@
+{
+    "name": "webview",
+    "private": true,
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "build": "tsc && vite build"
+    },
+    "devDependencies": {
+        "@types/node": "^20.2.3",
+        "typescript": "^5.0.4",
+        "vite": "^4.3.8"
+    },
+    "dependencies": {
+        "@workspace/types": "workspace:^",
+        "@workspace/utils": "workspace:^",
+        "siyuan": "workspace:^"
+    }
+}

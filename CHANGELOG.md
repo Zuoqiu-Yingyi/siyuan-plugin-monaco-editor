@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-05-23
+
+- 添加附属仓库 `siyuan-plugin-webview` | Add sub-repository `siyuan-plugin-webview`.
+
 ## 2023-05-20
 
 - 添加 `build.yml` CD 配置 | Add `build.yml` CD configuration.
