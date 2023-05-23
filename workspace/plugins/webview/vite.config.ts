@@ -17,11 +17,18 @@
 
 import { defineConfig } from "vite";
 import { resolve } from "path"
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { less } from "svelte-preprocess-less";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     base: `./`,
     plugins: [
+        svelte({
+            preprocess: {
+                style: less(),
+            },
+        }),
     ],
     build: {
         minify: false,

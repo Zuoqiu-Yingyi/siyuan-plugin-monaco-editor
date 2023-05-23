@@ -4,5 +4,7 @@
   "goBackOnePage": "Go back one page",
   "goForwardOnePage": "Go forward one page",
   "reloadCurrentPage": "Reload current page",
-  "stopLoadingThisPage": "Stop loading this page"
+  "stopLoadingThisPage": "Stop loading this page",
+  "openDevTools": "Open developer tools",
+  "closeDevTools": "Close developer tools"
 }

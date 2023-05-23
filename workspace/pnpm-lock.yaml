@@ -111,7 +111,7 @@ importers:
         version: 5.0.4
       vite:
         specifier: ^4.3.8
-        version: 4.3.8(@types/node@20.2.3)
+        version: 4.3.8(@types/node@20.2.3)(less@4.1.3)
 
   plugins/webview:
     dependencies:
@@ -125,15 +125,30 @@ importers:
         specifier: workspace:^
         version: link:../../packages/siyuan
     devDependencies:
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^2.3.0
+        version: 2.3.0(svelte@3.59.1)(vite@4.3.8)
+      '@tsconfig/svelte':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@types/node':
         specifier: ^20.2.3
         version: 20.2.3
+      less:
+        specifier: ^4.1.3
+        version: 4.1.3
+      svelte:
+        specifier: ^3.59.1
+        version: 3.59.1
+      svelte-preprocess-less:
+        specifier: ^0.4.0
+        version: 0.4.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
       vite:
         specifier: ^4.3.8
-        version: 4.3.8(@types/node@20.2.3)
+        version: 4.3.8(@types/node@20.2.3)(less@4.1.3)
 
   tools/eslint-config-custom:
     devDependencies:
@@ -696,6 +711,22 @@ packages:
       react-is: 18.2.0
     dev: true
 
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.1(@sveltejs/vite-plugin-svelte@2.3.0)(svelte@3.59.1)(vite@4.3.8):
+    resolution: {integrity: sha512-8ZXgDbAL1b2o7WHxnPsbkxTzZiZhMwOsCI/GFti3zFlh8unqJtUsgwRQV/XSULFcqkbZXz5v6MqMLSUpl3VKaA==}
+    engines: {node: ^14.18.0 || >= 16}
+    peerDependencies:
+      '@sveltejs/vite-plugin-svelte': ^2.2.0
+      svelte: ^3.54.0
+      vite: ^4.0.0
+    dependencies:
+      '@sveltejs/vite-plugin-svelte': 2.3.0(svelte@3.59.1)(vite@4.3.8)
+      debug: 4.3.4
+      svelte: 3.59.1
+      vite: 4.3.8(@types/node@20.2.3)(less@4.1.3)
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@sveltejs/vite-plugin-svelte@2.2.0(svelte@3.59.1)(vite@4.3.7):
     resolution: {integrity: sha512-KDtdva+FZrZlyug15KlbXuubntAPKcBau0K7QhAIqC5SAy0uDbjZwoexDRx0L0J2T4niEfC6FnA9GuQQJKg+Aw==}
     engines: {node: ^14.18.0 || >= 16}
@@ -713,6 +744,26 @@ packages:
       vitefu: 0.2.4(vite@4.3.7)
     transitivePeerDependencies:
       - supports-color
+
+  /@sveltejs/vite-plugin-svelte@2.3.0(svelte@3.59.1)(vite@4.3.8):
+    resolution: {integrity: sha512-NbgDn5/auWfGYFip7DheDj49/JLE6VugdtdLJjnQASYxXqrQjl81xaZzQsoSAxWk+j2mOkmPFy56gV2i63FUnA==}
+    engines: {node: ^14.18.0 || >= 16}
+    peerDependencies:
+      svelte: ^3.54.0
+      vite: ^4.0.0
+    dependencies:
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.1(@sveltejs/vite-plugin-svelte@2.3.0)(svelte@3.59.1)(vite@4.3.8)
+      debug: 4.3.4
+      deepmerge: 4.3.1
+      kleur: 4.1.5
+      magic-string: 0.30.0
+      svelte: 3.59.1
+      svelte-hmr: 0.15.1(svelte@3.59.1)
+      vite: 4.3.8(@types/node@20.2.3)(less@4.1.3)
+      vitefu: 0.2.4(vite@4.3.8)
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@tsconfig/svelte@4.0.1:
     resolution: {integrity: sha512-B+XlGpmuAQzJqDoBATNCvEPqQg0HkO7S8pM14QDI5NsmtymzRexQ1N+nX2H6RTtFbuFgaZD4I8AAi8voGg0GLg==}
@@ -1961,7 +2012,7 @@ packages:
     dependencies:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
-      tslib: 2.5.1
+      tslib: 2.5.2
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -2699,6 +2750,10 @@ packages:
 
   /tslib@2.5.1:
     resolution: {integrity: sha512-KaI6gPil5m9vF7DKaoXxx1ia9fxS4qG5YveErRRVknPDXXriu5M8h48YRjB6h5ZUOKuAKlSJYb0GaDe8I39fRw==}
+    dev: true
+
+  /tslib@2.5.2:
+    resolution: {integrity: sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==}
 
   /tsutils@3.21.0(typescript@5.0.4):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -2880,7 +2935,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vite@4.3.8(@types/node@20.2.3):
+  /vite@4.3.8(@types/node@20.2.3)(less@4.1.3):
     resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -2907,6 +2962,7 @@ packages:
     dependencies:
       '@types/node': 20.2.3
       esbuild: 0.17.19
+      less: 4.1.3
       postcss: 8.4.23
       rollup: 3.23.0
     optionalDependencies:
@@ -2922,6 +2978,17 @@ packages:
         optional: true
     dependencies:
       vite: 4.3.7(less@4.1.3)
+
+  /vitefu@0.2.4(vite@4.3.8):
+    resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      vite: 4.3.8(@types/node@20.2.3)(less@4.1.3)
+    dev: true
 
   /vue-eslint-parser@9.3.0(eslint@8.41.0):
     resolution: {integrity: sha512-48IxT9d0+wArT1+3wNIy0tascRoywqSUe2E1YalIC1L8jsUGe5aJQItWfRok7DVFGz3UYvzEI7n5wiTXsCMAcQ==}

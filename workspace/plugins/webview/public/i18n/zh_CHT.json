@@ -4,5 +4,7 @@
   "goBackOnePage": "轉到上一頁",
   "goForwardOnePage": "轉到下一頁",
   "reloadCurrentPage": "重載當前頁面",
-  "stopLoadingThisPage": "停止加載此頁面"
+  "stopLoadingThisPage": "停止加載此頁面",
+  "openDevTools": "打開開發者工具",
+  "closeDevTools": "關閉開發者工具"
 }
