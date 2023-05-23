@@ -1,10 +1,12 @@
 {
   "addTopBarIcon": "打開菜單",
   "browserTabLoaded": "瀏覽器頁簽插件已加載",
+  "closeDevTools": "關閉開發者工具",
+  "enterFullscreen": "進入全屏模式",
+  "exitFullscreen": "退出全屏模式",
   "goBackOnePage": "轉到上一頁",
   "goForwardOnePage": "轉到下一頁",
-  "reloadCurrentPage": "重載當前頁面",
-  "stopLoadingThisPage": "停止加載此頁面",
   "openDevTools": "打開開發者工具",
-  "closeDevTools": "關閉開發者工具"
+  "reloadCurrentPage": "重載當前頁面",
+  "stopLoadingThisPage": "停止加載此頁面"
 }

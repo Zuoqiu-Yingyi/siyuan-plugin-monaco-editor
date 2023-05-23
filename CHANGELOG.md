@@ -5,6 +5,7 @@
 - 添加附属仓库 `siyuan-plugin-webview` | Add sub-repository `siyuan-plugin-webview`.
 - 添加附属仓库 `webview` 的管理脚本 | Add management scripts for sub-repository `webview`.
 - 使用 `svelte` 重构 `webview` | Refactor `webview` with `svelte`.
+- 在 `<webview>` 外进行交互时设置 `<webview>` 的 `pointer-events` 为 `nont` | Set the `pointer-events` of `<webview>` to `nont` when interacting outside `<webview>`.
 
 ## 2023-05-20
 

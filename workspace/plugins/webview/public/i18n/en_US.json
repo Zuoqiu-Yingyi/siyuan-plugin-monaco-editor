@@ -1,10 +1,12 @@
 {
   "addTopBarIcon": "open quickSnippets menu",
   "browserTabLoaded": "browserTab plugin is loaded",
+  "closeDevTools": "Close developer tools",
+  "enterFullscreen": "Enter full-screen mode",
+  "exitFullscreen": "Exit full-screen mode",
   "goBackOnePage": "Go back one page",
   "goForwardOnePage": "Go forward one page",
-  "reloadCurrentPage": "Reload current page",
-  "stopLoadingThisPage": "Stop loading this page",
   "openDevTools": "Open developer tools",
-  "closeDevTools": "Close developer tools"
+  "reloadCurrentPage": "Reload current page",
+  "stopLoadingThisPage": "Stop loading this page"
 }
