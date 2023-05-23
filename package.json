@@ -19,6 +19,7 @@
         "vite": "^4.3.8"
     },
     "dependencies": {
+        "@workspace/components": "workspace:^",
         "@workspace/types": "workspace:^",
         "@workspace/utils": "workspace:^",
         "siyuan": "workspace:^"

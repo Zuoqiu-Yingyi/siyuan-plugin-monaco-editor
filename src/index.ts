@@ -17,6 +17,7 @@
 
 import siyuan from "siyuan";
 import Webview from "./components/Webview.svelte"
+import Settings from "@workspace/components/siyuan/setting/Example.svelte"
 import { isElectron } from "@workspace/utils/env/front-end";
 
 export default class WebviewPlugin extends siyuan.Plugin {
@@ -34,12 +35,16 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
-    protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>
+    
+    private readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
+    private readonly SETTINGS_DIALOG_ID: string;
 
     constructor(options: any) {
         super(options);
+        
+        this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
 
-        const pluginContext: WebviewPlugin = this;
+        const pluginContext = this;
         this.webview_tab = this.addTab({
             type: "-webview-tag",
             init() {
@@ -73,6 +78,19 @@ export default class WebviewPlugin extends siyuan.Plugin {
         if (isElectron()) {
             globalThis.removeEventListener("click", this.linkClientEventListener, true);
         }
+    }
+
+    openSetting(): void {
+        const that = this;
+        const id = globalThis.crypto.randomUUID();
+        const dialog = new siyuan.Dialog({
+            title: that.name,
+            content: `<div id="${that.SETTINGS_DIALOG_ID}"/>`,
+            width: siyuan.isMobile() ? "92vw" : "520px",
+        });
+        const global = new Settings({
+            target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
+        });
     }
 
     linkClientEventListener = (e: MouseEvent) => {
