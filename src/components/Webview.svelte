@@ -24,12 +24,14 @@
     export let tabContext: any;
     export let pluginContext: InstanceType<typeof siyuan.Plugin>;
 
+    let fullscreen = false; // 是否为全屏模式
     let can_back = false; // 能否转到上一页
     let can_forward = false; // 能否转到下一页
     let loading = false; // 页面是否正在加载
     let address = decodeURI(url); // 地址栏
     let devtools_opened = false; // 开发者工具是否已打开
     let webview: Electron.WebviewTag; // webview 标签
+    let webview_pointer_events_disable = false; // 是否禁用 webview 的鼠标事件
 
     /* 转到上一页 */
     function onGoBack() {
@@ -60,6 +62,11 @@
         url = encodeURI(e.target.value);
     }
 
+    /* 进入/退出全屏模式 */
+    function onEnterOrExitFullscreen() {
+        fullscreen = !fullscreen;
+    }
+
     /* 打开/关闭开发者工具 */
     function onOpenOrCloseDevTools() {
         if (webview) {
@@ -85,6 +92,7 @@
             /* 更新地址栏地址 */
             if (e.isMainFrame) {
                 address = decodeURI(e.url);
+                tabContext.data.title = e.url;
             }
 
             /* 是否可后退 */
@@ -104,6 +112,7 @@
             // console.debug(e)
             // console.debug(tabContext);
             tabContext.tab?.updateTitle(e.title);
+            tabContext.data.title = e.title;
         });
 
         /**
@@ -124,7 +133,12 @@
     });
 </script>
 
-<div class="fn__flex fn__flex-1 fn__flex-column content">
+<div
+    on:mouseenter={() => webview_pointer_events_disable = false}
+    on:mouseleave={() => webview_pointer_events_disable = true}
+    class:fullscreen
+    class="fn__flex fn__flex-1 fn__flex-column content"
+>
     <!-- 地址栏 -->
     <div class="protyle-breadcrumb">
         <!-- 后退按钮 -->
@@ -168,6 +182,16 @@
 
         <div class="fn__space" />
 
+        <!-- 打开/关闭全屏模式 -->
+        <button
+            on:click={onEnterOrExitFullscreen}
+            aria-label={fullscreen ? pluginContext.i18n.exitFullscreen : pluginContext.i18n.enterFullscreen}
+            class:toolbar__item--active={fullscreen}
+            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__sw"
+        >
+            <svg><use xlink:href={fullscreen ? "#iconFullscreenExit" : "#iconFullscreen"} /></svg>
+        </button>
+
         <!-- 打开/关闭开发者工具 -->
         <button
             on:click={onOpenOrCloseDevTools}
@@ -183,10 +207,10 @@
     <div class="fn__flex fn__flex-1 protyle-content">
         <webview
             bind:this={webview}
-            class="fn__flex-1"
             src={url}
-            allowfullscreen={true}
-            allowpopups={true}
+            class:pointer-events-disable={webview_pointer_events_disable}
+            class="fn__flex-1"
+            allowpopups
         />
     </div>
 </div>
@@ -204,5 +228,9 @@
         .protyle-content {
             max-height: 100%;
         }
+    }
+
+    .pointer-events-disable {
+        pointer-events: none;
     }
 </style>
