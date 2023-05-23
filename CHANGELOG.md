@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-05-24
+
+- 优化设置面板组件 | Optimize the settings panel component.
+
 ## 2023-05-23
 
 - 添加附属仓库 `siyuan-plugin-webview` | Add sub-repository `siyuan-plugin-webview`.

@@ -1,0 +1,29 @@
+{
+    "name": "jupyter-client",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-jupyter-client",
+    "version": "0.0.0",
+    "displayName": {
+        "default": "Jupyter Client",
+        "zh_CN": "Jupyter 客户端",
+        "zh_CHT": "Jupyter 客戶端"
+    },
+    "description": {
+        "default": "The plugin can connect to the Jupyter service, run the code block, output and save the run result.",
+        "zh_CN": "该插件可以连接 Jupyter 服务，运行代码块，输出并保存运行结果。",
+        "zh_CHT": "該插件可以連接 Jupyter 服務，運行代碼塊，輸出並保存運行結果。"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}
