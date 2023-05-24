@@ -3,6 +3,7 @@
 ## 2023-05-24
 
 - 优化设置面板组件 | Optimize the settings panel component.
+- `webview` 插件支持使用配置控制选项其行为 | The `webview` plugin supports using configuration to control its behavior.
 
 ## 2023-05-24
 

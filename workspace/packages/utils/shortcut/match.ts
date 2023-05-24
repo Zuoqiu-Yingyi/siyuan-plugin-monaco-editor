@@ -22,7 +22,7 @@ import {
 } from ".";
 
 /* 判断是否为预期的键盘事件 */
-export function isKeyboard(e: KeyboardEvent, status: IKeyboardStatus) {
+export function isMatchedKeyboardEvent(e: KeyboardEvent, status: IKeyboardStatus) {
     return e.key === status.key
         && e.type === status.type
         && e.altKey === status.altKey
@@ -32,7 +32,7 @@ export function isKeyboard(e: KeyboardEvent, status: IKeyboardStatus) {
 }
 
 /* 判断是否为预期的鼠标事件 */
-export function isMouse(e: MouseEvent, status: IMouseStatus) {
+export function isMatchedMouseEvent(e: MouseEvent, status: IMouseStatus) {
     return e.button === status.button
         && e.type === status.type
         && e.altKey === status.altKey
@@ -42,7 +42,7 @@ export function isMouse(e: MouseEvent, status: IMouseStatus) {
 }
 
 /* 判断是否为预期的类型事件 */
-export function isType(e: KeyboardEvent | MouseEvent, status: ITypeStatus) {
+export function isMatchedTypeEvent(e: KeyboardEvent | MouseEvent, status: ITypeStatus) {
     return e.type === status.type
         && e.altKey === status.altKey
         && e.ctrlKey === status.ctrlKey

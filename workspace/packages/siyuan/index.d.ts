@@ -17,11 +17,11 @@
 
 /**
  * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
- * update: 2023-05-19 15:02 +08:00
- * commit: https://github.com/siyuan-note/plugin-sample/blob/481bdcab5822b9584d540f159ce5b5572a11d11e/src/siyuan.d.ts
+ * update: 2023-05-24 11:09 +08:00
+ * commit: https://github.com/siyuan-note/plugin-sample/blob/afac008378e6df9841539c7c9f39cf9722125dbf/src/siyuan.d.ts
  */
 
-type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf"
+type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf" | "click-editortitleicon"
 
 declare global {
     interface Window {
@@ -58,6 +58,8 @@ declare interface IPluginDockTab {
     icon: string,
     hotkey?: string,
     title: string,
+    index?: number,
+    show?: boolean
 }
 
 interface IMenuItemOption {

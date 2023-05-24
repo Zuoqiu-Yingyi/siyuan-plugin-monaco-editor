@@ -75,6 +75,9 @@ importers:
         specifier: workspace:^
         version: link:../siyuan
     devDependencies:
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       parse-data-url:
         specifier: ^5.0.0
         version: 5.0.0

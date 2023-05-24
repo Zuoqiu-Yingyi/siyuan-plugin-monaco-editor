@@ -17,31 +17,25 @@
 
 import siyuan from "siyuan";
 
-import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 import { isElectron } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
+import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
+import { merge } from "@workspace/utils/misc/merge";
+// import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 
+import Settings from "./components/Settings.svelte";
 import Webview from "./components/Webview.svelte"
+import { DEFAULT_CONFIG } from "./configs/default";
+
+import type { IConfig, IProtocols } from "./types/config";
 
 export default class WebviewPlugin extends siyuan.Plugin {
-    static isUrlSchemeAvailable(url: string): boolean {
-        switch (true) {
-            case url.startsWith("https://"):
-            case url.startsWith("http://"):
-            case url.startsWith("file://"):
-            case url.startsWith("ftps://"):
-            case url.startsWith("ftp://"):
-            case url.startsWith("//"):
-                return true;
-            default:
-                return false;
-        }
-    }
-
+    static readonly GLOBAL_CONFIG_NAME = "global-config";
 
     protected readonly logger: InstanceType<typeof Logger>;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
+    protected config: IConfig;
 
     constructor(options: any) {
         super(options);
@@ -74,9 +68,17 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     onload(): void {
         // this.logger.debug(this);
-        if (isElectron()) {
-            globalThis.addEventListener("click", this.linkClientEventListener, true);
-        }
+        this.loadData(WebviewPlugin.GLOBAL_CONFIG_NAME)
+            .then(config => {
+                this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
+            })
+            .catch(error => this.logger.error(error))
+            .finally(() => {
+                if (isElectron()) {
+                    /* 注册触发打开页签动作的监听器 */
+                    globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
+                }
+            })
     }
 
     onLayoutReady(): void {
@@ -85,7 +87,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     onunload(): void {
         if (isElectron()) {
-            globalThis.removeEventListener("click", this.linkClientEventListener, true);
+            /* 移除触发打开页签动作的监听器 */
+            globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
     }
 
@@ -102,8 +105,30 @@ export default class WebviewPlugin extends siyuan.Plugin {
         });
     }
 
-    linkClientEventListener = (e: MouseEvent) => {
+    protected saveConfig(): void {
+        this.saveData(WebviewPlugin.GLOBAL_CONFIG_NAME, this.config)
+            .catch(error => this.logger.error(error));
+    }
+
+    protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
+        for (const key in protocols) {
+            const protocol = protocols[key];
+            if (protocol.enable && url.startsWith(protocol.prefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected readonly openTabEventListener = (e: MouseEvent) => {
         // this.logger.debug(e);
+
+        /* 判断功能是否已启用 */
+        if (!this.config.tab.enable) return;
+
+        /* 判断事件是否为目标事件 */
+        if (!isMatchedMouseEvent(e, this.config.tab.open.mouse)) return;
+
         const target = e.target as HTMLElement;
         let valid: boolean = false; // 是否有效
         let href: string = ""; // 链接地址
@@ -111,13 +136,13 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
         switch (target.localName) {
             case "a":
-                valid = true;
+                valid = this.config.tab.open.targets.hyperlink.other.enable;
                 href = (target as HTMLAnchorElement).href;
                 title = target.title || target.innerText;
                 break;
             case "span":
                 if (/\ba\b/.test(target.dataset.type)) {
-                    valid = true;
+                    valid = this.config.tab.open.targets.hyperlink.editor.enable;
                     href = target.dataset.href;
                     title = target.dataset.title || target.innerText;
                 }
@@ -125,9 +150,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
             default:
                 break;
         }
+
+        /* 判断目标元素是否有效 */
         if (valid) {
             this.logger.info(href);
-            if (WebviewPlugin.isUrlSchemeAvailable(href)) {
+            if (this.isUrlSchemeAvailable(href, this.config.tab.open.protocols)) {
                 try {
                     e.preventDefault();
                     e.stopPropagation();
@@ -145,7 +172,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                         },
                     });
                 } catch (e) {
-                    this.logger.warn(e)
+                    this.logger.warn(e);
                 }
             }
         }
