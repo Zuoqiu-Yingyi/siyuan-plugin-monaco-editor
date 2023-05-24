@@ -17,9 +17,13 @@
 
 <!-- 设置项组 -->
 
+<script lang="ts">
+    export let title: string; // 标题文本
+</script>
+
 <div class="b3-label">
-    <slot name="title" />
+    {@html title}
     <div class="config-query">
-        <slot name="content" />
+        <slot />
     </div>
 </div>

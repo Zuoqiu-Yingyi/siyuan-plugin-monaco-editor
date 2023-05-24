@@ -30,3 +30,11 @@
 
     <slot name="input" />
 </label>
+
+<style lang="less">
+    label {
+        width: unset;
+        min-width: 24em;
+        margin: 0.5em 2em 0.5em 0;
+    }
+</style>

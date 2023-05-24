@@ -28,6 +28,8 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
     import Panels from "./panel/Panels.svelte";
     import Panel from "./panel/Panel.svelte";
     import Tabs from "./tab/Tabs.svelte";
+    import Group from "./item/Group.svelte";
+    import MiniItem from "./item/MiniItem.svelte";
     import Item from "./item/Item.svelte";
     import Input from "./item/Input.svelte";
 
@@ -88,19 +90,16 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
             {tabs}
             let:focus
         >
+            <!-- 标签页 1 内容 -->
             <div
                 data-type={tabs[0].name}
                 class:fn__none={tabs[0].key !== focus}
             >
-                <Item
-                    {block}
-                    title="Checkbox"
-                    text="This is a checkbox"
-                >
+                <Item>
                     <h4 slot="title">This setting panel is provided by a svelte component</h4>
                     <span slot="text">
                         See:
-                        <code class="fn__code">/lib/setting-pannel.svelte</code>
+                        <a href="https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo/tree/main/workspace/packages/components/siyuan/setting">siyuan-packages-monorepo/workspace/packages/components/siyuan/setting at main · Zuoqiu-Yingyi/siyuan-packages-monorepo · GitHub</a>
                     </span>
                 </Item>
 
@@ -126,7 +125,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                 <Item
                     {block}
                     title="Input"
-                    text="This is an text input"
+                    text="This is a text input"
                 >
                     <Input
                         slot="input"
@@ -233,7 +232,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                 <Item
                     {block}
                     title="Textarea"
-                    text="This is an text textarea"
+                    text="This is a textarea"
                 >
                     <Input
                         slot="input"
@@ -249,11 +248,159 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                     />
                 </Item>
             </div>
+
+            <!-- 标签页 2 内容 -->
             <div
                 data-type={tabs[1].name}
                 class:fn__none={tabs[1].key !== focus}
             >
-                Empty Tab
+                <Group title="group-title <code class='fn__code'>code style</code>">
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconSettings" />
+                        </svg>
+                        <span slot="title">mini checkbox</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.checkbox}
+                            settingKey="Checkbox"
+                            settingValue={block}
+                            on:changed={event => {
+                                showMessage(`Checkbox changed: ${event.detail.key} = ${event.detail.value}`);
+                                setTimeout(() => (block = !block), 0);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconParagraph" />
+                        </svg>
+                        <span slot="title">mini text</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.text}
+                            settingKey="Text"
+                            settingValue=""
+                            placeholder="Input something"
+                            on:changed={event => {
+                                showMessage(`Input changed: ${event.detail.key} = ${event.detail.value}`);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconSpreadOdd" />
+                        </svg>
+                        <span slot="title">mini number</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.number}
+                            settingKey="Number"
+                            settingValue={50}
+                            limits={{
+                                min: 0,
+                                max: 100,
+                                step: 1,
+                            }}
+                            on:changed={event => {
+                                showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconScrollHoriz" />
+                        </svg>
+                        <span slot="title">mini slide</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.slider}
+                            settingKey="Slide"
+                            settingValue={50}
+                            limits={{
+                                min: 0,
+                                max: 100,
+                                step: 1,
+                            }}
+                            on:changed={event => {
+                                showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconSelectText" />
+                        </svg>
+                        <span slot="title">mini button</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.button}
+                            settingKey="Button"
+                            settingValue="Click me"
+                            on:clicked={() => {
+                                showMessage("Button clicked");
+                                setTimeout(() => (normal = !normal), 0);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconDown" />
+                        </svg>
+                        <span slot="title">mini slide</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.select}
+                            settingKey="Select"
+                            settingValue="left"
+                            options={{
+                                left: "Left",
+                                center: "Center",
+                                right: "Right",
+                            }}
+                            on:changed={event => {
+                                showMessage(`Select changed: ${event.detail.key} = ${event.detail.value}`);
+                            }}
+                        />
+                    </MiniItem>
+                    <MiniItem>
+                        <svg
+                            slot="icon"
+                            class="svg"
+                        >
+                            <use xlink:href="#iconAlignLeft" />
+                        </svg>
+                        <span slot="title">mini textarea</span>
+                        <Input
+                            slot="input"
+                            type={ItemType.textarea}
+                            settingKey="Textarea"
+                            settingValue=""
+                            placeholder="Input something"
+                            on:changed={event => {
+                                showMessage(`Input changed: ${event.detail.key} = ${event.detail.value}`);
+                            }}
+                        />
+                    </MiniItem>
+                </Group>
             </div>
         </Tabs>
     </Panel>
