@@ -3,6 +3,7 @@
 ## 2023-05-24
 
 - 优化设置面板组件 | Optimize the settings panel component.
+- 修复拖拽分屏失效问题 | Fix the issue that drag and drop split screen is invalid.
 
 ## 2023-05-23
 
