@@ -16,7 +16,8 @@
 -->
 
 <!--
-REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs/setting-item.svelte
+    常规设置项(行级)/大型设置项(块级)
+    REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs/setting-item.svelte
 -->
 
 <script lang="ts">

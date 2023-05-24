@@ -15,9 +15,18 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<div class="b3-label">
-    <slot name="title" />
-    <div class="config-query">
-        <slot name="content" />
+<!-- 小型设置项(用于设置项组内) -->
+
+<label class="fn__flex">
+    <slot name="icon" />
+
+    <span class="fn__space" />
+
+    <div class="fn__flex-1">
+        <slot name="title" />
     </div>
-</div>
+
+    <span class="fn__space" />
+
+    <slot name="input" />
+</label>

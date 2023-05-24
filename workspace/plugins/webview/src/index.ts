@@ -16,7 +16,8 @@
  */
 
 import siyuan from "siyuan";
-import Settings from "@workspace/components/siyuan/setting/Example.svelte"
+
+import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 import { isElectron } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 
@@ -76,6 +77,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
         if (isElectron()) {
             globalThis.addEventListener("click", this.linkClientEventListener, true);
         }
+    }
+
+    onLayoutReady(): void {
+        this.openSetting();
     }
 
     onunload(): void {

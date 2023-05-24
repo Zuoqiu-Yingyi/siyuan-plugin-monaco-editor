@@ -15,10 +15,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<!-- 设置项输入组件 -->
+
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
 
-    import { ItemType, type ILimits, type IOptions } from "./../item";
+    import { ItemType, type ILimits, type IOptions } from "./item";
 
     export let type: ItemType; // Setting Type
     export let settingKey: string;
