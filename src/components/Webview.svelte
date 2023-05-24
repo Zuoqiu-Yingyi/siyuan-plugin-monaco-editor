@@ -134,8 +134,6 @@
 </script>
 
 <div
-    on:mouseenter={() => webview_pointer_events_disable = false}
-    on:mouseleave={() => webview_pointer_events_disable = true}
     class:fullscreen
     class="fn__flex fn__flex-1 fn__flex-column content"
 >
@@ -204,7 +202,19 @@
     </div>
 
     <!-- 主体 -->
-    <div class="fn__flex fn__flex-1 protyle-content">
+    <div
+        on:mouseenter={e => (webview_pointer_events_disable = e.buttons === 0 ? false : true)}
+        on:mouseleave={() => (webview_pointer_events_disable = true)}
+        class="protyle-preview"
+    >
+        <!-- <webview
+            bind:this={webview}
+            on:mouseenter={() => (webview.style.pointerEvents = null)}
+            on:mouseleave={() => (webview.style.pointerEvents = "none")}
+            src={url}
+            class="fn__flex-1"
+            allowpopups
+        /> -->
         <webview
             bind:this={webview}
             src={url}
@@ -225,8 +235,8 @@
             }
         }
 
-        .protyle-content {
-            max-height: 100%;
+        .protyle-preview {
+            user-select: none;
         }
     }
 
