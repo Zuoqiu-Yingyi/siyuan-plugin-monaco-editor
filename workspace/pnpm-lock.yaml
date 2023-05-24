@@ -68,6 +68,9 @@ importers:
       '@workspace/types':
         specifier: workspace:^
         version: link:../types
+      siyuan:
+        specifier: workspace:^
+        version: link:../siyuan
     devDependencies:
       parse-data-url:
         specifier: ^5.0.0

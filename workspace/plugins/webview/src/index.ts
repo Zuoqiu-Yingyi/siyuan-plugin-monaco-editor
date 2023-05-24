@@ -16,9 +16,11 @@
  */
 
 import siyuan from "siyuan";
-import Webview from "./components/Webview.svelte"
 import Settings from "@workspace/components/siyuan/setting/Example.svelte"
 import { isElectron } from "@workspace/utils/env/front-end";
+import { Logger } from "@workspace/utils/logger";
+
+import Webview from "./components/Webview.svelte"
 
 export default class WebviewPlugin extends siyuan.Plugin {
     static isUrlSchemeAvailable(url: string): boolean {
@@ -35,20 +37,22 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
-    
-    private readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
-    private readonly SETTINGS_DIALOG_ID: string;
+
+    protected readonly logger: InstanceType<typeof Logger>;
+    protected readonly SETTINGS_DIALOG_ID: string;
+    protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
 
     constructor(options: any) {
         super(options);
-        
+
+        this.logger = new Logger(this.name);
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
 
         const pluginContext = this;
         this.webview_tab = this.addTab({
             type: "-webview-tag",
             init() {
-                // console.debug(this)
+                // pluginContext.logger.debug(this)
 
                 // const target = document.createElement("div");
                 // (this.element as HTMLElement).append(target);
@@ -68,7 +72,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     onload(): void {
-        // console.debug(this);
+        // this.logger.debug(this);
         if (isElectron()) {
             globalThis.addEventListener("click", this.linkClientEventListener, true);
         }
@@ -94,32 +98,49 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     linkClientEventListener = (e: MouseEvent) => {
-        // console.debug(e);
+        // this.logger.debug(e);
         const target = e.target as HTMLElement;
-        if (
-            target.dataset &&
-            target.dataset.type === "a" &&
-            target.dataset.href
-        ) {
-            console.info(`[${this.name}]: ${target.dataset.href}`);
-            const plugin = this
-            if (WebviewPlugin.isUrlSchemeAvailable(target.dataset.href)) {
+        let valid: boolean = false; // 是否有效
+        let href: string = ""; // 链接地址
+        let title: string = ""; // 链接标题
+
+        switch (target.localName) {
+            case "a":
+                valid = true;
+                href = (target as HTMLAnchorElement).href;
+                title = target.title || target.innerText;
+                break;
+            case "span":
+                if (/\ba\b/.test(target.dataset.type)) {
+                    valid = true;
+                    href = target.dataset.href;
+                    title = target.dataset.title || target.innerText;
+                }
+                break;
+            default:
+                break;
+        }
+        if (valid) {
+            this.logger.info(href);
+            if (WebviewPlugin.isUrlSchemeAvailable(href)) {
                 try {
                     e.preventDefault();
                     e.stopPropagation();
+
+                    const plugin = this
                     siyuan.openTab({
                         custom: {
                             icon: "iconLanguage",
-                            title: target.title || target.innerText || target.dataset.href,
+                            title: title || plugin.name,
                             fn: plugin.webview_tab,
                             data: {
-                                url: target.dataset.href,
-                                title: target.title || target.innerText,
+                                url: href,
+                                title: title || plugin.name,
                             },
                         },
                     });
                 } catch (e) {
-                    console.warn(e)
+                    this.logger.warn(e)
                 }
             }
         }
