@@ -1,12 +1,4 @@
 {
-  "browserTabLoaded": "浏览器页签插件已加载",
-  "closeDevTools": "关闭开发者工具",
-  "enterFullscreen": "进入全屏模式",
-  "exitFullscreen": "退出全屏模式",
-  "goBackOnePage": "转到上一页",
-  "goForwardOnePage": "转到下一页",
-  "openDevTools": "打开开发者工具",
-  "reloadCurrentPage": "刷新当前页面",
   "settings": {
     "general": "通用",
     "mouse": {
@@ -41,5 +33,15 @@
       }
     }
   },
-  "stopLoadingThisPage": "停止加载此页面"
+  "webview": {
+    "closeDevTools": "关闭开发者工具",
+    "enterFullscreen": "进入全屏模式",
+    "exitFullscreen": "退出全屏模式",
+    "goBackOnePage": "转到上一页",
+    "goForwardOnePage": "转到下一页",
+    "openDevTools": "打开开发者工具",
+    "openWithDefaultProgram": "使用默认程序打开",
+    "reloadCurrentPage": "刷新当前页面",
+    "stopLoadingThisPage": "停止加载此页面"
+  }
 }

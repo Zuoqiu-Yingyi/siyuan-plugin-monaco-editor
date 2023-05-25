@@ -1,12 +1,4 @@
 {
-  "browserTabLoaded": "browserTab plugin is loaded",
-  "closeDevTools": "Close developer tools",
-  "enterFullscreen": "Enter full-screen mode",
-  "exitFullscreen": "Exit full-screen mode",
-  "goBackOnePage": "Go back one page",
-  "goForwardOnePage": "Go forward one page",
-  "openDevTools": "Open developer tools",
-  "reloadCurrentPage": "Reload current page",
   "settings": {
     "general": "General",
     "mouse": {
@@ -41,5 +33,15 @@
       }
     }
   },
-  "stopLoadingThisPage": "Stop loading this page"
+  "webview": {
+    "closeDevTools": "Close developer tools",
+    "enterFullscreen": "Enter full-screen mode",
+    "exitFullscreen": "Exit full-screen mode",
+    "goBackOnePage": "Go back one page",
+    "goForwardOnePage": "Go forward one page",
+    "openDevTools": "Open developer tools",
+    "openWithDefaultProgram": "Open with default program",
+    "reloadCurrentPage": "Reload current page",
+    "stopLoadingThisPage": "Stop loading this page"
+  }
 }
