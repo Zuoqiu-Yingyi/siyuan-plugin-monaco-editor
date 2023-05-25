@@ -165,10 +165,8 @@
                         <MiniItem minWidth="8em">
                             <code
                                 slot="title"
-                                class="fn__code"
+                                class="fn__code">{protocol.prefix}</code
                             >
-                                {protocol.prefix}
-                            </code>
                             <Input
                                 slot="input"
                                 type={ItemType.checkbox}
