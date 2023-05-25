@@ -1,12 +1,4 @@
 {
-  "browserTabLoaded": "瀏覽器頁簽插件已加載",
-  "closeDevTools": "關閉開發者工具",
-  "enterFullscreen": "進入全屏模式",
-  "exitFullscreen": "退出全屏模式",
-  "goBackOnePage": "轉到上一頁",
-  "goForwardOnePage": "轉到下一頁",
-  "openDevTools": "打開開發者工具",
-  "reloadCurrentPage": "重載當前頁面",
   "settings": {
     "general": "通用",
     "mouse": {
@@ -29,7 +21,6 @@
         "title": "編輯器超鏈接"
       },
       "enable": {
-        "description": "在页签中打开超链接",
         "title": "啟用"
       },
       "otherHyperlink": {
@@ -41,5 +32,15 @@
       }
     }
   },
-  "stopLoadingThisPage": "停止加載此頁面"
+  "webview": {
+    "closeDevTools": "關閉開發者工具",
+    "enterFullscreen": "進入全屏模式",
+    "exitFullscreen": "退出全屏模式",
+    "goBackOnePage": "轉到上一頁",
+    "goForwardOnePage": "轉到下一頁",
+    "openDevTools": "打開開發者工具",
+    "openWithDefaultProgram": "使用預設程式打開",
+    "reloadCurrentPage": "重載當前頁面",
+    "stopLoadingThisPage": "停止加載此頁面"
+  }
 }

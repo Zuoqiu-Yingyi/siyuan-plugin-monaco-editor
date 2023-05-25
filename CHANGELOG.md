@@ -3,6 +3,7 @@
 ## 2023-05-24
 
 - 完善插件设置界面 | Improve the plugin settings interface.
+- `webview` 地址栏添加`使用默认程序打开`按钮 | Add `Open with default program` button to `webview` address bar.
 
 ## 2023-05-24
 

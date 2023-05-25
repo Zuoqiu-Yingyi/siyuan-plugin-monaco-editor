@@ -17,6 +17,8 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
+    import BlockButton from "@workspace/components/siyuan/misc/BlockButton.svelte";
+    import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
     import type { Electron } from "@workspace/types/electron";
     import type WebviewPlugin from "@/index";
     import type { I18N } from "@/utils/i18n";
@@ -63,6 +65,11 @@
     function onAddressChange(e) {
         // console.debug(e);
         url = encodeURI(e.target.value);
+    }
+
+    /* 使用默认程序打开 */
+    function onOpenWithDefaultProgram() {
+        global.open(tab.data.url, "_blank");
     }
 
     /* 进入/退出全屏模式 */
@@ -143,35 +150,32 @@
     <!-- 地址栏 -->
     <div class="protyle-breadcrumb">
         <!-- 后退按钮 -->
-        <button
+        <BlockButton
             on:click={onGoBack}
-            aria-label={i18n.goForwardOnePage}
-            class:toolbar__item--disabled={!can_back}
-            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
-        >
-            <svg><use xlink:href="#iconLeft" /></svg>
-        </button>
+            icon="#iconLeft"
+            ariaLabel={i18n.webview.goForwardOnePage}
+            disabled={!can_back}
+            tooltipsDirection={TooltipsDirection.se}
+        />
 
         <!-- 前进按钮 -->
-        <button
+        <BlockButton
             on:click={onGoForward}
-            aria-label={i18n.goBackOnePage}
-            class:toolbar__item--disabled={!can_forward}
-            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
-        >
-            <svg><use xlink:href="#iconRight" /></svg>
-        </button>
+            icon="#iconRight"
+            ariaLabel={i18n.webview.goBackOnePage}
+            disabled={!can_forward}
+            tooltipsDirection={TooltipsDirection.se}
+        />
 
         <!-- 刷新/终止加载按钮 -->
-        <button
+        <BlockButton
             on:click={onRefreshOrStop}
-            aria-label={loading ? i18n.stopLoadingThisPage : i18n.reloadCurrentPage}
-            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
-        >
-            <svg><use xlink:href={loading ? "#iconClose" : "#iconRefresh"} /></svg>
-        </button>
+            icon={loading ? "#iconClose" : "#iconRefresh"}
+            ariaLabel={loading ? i18n.webview.stopLoadingThisPage : i18n.webview.reloadCurrentPage}
+            tooltipsDirection={TooltipsDirection.se}
+        />
 
-        <div class="fn__space" />
+        <!-- <div class="fn__space" /> -->
 
         <!-- 地址输入框 -->
         <input
@@ -181,32 +185,38 @@
             type="url"
         />
 
-        <div class="fn__space" />
+        <!-- <div class="fn__space" /> -->
+
+        <!-- 使用默认程序打开中打开 -->
+        <BlockButton
+            on:click={onOpenWithDefaultProgram}
+            icon="#iconLanguage"
+            ariaLabel={i18n.webview.openWithDefaultProgram}
+            tooltipsDirection={TooltipsDirection.sw}
+        />
 
         <!-- 打开/关闭全屏模式 -->
-        <button
+        <BlockButton
             on:click={onEnterOrExitFullscreen}
-            aria-label={fullscreen ? i18n.exitFullscreen : i18n.enterFullscreen}
-            class:toolbar__item--active={fullscreen}
-            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__sw"
-        >
-            <svg><use xlink:href={fullscreen ? "#iconFullscreenExit" : "#iconFullscreen"} /></svg>
-        </button>
+            icon={fullscreen ? "#iconFullscreenExit" : "#iconFullscreen"}
+            ariaLabel={fullscreen ? i18n.webview.exitFullscreen : i18n.webview.enterFullscreen}
+            active={fullscreen}
+            tooltipsDirection={TooltipsDirection.sw}
+        />
 
         <!-- 打开/关闭开发者工具 -->
-        <button
+        <BlockButton
             on:click={onOpenOrCloseDevTools}
-            aria-label={devtools_opened ? i18n.closeDevTools : i18n.openDevTools}
-            class:toolbar__item--active={devtools_opened}
-            class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__sw"
-        >
-            <svg><use xlink:href="#iconBug" /></svg>
-        </button>
+            icon="#iconBug"
+            ariaLabel={devtools_opened ? i18n.webview.closeDevTools : i18n.webview.openDevTools}
+            active={devtools_opened}
+            tooltipsDirection={TooltipsDirection.sw}
+        />
     </div>
 
     <!-- 主体 -->
     <div
-        on:mouseenter={e => (webview_pointer_events_disable = e.buttons === 0 ? false : true)}
+        on:mouseenter={e => (webview_pointer_events_disable = e.button === 0 ? false : true)}
         on:mouseleave={() => (webview_pointer_events_disable = true)}
         class="protyle-preview"
     >
