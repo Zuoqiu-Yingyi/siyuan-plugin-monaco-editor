@@ -18,7 +18,190 @@
 <!-- 设置面板 -->
 
 <script lang="ts">
+    import Panels from "@workspace/components/siyuan/setting/panel/Panels.svelte";
+    import Panel from "@workspace/components/siyuan/setting/panel/Panel.svelte";
+    import Tabs from "@workspace/components/siyuan/setting/tab/Tabs.svelte";
+    import Item from "@workspace/components/siyuan/setting/item/Item.svelte";
+    import Input from "@workspace/components/siyuan/setting/item/Input.svelte";
+    import Shortcut from "@workspace/components/siyuan/setting/specified/Shortcut.svelte";
+
+    import { ItemType } from "@workspace/components/siyuan/setting/item/item";
+    import { type ITab } from "@workspace/components/siyuan/setting/tab";
+
+    import type WebviewPlugin from "@/index";
+
+    import type { IConfig } from "@/types/config";
+    import type { I18N } from "@/utils/i18n";
+    import Group from "~/../../packages/components/siyuan/setting/item/Group.svelte";
+    import MiniItem from "~/../../packages/components/siyuan/setting/item/MiniItem.svelte";
+    import { MouseButton } from "~/../../packages/utils/shortcut";
+
+    export let config: IConfig; // 传入的配置项
+    export let plugin: InstanceType<typeof WebviewPlugin>; // 插件实例
+
+    const i18n = plugin.i18n as unknown as I18N;
+
+    function updated() {
+        plugin.updateConfig(config);
+    }
+
+    enum PanelKey {
+        openTab,
+        openWindow,
+    }
+
+    enum TabKey {
+        general,
+        protocol,
+        shortcut,
+    }
+
+    let panels_focus_key = PanelKey.openTab;
+    const panels: ITab[] = [
+        {
+            key: PanelKey.openTab,
+            text: i18n.settings.openTab,
+            name: i18n.settings.openTab,
+            icon: "#iconBoth",
+        },
+    ];
+
+    let tab_tabs_focus_key = TabKey.general;
+    let window_tabs_focus_key = TabKey.general;
+    const tabs = {
+        tab: [
+            {
+                key: TabKey.general,
+                text: i18n.settings.general,
+                name: i18n.settings.general,
+                icon: "⚙",
+            },
+            {
+                key: TabKey.protocol,
+                text: i18n.settings.protocol,
+                name: i18n.settings.protocol,
+                icon: "🌐",
+            },
+            {
+                key: TabKey.shortcut,
+                text: i18n.settings.shortcut,
+                name: i18n.settings.shortcut,
+                icon: "⌨",
+            },
+        ] as ITab[],
+    };
 </script>
+
+<Panels
+    {panels}
+    focus={panels_focus_key}
+    let:focus={focusPanel}
+>
+    <!-- 打开页签设置面板 -->
+    <Panel display={panels[0].key === panels_focus_key}>
+        <Tabs
+            focus={tab_tabs_focus_key}
+            tabs={tabs.tab}
+            let:focus={focusTab}
+        >
+            <!-- 标签页 1 - 通用设置 -->
+            <div
+                data-type={tabs.tab[0].name}
+                class:fn__none={tabs.tab[0].key !== focusTab}
+            >
+                <Item
+                    title={i18n.settings.tab.enable.title}
+                    text={i18n.settings.tab.enable.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="Checkbox"
+                        settingValue={config.tab.enable}
+                        on:changed={e => {
+                            config.tab.enable = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+                <Item
+                    title={i18n.settings.tab.editorHyperlink.title}
+                    text={i18n.settings.tab.editorHyperlink.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="Checkbox"
+                        settingValue={config.tab.open.targets.hyperlink.editor}
+                        on:changed={e => {
+                            config.tab.open.targets.hyperlink.editor = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+                <Item
+                    title={i18n.settings.tab.otherHyperlink.title}
+                    text={i18n.settings.tab.otherHyperlink.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="Checkbox"
+                        settingValue={config.tab.open.targets.hyperlink.other}
+                        on:changed={e => {
+                            config.tab.open.targets.hyperlink.other = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+            </div>
+            <!-- 标签页 2 - 协议设置 -->
+            <div
+                data-type={tabs.tab[1].name}
+                class:fn__none={tabs.tab[1].key !== focusTab}
+            >
+                <Group title={i18n.settings.protocols.title}>
+                    {#each Object.entries(config.tab.open.protocols) as [key, protocol] (key)}
+                        <MiniItem minWidth="8em">
+                            <code
+                                slot="title"
+                                class="fn__code"
+                            >
+                                {protocol.prefix}
+                            </code>
+                            <Input
+                                slot="input"
+                                type={ItemType.checkbox}
+                                settingKey="Checkbox"
+                                settingValue={protocol.enable}
+                                on:changed={e => {
+                                    protocol.enable = e.detail.value;
+                                    updated();
+                                }}
+                            />
+                        </MiniItem>
+                    {/each}
+                </Group>
+            </div>
+            <!-- 标签页 3 - 快捷键设置 -->
+            <div
+                data-type={tabs.tab[2].name}
+                class:fn__none={tabs.tab[2].key !== focusTab}
+            >
+                <Shortcut
+                    minWidth="16em"
+                    title={i18n.settings.tab.shortcut.title}
+                    shortcut={config.tab.open.mouse}
+                    displayMouseEvent={false}
+                    disabledMouseButton={true}
+                    mouseButtonTitle={i18n.settings.mouse.button}
+                    mouseButtonOptions={[{ key: MouseButton.Left, text: i18n.settings.mouse.left }]}
+                    on:changed={updated}
+                />
+            </div>
+        </Tabs>
+    </Panel>
+</Panels>
 
 <style lang="less">
 </style>

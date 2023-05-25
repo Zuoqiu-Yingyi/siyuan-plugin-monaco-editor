@@ -16,13 +16,16 @@
 -->
 
 <script lang="ts">
-    import siyuan from "siyuan";
-    import type { Electron } from "@workspace/types/electron";
     import { onMount } from "svelte";
+    import type { Electron } from "@workspace/types/electron";
+    import type WebviewPlugin from "@/index";
+    import type { I18N } from "@/utils/i18n";
 
     export let url: string;
-    export let tabContext: any;
-    export let pluginContext: InstanceType<typeof siyuan.Plugin>;
+    export let tab: any;
+    export let plugin: InstanceType<typeof WebviewPlugin>;
+
+    const i18n = plugin.i18n as unknown as I18N;
 
     let fullscreen = false; // 是否为全屏模式
     let can_back = false; // 能否转到上一页
@@ -92,7 +95,7 @@
             /* 更新地址栏地址 */
             if (e.isMainFrame) {
                 address = decodeURI(e.url);
-                tabContext.data.title = e.url;
+                tab.data.title = e.url;
             }
 
             /* 是否可后退 */
@@ -110,9 +113,9 @@
          */
         webview.addEventListener("page-title-updated", e => {
             // console.debug(e)
-            // console.debug(tabContext);
-            tabContext.tab?.updateTitle(e.title);
-            tabContext.data.title = e.title;
+            // console.debug(tab);
+            tab.tab?.updateTitle(e.title);
+            tab.data.title = e.title;
         });
 
         /**
@@ -142,7 +145,7 @@
         <!-- 后退按钮 -->
         <button
             on:click={onGoBack}
-            aria-label={pluginContext.i18n.goForwardOnePage}
+            aria-label={i18n.goForwardOnePage}
             class:toolbar__item--disabled={!can_back}
             class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
         >
@@ -152,7 +155,7 @@
         <!-- 前进按钮 -->
         <button
             on:click={onGoForward}
-            aria-label={pluginContext.i18n.goBackOnePage}
+            aria-label={i18n.goBackOnePage}
             class:toolbar__item--disabled={!can_forward}
             class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
         >
@@ -162,7 +165,7 @@
         <!-- 刷新/终止加载按钮 -->
         <button
             on:click={onRefreshOrStop}
-            aria-label={loading ? pluginContext.i18n.stopLoadingThisPage : pluginContext.i18n.reloadCurrentPage}
+            aria-label={loading ? i18n.stopLoadingThisPage : i18n.reloadCurrentPage}
             class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__se"
         >
             <svg><use xlink:href={loading ? "#iconClose" : "#iconRefresh"} /></svg>
@@ -183,7 +186,7 @@
         <!-- 打开/关闭全屏模式 -->
         <button
             on:click={onEnterOrExitFullscreen}
-            aria-label={fullscreen ? pluginContext.i18n.exitFullscreen : pluginContext.i18n.enterFullscreen}
+            aria-label={fullscreen ? i18n.exitFullscreen : i18n.enterFullscreen}
             class:toolbar__item--active={fullscreen}
             class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__sw"
         >
@@ -193,7 +196,7 @@
         <!-- 打开/关闭开发者工具 -->
         <button
             on:click={onOpenOrCloseDevTools}
-            aria-label={devtools_opened ? pluginContext.i18n.closeDevTools : pluginContext.i18n.openDevTools}
+            aria-label={devtools_opened ? i18n.closeDevTools : i18n.openDevTools}
             class:toolbar__item--active={devtools_opened}
             class="block__icon block__icon--show fn__flex-center b3-tooltips b3-tooltips__sw"
         >

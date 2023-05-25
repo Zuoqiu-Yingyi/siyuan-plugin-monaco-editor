@@ -32,7 +32,8 @@ import type { IConfig, IProtocols } from "./types/config";
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
 
-    protected readonly logger: InstanceType<typeof Logger>;
+    public readonly logger: InstanceType<typeof Logger>;
+
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
     protected config: IConfig;
@@ -43,7 +44,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         this.logger = new Logger(this.name);
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
 
-        const pluginContext = this;
+        const plugin = this;
         this.webview_tab = this.addTab({
             type: "-webview-tag",
             init() {
@@ -52,14 +53,14 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 // const target = document.createElement("div");
                 // (this.element as HTMLElement).append(target);
 
-                const tabContext = this;
+                const tab = this;
                 new Webview({
                     // target,
-                    target: tabContext.element,
+                    target: tab.element,
                     props: {
-                        url: tabContext.data.url,
-                        tabContext,
-                        pluginContext,
+                        url: tab.data.url,
+                        tab,
+                        plugin,
                     },
                 });
             },
@@ -98,14 +99,22 @@ export default class WebviewPlugin extends siyuan.Plugin {
         const dialog = new siyuan.Dialog({
             title: that.name,
             content: `<div id="${that.SETTINGS_DIALOG_ID}"/>`,
-            width: siyuan.isMobile() ? "92vw" : "520px",
+            width: siyuan.isMobile() ? "92vw" : "720px",
+            height: siyuan.isMobile() ? undefined : "360px",
         });
-        const global = new Settings({
+        const settings = new Settings({
             target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
+            props: {
+                config: this.config,
+                plugin: this,
+            },
         });
     }
 
-    protected saveConfig(): void {
+    public updateConfig(config?: IConfig): void {
+        if (config && config !== this.config) {
+            this.config = config;
+        }
         this.saveData(WebviewPlugin.GLOBAL_CONFIG_NAME, this.config)
             .catch(error => this.logger.error(error));
     }
