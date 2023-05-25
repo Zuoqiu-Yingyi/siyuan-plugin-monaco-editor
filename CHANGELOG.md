@@ -4,6 +4,7 @@
 
 - 完善插件设置界面 | Improve the plugin settings interface.
 - `webview` 地址栏添加`使用默认程序打开`按钮 | Add `Open with default program` button to `webview` address bar.
+- 使用封装后的 `Svg.svelte` 组件 | Use the encapsulated `Svg.svelte` component.
 
 ## 2023-05-24
 

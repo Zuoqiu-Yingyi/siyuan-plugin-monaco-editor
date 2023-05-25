@@ -20,6 +20,7 @@
 <script lang="ts">
     import type { ComponentEvents } from "svelte";
     import Tab from "./Tab.svelte";
+    import Svg from "./../../misc/Svg.svelte";
     import { type ITab } from "./../tab";
 
     export let tabs: ITab[];
@@ -46,7 +47,7 @@
             >
                 <span slot="icon">
                     {#if tab.icon.startsWith("#")}
-                        <svg><use xlink:href={tab.icon} /></svg>
+                        <Svg icon={tab.icon} />
                     {:else}
                         {@html tab.icon}
                     {/if}

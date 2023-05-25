@@ -23,6 +23,8 @@
     import Group from "./../item/Group.svelte";
     import MiniItem from "./../item/MiniItem.svelte";
     import Input from "./../item/Input.svelte";
+    import Svg from "./../../misc/Svg.svelte";
+
     import { ItemType } from "./../item/item";
 
     import { type IMouseStatus, MouseButton, MouseEvent } from "@workspace/utils/shortcut";
@@ -88,12 +90,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconKeymap" />
-            </svg>
+            <Svg
+                icon="#iconKeymap"
+                className="svg"
+            />
             <kbd slot="title">Ctrl</kbd>
             <Input
                 slot="input"
@@ -111,12 +111,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconKeymap" />
-            </svg>
+            <Svg
+                icon="#iconKeymap"
+                className="svg"
+            />
             <kbd slot="title">Shift</kbd>
             <Input
                 slot="input"
@@ -134,12 +132,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconKeymap" />
-            </svg>
+            <Svg
+                icon="#iconKeymap"
+                className="svg"
+            />
             <kbd slot="title">Alt</kbd>
             <Input
                 slot="input"
@@ -157,12 +153,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconKeymap" />
-            </svg>
+            <Svg
+                icon="#iconKeymap"
+                className="svg"
+            />
             <kbd slot="title">Meta</kbd>
             <Input
                 slot="input"
@@ -180,12 +174,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconSelectText" />
-            </svg>
+            <Svg
+                icon="#iconSelectText"
+                className="svg"
+            />
             <span slot="title">{mouseButtonTitle}</span>
             <Input
                 slot="input"
@@ -204,12 +196,10 @@
             {minWidth}
             {marginRight}
         >
-            <svg
-                slot="icon"
-                class="svg"
-            >
-                <use xlink:href="#iconSelectText" />
-            </svg>
+            <Svg
+                icon="#iconSelectText"
+                className="svg"
+            />
             <span slot="title">{mouseEventTitle}</span>
             <Input
                 slot="input"

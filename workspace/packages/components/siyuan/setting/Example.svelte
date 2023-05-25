@@ -32,6 +32,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
     import MiniItem from "./item/MiniItem.svelte";
     import Item from "./item/Item.svelte";
     import Input from "./item/Input.svelte";
+    import Svg from "./../misc/Svg.svelte";
 
     let block = false;
     let normal = false;
@@ -184,7 +185,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         type={ItemType.slider}
                         settingKey="Slide"
                         settingValue={50}
-                        limits={limits}
+                        {limits}
                         on:changed={event => {
                             showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                         }}
@@ -256,12 +257,11 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
             >
                 <Group title="group-title <code class='fn__code'>code style</code>">
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconSettings" />
-                        </svg>
+                            icon="#iconSettings"
+                            className="svg"
+                        />
                         <span slot="title">mini checkbox</span>
                         <Input
                             slot="input"
@@ -275,12 +275,11 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconParagraph" />
-                        </svg>
+                            icon="#iconParagraph"
+                            className="svg"
+                        />
                         <span slot="title">mini text</span>
                         <Input
                             slot="input"
@@ -294,50 +293,47 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconSpreadOdd" />
-                        </svg>
+                            icon="#iconSpreadOdd"
+                            className="svg"
+                        />
                         <span slot="title">mini number</span>
                         <Input
                             slot="input"
                             type={ItemType.number}
                             settingKey="Number"
                             settingValue={50}
-                            limits={limits}
+                            {limits}
                             on:changed={event => {
                                 showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                             }}
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconScrollHoriz" />
-                        </svg>
+                            icon="#iconScrollHoriz"
+                            className="svg"
+                        />
                         <span slot="title">mini slide</span>
                         <Input
                             slot="input"
                             type={ItemType.slider}
                             settingKey="Slide"
                             settingValue={50}
-                            limits={limits}
+                            {limits}
                             on:changed={event => {
                                 showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                             }}
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconSelectText" />
-                        </svg>
+                            icon="#iconSelectText"
+                            className="svg"
+                        />
                         <span slot="title">mini button</span>
                         <Input
                             slot="input"
@@ -351,31 +347,29 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconDown" />
-                        </svg>
+                            icon="#iconDown"
+                            className="svg"
+                        />
                         <span slot="title">mini select</span>
                         <Input
                             slot="input"
                             type={ItemType.select}
                             settingKey="Select"
                             settingValue="left"
-                            options={options}
+                            {options}
                             on:changed={event => {
                                 showMessage(`Select changed: ${event.detail.key} = ${event.detail.value}`);
                             }}
                         />
                     </MiniItem>
                     <MiniItem>
-                        <svg
+                        <Svg
                             slot="icon"
-                            class="svg"
-                        >
-                            <use xlink:href="#iconAlignLeft" />
-                        </svg>
+                            icon="#iconAlignLeft"
+                            className="svg"
+                        />
                         <span slot="title">mini textarea</span>
                         <Input
                             slot="input"

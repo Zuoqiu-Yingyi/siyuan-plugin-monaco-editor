@@ -19,6 +19,7 @@
 
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+    import Svg from "./../../misc/Svg.svelte";
     import type { ITab, TabKey } from "./../tab";
 
     export let panels: ITab[]; // 面板标签列表
@@ -46,9 +47,10 @@
         {#if searchEnable}
             <!-- 搜索框 -->
             <div class="b3-form__icon">
-                <svg class="b3-form__icon-icon">
-                    <use xlink:href="#iconSearch" />
-                </svg>
+                <Svg
+                    icon="#iconSearch"
+                    className="b3-form__icon-icon"
+                />
                 <input
                     bind:value={searchValue}
                     on:change={searchChanged}
@@ -66,11 +68,10 @@
                 class:b3-list-item--focus={panel.key === focus}
                 class="b3-list-item"
             >
-                <svg class="b3-list-item__graphic">
-                    {#if panel.icon}
-                        <use xlink:href={panel.icon} />
-                    {/if}
-                </svg>
+                <Svg
+                    icon={panel.icon}
+                    className="b3-list-item__graphic"
+                />
                 <span class="b3-list-item__text">
                     {@html panel.text}
                 </span>
