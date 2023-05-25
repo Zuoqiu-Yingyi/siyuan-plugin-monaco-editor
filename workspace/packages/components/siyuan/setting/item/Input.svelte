@@ -26,10 +26,11 @@
     export let settingKey: string;
     export let settingValue: any;
 
+    export let disabled: boolean = false; // Disable Input
     export let block: boolean = false; // Using Block Style
     export let normal: boolean = true; // Normal Size
     export let placeholder: string = ""; // Use it if type is text/number/textarea
-    export let options: IOptions = {}; // Use it if type is select
+    export let options: IOptions = []; // Use it if type is select
     export let limits: ILimits = { min: 0, max: 100, step: 1 }; // Use it if type is number/slider
 
     const dispatch = createEventDispatcher();
@@ -46,6 +47,7 @@
 {#if type === ItemType.checkbox}
     <!-- Checkbox -->
     <input
+        {disabled}
         class="b3-switch"
         class:fn__block={block}
         class:fn__flex-center={!block}
@@ -56,6 +58,7 @@
 {:else if type === ItemType.text}
     <!-- Text Input -->
     <input
+        {disabled}
         class="b3-text-field"
         class:fn__block={block}
         class:fn__size200={!block && normal}
@@ -67,6 +70,7 @@
 {:else if type === ItemType.number}
     <!-- Number Input -->
     <input
+        {disabled}
         class="b3-text-field"
         class:fn__block={block}
         class:fn__size200={!block && normal}
@@ -82,6 +86,7 @@
 {:else if type === ItemType.slider}
     <!-- Slider -->
     <input
+        {disabled}
         class="b3-slider"
         class:fn__block={block}
         class:fn__size200={!block && normal}
@@ -95,6 +100,7 @@
 {:else if type === ItemType.button}
     <!-- Button Input -->
     <button
+        {disabled}
         class="b3-button b3-button--outline"
         class:fn__block={block}
         class:fn__size200={!block && normal}
@@ -106,6 +112,7 @@
 {:else if type === ItemType.select}
     <!-- Dropdown select -->
     <select
+        {disabled}
         class="b3-select"
         class:fn__block={block}
         class:fn__size200={!block && normal}
@@ -113,13 +120,14 @@
         bind:value={settingValue}
         on:change={changed}
     >
-        {#each Object.entries(options) as [value, text]}
-            <option {value}>{text}</option>
+        {#each options as option (option.key)}
+            <option value={option.key}>{option.text}</option>
         {/each}
     </select>
 {:else if type === ItemType.textarea}
     <!-- Text Area -->
     <textarea
+        {disabled}
         class="b3-text-field"
         class:fn__block={block}
         class:fn__size200={!block && normal}

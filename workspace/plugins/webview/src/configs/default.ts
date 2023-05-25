@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IConfig } from "./../types/config";
+import type { IConfig } from "@/types/config";
 import { MouseButton } from "@workspace/utils/shortcut";
 
 /* 默认配置选项 */

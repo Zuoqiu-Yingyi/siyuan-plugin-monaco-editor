@@ -15,25 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export enum ItemType {
-    checkbox,
-    text,
-    number,
-    slider,
-    button,
-    select,
-    textarea,
-}
+import { A } from "ts-toolbelt";
 
-export interface ILimits {
-    min: number;
-    max: number;
-    step: number;
-}
+// REF https://www.zhihu.com/question/479585640/answer/2705083460
+type IsEqual<T, U> =
+    (<T1>() => T1 extends T ? 1 : 2) extends
+    (<T2>() => T2 extends U ? 1 : 2)
+    ? true
+    : false;
 
-export interface IOption {
-    key: string | number,
-    text: string,
-}
-
-export type IOptions = IOption[];
+// REF https://github.com/millsp/ts-toolbelt/blob/master/tests/Any.ts
+export declare function i18nCheck<T, U>(): A.Equals<T, U>;
+export declare function i18nChecks(checks: 1[]): void;

@@ -17,7 +17,15 @@
 
 <!-- 小型设置项(用于设置项组内) -->
 
-<label class="fn__flex">
+<script>
+    export let minWidth = "24em";
+    export let marginRight = "2em";
+</script>
+
+<label
+    style="min-width: {minWidth}; margin-right: {marginRight};"
+    class="fn__flex"
+>
     <slot name="icon" />
 
     <span class="fn__space" />
@@ -34,7 +42,6 @@
 <style lang="less">
     label {
         width: unset;
-        min-width: 24em;
-        margin: 0.5em 2em 0.5em 0;
+        margin: 0.5em 0;
     }
 </style>

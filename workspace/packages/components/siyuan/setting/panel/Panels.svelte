@@ -81,3 +81,9 @@
     <!-- 面板主体 -->
     <slot {focus}>Container</slot>
 </div>
+
+<style lang="less">
+    .b3-list-item__text {
+        margin-right: 0.5em;
+    }
+</style>

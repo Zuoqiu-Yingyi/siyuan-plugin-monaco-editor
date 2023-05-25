@@ -18,13 +18,14 @@
 <!-- 选项卡组 -->
 
 <script lang="ts">
+    import type { ComponentEvents } from "svelte";
     import Tab from "./Tab.svelte";
     import { type ITab } from "./../tab";
 
     export let tabs: ITab[];
     export let focus: string | number;
 
-    function changed(e) {
+    function changed(e: ComponentEvents<Tab>["changed"]) {
         focus = e.detail.key;
     }
 </script>
@@ -44,7 +45,11 @@
                 focus={tab.key === focus}
             >
                 <span slot="icon">
-                    {@html tab.icon}
+                    {#if tab.icon.startsWith("#")}
+                        <svg><use xlink:href={tab.icon} /></svg>
+                    {:else}
+                        {@html tab.icon}
+                    {/if}
                 </span>
                 <span slot="text">
                     {@html tab.text}

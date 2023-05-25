@@ -1,5 +1,4 @@
 {
-  "addTopBarIcon": "open quickSnippets menu",
   "browserTabLoaded": "browserTab plugin is loaded",
   "closeDevTools": "Close developer tools",
   "enterFullscreen": "Enter full-screen mode",
@@ -8,5 +7,39 @@
   "goForwardOnePage": "Go forward one page",
   "openDevTools": "Open developer tools",
   "reloadCurrentPage": "Reload current page",
+  "settings": {
+    "general": "General",
+    "mouse": {
+      "back": "Back button",
+      "button": "Mouse button",
+      "forward": "Forward button",
+      "left": "Left button",
+      "middle": "Middle button",
+      "right": "Right button"
+    },
+    "openTab": "Open Tab",
+    "protocol": "Protocol",
+    "protocols": {
+      "title": "List of active URL schemes"
+    },
+    "shortcut": "Shortcut",
+    "tab": {
+      "editorHyperlink": {
+        "description": "Access hyperlinks in the editor",
+        "title": "Editor Hyperlink"
+      },
+      "enable": {
+        "description": "Open the hyperlink in the tab",
+        "title": "Enable"
+      },
+      "otherHyperlink": {
+        "description": "Access hyperlinks elsewhere",
+        "title": "Other Hyperlink"
+      },
+      "shortcut": {
+        "title": "Key combination for opening hyperlinks"
+      }
+    }
+  },
   "stopLoadingThisPage": "Stop loading this page"
 }

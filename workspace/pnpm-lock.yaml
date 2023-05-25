@@ -35,6 +35,9 @@ importers:
       '@workspace/types':
         specifier: workspace:^
         version: link:../types
+      '@workspace/utils':
+        specifier: workspace:^
+        version: link:../utils
       siyuan:
         specifier: workspace:^
         version: link:../siyuan
@@ -62,6 +65,10 @@ importers:
       siyuan:
         specifier: workspace:^
         version: link:../siyuan
+    devDependencies:
+      ts-toolbelt:
+        specifier: ^9.6.0
+        version: 9.6.0
 
   packages/utils:
     dependencies:
@@ -2844,6 +2851,10 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+    dev: true
+
+  /ts-toolbelt@9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
     dev: true
 
   /tslib@1.14.1:

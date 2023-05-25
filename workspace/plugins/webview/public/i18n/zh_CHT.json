@@ -1,5 +1,4 @@
 {
-  "addTopBarIcon": "打開菜單",
   "browserTabLoaded": "瀏覽器頁簽插件已加載",
   "closeDevTools": "關閉開發者工具",
   "enterFullscreen": "進入全屏模式",
@@ -8,5 +7,39 @@
   "goForwardOnePage": "轉到下一頁",
   "openDevTools": "打開開發者工具",
   "reloadCurrentPage": "重載當前頁面",
+  "settings": {
+    "general": "通用",
+    "mouse": {
+      "back": "返回鍵",
+      "button": "鼠標按鍵",
+      "forward": "前進鍵",
+      "left": "左鍵",
+      "middle": "中鍵",
+      "right": "右鍵"
+    },
+    "openTab": "打開頁簽",
+    "protocol": "協議",
+    "protocols": {
+      "title": "激活的 URL 協議列表"
+    },
+    "shortcut": "快捷鍵",
+    "tab": {
+      "editorHyperlink": {
+        "description": "訪問編輯器中的超鏈接",
+        "title": "編輯器超鏈接"
+      },
+      "enable": {
+        "description": "在页签中打开超链接",
+        "title": "啟用"
+      },
+      "otherHyperlink": {
+        "description": "訪問其他位置的超鏈接",
+        "title": "其他超鏈接"
+      },
+      "shortcut": {
+        "title": "用於打開超鏈接的按鍵組合"
+      }
+    }
+  },
   "stopLoadingThisPage": "停止加載此頁面"
 }

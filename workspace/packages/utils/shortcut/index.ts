@@ -27,6 +27,22 @@ export enum MouseButton {
     Forward = 4,
 }
 
+export enum MouseEvent {
+    click = "click",
+    dblclick = "dblclick",
+
+    mousedown = "mousedown",
+    mouseup = "mouseup",
+
+    mouseenter = "mouseenter",
+    mouseleave = "mouseleave",
+
+    mousewheel = "mousewheel",
+    mouseover = "mouseover",
+    mousemove = "mousemove",
+    mouseout = "mouseout",
+}
+
 /**
  * 功能键状态
  * REF: [Event - Web API 接口参考 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Event)

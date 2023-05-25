@@ -67,6 +67,18 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
         },
     ];
 
+    const limits = {
+        min: 0,
+        max: 100,
+        step: 1,
+    };
+
+    const options = [
+        { key: "left", text: "Left" },
+        { key: "center", text: "Center" },
+        { key: "right", text: "Right" },
+    ];
+
     onMount(() => {
         showMessage("Setting panel opened");
     });
@@ -153,11 +165,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         type={ItemType.number}
                         settingKey="Number"
                         settingValue={50}
-                        limits={{
-                            min: 0,
-                            max: 100,
-                            step: 1,
-                        }}
+                        {limits}
                         on:changed={event => {
                             showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                         }}
@@ -176,11 +184,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         type={ItemType.slider}
                         settingKey="Slide"
                         settingValue={50}
-                        limits={{
-                            min: 0,
-                            max: 100,
-                            step: 1,
-                        }}
+                        limits={limits}
                         on:changed={event => {
                             showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                         }}
@@ -218,11 +222,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         type={ItemType.select}
                         settingKey="Select"
                         settingValue="left"
-                        options={{
-                            left: "Left",
-                            center: "Center",
-                            right: "Right",
-                        }}
+                        {options}
                         on:changed={event => {
                             showMessage(`Select changed: ${event.detail.key} = ${event.detail.value}`);
                         }}
@@ -306,11 +306,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                             type={ItemType.number}
                             settingKey="Number"
                             settingValue={50}
-                            limits={{
-                                min: 0,
-                                max: 100,
-                                step: 1,
-                            }}
+                            limits={limits}
                             on:changed={event => {
                                 showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                             }}
@@ -329,11 +325,7 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                             type={ItemType.slider}
                             settingKey="Slide"
                             settingValue={50}
-                            limits={{
-                                min: 0,
-                                max: 100,
-                                step: 1,
-                            }}
+                            limits={limits}
                             on:changed={event => {
                                 showMessage(`Slide changed: ${event.detail.key} = ${event.detail.value}`);
                             }}
@@ -365,17 +357,13 @@ REF: https://github.com/siyuan-note/plugin-sample-vite-svelte/blob/main/src/libs
                         >
                             <use xlink:href="#iconDown" />
                         </svg>
-                        <span slot="title">mini slide</span>
+                        <span slot="title">mini select</span>
                         <Input
                             slot="input"
                             type={ItemType.select}
                             settingKey="Select"
                             settingValue="left"
-                            options={{
-                                left: "Left",
-                                center: "Center",
-                                right: "Right",
-                            }}
+                            options={options}
                             on:changed={event => {
                                 showMessage(`Select changed: ${event.detail.key} = ${event.detail.value}`);
                             }}

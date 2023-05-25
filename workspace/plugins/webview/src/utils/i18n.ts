@@ -15,25 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export enum ItemType {
-    checkbox,
-    text,
-    number,
-    slider,
-    button,
-    select,
-    textarea,
-}
+import {
+    i18nCheck,
+    i18nChecks,
+} from "@workspace/types/siyuan/i18n";
 
-export interface ILimits {
-    min: number;
-    max: number;
-    step: number;
-}
+import zh_Hans from "~/public/i18n/zh_CN.json";
+import zh_Hant from "~/public/i18n/zh_CHT.json";
+import en from "~/public/i18n/en_US.json";
 
-export interface IOption {
-    key: string | number,
-    text: string,
-}
+export type I18N = typeof zh_Hans;
 
-export type IOptions = IOption[];
+i18nChecks([
+    i18nCheck<I18N, typeof zh_Hans>(),
+    i18nCheck<I18N, typeof zh_Hant>(),
+    i18nCheck<I18N, typeof en>(),
+]);

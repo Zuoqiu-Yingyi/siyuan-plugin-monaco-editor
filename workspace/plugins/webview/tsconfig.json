@@ -18,8 +18,18 @@
             "ESNext",
             "DOM"
         ],
+        "baseUrl": "./",
+        "paths": {
+            "~/*": [
+                "./*"
+            ],
+            "@/*": [
+                "src/*"
+            ]
+        }
     },
     "include": [
+        "public/i18n/*.json",
         "src/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.js",
