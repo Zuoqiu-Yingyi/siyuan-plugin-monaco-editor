@@ -3,6 +3,7 @@
 ## 2023-05-26
 
 - 实现在新窗口打开功能 | Implement open in new window function.
+- 完善新窗口打开功能的设置界面 | Improve the settings interface of the open in new window function.
 
 ## 2023-05-26
 

@@ -24,20 +24,20 @@
       "middle": "中鍵",
       "right": "右鍵"
     },
-    "openTab": "打開頁簽",
-    "protocol": "協議",
-    "protocols": {
-      "title": "激活的 URL 協議列表"
-    },
-    "shortcut": "快捷鍵",
-    "tab": {
+    "open": {
       "editorHyperlink": {
         "description": "訪問編輯器中的超鏈接",
         "title": "編輯器超鏈接"
       },
       "enable": {
-        "description": "在頁簽中打開超鏈接（僅支持桌面端）",
-        "title": "啟用"
+        "tab": {
+          "description": "在新標籤頁中打開超鏈接（僅支持桌面端）",
+          "title": "啟用"
+        },
+        "window": {
+          "description": "在新窗口中打開超鏈接",
+          "title": "啟用"
+        }
       },
       "otherHyperlink": {
         "description": "訪問其他位置的超鏈接",
@@ -45,6 +45,36 @@
       },
       "shortcut": {
         "title": "用於打開超鏈接的按鍵組合"
+      }
+    },
+    "openTab": "打開頁簽",
+    "openWindow": "打開窗口",
+    "protocol": "協議",
+    "protocols": {
+      "title": "激活的 URL 協議列表"
+    },
+    "shortcut": "快捷鍵",
+    "window": {
+      "height": {
+        "description": "新窗口的默認高度",
+        "title": "窗口高度"
+      },
+      "menuBar": {
+        "description": "菜單欄的可見狀態",
+        "options": {
+          "autoHide": "自動隱藏",
+          "disabled": "禁用",
+          "alwaysShow": "總是顯示"
+        },
+        "title": "菜单栏"
+      },
+      "top": {
+        "description": "打开的新窗口是否默认置顶",
+        "title": "窗口置顶"
+      },
+      "width": {
+        "description": "新窗口的默认宽度",
+        "title": "窗口宽度"
       }
     }
   },

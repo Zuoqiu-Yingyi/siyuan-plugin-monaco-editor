@@ -112,7 +112,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             title: that.name,
             content: `<div id="${that.SETTINGS_DIALOG_ID}"/>`,
             width: siyuan.isMobile() ? "92vw" : "720px",
-            height: siyuan.isMobile() ? undefined : "360px",
+            height: siyuan.isMobile() ? undefined : "640px",
         });
         const settings = new Settings({
             target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
