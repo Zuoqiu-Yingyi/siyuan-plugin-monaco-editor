@@ -126,5 +126,13 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             },
         },
+        params: {
+            width: 720,
+            height: 480,
+            frame: true,
+            alwaysOnTop: true,
+            autoHideMenuBar: true,
+            enableMenuBar: true,
+        }
     },
 };

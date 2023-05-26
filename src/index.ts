@@ -27,7 +27,16 @@ import Settings from "./components/Settings.svelte";
 import Webview from "./components/Webview.svelte"
 import { DEFAULT_CONFIG } from "./configs/default";
 
-import type { IConfig, IProtocols } from "./types/config";
+import type {
+    IConfig,
+    IProtocols,
+    ITargets,
+} from "./types/config";
+import {
+    openNewWindow,
+    type IOverwrite,
+    type IWebPreferences,
+} from "./utils/window";
 
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -80,6 +89,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     /* 注册触发打开页签动作的监听器 */
                     globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
                 }
+                globalThis.addEventListener(this.config.window.open.mouse.type, this.openWindowEventListener, true);
             })
     }
 
@@ -92,6 +102,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             /* 移除触发打开页签动作的监听器 */
             globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
+        globalThis.removeEventListener(this.config.window.open.mouse.type, this.openWindowEventListener, true);
     }
 
     openSetting(): void {
@@ -127,19 +138,46 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return this.config.general.useragent || global.navigator.userAgent;
     }
 
-
-    public openWebviewTab(url: string, title?: string, icon: string = "iconLanguage") {
+    public openWebviewTab(href: string, title?: string, icon: string = "iconLanguage") {
         siyuan.openTab({
             custom: {
                 icon,
                 title: title || this.name,
                 fn: this.webview_tab,
                 data: {
-                    url,
+                    href,
                     title: title || this.name,
                 },
             },
         });
+    }
+
+    public openWindow(
+        href: string,
+        params: IOverwrite = {
+            x: 0,
+            y: 0,
+            title: undefined,
+        },
+        webPreferences: IWebPreferences = {
+            defaultFontSize: globalThis.siyuan.config.editor.fontSize,
+            defaultFontFamily: {
+                standard: globalThis.siyuan.config.editor.fontFamily,
+            },
+        },
+    ) {
+        try {
+            const url = new URL(href);
+            const window = openNewWindow(
+                url,
+                this.config.window.params,
+                params,
+                webPreferences,
+                this,
+            );
+        } catch (err) {
+            this.logger.warn(err);
+        }
     }
 
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
@@ -152,6 +190,36 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return false;
     }
 
+    /**
+     * 获取超链接的元数据
+     * @param element: 超链接元素
+     * @params targets: 目标配置
+     */
+    protected parseHyperlinkMeta(element: HTMLElement, targets: ITargets) {
+        const meta = {
+            valid: false,
+            href: undefined,
+            title: undefined,
+        };
+        switch (element.localName) {
+            case "a":
+                meta.valid = targets.hyperlink.other.enable;
+                meta.href = (element as HTMLAnchorElement).href;
+                meta.title = element.title || element.innerText;
+                break;
+            case "span":
+                if (/\ba\b/.test(element.dataset.type)) {
+                    meta.valid = targets.hyperlink.editor.enable;
+                    meta.href = element.dataset.href;
+                    meta.title = element.dataset.title || element.innerText;
+                }
+                break;
+            default:
+                break;
+        }
+        return meta;
+    }
+
     protected readonly openTabEventListener = (e: MouseEvent) => {
         // this.logger.debug(e);
 
@@ -161,37 +229,48 @@ export default class WebviewPlugin extends siyuan.Plugin {
         /* 判断事件是否为目标事件 */
         if (!isMatchedMouseEvent(e, this.config.tab.open.mouse)) return;
 
-        const target = e.target as HTMLElement;
-        let valid: boolean = false; // 是否有效
-        let href: string = ""; // 链接地址
-        let title: string = ""; // 链接标题
-
-        switch (target.localName) {
-            case "a":
-                valid = this.config.tab.open.targets.hyperlink.other.enable;
-                href = (target as HTMLAnchorElement).href;
-                title = target.title || target.innerText;
-                break;
-            case "span":
-                if (/\ba\b/.test(target.dataset.type)) {
-                    valid = this.config.tab.open.targets.hyperlink.editor.enable;
-                    href = target.dataset.href;
-                    title = target.dataset.title || target.innerText;
-                }
-                break;
-            default:
-                break;
-        }
+        const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.tab.open.targets);
 
         /* 判断目标元素是否有效 */
-        if (valid) {
-            this.logger.info(href);
-            if (this.isUrlSchemeAvailable(href, this.config.tab.open.protocols)) {
+        if (meta.valid) {
+            this.logger.info(meta.href);
+            if (this.isUrlSchemeAvailable(meta.href, this.config.tab.open.protocols)) {
                 try {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    this.openWebviewTab(href, title);
+                    this.openWebviewTab(meta.href, meta.title);
+                } catch (e) {
+                    this.logger.warn(e);
+                }
+            }
+        }
+    }
+
+    protected readonly openWindowEventListener = (e: MouseEvent) => {
+        // this.logger.debug(e);
+
+        /* 判断功能是否已启用 */
+        if (!this.config.window.enable) return;
+
+        /* 判断事件是否为目标事件 */
+        if (!isMatchedMouseEvent(e, this.config.window.open.mouse)) return;
+
+        const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.window.open.targets);
+
+        /* 判断目标元素是否有效 */
+        if (meta.valid) {
+            this.logger.info(meta.href);
+            if (this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
+                try {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    this.openWindow(meta.href, {
+                        x: e.screenX,
+                        y: e.screenY,
+                        title: meta.title || this.name,
+                    });
                 } catch (e) {
                     this.logger.warn(e);
                 }
