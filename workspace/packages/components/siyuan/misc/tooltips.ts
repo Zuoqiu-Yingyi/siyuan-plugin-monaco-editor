@@ -16,12 +16,12 @@
  */
 
 export enum TooltipsDirection {
-    n = "b3-tooltips__nw",
-    ne = "b3-tooltips__n",
-    e = "b3-tooltips__ne",
-    se = "b3-tooltips__e",
-    s = "b3-tooltips__se",
-    sw = "b3-tooltips__s",
-    w = "b3-tooltips__sw",
-    nw = "b3-tooltips__w",
+    n = "b3-tooltips__n",
+    ne = "b3-tooltips__ne",
+    e = "b3-tooltips__e",
+    se = "b3-tooltips__se",
+    s = "b3-tooltips__s",
+    sw = "b3-tooltips__sw",
+    w = "b3-tooltips__w",
+    nw = "b3-tooltips__nw",
 }

@@ -1,6 +1,10 @@
 # 更改日志 | CHANGE LOG
 
-## 2023-05-24
+## 2023-05-26
+
+- 修复提示框方向异常问题 | Fix the issue of abnormal direction of prompt box.
+
+## 2023-05-25
 
 - 完善插件设置界面 | Improve the plugin settings interface.
 - `webview` 地址栏添加`使用默认程序打开`按钮 | Add `Open with default program` button to `webview` address bar.
