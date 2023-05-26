@@ -6,6 +6,7 @@
 - 完善新窗口打开功能的设置界面 | Improve the settings interface of the open in new window function.
 - 添加 `使用新窗口打开` 按钮 | Add `Open with a new window` button.
 - 修复菜单栏状态设置失效问题 | Fix the issue that the menu bar status setting is invalid.
+- 修复设置面板无法完全填充问题 | Fix the issue that the settings panel cannot be fully filled.
 
 ## 2023-05-26
 
