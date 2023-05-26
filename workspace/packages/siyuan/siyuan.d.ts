@@ -17,8 +17,8 @@
 
 /**
  * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
- * update: 2023-05-24 11:09 +08:00
- * commit: https://github.com/siyuan-note/plugin-sample/blob/afac008378e6df9841539c7c9f39cf9722125dbf/src/siyuan.d.ts
+ * update: 2023-05-25 23:18 +08:00
+ * commit: https://github.com/siyuan-note/plugin-sample/blob/c011324d1f91d34ff2fecefdf517132fc1ec07e3/src/siyuan.d.ts
  */
 
 type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf" | "click-editortitleicon"
@@ -76,6 +76,7 @@ interface IMenuItemOption {
     current?: boolean
     bind?: (element: HTMLElement) => void
     index?: number
+    element?: HTMLElement
 }
 
 export function fetchPost(url: string, data?: any, cb?: (response: IWebSocketData) => void, headers?: IObject): void;
@@ -153,6 +154,8 @@ export abstract class Plugin {
     saveData(storageName: string, content: any): Promise<void>;
 
     removeData(storageName: string): Promise<any>;
+
+    addIcons(svg: string): void;
 
     addTab(options: {
         type: string,

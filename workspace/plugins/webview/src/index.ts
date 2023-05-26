@@ -32,6 +32,7 @@ import type { IConfig, IProtocols } from "./types/config";
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
 
+    public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
 
     protected readonly SETTINGS_DIALOG_ID: string;
@@ -58,7 +59,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     // target,
                     target: tab.element,
                     props: {
-                        url: tab.data.url,
+                        src: tab.data.url,
                         tab,
                         plugin,
                     },
@@ -111,13 +112,21 @@ export default class WebviewPlugin extends siyuan.Plugin {
         });
     }
 
-    public updateConfig(config?: IConfig): void {
+    public async resetConfig(): Promise<void> {
+        return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);
+    }
+
+    public async updateConfig(config?: IConfig): Promise<void> {
         if (config && config !== this.config) {
             this.config = config;
         }
-        this.saveData(WebviewPlugin.GLOBAL_CONFIG_NAME, this.config)
-            .catch(error => this.logger.error(error));
+        return this.saveData(WebviewPlugin.GLOBAL_CONFIG_NAME, this.config);
     }
+
+    public get useragent(): string {
+        return this.config.general.useragent || global.navigator.userAgent;
+    }
+
 
     public openWebviewTab(url: string, title?: string, icon: string = "iconLanguage") {
         siyuan.openTab({

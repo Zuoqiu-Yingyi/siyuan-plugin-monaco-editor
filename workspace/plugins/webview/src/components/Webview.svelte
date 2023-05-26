@@ -23,9 +23,11 @@
     import type WebviewPlugin from "@/index";
     import type { I18N } from "@/utils/i18n";
 
-    export let url: string;
+    export let src: string;
     export let tab: any;
     export let plugin: InstanceType<typeof WebviewPlugin>;
+
+    export let useragent: string = plugin.useragent; // 用户代理
 
     const i18n = plugin.i18n as unknown as I18N;
 
@@ -33,7 +35,7 @@
     let can_back = false; // 能否转到上一页
     let can_forward = false; // 能否转到下一页
     let loading = false; // 页面是否正在加载
-    let address = decodeURI(url); // 地址栏
+    let address = decodeURI(src); // 地址栏
     let devtools_opened = false; // 开发者工具是否已打开
     let webview: Electron.WebviewTag; // webview 标签
     let webview_pointer_events_disable = false; // 是否禁用 webview 的鼠标事件
@@ -64,7 +66,20 @@
     /* 地址栏存在来自外部更改 */
     function onAddressChange(e) {
         // plugin.logger.debug(e);
-        url = encodeURI(e.target.value);
+
+        if (address) {
+            try {
+                const url = new URL(address);
+                src = url.href;
+            } catch (e) {
+                try {
+                    const url = new URL(`http://${address}`);
+                    src = url.href.replace(/^http:/, "");
+                } catch (error) {
+                    plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error", globalThis.crypto.randomUUID());
+                }
+            }
+        }
     }
 
     /* 使用默认程序打开 */
@@ -252,7 +267,8 @@
         /> -->
         <webview
             bind:this={webview}
-            src={url}
+            {src}
+            {useragent}
             class:pointer-events-disable={webview_pointer_events_disable}
             class="fn__flex-1"
             allowpopups

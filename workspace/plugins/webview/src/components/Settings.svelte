@@ -45,7 +45,19 @@
         plugin.updateConfig(config);
     }
 
+    function resetOptions() {
+        plugin.siyuan.confirm(
+            i18n.settings.generalSettings.reset.title, // 标题
+            i18n.settings.generalSettings.reset.description, // 文本
+            async () => {
+                await plugin.resetConfig(); // 重置配置
+                globalThis.location.reload(); // 刷新页面
+            }, // 确认按钮回调
+        );
+    }
+
     enum PanelKey {
+        general,
         openTab,
         openWindow,
     }
@@ -56,8 +68,14 @@
         shortcut,
     }
 
-    let panels_focus_key = PanelKey.openTab;
+    let panels_focus_key = PanelKey.general;
     const panels: ITab[] = [
+        {
+            key: PanelKey.general,
+            text: i18n.settings.generalSettings.title,
+            name: i18n.settings.generalSettings.title,
+            icon: "#iconSettings",
+        },
         {
             key: PanelKey.openTab,
             text: i18n.settings.openTab,
@@ -97,8 +115,44 @@
     focus={panels_focus_key}
     let:focus={focusPanel}
 >
+    <!-- 常规设置面板 -->
+    <Panel display={panels[0].key === focusPanel}>
+        <!-- 自定义 UA -->
+        <Item
+            title={i18n.settings.generalSettings.useragent.title}
+            text={i18n.settings.generalSettings.useragent.description}
+            block={true}
+        >
+            <Input
+                slot="input"
+                type={ItemType.text}
+                block={true}
+                placeholder={globalThis.navigator.userAgent}
+                settingKey="Text"
+                settingValue={config.general.useragent}
+                on:changed={e => {
+                    config.general.useragent = e.detail.value;
+                    updated();
+                }}
+            />
+        </Item>
+
+        <!-- 重置设置 -->
+        <Item
+            title={i18n.settings.generalSettings.reset.title}
+            text={i18n.settings.generalSettings.reset.description}
+        >
+            <Input
+                slot="input"
+                type={ItemType.button}
+                settingKey="Reset"
+                settingValue={i18n.settings.generalSettings.reset.text}
+                on:clicked={resetOptions}
+            />
+        </Item>
+    </Panel>
     <!-- 打开页签设置面板 -->
-    <Panel display={panels[0].key === panels_focus_key}>
+    <Panel display={panels[1].key === focusPanel}>
         <Tabs
             focus={tab_tabs_focus_key}
             tabs={tabs.tab}
@@ -109,6 +163,7 @@
                 data-type={tabs.tab[0].name}
                 class:fn__none={tabs.tab[0].key !== focusTab}
             >
+                <!-- 是否启用 -->
                 <Item
                     title={i18n.settings.tab.enable.title}
                     text={i18n.settings.tab.enable.description}
@@ -124,6 +179,8 @@
                         }}
                     />
                 </Item>
+
+                <!-- 编辑器超链接 -->
                 <Item
                     title={i18n.settings.tab.editorHyperlink.title}
                     text={i18n.settings.tab.editorHyperlink.description}
@@ -139,6 +196,8 @@
                         }}
                     />
                 </Item>
+
+                <!-- 其他超链接 -->
                 <Item
                     title={i18n.settings.tab.otherHyperlink.title}
                     text={i18n.settings.tab.otherHyperlink.description}
