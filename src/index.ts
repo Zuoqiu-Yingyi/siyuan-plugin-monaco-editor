@@ -110,7 +110,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         const id = globalThis.crypto.randomUUID();
         const dialog = new siyuan.Dialog({
             title: that.name,
-            content: `<div id="${that.SETTINGS_DIALOG_ID}"/>`,
+            content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
             width: siyuan.isMobile() ? "92vw" : "720px",
             height: siyuan.isMobile() ? undefined : "640px",
         });
