@@ -77,7 +77,7 @@ export const DEFAULT_CONFIG: IConfig = {
         enable: true,
         open: {
             mouse: {
-                type: "mouseup",
+                type: "mousedown",
                 button: MouseButton.Middle,
 
                 altKey: false,
@@ -96,10 +96,10 @@ export const DEFAULT_CONFIG: IConfig = {
                 }
             },
             protocols: {
-                siyuan: {
-                    enable: true,
-                    prefix: "siyuan://",
-                },
+                // siyuan: {
+                //     enable: true,
+                //     prefix: "siyuan://",
+                // },
                 https: {
                     enable: true,
                     prefix: "https://",
@@ -127,8 +127,8 @@ export const DEFAULT_CONFIG: IConfig = {
             },
         },
         params: {
-            width: 720,
-            height: 480,
+            width: 800,
+            height: 600,
             frame: true,
             alwaysOnTop: true,
             autoHideMenuBar: true,

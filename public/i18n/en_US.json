@@ -24,20 +24,20 @@
       "middle": "Middle button",
       "right": "Right button"
     },
-    "openTab": "Open Tab",
-    "protocol": "Protocol",
-    "protocols": {
-      "title": "List of active URL schemes"
-    },
-    "shortcut": "Shortcut",
-    "tab": {
+    "open": {
       "editorHyperlink": {
         "description": "Access hyperlinks in the editor",
         "title": "Editor Hyperlink"
       },
       "enable": {
-        "description": "Open the hyperlink in the tab (Only desktop client)",
-        "title": "Enable"
+        "tab": {
+          "description": "Open the hyperlink in a new tab (Only desktop client)",
+          "title": "Enable"
+        },
+        "window": {
+          "description": "Open the hyperlink in a new window",
+          "title": "Enable"
+        }
       },
       "otherHyperlink": {
         "description": "Access hyperlinks elsewhere",
@@ -45,6 +45,36 @@
       },
       "shortcut": {
         "title": "Key combination for opening hyperlinks"
+      }
+    },
+    "openTab": "Open Tab",
+    "openWindow": "Open Window",
+    "protocol": "Protocol",
+    "protocols": {
+      "title": "List of active URL schemes"
+    },
+    "shortcut": "Shortcut",
+    "window": {
+      "height": {
+        "description": "The default height of the new window",
+        "title": "Window Height"
+      },
+      "menuBar": {
+        "description": "The visible state of the menu bar",
+        "options": {
+          "autoHide": "Auto Hide",
+          "disabled": "Disabled",
+          "alwaysShow": "Always Show"
+        },
+        "title": "Menu Bar"
+      },
+      "top": {
+        "description": "Whether new windows are pinned to the top by default",
+        "title": "Window Top"
+      },
+      "width": {
+        "description": "The default width of the new window",
+        "title": "Window Width"
       }
     }
   },

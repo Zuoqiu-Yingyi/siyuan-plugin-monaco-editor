@@ -25,7 +25,14 @@ import type { IWindowParams } from "./../types/config";
 import { createMenuTemplate } from "../configs/menuTemplae";
 import type WebviewPlugin from "..";
 
+/* 菜单栏状态 */
+export enum MenuBarStatus {
+    AlwaysShow, // 总是显示
+    AutoHide, // 自动隐藏
+    Disabled, // 禁用
+}
 
+/* 页面配置 */
 export interface IWebPreferences extends Electron.WebPreferences {
     defaultFontSize: number, // 默认字体大小
     defaultFontFamily: {
@@ -33,6 +40,7 @@ export interface IWebPreferences extends Electron.WebPreferences {
     },
 }
 
+/* 覆写的配置 */
 export interface IOverwrite extends Electron.BrowserWindowConstructorOptions {
     x: number, // 窗口横坐标
     y: number, // 窗口纵坐标
