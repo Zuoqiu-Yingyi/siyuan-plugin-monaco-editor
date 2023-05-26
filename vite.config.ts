@@ -38,6 +38,7 @@ export default defineConfig({
     },
     build: {
         minify: false,
+        sourcemap: "inline",
         lib: {
             entry: resolve(__dirname, "src/index.ts"),
             fileName: "index",
@@ -45,7 +46,8 @@ export default defineConfig({
         },
         rollupOptions: {
             external: [
-                'siyuan',
+                "siyuan",
+                /^@electron\/.*$/,
             ],
             output: {
                 entryFileNames: chunkInfo => {

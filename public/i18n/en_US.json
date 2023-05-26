@@ -21,7 +21,7 @@
         "title": "Editor Hyperlink"
       },
       "enable": {
-        "description": "Open the hyperlink in the tab",
+        "description": "Open the hyperlink in the tab (Only desktop client)",
         "title": "Enable"
       },
       "otherHyperlink": {

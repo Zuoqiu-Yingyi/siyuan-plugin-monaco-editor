@@ -119,6 +119,20 @@ export default class WebviewPlugin extends siyuan.Plugin {
             .catch(error => this.logger.error(error));
     }
 
+    public openWebviewTab(url: string, title?: string, icon: string = "iconLanguage") {
+        siyuan.openTab({
+            custom: {
+                icon,
+                title: title || this.name,
+                fn: this.webview_tab,
+                data: {
+                    url,
+                    title: title || this.name,
+                },
+            },
+        });
+    }
+
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
         for (const key in protocols) {
             const protocol = protocols[key];
@@ -168,18 +182,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    const plugin = this
-                    siyuan.openTab({
-                        custom: {
-                            icon: "iconLanguage",
-                            title: title || plugin.name,
-                            fn: plugin.webview_tab,
-                            data: {
-                                url: href,
-                                title: title || plugin.name,
-                            },
-                        },
-                    });
+                    this.openWebviewTab(href, title);
                 } catch (e) {
                     this.logger.warn(e);
                 }
