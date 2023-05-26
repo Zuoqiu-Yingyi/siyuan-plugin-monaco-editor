@@ -1,10 +1,11 @@
 # 更改日志 | CHANGE LOG
 
-## 2023-05-26
+## 2023-05-27
 
 - 实现在新窗口打开功能 | Implement open in new window function.
 - 完善新窗口打开功能的设置界面 | Improve the settings interface of the open in new window function.
 - 添加 `使用新窗口打开` 按钮 | Add `Open with a new window` button.
+- 修复菜单栏状态设置失效问题 | Fix the issue that the menu bar status setting is invalid.
 
 ## 2023-05-26
 
