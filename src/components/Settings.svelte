@@ -399,7 +399,7 @@
                                 : MenuBarStatus.AlwaysShow // 总是显示
                             : MenuBarStatus.Disabled}
                         on:changed={e => {
-                            switch (e.detail.key) {
+                            switch (e.detail.value) {
                                 case MenuBarStatus.AutoHide:
                                     config.window.params.enableMenuBar = true;
                                     config.window.params.autoHideMenuBar = true;
