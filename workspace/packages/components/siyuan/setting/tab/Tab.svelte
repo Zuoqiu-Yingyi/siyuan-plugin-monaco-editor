@@ -41,12 +41,11 @@
     class="item item--full"
 >
     <!-- [组件子级 / Checking for slot content • Svelte 教程 | Svelte 中文网](https://www.svelte.cn/tutorial/optional-slots) -->
+    <span class="fn__flex-1" />
     {#if $$slots.icon}
         <span class="item__icon">
             <slot name="icon" />
         </span>
-    {:else}
-        <span class="fn__flex-1" />
     {/if}
 
     <span class="item__text">

@@ -63,7 +63,7 @@
 
     /* 地址栏存在来自外部更改 */
     function onAddressChange(e) {
-        // console.debug(e);
+        // plugin.logger.debug(e);
         url = encodeURI(e.target.value);
     }
 
@@ -98,7 +98,7 @@
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-did-start-navigation
          */
         webview.addEventListener("load-commit", e => {
-            // console.debug(e)
+            // plugin.logger.debug(e)
             /* 更新地址栏地址 */
             if (e.isMainFrame) {
                 address = decodeURI(e.url);
@@ -119,8 +119,8 @@
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#%E4%BA%8B%E4%BB%B6-page-title-updated
          */
         webview.addEventListener("page-title-updated", e => {
-            // console.debug(e)
-            // console.debug(tab);
+            // plugin.logger.debug(e)
+            // plugin.logger.debug(tab);
             tab.tab?.updateTitle(e.title);
             tab.data.title = e.title;
         });
@@ -132,13 +132,35 @@
          */
         /* 开始加载 */
         webview.addEventListener("did-start-loading", _ => {
-            // console.debug(e)
+            // plugin.logger.debug(e)
             loading = true;
         });
         /* 停止加载 */
         webview.addEventListener("did-stop-loading", _ => {
-            // console.debug(e)
+            // plugin.logger.debug(e)
             loading = false;
+        });
+
+        /**
+         * 在新窗口打开链接
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-devtools-open-url
+         */
+        webview.addEventListener("devtools-open-url", e => {
+            // plugin.logger.debug(e);
+            plugin.openWebviewTab(e.url);
+        });
+
+        /**
+         * 上下文菜单(右键触发)
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-context-menu
+         */
+        webview.addEventListener("context-menu", e => {
+            plugin.logger.debug(e);
+
+            /* 在超链接上激活上下文菜单(右键点击/键盘上下文键) */
+            if (e.params.linkURL) {
+                plugin.openWebviewTab(e.params.linkURL, e.params.titleText || e.params.linkText || e.params.altText);
+            }
         });
     });
 </script>

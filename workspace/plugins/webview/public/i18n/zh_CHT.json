@@ -21,6 +21,7 @@
         "title": "編輯器超鏈接"
       },
       "enable": {
+        "description": "在頁簽中打開超鏈接（僅支持桌面端）",
         "title": "啟用"
       },
       "otherHyperlink": {

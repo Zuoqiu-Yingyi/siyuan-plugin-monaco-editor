@@ -3,6 +3,7 @@
 ## 2023-05-26
 
 - 修复提示框方向异常问题 | Fix the issue of abnormal direction of prompt box.
+- `webview` 添加在新标签页打开功能 | Add open in new tab function to `webview`.
 
 ## 2023-05-25
 

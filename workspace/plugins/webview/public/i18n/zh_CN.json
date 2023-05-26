@@ -21,7 +21,7 @@
         "title": "编辑器超链接"
       },
       "enable": {
-        "description": "在页签中打开超链接",
+        "description": "在页签中打开超链接（仅支持桌面端）",
         "title": "启用"
       },
       "otherHyperlink": {
