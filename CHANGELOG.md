@@ -4,6 +4,7 @@
 
 - 实现在新窗口打开功能 | Implement open in new window function.
 - 完善新窗口打开功能的设置界面 | Improve the settings interface of the open in new window function.
+- 添加 `使用新窗口打开` 按钮 | Add `Open with a new window` button.
 
 ## 2023-05-26
 

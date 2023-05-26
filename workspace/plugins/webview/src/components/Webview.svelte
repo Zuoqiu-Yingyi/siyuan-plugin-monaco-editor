@@ -70,11 +70,11 @@
         if (address) {
             try {
                 const url = new URL(address);
-                src = url.href;
+                webview.loadURL(url.href);
             } catch (e) {
                 try {
                     const url = new URL(`http://${address}`);
-                    src = url.href.replace(/^http:/, "");
+                    webview.loadURL(url.href.replace(/^http:/, ""));
                 } catch (error) {
                     plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error", globalThis.crypto.randomUUID());
                 }
@@ -84,7 +84,16 @@
 
     /* 使用默认程序打开 */
     function onOpenWithDefaultProgram() {
-        global.open(tab.data.url, "_blank");
+        global.open(tab.data.href, "_blank");
+    }
+
+    /* 在新窗口打开 */
+    function onOpenWithNewWindow(e: MouseEvent) {
+        plugin.openWindow(tab.data.href, {
+            x: e.screenX,
+            y: e.screenY,
+            title: tab.data.title,
+        });
     }
 
     /* 进入/退出全屏模式 */
@@ -117,7 +126,7 @@
             /* 更新地址栏地址 */
             if (e.isMainFrame) {
                 address = decodeURI(e.url);
-                tab.data.title = e.url;
+                tab.data.href = e.url;
             }
 
             /* 是否可后退 */
@@ -157,7 +166,7 @@
         });
 
         /**
-         * 在新窗口打开链接
+         * 在标签页打开链接
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-devtools-open-url
          */
         webview.addEventListener("devtools-open-url", e => {
@@ -224,11 +233,19 @@
 
         <!-- <div class="fn__space" /> -->
 
-        <!-- 使用默认程序打开中打开 -->
+        <!-- 使用默认程序(一般为浏览器)打开当前页面链接 -->
         <BlockButton
             on:click={onOpenWithDefaultProgram}
             icon="#iconLanguage"
             ariaLabel={i18n.webview.openWithDefaultProgram}
+            tooltipsDirection={TooltipsDirection.sw}
+        />
+
+        <!-- 使用新窗口打开当前页面链接 -->
+        <BlockButton
+            on:click={onOpenWithNewWindow}
+            icon="#iconOpenWindow"
+            ariaLabel={i18n.webview.openWithNewWindow}
             tooltipsDirection={TooltipsDirection.sw}
         />
 
@@ -257,14 +274,6 @@
         on:mouseleave={() => (webview_pointer_events_disable = true)}
         class="protyle-preview"
     >
-        <!-- <webview
-            bind:this={webview}
-            on:mouseenter={() => (webview.style.pointerEvents = null)}
-            on:mouseleave={() => (webview.style.pointerEvents = "none")}
-            src={url}
-            class="fn__flex-1"
-            allowpopups
-        /> -->
         <webview
             bind:this={webview}
             {src}

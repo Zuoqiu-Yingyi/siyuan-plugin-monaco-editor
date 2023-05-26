@@ -37,8 +37,8 @@ export default defineConfig({
         }
     },
     build: {
-        minify: false,
-        sourcemap: "inline",
+        minify: true,
+        // sourcemap: "inline",
         lib: {
             entry: resolve(__dirname, "src/index.ts"),
             fileName: "index",

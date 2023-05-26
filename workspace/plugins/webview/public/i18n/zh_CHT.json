@@ -86,6 +86,7 @@
     "goForwardOnePage": "轉到下一頁",
     "openDevTools": "打開開發者工具",
     "openWithDefaultProgram": "使用預設程式打開",
+    "openWithNewWindow": "使用新窗口打開",
     "reloadCurrentPage": "重載當前頁面",
     "stopLoadingThisPage": "停止加載此頁面"
   }
