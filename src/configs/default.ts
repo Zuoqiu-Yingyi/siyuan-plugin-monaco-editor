@@ -20,6 +20,9 @@ import { MouseButton } from "@workspace/utils/shortcut";
 
 /* 默认配置选项 */
 export const DEFAULT_CONFIG: IConfig = {
+    general: {
+        useragent: "",
+    },
     tab: {
         enable: true,
         open: {

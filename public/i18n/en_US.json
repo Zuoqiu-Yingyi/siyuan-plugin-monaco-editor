@@ -1,6 +1,21 @@
 {
+  "message": {
+    "nonStandardURL": "is not standardized, please enter the URL address of the specification"
+  },
   "settings": {
     "general": "General",
+    "generalSettings": {
+      "reset": {
+        "description": "Reset all settings options to default (The page will be refreshed after resetting)",
+        "text": "Reset",
+        "title": "Reset settings options"
+      },
+      "title": "General",
+      "useragent": {
+        "description": "Use custom <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent\">User-Agent</a>, leave this item blank to use the default User-Agent (Only desktop client)",
+        "title": "User-Agent (UA)"
+      }
+    },
     "mouse": {
       "back": "Back button",
       "button": "Mouse button",

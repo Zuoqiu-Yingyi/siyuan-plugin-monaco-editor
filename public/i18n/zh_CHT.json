@@ -1,6 +1,21 @@
 {
+  "message": {
+    "nonStandardURL": "不規範，請輸入規範的 URL 地址"
+  },
   "settings": {
-    "general": "通用",
+    "general": "常規",
+    "generalSettings": {
+      "reset": {
+        "description": "重置所有設置選項為默認選項（重置後將刷新頁面）",
+        "text": "重置",
+        "title": "重置設置選項"
+      },
+      "title": "常規設置",
+      "useragent": {
+        "description": "使用自定義 <a href=\"https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Headers/User-Agent\">User-Agent</a>，該項留空則使用默認 User-Agent（僅支持桌面端）",
+        "title": "用戶代理字段 (User-Agent, UA)"
+      }
+    },
     "mouse": {
       "back": "返回鍵",
       "button": "鼠標按鍵",
