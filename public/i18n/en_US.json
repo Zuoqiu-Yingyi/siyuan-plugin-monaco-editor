@@ -86,6 +86,7 @@
     "goForwardOnePage": "Go forward one page",
     "openDevTools": "Open developer tools",
     "openWithDefaultProgram": "Open with default program",
+    "openWithNewWindow": "Open with a new window",
     "reloadCurrentPage": "Reload current page",
     "stopLoadingThisPage": "Stop loading this page"
   }

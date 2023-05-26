@@ -68,7 +68,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     // target,
                     target: tab.element,
                     props: {
-                        src: tab.data.url,
+                        src: tab.data.href,
                         tab,
                         plugin,
                     },
@@ -94,7 +94,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     onLayoutReady(): void {
-        this.openSetting();
+        // this.openSetting();
     }
 
     onunload(): void {
