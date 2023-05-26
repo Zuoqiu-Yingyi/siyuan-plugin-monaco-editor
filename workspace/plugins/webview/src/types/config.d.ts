@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import type { Electron } from "@workspace/types/electron";
 import { IMouseStatus, type IKeyboardStatus } from "@workspace/utils/shortcut";
 
 /* 常规设置 */
-export interface IGeneral { 
+export interface IGeneral {
     useragent: string, // 用户代理
 }
 
@@ -47,6 +48,16 @@ export interface IOpen {
     protocols: IProtocols, // 支持的协议
 }
 
+
+export interface IWindowParams extends Electron.BrowserWindowConstructorOptions {
+    width: number, // 窗口宽度
+    height: number, // 窗口高度
+    frame: boolean, // 窗口边框
+    alwaysOnTop: boolean, // 是否置顶
+    autoHideMenuBar: boolean, // 是否自动隐藏菜单栏
+    enableMenuBar: boolean, // 是否启用菜单栏
+}
+
 export interface IConfig {
     /* 常规设置 */
     general: IGeneral,
@@ -60,5 +71,6 @@ export interface IConfig {
     window: {
         enable: boolean, // 是否启用
         open: IOpen, // 打开相关配置
+        params: IWindowParams, // 窗口参数
     }
 }

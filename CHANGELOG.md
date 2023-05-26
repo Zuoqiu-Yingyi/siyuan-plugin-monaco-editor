@@ -2,6 +2,10 @@
 
 ## 2023-05-26
 
+- 实现在新窗口打开功能 | Implement open in new window function.
+
+## 2023-05-26
+
 - 修复提示框方向异常问题 | Fix the issue of abnormal direction of prompt box.
 - `webview` 添加在新标签页打开功能 | Add open in new tab function to `webview`.
 - 添加自定义 `User-Agent` 功能 | Add custom `User-Agent` function.

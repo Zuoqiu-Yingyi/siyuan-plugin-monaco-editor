@@ -17,6 +17,10 @@
 
 const FLAG_ELECTRON = globalThis.navigator.userAgent.includes('Electron');
 
+export function hasNodeRequire(): boolean {
+    return !!globalThis.require;
+}
+
 export function isElectron(): boolean {
-    return FLAG_ELECTRON;
+    return FLAG_ELECTRON && hasNodeRequire();
 }
