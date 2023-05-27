@@ -94,10 +94,30 @@
         },
     ];
 
-    let tab_tabs_focus_key = TabKey.general;
-    let window_tabs_focus_key = TabKey.general;
+    let tab_settings_tabs_focus_key = TabKey.general;
+    let window_settings_tabs_focus_key = TabKey.general;
     const tabs = {
         tab: [
+            {
+                key: TabKey.general,
+                text: i18n.settings.general,
+                name: i18n.settings.general,
+                icon: "⚙",
+            },
+            {
+                key: TabKey.protocol,
+                text: i18n.settings.protocol,
+                name: i18n.settings.protocol,
+                icon: "🌐",
+            },
+            {
+                key: TabKey.shortcut,
+                text: i18n.settings.shortcut,
+                name: i18n.settings.shortcut,
+                icon: "⌨",
+            },
+        ] as ITab[],
+        window: [
             {
                 key: TabKey.general,
                 text: i18n.settings.general,
@@ -171,7 +191,7 @@
     <!-- 打开页签的设置面板 -->
     <Panel display={panels[1].key === focusPanel}>
         <Tabs
-            focus={tab_tabs_focus_key}
+            focus={tab_settings_tabs_focus_key}
             tabs={tabs.tab}
             let:focus={focusTab}
         >
@@ -279,14 +299,14 @@
     <!-- 打开窗口的设置面板 -->
     <Panel display={panels[2].key === focusPanel}>
         <Tabs
-            focus={window_tabs_focus_key}
-            tabs={tabs.tab}
+            focus={window_settings_tabs_focus_key}
+            tabs={tabs.window}
             let:focus={focusTab}
         >
             <!-- 标签页 1 - 通用设置 -->
             <div
-                data-type={tabs.tab[0].name}
-                class:fn__none={tabs.tab[0].key !== focusTab}
+                data-type={tabs.window[0].name}
+                class:fn__none={tabs.window[0].key !== focusTab}
             >
                 <!-- 是否启用 -->
                 <Item
@@ -433,8 +453,8 @@
 
             <!-- 标签页 2 - 协议设置 -->
             <div
-                data-type={tabs.tab[1].name}
-                class:fn__none={tabs.tab[1].key !== focusTab}
+                data-type={tabs.window[1].name}
+                class:fn__none={tabs.window[1].key !== focusTab}
             >
                 <Group title={i18n.settings.protocols.title}>
                     {#each Object.entries(config.window.open.protocols) as [key, protocol] (key)}
@@ -460,8 +480,8 @@
 
             <!-- 标签页 3 - 快捷键设置 -->
             <div
-                data-type={tabs.tab[2].name}
-                class:fn__none={tabs.tab[2].key !== focusTab}
+                data-type={tabs.window[2].name}
+                class:fn__none={tabs.window[2].key !== focusTab}
             >
                 <Shortcut
                     minWidth="16em"
@@ -477,8 +497,8 @@
 
             <!-- 标签页 4 - 思源窗口设置 -->
             <div
-                data-type={tabs.tab[3].name}
-                class:fn__none={tabs.tab[3].key !== focusTab}
+                data-type={tabs.window[3].name}
+                class:fn__none={tabs.window[3].key !== focusTab}
             >
                 <!-- 是否启用 -->
                 <Item
