@@ -54,6 +54,37 @@
       "title": "激活的 URL 协议列表"
     },
     "shortcut": "快捷键",
+    "siyuan": {
+      "editorType": {
+        "description": "默认在新窗口中打开的思源编辑器类型",
+        "options": {
+          "desktop": "桌面端编辑器",
+          "mobile": "移动端编辑器"
+        },
+        "title": "编辑器类型"
+      },
+      "enable": {
+        "description": "在新窗口中打开思源编辑器",
+        "title": "启用"
+      },
+      "focus": {
+        "description": "在新窗口中打开的思源编辑器是否默认聚焦",
+        "title": "聚焦"
+      },
+      "open": {
+        "desktop": {
+          "description": "打开一个思源桌面端编辑器窗口",
+          "text": "打开",
+          "title": "桌面端编辑器"
+        },
+        "mobile": {
+          "description": "打开一个思源移动端编辑器窗口",
+          "text": "打开",
+          "title": "移动端编辑器"
+        }
+      },
+      "title": "思源"
+    },
     "window": {
       "height": {
         "description": "新窗口的默认高度",
@@ -62,9 +93,9 @@
       "menuBar": {
         "description": "菜单栏的可见状态",
         "options": {
+          "alwaysShow": "总是显示",
           "autoHide": "自动隐藏",
-          "disabled": "禁用",
-          "alwaysShow": "总是显示"
+          "disabled": "禁用"
         },
         "title": "菜单栏"
       },

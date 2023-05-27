@@ -21,6 +21,13 @@ import { isElectron } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { merge } from "@workspace/utils/misc/merge";
+import { getBlockID } from "@workspace/utils/siyuan/dom";
+import {
+    Pathname,
+    buildSiyuanWebURL,
+    editorType2Pathname,
+} from "@workspace/utils/siyuan/url";
+
 // import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 
 import Settings from "./components/Settings.svelte";
@@ -31,12 +38,14 @@ import type {
     IConfig,
     IProtocols,
     ITargets,
+    IWindowParams,
 } from "./types/config";
 import {
     openNewWindow,
     type IOverwrite,
     type IWebPreferences,
 } from "./utils/window";
+import { EditorType } from "~/../../packages/utils/siyuan";
 
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -154,10 +163,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     public openWindow(
         href: string,
-        params: IOverwrite = {
+        params: IOverwrite | IWindowParams = {
             x: 0,
             y: 0,
-            title: undefined,
+            title: null,
         },
         webPreferences: IWebPreferences = {
             defaultFontSize: globalThis.siyuan.config.editor.fontSize,
@@ -178,6 +187,24 @@ export default class WebviewPlugin extends siyuan.Plugin {
         } catch (err) {
             this.logger.warn(err);
         }
+    }
+
+    public openSiyuanDesktopWindow(e?: MouseEvent): void {
+        const params = {
+            x: e?.screenX | 0,
+            y: e?.screenY | 0,
+            title: "desktop",
+        }
+        this.openWindow(buildSiyuanWebURL(Pathname.desktop).href, params);
+    }
+
+    public openSiyuanMobileWindow(e?: MouseEvent): void {
+        const params = {
+            x: e?.screenX | 0,
+            y: e?.screenY | 0,
+            title: "desktop",
+        }
+        this.openWindow(buildSiyuanWebURL(Pathname.mobile).href, params);
     }
 
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
@@ -262,6 +289,14 @@ export default class WebviewPlugin extends siyuan.Plugin {
         if (meta.valid) {
             this.logger.info(meta.href);
             if (this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
+                /* 思源协议 siyuan:// 需要转化为 http(s):// 协议 */
+                if (meta.href.startsWith("siyuan://") && this.config.window.siyuan.enable) {
+                    meta.href = buildSiyuanWebURL(
+                        editorType2Pathname(this.config.window.siyuan.editorType),
+                        { url: meta.href },
+                    );
+                }
+
                 try {
                     e.preventDefault();
                     e.stopPropagation();
@@ -271,6 +306,36 @@ export default class WebviewPlugin extends siyuan.Plugin {
                         y: e.screenY,
                         title: meta.title || this.name,
                     });
+                } catch (e) {
+                    this.logger.warn(e);
+                }
+            }
+        }
+
+        /* 打开思源编辑器 */
+        if (this.config.window.siyuan.enable) {
+            const block_id = getBlockID(e);
+            if (block_id) {
+                try {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    this.openWindow(
+                        buildSiyuanWebURL(
+                            editorType2Pathname(this.config.window.siyuan.editorType),
+                            {
+                                id: block_id,
+                                focus: this.config.window.siyuan.focus,
+                            }
+                        ).href,
+                        {
+                            x: e.screenX,
+                            y: e.screenY,
+                            title: undefined,
+                            enableMenuBar: true,
+                            autoHideMenuBar: false,
+                        },
+                    );
                 } catch (e) {
                     this.logger.warn(e);
                 }
