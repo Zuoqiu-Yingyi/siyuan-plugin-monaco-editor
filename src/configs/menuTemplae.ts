@@ -115,14 +115,14 @@ export function createMenuTemplate(
             : [
                 { type: "separator" },
                 { // 钉住
-                    label: 'Pinned',
+                    label: "Toggle On Top",
                     click: (menuItem, browserWindow, event) => {
                         if (browserWindow) browserWindow.setAlwaysOnTop(!browserWindow.isAlwaysOnTop());
                     },
-                    type: 'checkbox',
+                    type: "checkbox",
                     checked: top,
                     // REF [快捷键 | Electron](https://www.electronjs.org/zh/docs/latest/api/accelerator)
-                    accelerator: 'Alt+Shift+P',
+                    accelerator: "CmdOrCtrl+Shift+Space",
                 },
             ]
         ) as Array<Electron.MenuItemConstructorOptions>,

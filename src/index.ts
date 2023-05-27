@@ -94,7 +94,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
-                if (isElectron()) {
+                if (isElectron() && !siyuan.isMobile()) {
                     /* 注册触发打开页签动作的监听器 */
                     globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
                 }
@@ -107,7 +107,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
-        if (isElectron()) {
+        if (isElectron() && !siyuan.isMobile()) {
             /* 移除触发打开页签动作的监听器 */
             globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
@@ -213,11 +213,30 @@ export default class WebviewPlugin extends siyuan.Plugin {
             x: e?.screenX | 0,
             y: e?.screenY | 0,
             title: "mobile",
-            alwaysOnTop: false, // 移动端启用置顶
-            enableMenuBar: true, // 启用菜单栏
-            autoHideMenuBar: false, // 禁用自动隐藏菜单栏
+            alwaysOnTop: true, // 移动端启用置顶
+            autoHideMenuBar: false,
+            webPreferences: {
+                nodeIntegration: true,
+                webviewTag: true,
+                contextIsolation: false,
+            },
+
+            enableMenuBar: true,
+            enableElectron: true,
         }
         this.openWindow(href || buildSiyuanWebURL(Pathname.mobile).href, params);
+    }
+
+    public openSiyuanWindow(url: URL, e?: MouseEvent): void {
+        switch (this.config.window.siyuan.editorType) {
+            case EditorType.desktop:
+                this.openSiyuanDesktopWindow(e, url.href);
+                break;
+
+            case EditorType.mobile:
+                this.openSiyuanMobileWindow(e, url.href);
+                break;
+        }
     }
 
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
@@ -261,75 +280,80 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     protected readonly openTabEventListener = (e: MouseEvent) => {
-        // this.logger.debug(e);
+        try {
+            // this.logger.debug(e);
 
-        /* 判断功能是否已启用 */
-        if (!this.config.tab.enable) return;
+            /* 判断功能是否已启用 */
+            if (!this.config.tab.enable) return;
 
-        /* 判断事件是否为目标事件 */
-        if (!isMatchedMouseEvent(e, this.config.tab.open.mouse)) return;
+            /* 判断事件是否为目标事件 */
+            if (!isMatchedMouseEvent(e, this.config.tab.open.mouse)) return;
 
-        const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.tab.open.targets);
+            const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.tab.open.targets);
 
-        /* 判断目标元素是否有效 */
-        if (meta.valid) {
-            this.logger.info(meta.href);
-            if (this.isUrlSchemeAvailable(meta.href, this.config.tab.open.protocols)) {
-                try {
-                    e.preventDefault();
-                    e.stopPropagation();
+            /* 判断目标元素是否有效 */
+            if (meta.valid) {
+                this.logger.info(meta.href);
+                if (this.isUrlSchemeAvailable(meta.href, this.config.tab.open.protocols)) {
+                    try {
+                        e.preventDefault();
+                        e.stopPropagation();
 
-                    this.openWebviewTab(meta.href, meta.title);
-                } catch (e) {
-                    this.logger.warn(e);
+                        this.openWebviewTab(meta.href, meta.title);
+                    } catch (e) {
+                        this.logger.warn(e);
+                    }
                 }
             }
+        } catch (e) {
+            this.logger.warn(e);
         }
     }
 
     protected readonly openWindowEventListener = (e: MouseEvent) => {
-        // this.logger.debug(e);
+        try {
+            // this.logger.debug(e);
 
-        /* 判断功能是否已启用 */
-        if (!this.config.window.enable) return;
+            /* 判断功能是否已启用 */
+            if (!this.config.window.enable) return;
 
-        /* 判断事件是否为目标事件 */
-        if (!isMatchedMouseEvent(e, this.config.window.open.mouse)) return;
+            /* 判断事件是否为目标事件 */
+            if (!isMatchedMouseEvent(e, this.config.window.open.mouse)) return;
 
-        const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.window.open.targets);
+            const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.window.open.targets);
 
-        /* 判断目标元素是否有效 */
-        if (meta.valid) {
-            this.logger.info(meta.href);
-            if (this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
-                /* 思源协议 siyuan:// 需要转化为 http(s):// 协议 */
-                if (meta.href.startsWith("siyuan://") && this.config.window.siyuan.enable) {
-                    meta.href = buildSiyuanWebURL(
-                        editorType2Pathname(this.config.window.siyuan.editorType),
-                        { url: meta.href },
-                    );
-                }
-
-                try {
+            /* 打开超链接 */
+            if (meta.valid) {
+                this.logger.info(meta.href);
+                if (this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    this.openWindow(meta.href, {
-                        x: e.screenX,
-                        y: e.screenY,
-                        title: meta.title || this.name,
-                    });
-                } catch (e) {
-                    this.logger.warn(e);
+                    /* 思源协议 siyuan:// 需要使用单独的方案 */
+                    if (meta.href.startsWith("siyuan://")) {
+                        if (this.config.window.siyuan.enable) {
+                            /* 打开思源编辑器 */
+                            const url = buildSiyuanWebURL(
+                                editorType2Pathname(this.config.window.siyuan.editorType),
+                                { url: meta.href },
+                            );
+                            this.openSiyuanWindow(url, e);
+                        }
+                    }
+                    else {
+                        this.openWindow(meta.href, {
+                            x: e.screenX,
+                            y: e.screenY,
+                            title: meta.title || this.name,
+                        });
+                    }
                 }
             }
-        }
 
-        /* 打开思源编辑器 */
-        if (this.config.window.siyuan.enable) {
-            const block_id = getBlockID(e);
-            if (block_id) {
-                try {
+            /* 打开思源编辑器 */
+            if (this.config.window.siyuan.enable) {
+                const block_id = getBlockID(e);
+                if (block_id) {
                     e.preventDefault();
                     e.stopPropagation();
 
@@ -340,19 +364,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
                             focus: this.config.window.siyuan.focus,
                         }
                     );
-                    switch (this.config.window.siyuan.editorType) {
-                        case EditorType.desktop:
-                            this.openSiyuanDesktopWindow(e, url.href);
-                            break;
-
-                        case EditorType.mobile:
-                            this.openSiyuanMobileWindow(e, url.href);
-                            break;
-                    }
-                } catch (e) {
-                    this.logger.warn(e);
+                    this.openSiyuanWindow(url, e);
                 }
             }
+        } catch (e) {
+            this.logger.warn(e);
         }
     }
 };
