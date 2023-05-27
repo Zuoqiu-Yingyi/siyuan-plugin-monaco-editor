@@ -93,7 +93,7 @@ export const DEFAULT_CONFIG: IConfig = {
                         enable: true,
                     },
                     other: {
-                        enable: true,
+                        enable: false,
                     },
                 }
             },

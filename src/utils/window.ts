@@ -34,9 +34,9 @@ export enum MenuBarStatus {
 
 /* 页面配置 */
 export interface IWebPreferences extends Electron.WebPreferences {
-    defaultFontSize: number, // 默认字体大小
-    defaultFontFamily: {
-        standard: string, // 默认字体
+    defaultFontSize?: number, // 默认字体大小
+    defaultFontFamily?: {
+        standard?: string, // 默认字体
     },
 }
 
@@ -46,6 +46,9 @@ export interface IOverwrite extends Electron.BrowserWindowConstructorOptions {
     y: number, // 窗口纵坐标
     title: string, // 窗口标题
     webPreferences?: IWebPreferences, // 页面配置
+
+    enableMenuBar?: boolean, // (自定义) 是否启用菜单栏
+    enableElectron?: boolean, // (自定义) 是否启用 Electron 环境
 }
 
 export function openNewWindow(
@@ -71,6 +74,14 @@ export function openNewWindow(
         }
         else {
             window.removeMenu();
+        }
+
+        /* 是否启用 Electron 环境 */
+        if (params.enableElectron) {
+            globalThis
+                .require('@electron/remote')
+                .require('@electron/remote/main')
+                .enable(window.webContents);
         }
 
         /* 加载 URL */

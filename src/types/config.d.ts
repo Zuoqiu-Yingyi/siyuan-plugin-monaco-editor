@@ -56,10 +56,11 @@ export interface IWindowParams extends Electron.BrowserWindowConstructorOptions 
     frame: boolean, // 窗口边框
     alwaysOnTop: boolean, // 是否置顶
     autoHideMenuBar: boolean, // 是否自动隐藏菜单栏
+
     enableMenuBar: boolean, // 是否启用菜单栏
 }
 
-export interface ISiyuanWindow { 
+export interface ISiyuanWindow {
     enable: boolean, // 是否打开思源编辑窗口
     focus: boolean, // 打开的思源编辑窗口是否默认聚焦
     editorType: EditorType.desktop | EditorType.mobile, // 打开的思源编辑器类型

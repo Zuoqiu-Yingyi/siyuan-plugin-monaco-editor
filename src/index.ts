@@ -163,7 +163,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     public openWindow(
         href: string,
-        params: IOverwrite | IWindowParams = {
+        params: IOverwrite = {
             x: 0,
             y: 0,
             title: null,
@@ -189,22 +189,35 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
-    public openSiyuanDesktopWindow(e?: MouseEvent): void {
+    public openSiyuanDesktopWindow(e?: MouseEvent, href?: string): void {
         const params = {
             x: e?.screenX | 0,
             y: e?.screenY | 0,
             title: "desktop",
+            alwaysOnTop: false, // 桌面端禁用置顶
+            autoHideMenuBar: false, // 禁用自动隐藏菜单栏
+            webPreferences: {
+                nodeIntegration: true, // 是否启用 Node.js 内置模块
+                webviewTag: true, // 是否启用 webview 标签
+                contextIsolation: false, // 是否开启上下文隔离, 设置 false 之后可以使用 require
+            },
+
+            enableMenuBar: true, // (自定义) 启用菜单栏
+            enableElectron: true, // (自定义) 启用 Electron 环境
         }
-        this.openWindow(buildSiyuanWebURL(Pathname.desktop).href, params);
+        this.openWindow(href || buildSiyuanWebURL(Pathname.desktop).href, params);
     }
 
-    public openSiyuanMobileWindow(e?: MouseEvent): void {
+    public openSiyuanMobileWindow(e?: MouseEvent, href?: string): void {
         const params = {
             x: e?.screenX | 0,
             y: e?.screenY | 0,
-            title: "desktop",
+            title: "mobile",
+            alwaysOnTop: false, // 移动端启用置顶
+            enableMenuBar: true, // 启用菜单栏
+            autoHideMenuBar: false, // 禁用自动隐藏菜单栏
         }
-        this.openWindow(buildSiyuanWebURL(Pathname.mobile).href, params);
+        this.openWindow(href || buildSiyuanWebURL(Pathname.mobile).href, params);
     }
 
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
@@ -320,22 +333,22 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    this.openWindow(
-                        buildSiyuanWebURL(
-                            editorType2Pathname(this.config.window.siyuan.editorType),
-                            {
-                                id: block_id,
-                                focus: this.config.window.siyuan.focus,
-                            }
-                        ).href,
+                    const url = buildSiyuanWebURL(
+                        editorType2Pathname(this.config.window.siyuan.editorType),
                         {
-                            x: e.screenX,
-                            y: e.screenY,
-                            title: undefined,
-                            enableMenuBar: true,
-                            autoHideMenuBar: false,
-                        },
+                            id: block_id,
+                            focus: this.config.window.siyuan.focus,
+                        }
                     );
+                    switch (this.config.window.siyuan.editorType) {
+                        case EditorType.desktop:
+                            this.openSiyuanDesktopWindow(e, url.href);
+                            break;
+
+                        case EditorType.mobile:
+                            this.openSiyuanMobileWindow(e, url.href);
+                            break;
+                    }
                 } catch (e) {
                     this.logger.warn(e);
                 }
