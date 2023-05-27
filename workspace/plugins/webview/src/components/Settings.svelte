@@ -37,6 +37,7 @@
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
     import { MenuBarStatus } from "@/utils/window";
+    import { EditorType } from "~/../../packages/utils/siyuan";
 
     export let config: IConfig; // 传入的配置项
     export let plugin: InstanceType<typeof WebviewPlugin>; // 插件实例
@@ -68,6 +69,7 @@
         general,
         protocol,
         shortcut,
+        siyuan,
     }
 
     let panels_focus_key = PanelKey.general;
@@ -113,6 +115,12 @@
                 text: i18n.settings.shortcut,
                 name: i18n.settings.shortcut,
                 icon: "⌨",
+            },
+            {
+                key: TabKey.siyuan,
+                text: i18n.settings.siyuan.title,
+                name: i18n.settings.siyuan.title,
+                icon: "📝",
             },
         ] as ITab[],
     };
@@ -465,6 +473,95 @@
                     mouseButtonOptions={[{ key: MouseButton.Middle, text: i18n.settings.mouse.middle }]}
                     on:changed={updated}
                 />
+            </div>
+
+            <!-- 标签页 4 - 思源窗口设置 -->
+            <div
+                data-type={tabs.tab[3].name}
+                class:fn__none={tabs.tab[3].key !== focusTab}
+            >
+                <!-- 是否启用 -->
+                <Item
+                    title={i18n.settings.siyuan.enable.title}
+                    text={i18n.settings.siyuan.enable.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="enable"
+                        settingValue={config.window.siyuan.enable}
+                        on:changed={e => {
+                            config.window.siyuan.enable = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 打开一个桌面端编辑器 -->
+                <Item
+                    title={i18n.settings.siyuan.open.desktop.title}
+                    text={i18n.settings.siyuan.open.desktop.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.button}
+                        settingKey="Reset"
+                        settingValue={i18n.settings.siyuan.open.desktop.text}
+                        on:clicked={e => plugin.openSiyuanDesktopWindow(e.detail.event)}
+                    />
+                </Item>
+
+                <!-- 打开一个移动端编辑器 -->
+                <Item
+                    title={i18n.settings.siyuan.open.mobile.title}
+                    text={i18n.settings.siyuan.open.mobile.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.button}
+                        settingKey="Reset"
+                        settingValue={i18n.settings.siyuan.open.mobile.text}
+                        on:clicked={e => plugin.openSiyuanMobileWindow(e.detail.event)}
+                    />
+                </Item>
+
+                <!-- 是否默认聚焦 -->
+                <Item
+                    title={i18n.settings.siyuan.focus.title}
+                    text={i18n.settings.siyuan.focus.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="focus"
+                        settingValue={config.window.siyuan.focus}
+                        on:changed={e => {
+                            config.window.siyuan.focus = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 默认打开的思源编辑器 -->
+                <Item
+                    title={i18n.settings.siyuan.editorType.title}
+                    text={i18n.settings.siyuan.editorType.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.select}
+                        settingKey="menuBar"
+                        settingValue={config.window.siyuan.editorType}
+                        on:changed={e => {
+                            config.window.siyuan.editorType = e.detail.value;
+                            updated();
+                        }}
+                        options={[
+                            { key: EditorType.mobile, text: i18n.settings.siyuan.editorType.options.mobile },
+                            { key: EditorType.desktop, text: i18n.settings.siyuan.editorType.options.desktop },
+                        ]}
+                    />
+                </Item>
             </div>
         </Tabs>
     </Panel>

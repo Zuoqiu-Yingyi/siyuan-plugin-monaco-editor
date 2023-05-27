@@ -54,6 +54,37 @@
       "title": "List of active URL schemes"
     },
     "shortcut": "Shortcut",
+    "siyuan": {
+      "editorType": {
+        "description": "The type of SiYuan editor that opens in a new window by default",
+        "options": {
+          "desktop": "Desktop Editor",
+          "mobile": "Mobile Editor"
+        },
+        "title": "Editor Type"
+      },
+      "enable": {
+        "description": "Open SiYuan Editor in a new window",
+        "title": "Enable"
+      },
+      "focus": {
+        "description": "Whether the SiYuan editor opened in a new window is focused by default",
+        "title": "Focus"
+      },
+      "open": {
+        "desktop": {
+          "description": "Open a window of SiYuan desktop editor",
+          "text": "Open",
+          "title": "Desktop Editor"
+        },
+        "mobile": {
+          "description": "Open a window of SiYuan mobile editor",
+          "text": "Open",
+          "title": "Mobile Editor"
+        }
+      },
+      "title": "SiYuan"
+    },
     "window": {
       "height": {
         "description": "The default height of the new window",
@@ -62,9 +93,9 @@
       "menuBar": {
         "description": "The visible state of the menu bar",
         "options": {
+          "alwaysShow": "Always Show",
           "autoHide": "Auto Hide",
-          "disabled": "Disabled",
-          "alwaysShow": "Always Show"
+          "disabled": "Disabled"
         },
         "title": "Menu Bar"
       },

@@ -7,6 +7,7 @@
 - 添加 `使用新窗口打开` 按钮 | Add `Open with a new window` button.
 - 修复菜单栏状态设置失效问题 | Fix the issue that the menu bar status setting is invalid.
 - 修复设置面板无法完全填充问题 | Fix the issue that the settings panel cannot be fully filled.
+- 添加 `使用新窗口打开思源编辑器` 功能 | Add `Open SiYuan Editor in a new window` function.
 
 ## 2023-05-26
 

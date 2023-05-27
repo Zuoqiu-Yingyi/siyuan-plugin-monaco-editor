@@ -16,7 +16,9 @@
  */
 
 import type { IConfig } from "@/types/config";
+
 import { MouseButton } from "@workspace/utils/shortcut";
+import { EditorType } from "@workspace/utils/siyuan";
 
 /* 默认配置选项 */
 export const DEFAULT_CONFIG: IConfig = {
@@ -96,10 +98,10 @@ export const DEFAULT_CONFIG: IConfig = {
                 }
             },
             protocols: {
-                // siyuan: {
-                //     enable: true,
-                //     prefix: "siyuan://",
-                // },
+                siyuan: {
+                    enable: true,
+                    prefix: "siyuan://",
+                },
                 https: {
                     enable: true,
                     prefix: "https://",
@@ -133,6 +135,11 @@ export const DEFAULT_CONFIG: IConfig = {
             alwaysOnTop: true,
             autoHideMenuBar: true,
             enableMenuBar: true,
-        }
+        },
+        siyuan: {
+            enable: true,
+            focus: false,
+            editorType: EditorType.mobile,
+        },
     },
 };

@@ -35,12 +35,12 @@
 
     const dispatch = createEventDispatcher();
 
-    function clicked() {
-        dispatch("clicked");
+    function clicked(event: MouseEvent) {
+        dispatch("clicked", { event });
     }
 
-    function changed() {
-        dispatch("changed", { key: settingKey, value: settingValue });
+    function changed(event: Event) {
+        dispatch("changed", { key: settingKey, value: settingValue, event });
     }
 </script>
 

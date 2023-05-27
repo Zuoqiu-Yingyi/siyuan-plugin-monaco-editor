@@ -16,6 +16,7 @@
  */
 
 import type { Electron } from "@workspace/types/electron";
+import { EditorType } from "@workspace/utils/siyuan";
 import { IMouseStatus, type IKeyboardStatus } from "@workspace/utils/shortcut";
 
 /* 常规设置 */
@@ -58,6 +59,12 @@ export interface IWindowParams extends Electron.BrowserWindowConstructorOptions 
     enableMenuBar: boolean, // 是否启用菜单栏
 }
 
+export interface ISiyuanWindow { 
+    enable: boolean, // 是否打开思源编辑窗口
+    focus: boolean, // 打开的思源编辑窗口是否默认聚焦
+    editorType: EditorType.desktop | EditorType.mobile, // 打开的思源编辑器类型
+}
+
 export interface IConfig {
     /* 常规设置 */
     general: IGeneral,
@@ -72,5 +79,6 @@ export interface IConfig {
         enable: boolean, // 是否启用
         open: IOpen, // 打开相关配置
         params: IWindowParams, // 窗口参数
+        siyuan: ISiyuanWindow, // 思源窗口参数
     }
 }

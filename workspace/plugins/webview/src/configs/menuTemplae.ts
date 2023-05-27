@@ -61,7 +61,6 @@ export function createMenuTemplate(
         ) as Array<Electron.MenuItemConstructorOptions>,
 
         { role: "close" }, // 关闭
-        { role: "quit" }, // 退出
     ];
     const editMenu: Array<Electron.MenuItemConstructorOptions> = [ // 编辑菜单
         { role: "undo" }, // 撤销
@@ -103,7 +102,7 @@ export function createMenuTemplate(
 
         { type: "separator" },
         { role: "resetZoom" }, // 重置缩放
-        { role: "zoomIn" }, // 放大
+        { role: 'zoomIn', accelerator: 'CmdOrCtrl+=' }, // 放大
         { role: "zoomOut" }, // 缩小
 
         ...(isMacOS

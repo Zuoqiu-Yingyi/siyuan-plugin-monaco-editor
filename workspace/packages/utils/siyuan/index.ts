@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import siyuan from "siyuan";
-
-export type BlockID = string;
-
-export type openTabParameters = Parameters<siyuan.openTab>;
-export type openTabParametersOptions = openTabParameters[0];
-export type openTabParametersOptionsCustom = openTabParametersOptions.custom;
+/* 思源界面类型 */
+export enum EditorType {
+    window,
+    app,
+    desktop,
+    mobile,
+}

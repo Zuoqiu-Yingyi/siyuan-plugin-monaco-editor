@@ -54,6 +54,37 @@
       "title": "激活的 URL 協議列表"
     },
     "shortcut": "快捷鍵",
+    "siyuan": {
+      "editorType": {
+        "description": "默認在新窗口中打開的思源編輯器類型",
+        "options": {
+          "desktop": "桌面端編輯器",
+          "mobile": "移動端編輯器"
+        },
+        "title": "編輯器類型"
+      },
+      "enable": {
+        "description": "在新窗口中打開思源編輯器",
+        "title": "啟用"
+      },
+      "focus": {
+        "description": "在新窗口中打開的思源編輯器是否默認聚焦",
+        "title": "聚焦"
+      },
+      "open": {
+        "desktop": {
+          "description": "打開一個思源桌面端編輯器窗口",
+          "text": "打開",
+          "title": "桌面端編輯器"
+        },
+        "mobile": {
+          "description": "打開一個思源移動端編輯器窗口",
+          "text": "打開",
+          "title": "移動端編輯器"
+        }
+      },
+      "title": "思遠"
+    },
     "window": {
       "height": {
         "description": "新窗口的默認高度",
@@ -62,19 +93,19 @@
       "menuBar": {
         "description": "菜單欄的可見狀態",
         "options": {
+          "alwaysShow": "總是顯示",
           "autoHide": "自動隱藏",
-          "disabled": "禁用",
-          "alwaysShow": "總是顯示"
+          "disabled": "禁用"
         },
-        "title": "菜单栏"
+        "title": "菜單欄"
       },
       "top": {
         "description": "打开的新窗口是否默认置顶",
-        "title": "窗口置顶"
+        "title": "窗口置頂"
       },
       "width": {
         "description": "新窗口的默认宽度",
-        "title": "窗口宽度"
+        "title": "窗口寬度"
       }
     }
   },

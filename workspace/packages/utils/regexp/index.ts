@@ -15,10 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import siyuan from "siyuan";
-
-export type BlockID = string;
-
-export type openTabParameters = Parameters<siyuan.openTab>;
-export type openTabParametersOptions = openTabParameters[0];
-export type openTabParametersOptionsCustom = openTabParametersOptions.custom;
+export default {
+    id: /^\d{14}\-[0-9a-z]{7}$/, // 块 ID 正则表达式
+    url: /^siyuan:\/\/blocks\/(\d{14}\-[0-9a-z]{7})/, // 思源 URL Scheme 正则表达式
+}

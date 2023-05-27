@@ -51,7 +51,7 @@ export interface IOverwrite extends Electron.BrowserWindowConstructorOptions {
 export function openNewWindow(
     url: URL, // 窗口地址
     windowParams: IWindowParams, // 窗口参数
-    overwriteParams: IOverwrite, // 覆盖参数
+    overwriteParams: IOverwrite | IWindowParams, // 覆盖参数
     webPreferences: IWebPreferences, // 页面参数
     plugin: InstanceType<typeof WebviewPlugin>, // 插件对象
 ): Window | Electron.BrowserWindow {
@@ -63,16 +63,24 @@ export function openNewWindow(
             Menu,
         } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
         const window = new BrowserWindow(params);
+
+        /* 是否启用菜单栏 */
         if (params.enableMenuBar) {
             const menu = Menu.buildFromTemplate(createMenuTemplate(globalThis.process.platform === "darwin", params.alwaysOnTop));
             window.setMenu(menu);
         }
+        else {
+            window.removeMenu();
+        }
+
+        /* 加载 URL */
         window.loadURL(
             url.href,
             {
                 userAgent: plugin.useragent,
             },
         );
+
         return window;
     }
     else {
