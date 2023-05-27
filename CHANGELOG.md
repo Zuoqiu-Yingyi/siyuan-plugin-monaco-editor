@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-05-28
+
+- 添加 CD 配置 | Add CD configuration.
+
 ## 2023-05-27
 
 - 实现在新窗口打开功能 | Implement open in new window function.
