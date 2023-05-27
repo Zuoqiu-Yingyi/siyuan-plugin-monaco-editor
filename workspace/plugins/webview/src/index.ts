@@ -22,10 +22,12 @@ import { Logger } from "@workspace/utils/logger";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
+import regexp from "@workspace/utils/regexp";
 import {
     Pathname,
     buildSiyuanWebURL,
     editorType2Pathname,
+    parseSiyuanURL,
 } from "@workspace/utils/siyuan/url";
 
 // import Settings from "@workspace/components/siyuan/setting/Example.svelte";
@@ -340,7 +342,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                             /* 打开思源编辑器 */
                             const url = buildSiyuanWebURL(
                                 editorType2Pathname(this.config.window.siyuan.editorType),
-                                { url: meta.href },
+                                parseSiyuanURL(new URL(meta.href)),
                             );
                             this.openSiyuanWindow(url, e);
                         }

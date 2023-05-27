@@ -11,6 +11,7 @@
 - 在新窗口打开的思源编辑器中添加 `Electron` 上下文 | Add `Electron` context to SiYuan Editor opened in a new window.
 - 调整桌面端与移动端窗口的默认设置 | Adjust the default settings of desktop and mobile windows.
 - 调整在新窗口打开触发策略 | Adjust the trigger strategy for opening in a new window.
+- 优化思源超链接解析 | Optimize SiYuan hyperlinks parsing.
 
 ## 2023-05-26
 

@@ -17,6 +17,7 @@
 
 import { BlockID } from "@workspace/types/siyuan";
 import { EditorType } from ".";
+import regexp from "../regexp";
 
 /* 思源各 web 端路径 */
 export enum Pathname {
@@ -57,4 +58,20 @@ export function buildSiyuanWebURL(pathname: Pathname, params?: { id?: BlockID, f
         url.searchParams.set("url", params.url);
     }
     return url;
+}
+
+/**
+ * 解析思源 URL
+ * @params url: URL
+ */
+export function parseSiyuanURL(url: URL) {
+    if (regexp.url.test(url.href)) {
+        return {
+            id: regexp.url.exec(url.href)![1],
+            focus: url.searchParams.get("focus") === "1",
+        }
+    }
+    else { 
+        return null;
+    }
 }
