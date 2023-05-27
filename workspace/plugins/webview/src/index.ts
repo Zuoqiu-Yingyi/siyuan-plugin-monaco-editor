@@ -256,19 +256,22 @@ export default class WebviewPlugin extends siyuan.Plugin {
      */
     protected parseHyperlinkMeta(element: HTMLElement, targets: ITargets) {
         const meta = {
-            valid: false,
-            href: undefined,
-            title: undefined,
+            valid: false, // 是否为有效的超链接
+            enabled: false, // 是否为激活的超链接
+            href: undefined, // 超链接目标
+            title: undefined, // 超链接标题/锚文本
         };
         switch (element.localName) {
             case "a":
-                meta.valid = targets.hyperlink.other.enable;
+                meta.valid = true;
+                meta.enabled = targets.hyperlink.other.enable;
                 meta.href = (element as HTMLAnchorElement).href;
                 meta.title = element.title || element.innerText;
                 break;
             case "span":
                 if (/\ba\b/.test(element.dataset.type)) {
-                    meta.valid = targets.hyperlink.editor.enable;
+                    meta.valid = true;
+                    meta.enabled = targets.hyperlink.editor.enable;
                     meta.href = element.dataset.href;
                     meta.title = element.dataset.title || element.innerText;
                 }
@@ -323,9 +326,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
             const meta = this.parseHyperlinkMeta(e.target as HTMLElement, this.config.window.open.targets);
 
             /* 打开超链接 */
-            if (meta.valid) {
+            if (meta.valid) { // 是否为超链接
                 this.logger.info(meta.href);
-                if (this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
+
+                /* 仅访问激活的超链接 */
+                if (meta.enabled && this.isUrlSchemeAvailable(meta.href, this.config.window.open.protocols)) {
                     e.preventDefault();
                     e.stopPropagation();
 
@@ -349,24 +354,26 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     }
                 }
             }
+            else { // 不为超链接
+                /* 打开思源编辑器 */
+                if (this.config.window.siyuan.enable) {
+                    const block_id = getBlockID(e);
+                    if (block_id) {
+                        e.preventDefault();
+                        e.stopPropagation();
 
-            /* 打开思源编辑器 */
-            if (this.config.window.siyuan.enable) {
-                const block_id = getBlockID(e);
-                if (block_id) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const url = buildSiyuanWebURL(
-                        editorType2Pathname(this.config.window.siyuan.editorType),
-                        {
-                            id: block_id,
-                            focus: this.config.window.siyuan.focus,
-                        }
-                    );
-                    this.openSiyuanWindow(url, e);
+                        const url = buildSiyuanWebURL(
+                            editorType2Pathname(this.config.window.siyuan.editorType),
+                            {
+                                id: block_id,
+                                focus: this.config.window.siyuan.focus,
+                            }
+                        );
+                        this.openSiyuanWindow(url, e);
+                    }
                 }
             }
+
         } catch (e) {
             this.logger.warn(e);
         }
