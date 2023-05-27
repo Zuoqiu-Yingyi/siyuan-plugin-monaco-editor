@@ -1,0 +1,124 @@
+{
+  "message": {
+    "nonStandardURL": "is not standardized, please enter the URL address of the specification"
+  },
+  "settings": {
+    "general": "General",
+    "generalSettings": {
+      "reset": {
+        "description": "Reset all settings options to default (The page will be refreshed after resetting)",
+        "text": "Reset",
+        "title": "Reset settings options"
+      },
+      "title": "General",
+      "useragent": {
+        "description": "Use custom <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent\">User-Agent</a>, leave this item blank to use the default User-Agent (Only desktop client)",
+        "title": "User-Agent (UA)"
+      }
+    },
+    "mouse": {
+      "back": "Back button",
+      "button": "Mouse button",
+      "forward": "Forward button",
+      "left": "Left button",
+      "middle": "Middle button",
+      "right": "Right button"
+    },
+    "open": {
+      "editorHyperlink": {
+        "description": "Access hyperlinks in the editor",
+        "title": "Editor Hyperlink"
+      },
+      "enable": {
+        "tab": {
+          "description": "Open the hyperlink in a new tab (Only desktop client)",
+          "title": "Enable"
+        },
+        "window": {
+          "description": "Open the hyperlink in a new window",
+          "title": "Enable"
+        }
+      },
+      "otherHyperlink": {
+        "description": "Access hyperlinks elsewhere",
+        "title": "Other Hyperlink"
+      },
+      "shortcut": {
+        "title": "Key combination for opening hyperlinks"
+      }
+    },
+    "openTab": "Open Tab",
+    "openWindow": "Open Window",
+    "protocol": "Protocol",
+    "protocols": {
+      "title": "List of active URL schemes"
+    },
+    "shortcut": "Shortcut",
+    "siyuan": {
+      "editorType": {
+        "description": "The type of SiYuan editor that opens in a new window by default",
+        "options": {
+          "desktop": "Desktop Editor",
+          "mobile": "Mobile Editor"
+        },
+        "title": "Editor Type"
+      },
+      "enable": {
+        "description": "Open SiYuan Editor in a new window",
+        "title": "Enable"
+      },
+      "focus": {
+        "description": "Whether the SiYuan editor opened in a new window is focused by default",
+        "title": "Focus"
+      },
+      "open": {
+        "desktop": {
+          "description": "Open a window of SiYuan desktop editor",
+          "text": "Open",
+          "title": "Desktop Editor"
+        },
+        "mobile": {
+          "description": "Open a window of SiYuan mobile editor",
+          "text": "Open",
+          "title": "Mobile Editor"
+        }
+      },
+      "title": "SiYuan Editor"
+    },
+    "window": {
+      "height": {
+        "description": "The default height of the new window",
+        "title": "Window Height"
+      },
+      "menuBar": {
+        "description": "The visible state of the menu bar",
+        "options": {
+          "alwaysShow": "Always Show",
+          "autoHide": "Auto Hide",
+          "disabled": "Disabled"
+        },
+        "title": "Menu Bar"
+      },
+      "top": {
+        "description": "Whether new windows are pinned to the top by default",
+        "title": "Window Top"
+      },
+      "width": {
+        "description": "The default width of the new window",
+        "title": "Window Width"
+      }
+    }
+  },
+  "webview": {
+    "closeDevTools": "Close developer tools",
+    "enterFullscreen": "Enter full-screen mode",
+    "exitFullscreen": "Exit full-screen mode",
+    "goBackOnePage": "Go back one page",
+    "goForwardOnePage": "Go forward one page",
+    "openDevTools": "Open developer tools",
+    "openWithDefaultProgram": "Open with default program",
+    "openWithNewWindow": "Open with a new window",
+    "reloadCurrentPage": "Reload current page",
+    "stopLoadingThisPage": "Stop loading this page"
+  }
+}
