@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="icon" src="./icon.png" style="width: 8em; height: 8em;">
+<img alt="icon" src="https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-webview/public/icon.png" style="width: 8em; height: 8em;">
 
 ---
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Zuoqiu-Yingyi/siyuan-plugin-webview?include_prereleases&style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/releases/latest)
@@ -22,7 +22,7 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that allows yo
 
 ## PREVIEW
 
-![preview image](./preview.png)
+![preview image](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-webview/public/preview.png)
 
 ## INTRODUCTION
 

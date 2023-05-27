@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="图标" src="./icon.png" style="width: 8em; height: 8em;">
+<img alt="图标" src="https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-webview/public/icon.png" style="width: 8em; height: 8em;">
 
 ---
 [![GitHub 最新发行版本 (最新一次发行/预发行)](https://img.shields.io/github/v/release/Zuoqiu-Yingyi/siyuan-plugin-webview?include_prereleases&style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/releases/latest)
@@ -22,7 +22,7 @@
 
 ## 预览
 
-![预览图片](./preview.png)
+![预览图片](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-webview/public/preview.png)
 
 ## 介绍
 
