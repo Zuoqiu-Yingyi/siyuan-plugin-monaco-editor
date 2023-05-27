@@ -9,18 +9,15 @@
         "zh_CHT": "網頁視圖"
     },
     "description": {
-        "default": "Provide multi-tab/multi-window web page view for SiYuan",
-        "zh_CN": "为思源提供多页签/多窗口的网页视图",
-        "zh_CHT": "為思源提供多頁簽/多窗口的網頁視圖"
+        "default": "Provide <code class='fn__code'>multi-tab / multi-window web</code> page view for SiYuan",
+        "zh_CN": "为思源提供 <code class='fn__code'>多页签 / 多窗口</code> 网页视图",
+        "zh_CHT": "為思源提供 <code class='fn__code'>多頁簽 / 多窗口</code> 網頁視圖"
     },
     "readme": {
-        "default": "README.md"
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
     },
-    "i18n": [
-        "en_US",
-        "zh_CN",
-        "zh_CHT"
-    ],
     "funding": {
         "openCollective": "",
         "patreon": "",

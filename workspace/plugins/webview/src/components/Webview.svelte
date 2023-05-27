@@ -145,8 +145,9 @@
         webview.addEventListener("page-title-updated", e => {
             // plugin.logger.debug(e)
             // plugin.logger.debug(tab);
-            tab.tab?.updateTitle(e.title);
             tab.data.title = e.title;
+            tab.tab.updateTitle(e.title);
+            tab.tab.headElement.ariaLabel = e.title;
         });
 
         /**
