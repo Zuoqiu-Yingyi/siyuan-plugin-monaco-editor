@@ -61,50 +61,53 @@ export function openNewWindow(
     overwriteParams.webPreferences = merge(overwriteParams.webPreferences || {}, webPreferences) as IWebPreferences;
     const params = merge(windowParams, overwriteParams) as IOverwrite & IWindowParams;
     if (isElectron()) {
-        const {
-            BrowserWindow,
-            Menu,
-        } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
-        const window = new BrowserWindow(params);
+        try {
+            const {
+                BrowserWindow,
+                Menu,
+            } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
+            const window = new BrowserWindow(params);
 
-        /* 是否启用菜单栏 */
-        if (params.enableMenuBar) {
-            const menu = Menu.buildFromTemplate(createMenuTemplate(globalThis.process.platform === "darwin", params.alwaysOnTop));
-            window.setMenu(menu);
+            /* 是否启用菜单栏 */
+            if (params.enableMenuBar) {
+                const menu = Menu.buildFromTemplate(createMenuTemplate(globalThis.process.platform === "darwin", params.alwaysOnTop));
+                window.setMenu(menu);
+            }
+            else {
+                window.removeMenu();
+            }
+
+            /* 是否启用 Electron 环境 */
+            if (params.enableElectron) {
+                globalThis
+                    .require('@electron/remote')
+                    .require('@electron/remote/main')
+                    .enable(window.webContents);
+            }
+
+            /* 加载 URL */
+            window.loadURL(
+                url.href,
+                {
+                    userAgent: plugin.useragent,
+                },
+            );
+
+            return window;
+        } catch (err) {
+            plugin.logger.warn(err);
         }
-        else {
-            window.removeMenu();
-        }
-
-        /* 是否启用 Electron 环境 */
-        if (params.enableElectron) {
-            globalThis
-                .require('@electron/remote')
-                .require('@electron/remote/main')
-                .enable(window.webContents);
-        }
-
-        /* 加载 URL */
-        window.loadURL(
-            url.href,
-            {
-                userAgent: plugin.useragent,
-            },
-        );
-
-        return window;
     }
-    else {
-        return globalThis.open(
-            url.href,
-            url.href,
-            [
-                `popup = true`,
-                `width = ${params.width}`,
-                `height = ${params.height}`,
-                `left = ${params.x}`,
-                `top = ${params.y}`,
-            ].join(","),
-        );
-    }
+
+    return globalThis.open(
+        url.href,
+        url.href,
+        [
+            `popup = true`,
+            `width = ${params.width}`,
+            `height = ${params.height}`,
+            `left = ${params.x}`,
+            `top = ${params.y}`,
+        ].join(","),
+    );
 }

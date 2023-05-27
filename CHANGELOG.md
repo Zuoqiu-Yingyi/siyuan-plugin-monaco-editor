@@ -9,6 +9,7 @@
 - 修复设置面板无法完全填充问题 | Fix the issue that the settings panel cannot be fully filled.
 - 添加 `使用新窗口打开思源编辑器` 功能 | Add `Open SiYuan Editor in a new window` function.
 - 在新窗口打开的思源编辑器中添加 `Electron` 上下文 | Add `Electron` context to SiYuan Editor opened in a new window.
+- 调整桌面端与移动端窗口的默认设置 | Adjust the default settings of desktop and mobile windows.
 
 ## 2023-05-26
 
