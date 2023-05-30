@@ -3,6 +3,12 @@
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview",
     "version": "1.0.0",
+    "backends": [
+        "all"
+    ],
+    "frontends": [
+        "all"
+    ],
     "displayName": {
         "default": "Web Page View",
         "zh_CN": "网页视图",

@@ -17,12 +17,15 @@
 
 import siyuan from "siyuan";
 
-import { isElectron } from "@workspace/utils/env/front-end";
+import {
+    isElectron,
+    isDesktop,
+    isMobile,
+} from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
-import regexp from "@workspace/utils/regexp";
 import {
     Pathname,
     buildSiyuanWebURL,
@@ -96,7 +99,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
-                if (isElectron() && !siyuan.isMobile()) {
+                if (isElectron() && isDesktop()) {
                     /* 注册触发打开页签动作的监听器 */
                     globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
                 }
@@ -109,7 +112,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
-        if (isElectron() && !siyuan.isMobile()) {
+        if (isElectron() && isDesktop()) {
             /* 移除触发打开页签动作的监听器 */
             globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
@@ -122,8 +125,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
         const dialog = new siyuan.Dialog({
             title: that.name,
             content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
-            width: siyuan.isMobile() ? "92vw" : "720px",
-            height: siyuan.isMobile() ? undefined : "640px",
+            width: isMobile() ? "92vw" : "720px",
+            height: isMobile() ? undefined : "640px",
         });
         const settings = new Settings({
             target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
@@ -151,6 +154,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     public openWebviewTab(href: string, title?: string, icon: string = "iconLanguage") {
         siyuan.openTab({
+            app: this.app,
             custom: {
                 icon,
                 title: title || this.name,
