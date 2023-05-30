@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import siyuan from "siyuan";
+
 const FLAG_ELECTRON = globalThis.navigator.userAgent.includes('Electron');
 
 export function hasNodeRequire(): boolean {
@@ -27,4 +29,52 @@ export function hasNodeProcess(): boolean {
 
 export function isElectron(): boolean {
     return hasNodeProcess() && hasNodeRequire();
+}
+
+export function isDesktop(): boolean {
+    switch (siyuan.getFrontend()) {
+        case "desktop":
+        case "desktop-window":
+        case "browser-desktop":
+            return true;
+
+        case "mobile":
+        case "browser-mobile":
+            return false;
+
+        default:
+            return false;
+    }
+}
+
+export function isMobile(): boolean {
+    switch (siyuan.getFrontend()) {
+        case "mobile":
+        case "browser-mobile":
+            return true;
+
+        case "desktop":
+        case "desktop-window":
+        case "browser-desktop":
+            return false;
+
+        default:
+            return false;
+    }
+}
+
+export function isBrowser(): boolean {
+    switch (siyuan.getFrontend()) {
+        case "browser-desktop":
+        case "browser-mobile":
+            return true;
+
+        case "desktop":
+        case "desktop-window":
+        case "mobile":
+            return false;
+
+        default:
+            return false;
+    }
 }

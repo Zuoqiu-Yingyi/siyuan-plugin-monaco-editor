@@ -15,18 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * REF https://github.com/siyuan-note/plugin-sample/blob/main/src/siyuan.d.ts
- * update: 2023-05-25 23:18 +08:00
- * commit: https://github.com/siyuan-note/plugin-sample/blob/c011324d1f91d34ff2fecefdf517132fc1ec07e3/src/siyuan.d.ts
- */
+type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf" |
+    "click-editortitleicon" | "open-noneditableblock"
 
-type TEventBus = "ws-main" | "click-blockicon" | "click-editorcontent" | "click-pdf" | "click-editortitleicon"
+type TCardType = "doc" | "notebook" | "all"
 
 declare global {
     interface Window {
         Lute: Lute
     }
+}
+
+interface ITab {
+    id: string;
+    headElement: HTMLElement;
+    panelElement: HTMLElement;
+    model: IModel;
+    title: string;
+    icon: string;
+    docIcon: string;
+    updateTitle: (title: string) => void;
+    pin: () => void;
+    unpin: () => void;
+    setDocIcon: (icon: string) => void;
+    close: () => void;
+}
+
+interface IModel {
+    element: Element;
+    tab: ITab;
+    data: any;
+    type: string;
 }
 
 interface IObject {
@@ -41,6 +60,31 @@ interface ILuteNode {
         },
         HeadingLevel: string,
     };
+}
+
+interface ISearchOption {
+    page?: number
+    group?: number,  // 0：不分组，1：按文档分组
+    hasReplace?: boolean,
+    method?: number //  0：文本，1：查询语法，2：SQL，3：正则表达式
+    hPath?: string
+    idPath?: string[]
+    k: string
+    r?: string
+    types?: {
+        mathBlock: boolean
+        table: boolean
+        blockquote: boolean
+        superBlock: boolean
+        paragraph: boolean
+        document: boolean
+        heading: boolean
+        list: boolean
+        listItem: boolean
+        codeBlock: boolean
+        htmlBlock: boolean
+        embedBlock: boolean
+    }
 }
 
 interface IWebSocketData {
@@ -79,30 +123,52 @@ interface IMenuItemOption {
     element?: HTMLElement
 }
 
-export function fetchPost(url: string, data?: any, cb?: (response: IWebSocketData) => void, headers?: IObject): void;
+export function fetchPost(url: string, data?: any, callback?: (response: IWebSocketData) => void, headers?: IObject): void;
 
 export function fetchSyncPost(url: string, data?: any): Promise<IWebSocketData>;
 
-export function fetchGet(url: string, cb: (response: IWebSocketData) => void): void;
+export function fetchGet(url: string, callback: (response: IWebSocketData) => void): void;
 
 export function openTab(options: {
+    app: App,
+    doc?: {
+        id: string,     // 块 id
+        action?: string[] // cb-get-all：获取所有内容；cb-get-focus：打开后光标定位在 id 所在的块；cb-get-hl: 打开后 id 块高亮
+        zoomIn?: boolean // 是否缩放
+    },
+    pdf?: {
+        path: string,
+        page?: number,  // pdf 页码
+        id?: string,    // File Annotation id
+    },
+    asset?: {
+        path: string,
+    },
+    search?: ISearchOption
+    card?: {
+        type: TCardType,
+        id?: string, //  cardType 为 all 时不传，否则传文档或笔记本 id
+        title?: string //  cardType 为 all 时不传，否则传文档或笔记本名称
+    },
     custom?: {
         title: string,
         icon: string,
         data?: any
-        fn?: () => any,
-    }   // card 和自定义页签 必填
+        fn?: () => IModel,
+    }
     position?: "right" | "bottom",
     keepCursor?: boolean // 是否跳转到新 tab 上
     removeCurrentTab?: boolean // 在当前页签打开时需移除原有页签
     afterOpen?: () => void // 打开后回调
-}): void
+}): ITab
 
-export function isMobile(): boolean;
+export function getFrontend(): "desktop" | "desktop-window" | "mobile" | "browser-desktop" | "browser-mobile";
+
+export function getBackend(): "windows" | "linux" | "darwin" | "docker" | "android" | "ios"
 
 export function adaptHotkey(hotkey: string): string;
 
-export function confirm(title: string, text: string, confirmCB?: () => void, cancelCB?: () => void): void;
+export function confirm(title: string, text: string, confirmCallback?: () => void, cancelCallback?: () => void): void;
 
 /**
  * @param timeout - ms. 0: manual close；-1: always show; 6000: default
@@ -119,10 +185,10 @@ export abstract class Plugin {
     i18n: IObject;
     data: any;
     name: string;
+    app: App;
 
     constructor(options: {
         app: App,
-        id: string,
         name: string,
         i18n: IObject
     })
@@ -133,7 +199,8 @@ export abstract class Plugin {
 
     onLayoutReady(): void;
 
-    /*
+    /**
+     * Must be executed before the synchronous function.
      * @param {string} [options.position=right]
      */
     addTopBar(options: {
@@ -145,10 +212,6 @@ export abstract class Plugin {
 
     openSetting(): void
 
-    // registerCommand(command: IPluginCommand): void;
-
-    // registerSettingRender(settingRender: SettingRender): void;
-
     loadData(storageName: string): Promise<any>;
 
     saveData(storageName: string, content: any): Promise<void>;
@@ -157,14 +220,20 @@ export abstract class Plugin {
 
     addIcons(svg: string): void;
 
+    /**
+     * Must be executed before the synchronous function.
+     */
     addTab(options: {
         type: string,
         destroy?: () => void,
         resize?: () => void,
         update?: () => void,
         init: () => void
-    }): () => any
+    }): () => IModel
 
+    /**
+     * Must be executed before the synchronous function.
+     */
     addDock(options: {
         config: IPluginDockTab,
         data: any,
@@ -173,7 +242,26 @@ export abstract class Plugin {
         resize?: () => void,
         update?: () => void,
         init: () => void
-    }): any
+    }): { config: IPluginDockTab, model: IModel }
+
+    addCommand(options: {
+        langKey: string, // 多语言 key
+        /**
+         * 目前需使用 MacOS 符号标识，顺序按照 ⌥⇧⌘，入 ⌥⇧⌘A
+         * "Ctrl": "⌘",
+         * "Shift": "⇧",
+         * "Alt": "⌥",
+         * "Tab": "⇥",
+         * "Backspace": "⌫",
+         * "Delete": "⌦",
+         * "Enter": "↩",
+         */
+        hotkey: string,
+        callback?: () => void
+        fileTreeCallback?: (file: any) => void
+        editorCallback?: (protyle: any) => void
+        dockCallback?: (element: HTMLElement) => void
+    }): void
 
     addFloatLayer(options: {
         ids: string[],
@@ -215,7 +303,7 @@ export class Dialog {
 }
 
 export class Menu {
-    constructor(id?: string, closeCB?: () => void);
+    constructor(id?: string, closeCallback?: () => void);
 
     showSubMenu(subMenuElement: HTMLElement): void;
 
@@ -225,7 +313,7 @@ export class Menu {
 
     open(options: { x: number, y: number, h?: number, w?: number, isLeft?: boolean }): void;
 
-    /*
+    /**
      * @param {string} [position=all]
      */
     fullscreen(position?: "bottom" | "all"): void;

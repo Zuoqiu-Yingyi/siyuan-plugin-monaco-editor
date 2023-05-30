@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-05-31
+
+- 清单新增字段 `backends` 与 `frontends` | Manifest adds fields `backends` and `frontends`.
+
 ## 2023-05-28
 
 - 添加 CD 配置 | Add CD configuration.
