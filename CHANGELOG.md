@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/compare/v1.0.0...v1.0.1) (2023-05-31)
+
+
+### Build System
+
+* **siyuan:** 使用思源提供的类型定义文件 | Use the type definition file provided by SiYuan. ([7247bd8](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/7247bd8af617f79584f3f20ff956a1a31ee7408a))
+
+
+### Miscellaneous
+
+* **webviewi:** remove webview module ([bef8182](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/bef81826b75bb8cb99d8433d5845d8de918bea74))
+* **webview:** release v1.0.1 ([de89d32](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/de89d325f4a8136a5382273c8c601138cc8431d1))
+* **webview:** 清单新增字段 `backends` 与 `frontends` | Manifest adds fields `backends` and `frontends`. ([67cc633](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/67cc6335361991a093512ee31710639cf6a89148))
+
 ## 1.0.0 (2023-05-27)
 
 
