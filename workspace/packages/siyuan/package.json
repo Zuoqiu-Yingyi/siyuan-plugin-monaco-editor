@@ -1,9 +1,0 @@
-{
-    "name": "siyuan",
-    "version": "0.0.0",
-    "types": "siyuan.d.ts",
-    "private": true,
-    "publishConfig": {
-        "access": "public"
-    }
-}

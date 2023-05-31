@@ -3,6 +3,7 @@
 ## 2023-05-31
 
 - 清单新增字段 `backends` 与 `frontends` | Manifest adds fields `backends` and `frontends`.
+- 使用思源提供的类型定义文件 | Use the type definition file provided by SiYuan.
 
 ## 2023-05-28
 

@@ -16,7 +16,6 @@
     "dependencies": {
         "@workspace/tsconfig": "workspace:^",
         "@workspace/types": "workspace:^",
-        "@workspace/utils": "workspace:^",
-        "siyuan": "workspace:^"
+        "@workspace/utils": "workspace:^"
     }
 }

@@ -6,7 +6,6 @@
         "access": "public"
     },
     "dependencies": {
-        "siyuan": "workspace:^"
     },
     "devDependencies": {
         "ts-toolbelt": "^9.6.0"
