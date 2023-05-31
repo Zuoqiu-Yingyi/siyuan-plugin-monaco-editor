@@ -2,7 +2,8 @@
     "name": "webview",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "minAppVersion": "2.8.10",
     "backends": [
         "all"
     ],
