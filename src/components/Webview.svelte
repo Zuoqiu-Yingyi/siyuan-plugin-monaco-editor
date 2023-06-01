@@ -151,6 +151,35 @@
         });
 
         /**
+         * 更改页签图标
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#%E4%BA%8B%E4%BB%B6-page-favicon-updated
+         */
+        webview.addEventListener("page-favicon-updated", e => {
+            // plugin.logger.debug(e)
+            const favicons = e.favicons;
+
+            /* 删除原生 svg 图标 */
+            tab.tab.headElement.querySelector(".item__graphic")?.remove();
+
+            if (favicons.length > 0) {
+                /* 设置在线图标 */
+                tab.tab.docIcon = favicons[0];
+                const img = `<img src="${tab.tab.docIcon}" />`; // 在线图标
+                const iconElement = tab.tab.headElement.querySelector(".item__icon"); // 图标容器
+
+                /* 设置图标 */
+                if (iconElement) {
+                    iconElement.innerHTML = img;
+                } else {
+                    tab.tab.headElement.insertAdjacentHTML("afterbegin", `<span class="item__icon">${img}</span>`);
+                }
+            } else {
+                /* 设置默认图标 */
+                tab.tab.setDocIcon("🌐".codePointAt(0).toString(16), true);
+            }
+        });
+
+        /**
          * 加载时 & 加载完成设置不同的状态
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-did-start-loading
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-did-stop-loading
