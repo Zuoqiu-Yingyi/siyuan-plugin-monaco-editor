@@ -162,16 +162,20 @@
             tab.tab.headElement.querySelector(".item__graphic")?.remove();
 
             if (favicons.length > 0) {
-                /* 设置在线图标 */
-                tab.tab.docIcon = favicons[0];
-                const img = `<img src="${tab.tab.docIcon}" />`; // 在线图标
-                const iconElement = tab.tab.headElement.querySelector(".item__icon"); // 图标容器
+                const favicon = favicons[0];
 
-                /* 设置图标 */
-                if (iconElement) {
-                    iconElement.innerHTML = img;
-                } else {
-                    tab.tab.headElement.insertAdjacentHTML("afterbegin", `<span class="item__icon">${img}</span>`);
+                /* 更新在线图标 */
+                if (tab.tab.docIcon !== favicon) {
+                    tab.tab.docIcon = favicon;
+                    const img = `<img src="${favicon}" />`; // 在线图标
+                    const iconElement = tab.tab.headElement.querySelector(".item__icon"); // 图标容器
+
+                    /* 设置图标 */
+                    if (iconElement) { // 更新图标
+                        iconElement.innerHTML = img;
+                    } else { // 插入图标
+                        tab.tab.headElement.insertAdjacentHTML("afterbegin", `<span class="item__icon">${img}</span>`);
+                    }
                 }
             } else {
                 /* 设置默认图标 */
