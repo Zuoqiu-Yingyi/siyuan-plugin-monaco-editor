@@ -17,6 +17,8 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
+
     import BlockButton from "@workspace/components/siyuan/misc/BlockButton.svelte";
     import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
     import type { Electron } from "@workspace/types/electron";
@@ -39,6 +41,9 @@
     let devtools_opened = false; // 开发者工具是否已打开
     let webview: Electron.WebviewTag; // webview 标签
     let webview_pointer_events_disable = false; // 是否禁用 webview 的鼠标事件
+
+    let status_display = false; // 状态栏显示状态
+    let status = ""; // 状态栏内容
 
     /* 转到上一页 */
     function onGoBack() {
@@ -171,9 +176,11 @@
                     const img = `<img src="${favicon}" />`; // 在线图标
 
                     /* 设置图标 */
-                    if (iconElement) { // 更新图标
+                    if (iconElement) {
+                        // 更新图标
                         iconElement.innerHTML = img;
-                    } else { // 插入图标
+                    } else {
+                        // 插入图标
                         tab.tab.headElement.insertAdjacentHTML("afterbegin", `<span class="item__icon">${img}</span>`);
                     }
                 }
@@ -206,6 +213,23 @@
         webview.addEventListener("devtools-open-url", e => {
             // plugin.logger.debug(e);
             plugin.openWebviewTab(e.url);
+        });
+
+        /**
+         * 焦点为链接时在状态栏显示链接
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-update-target-url
+         */
+        webview.addEventListener("update-target-url", e => {
+            // plugin.logger.debug(e);
+
+            if (e.url) {
+                status = e.url;
+                if (!status_display) {
+                    status_display = true;
+                }
+            } else {
+                status_display = false;
+            }
         });
 
         /**
@@ -317,6 +341,15 @@
             allowpopups
         />
     </div>
+    {#if status_display}
+        <div
+            class="webview-status tooltip"
+            in:fade={{ delay: 0, duration: 125 }}
+            out:fade={{ delay: 500, duration: 250 }}
+        >
+            <span>{status}</span>
+        </div>
+    {/if}
 </div>
 
 <style lang="less">
@@ -331,6 +364,12 @@
 
         .protyle-preview {
             user-select: none;
+        }
+
+        .webview-status {
+            position: absolute;
+            bottom: 0;
+            left: 0;
         }
     }
 
