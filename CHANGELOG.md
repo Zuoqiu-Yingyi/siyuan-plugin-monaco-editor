@@ -4,6 +4,7 @@
 
 - 设置页签图标为网页图标 | Set the tab icon to the web icon.
 - 修复页签图标未显示问题 | Fix the issue of tab icon not displayed.
+- 新增超链接地址提示功能 | Add hyperlink address prompt function.
 
 ## 2023-05-31
 
