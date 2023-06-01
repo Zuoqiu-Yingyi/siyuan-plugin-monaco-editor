@@ -3,6 +3,7 @@
 ## 2023-06-01
 
 - 设置页签图标为网页图标 | Set the tab icon to the web icon.
+- 修复页签图标未显示问题 | Fix the issue of tab icon not displayed.
 
 ## 2023-05-31
 
