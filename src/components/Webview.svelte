@@ -162,13 +162,13 @@
             tab.tab.headElement.querySelector(".item__graphic")?.remove();
 
             if (favicons.length > 0) {
-                const favicon = favicons[0];
+                const favicon = favicons[0]; // 图标地址
+                const iconElement = tab.tab.headElement.querySelector(".item__icon"); // 图标容器
 
-                /* 更新在线图标 */
-                if (tab.tab.docIcon !== favicon) {
+                /* 图标容器不存在或者图标地址更改时插入/更新图标 */
+                if (tab.tab.docIcon !== favicon || !iconElement) {
                     tab.tab.docIcon = favicon;
                     const img = `<img src="${favicon}" />`; // 在线图标
-                    const iconElement = tab.tab.headElement.querySelector(".item__icon"); // 图标容器
 
                     /* 设置图标 */
                     if (iconElement) { // 更新图标
