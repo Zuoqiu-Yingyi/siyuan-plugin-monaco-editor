@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-01
+
+- 设置页签图标为网页图标 | Set the tab icon to the web icon.
+
 ## 2023-05-31
 
 - 清单新增字段 `backends` 与 `frontends` | Manifest adds fields `backends` and `frontends`.
