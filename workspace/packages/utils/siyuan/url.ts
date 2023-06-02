@@ -48,15 +48,20 @@ export function editorType2Pathname(editorEype: EditorType): Pathname {
 export function buildSiyuanWebURL(pathname: Pathname, params?: { id?: BlockID, focus?: boolean, url?: string }, origin = globalThis.origin): URL {
     const url = new URL(origin);
     url.pathname = pathname;
+
+    /* 通过块 ID 跳转 */
     if (params?.id) {
         url.searchParams.set("id", params.id);
     }
-    if (params?.focus) {
-        url.searchParams.set("focus", "1");
+
+    if (params?.focus !== undefined) {
+        url.searchParams.set("focus", params.focus ? "1" : "0");
     }
+
     if (params?.url) {
         url.searchParams.set("url", params.url);
     }
+
     return url;
 }
 
@@ -71,7 +76,7 @@ export function parseSiyuanURL(url: URL) {
             focus: url.searchParams.get("focus") === "1",
         }
     }
-    else { 
+    else {
         return null;
     }
 }

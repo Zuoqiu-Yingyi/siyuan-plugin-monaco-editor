@@ -32,6 +32,10 @@ import {
     editorType2Pathname,
     parseSiyuanURL,
 } from "@workspace/utils/siyuan/url";
+import {
+    getBlockMenuContext,
+    type BlockMenuDetail,
+} from "@workspace/utils/siyuan/menu/block";
 
 // import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 
@@ -104,7 +108,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
                 }
                 globalThis.addEventListener(this.config.window.open.mouse.type, this.openWindowEventListener, true);
+
+                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+                this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
             })
+
     }
 
     onLayoutReady(): void {
@@ -117,6 +125,9 @@ export default class WebviewPlugin extends siyuan.Plugin {
             globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
         globalThis.removeEventListener(this.config.window.open.mouse.type, this.openWindowEventListener, true);
+
+        this.eventBus.off("click-blockicon", this.blockMenuEventListener);
+        this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
     }
 
     openSetting(): void {
@@ -137,10 +148,12 @@ export default class WebviewPlugin extends siyuan.Plugin {
         });
     }
 
+    /* 重置插件配置 */
     public async resetConfig(): Promise<void> {
         return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);
     }
 
+    /* 更新插件配置 */
     public async updateConfig(config?: IConfig): Promise<void> {
         if (config && config !== this.config) {
             this.config = config;
@@ -148,10 +161,12 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return this.saveData(WebviewPlugin.GLOBAL_CONFIG_NAME, this.config);
     }
 
+    /* 获得 UA */
     public get useragent(): string {
         return this.config.general.useragent || global.navigator.userAgent;
     }
 
+    /* 打开新标签页 */
     public openWebviewTab(href: string, title?: string, icon: string = "iconLanguage") {
         siyuan.openTab({
             app: this.app,
@@ -167,6 +182,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         });
     }
 
+    /* 打开新窗口 */
     public openWindow(
         href: string,
         params: IOverwrite = {
@@ -195,6 +211,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 打开思源桌面端窗口 */
     public openSiyuanDesktopWindow(e?: MouseEvent, href?: string): void {
         const params = {
             x: e?.screenX | 0,
@@ -214,6 +231,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         this.openWindow(href || buildSiyuanWebURL(Pathname.desktop).href, params);
     }
 
+    /* 打开思源移动端窗口 */
     public openSiyuanMobileWindow(e?: MouseEvent, href?: string): void {
         const params = {
             x: e?.screenX | 0,
@@ -233,6 +251,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         this.openWindow(href || buildSiyuanWebURL(Pathname.mobile).href, params);
     }
 
+    /* 打开思源窗口 */
     public openSiyuanWindow(url: URL, e?: MouseEvent): void {
         switch (this.config.window.siyuan.editorType) {
             case EditorType.desktop:
@@ -245,6 +264,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 是否为有效的 URL 协议 */
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
         for (const key in protocols) {
             const protocol = protocols[key];
@@ -288,6 +308,56 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return meta;
     }
 
+    /* 添加块菜单项 */
+    protected readonly blockMenuEventListener = (e: any) => {
+        // this.logger.debug(e);
+        const detail = e.detail as BlockMenuDetail;
+        const context = getBlockMenuContext(e.detail);
+        if (context) {
+            const submenu: siyuan.IMenuItemOption[] = [];
+            const clickEventListener = (element: HTMLElement, focus: boolean) => {
+                const url = buildSiyuanWebURL(
+                    editorType2Pathname(this.config.window.siyuan.editorType),
+                    {
+                        id: context.id,
+                        focus,
+                    }
+                );
+
+                const rect = element.getBoundingClientRect();
+                this.openSiyuanWindow(url, {
+                    screenX: globalThis.screenX + rect.x,
+                    screenY: globalThis.screenY + rect.y,
+                } as any);
+            };
+
+            /* 新窗口打开块 */
+            submenu.push({
+                icon: "iconOpenWindow",
+                label: this.i18n.menu.openEditor.label,
+                click: (element) => clickEventListener(element, false),
+            });
+
+            if (!context.isDocumentBlock // 不是文档块
+                && !context.isMultiBlock // 不是多个块
+            ) {
+                /* 新窗口打开块并聚焦 */
+                submenu.push({
+                    icon: "iconFocus",
+                    label: this.i18n.menu.openFocusedEditor.label,
+                    click: (element) => clickEventListener(element, true),
+                });
+            }
+
+            detail.menu.addItem({
+                icon: "iconLanguage",
+                label: this.i18n.displayName,
+                submenu,
+            });
+        }
+    }
+
+    /* 打开标签页 */
     protected readonly openTabEventListener = (e: MouseEvent) => {
         try {
             // this.logger.debug(e);
@@ -319,6 +389,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 打开窗口 */
     protected readonly openWindowEventListener = (e: MouseEvent) => {
         try {
             // this.logger.debug(e);

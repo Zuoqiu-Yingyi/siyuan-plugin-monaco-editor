@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-02
+
+- 新增块菜单菜单项 `在新窗口打开` 用 `在新窗口打开并聚焦` | Add block menu item `Open in new window` with `Open in new window and focus`.
+
 ## 2023-06-01
 
 - 设置页签图标为网页图标 | Set the tab icon to the web icon.

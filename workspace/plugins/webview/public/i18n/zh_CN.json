@@ -1,4 +1,13 @@
 {
+  "displayName": "网页视图",
+  "menu": {
+    "openEditor": {
+      "label": "在新窗口打开"
+    },
+    "openFocusedEditor": {
+      "label": "在新窗口打开并聚焦"
+    }
+  },
   "message": {
     "nonStandardURL": "不规范，请输入规范的 URL 地址"
   },
