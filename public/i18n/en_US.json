@@ -1,4 +1,13 @@
 {
+  "displayName": "Web Page View",
+  "menu": {
+    "openEditor": {
+      "label": "Open in a New Window"
+    },
+    "openFocusedEditor": {
+      "label": "Open in a New Window and Focus"
+    }
+  },
   "message": {
     "nonStandardURL": "is not standardized, please enter the URL address of the specification"
   },
