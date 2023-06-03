@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-04
+
+- 添加附属仓库 `metadata` 的管理脚本 | Add management scripts for sub-repository `metadata`.
+
 ## 2023-06-02
 
 - 新增块菜单菜单项 `在新窗口打开` 用 `在新窗口打开并聚焦` | Add block menu item `Open in new window` with `Open in new window and focus`.
