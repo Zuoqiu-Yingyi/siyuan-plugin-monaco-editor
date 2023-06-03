@@ -2,7 +2,6 @@
   "recommendations": [
     "richie5um2.vscode-sort-json",
     "tyriar.sort-lines",
-    "vue.vscode-typescript-vue-plugin",
     "zixuanchen.vitest-explorer",
     "esbenp.prettier-vscode"
   ]

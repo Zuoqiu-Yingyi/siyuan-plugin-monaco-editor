@@ -3,6 +3,7 @@
 ## 2023-06-04
 
 - 添加附属仓库 `metadata` 的管理脚本 | Add management scripts for sub-repository `metadata`.
+- 添加附属仓库 `metadata` | Add sub-repository `metadata`.
 
 ## 2023-06-02
 
