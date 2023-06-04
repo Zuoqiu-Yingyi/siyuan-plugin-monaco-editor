@@ -20,17 +20,20 @@
 /* 计算 DOM 元素相对于屏幕原点方位 */
 export function getElementScreenPosition(element: HTMLElement) {
     const rect = element.getBoundingClientRect();
+    const screenX = (globalThis as any).mozInnerScreenX ?? globalThis.screenX;
+    const screenY = (globalThis as any).mozInnerscreenY ?? globalThis.screenY;
+
     return {
-        x: globalThis.screenX + rect.x,
-        y: globalThis.screenY + rect.y,
+        x: screenX + rect.x,
+        y: screenY + rect.y,
 
-        centerX: globalThis.screenX + rect.x + Math.round(rect.width / 2),
-        centerY: globalThis.screenY + rect.y + Math.round(rect.height / 2),
+        centerX: screenX + rect.x + Math.round(rect.width / 2),
+        centerY: screenY + rect.y + Math.round(rect.height / 2),
 
-        left: globalThis.screenX + rect.left,
-        right: globalThis.screenX + rect.right,
+        left: screenX + rect.left,
+        right: screenX + rect.right,
 
-        top: globalThis.screenY + rect.top,
-        bottom: globalThis.screenY + rect.bottom,
+        top: screenY + rect.top,
+        bottom: screenY + rect.bottom,
     };
 }

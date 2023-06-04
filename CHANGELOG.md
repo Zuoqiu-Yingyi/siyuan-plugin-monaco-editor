@@ -5,6 +5,7 @@
 - 添加附属仓库 `metadata` 的管理脚本 | Add management scripts for sub-repository `metadata`.
 - 添加附属仓库 `metadata` | Add sub-repository `metadata`.
 - 添加顶部工具栏菜单项 | Add top toolbar menu items.
+- 改进顶部工具栏菜单项隐藏时的菜单位置 | Improve the menu position when the top toolbar menu item is hidden.
 
 ## 2023-06-02
 
