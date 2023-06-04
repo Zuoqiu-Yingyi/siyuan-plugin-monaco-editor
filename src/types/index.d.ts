@@ -16,8 +16,6 @@
  */
 
 export interface IPosition {
-    x?: number,
-    y?: number,
     screenX?: number,
     screenY?: number,
 }

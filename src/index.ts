@@ -66,6 +66,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     protected readonly TOP_BAR_MENU_ID: string;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
+    protected tab_bar_item: ReturnType<siyuan.Plugin["addTopBar"]>;
     protected config: IConfig;
 
     constructor(options: any) {
@@ -123,33 +124,58 @@ export default class WebviewPlugin extends siyuan.Plugin {
         if (FLAG_DESKTOP) {
             /* 顶部工具栏菜单 */
             const menu = new siyuan.Menu(this.TOP_BAR_MENU_ID);
-            this.addTopBar({
+            this.tab_bar_item = this.addTopBar({
                 icon: "iconOpenWindow",
                 title: this.i18n.displayName,
                 position: "right",
                 callback: (e) => {
+                    // this.logger.debug(e);
                     const menu = new siyuan.Menu(this.TOP_BAR_MENU_ID);
+
+                    /* 菜单项 - 打开桌面端窗口 */
                     menu.addItem({
-                        icon: "iconOpenWindow",
+                        icon: "iconSiYuan",
                         label: this.i18n.menu.openDesktopWindow.label,
                         click: (element) => {
                             const position = getElementScreenPosition(element);
-                            this.openSiyuanDesktopWindow({ x: position.centerX, y: position.centerY });
+                            this.openSiyuanDesktopWindow({ screenX: position.centerX, screenY: position.centerY });
                         },
                     });
+
+                    /* 菜单项 - 打开移动端窗口 */
                     menu.addItem({
-                        icon: "iconOpenWindow",
+                        icon: "iconSiYuan",
                         label: this.i18n.menu.openMobildWindow.label,
                         click: (element) => {
                             const position = getElementScreenPosition(element);
-                            this.openSiyuanMobileWindow({ x: position.centerX, y: position.centerY });
+                            this.openSiyuanMobileWindow({ screenX: position.centerX, screenY: position.centerY });
                         },
                     });
-                    menu.open({
-                        x: e.x,
-                        y: e.y,
+
+                    /* 菜单打开选项 */
+                    const menu_open_options = {
+                        x: 0,
+                        y: 0,
                         isLeft: true,
-                    });
+                    };
+
+                    /* 顶栏菜单项项被隐藏 */
+                    if ((e.target as HTMLElement).classList.contains("fn__none")) {
+                        const barPlugins = document.getElementById("barPlugins");
+                        if (barPlugins) {
+                            const rect = barPlugins.getBoundingClientRect();
+                            menu_open_options.x = rect.x + rect.width / 2;
+                            menu_open_options.y = rect.y + rect.height / 2;
+                        }
+                    }
+                    else {
+                        const rect = this.tab_bar_item.getBoundingClientRect();
+                        menu_open_options.x = rect.x + rect.width / 2;
+                        menu_open_options.y = rect.y + rect.height / 2;
+                    }
+
+                    /* 打开菜单 */
+                    menu.open(menu_open_options);
                 },
             });
         }
@@ -253,8 +279,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
         href?: string,
     ): void {
         const params = {
-            x: e?.x ?? e?.screenX ?? 0,
-            y: e?.y ?? e?.screenY ?? 0,
+            x: e?.screenX ?? 0,
+            y: e?.screenY ?? 0,
             title: "desktop",
             alwaysOnTop: false, // 桌面端禁用置顶
             autoHideMenuBar: false, // 禁用自动隐藏菜单栏
@@ -276,8 +302,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
         href?: string,
     ): void {
         const params = {
-            x: e?.x ?? e?.screenX ?? 0,
-            y: e?.y ?? e?.screenY ?? 0,
+            x: e?.screenX ?? 0,
+            y: e?.screenY ?? 0,
             title: "mobile",
             alwaysOnTop: true, // 移动端启用置顶
             autoHideMenuBar: false,
