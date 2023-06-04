@@ -17,7 +17,10 @@
 
 import siyuan from "siyuan";
 
-const FLAG_ELECTRON = globalThis.navigator.userAgent.includes('Electron');
+export const FLAG_ELECTRON = isElectron();
+export const FLAG_DESKTOP = isDesktop();
+export const FLAG_BROWSER = isBrowser();
+export const FLAG_MOBILE = isMobile();
 
 export function hasNodeRequire(): boolean {
     return !!globalThis.require;

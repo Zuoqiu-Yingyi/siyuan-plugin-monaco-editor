@@ -4,6 +4,7 @@
 
 - 添加附属仓库 `metadata` 的管理脚本 | Add management scripts for sub-repository `metadata`.
 - 添加附属仓库 `metadata` | Add sub-repository `metadata`.
+- 添加顶部工具栏菜单项 | Add top toolbar menu items.
 
 ## 2023-06-02
 

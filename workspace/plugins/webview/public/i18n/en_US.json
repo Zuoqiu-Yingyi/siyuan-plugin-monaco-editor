@@ -6,6 +6,12 @@
     },
     "openFocusedEditor": {
       "label": "Open in a New Window and Focus"
+    },
+    "openDesktopWindow": {
+      "label": "Open SiYuan Desktop Window"
+    },
+    "openMobildWindow": {
+      "label": "Open SiYuan Mobile Window"
     }
   },
   "message": {

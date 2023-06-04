@@ -525,7 +525,7 @@
                     <Input
                         slot="input"
                         type={ItemType.button}
-                        settingKey="Reset"
+                        settingKey="open-desktop-window"
                         settingValue={i18n.settings.siyuan.open.desktop.text}
                         on:clicked={e => plugin.openSiyuanDesktopWindow(e.detail.event)}
                     />
@@ -539,7 +539,7 @@
                     <Input
                         slot="input"
                         type={ItemType.button}
-                        settingKey="Reset"
+                        settingKey="open-mobile-window"
                         settingValue={i18n.settings.siyuan.open.mobile.text}
                         on:clicked={e => plugin.openSiyuanMobileWindow(e.detail.event)}
                     />

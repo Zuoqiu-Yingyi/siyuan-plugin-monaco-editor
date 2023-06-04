@@ -18,13 +18,14 @@
 import siyuan from "siyuan";
 
 import {
-    isElectron,
-    isDesktop,
-    isMobile,
+    FLAG_ELECTRON,
+    FLAG_DESKTOP,
+    FLAG_MOBILE,
 } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { merge } from "@workspace/utils/misc/merge";
+import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
 import {
     Pathname,
@@ -47,7 +48,6 @@ import type {
     IConfig,
     IProtocols,
     ITargets,
-    IWindowParams,
 } from "./types/config";
 import {
     openNewWindow,
@@ -55,6 +55,7 @@ import {
     type IWebPreferences,
 } from "./utils/window";
 import { EditorType } from "~/../../packages/utils/siyuan";
+import type { IPosition } from "./types";
 
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -62,6 +63,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
 
+    protected readonly TOP_BAR_MENU_ID: string;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly webview_tab: ReturnType<siyuan.Plugin["addTab"]>;
     protected config: IConfig;
@@ -70,6 +72,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
         super(options);
 
         this.logger = new Logger(this.name);
+        this.TOP_BAR_MENU_ID = `${this.name}-top-bar-menu`;
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
 
         const plugin = this;
@@ -103,7 +106,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
-                if (isElectron() && isDesktop()) {
+                if (FLAG_ELECTRON && FLAG_DESKTOP) {
                     /* 注册触发打开页签动作的监听器 */
                     globalThis.addEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
                 }
@@ -117,10 +120,43 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     onLayoutReady(): void {
         // this.openSetting();
+        if (FLAG_DESKTOP) {
+            /* 顶部工具栏菜单 */
+            const menu = new siyuan.Menu(this.TOP_BAR_MENU_ID);
+            this.addTopBar({
+                icon: "iconOpenWindow",
+                title: this.i18n.displayName,
+                position: "right",
+                callback: (e) => {
+                    const menu = new siyuan.Menu(this.TOP_BAR_MENU_ID);
+                    menu.addItem({
+                        icon: "iconOpenWindow",
+                        label: this.i18n.menu.openDesktopWindow.label,
+                        click: (element) => {
+                            const position = getElementScreenPosition(element);
+                            this.openSiyuanDesktopWindow({ x: position.centerX, y: position.centerY });
+                        },
+                    });
+                    menu.addItem({
+                        icon: "iconOpenWindow",
+                        label: this.i18n.menu.openMobildWindow.label,
+                        click: (element) => {
+                            const position = getElementScreenPosition(element);
+                            this.openSiyuanMobileWindow({ x: position.centerX, y: position.centerY });
+                        },
+                    });
+                    menu.open({
+                        x: e.x,
+                        y: e.y,
+                        isLeft: true,
+                    });
+                },
+            });
+        }
     }
 
     onunload(): void {
-        if (isElectron() && isDesktop()) {
+        if (FLAG_ELECTRON && FLAG_DESKTOP) {
             /* 移除触发打开页签动作的监听器 */
             globalThis.removeEventListener(this.config.tab.open.mouse.type, this.openTabEventListener, true);
         }
@@ -136,8 +172,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
         const dialog = new siyuan.Dialog({
             title: that.name,
             content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
-            width: isMobile() ? "92vw" : "720px",
-            height: isMobile() ? undefined : "640px",
+            width: FLAG_MOBILE ? "92vw" : "720px",
+            height: FLAG_MOBILE ? undefined : "640px",
         });
         const settings = new Settings({
             target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
@@ -212,10 +248,13 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     /* 打开思源桌面端窗口 */
-    public openSiyuanDesktopWindow(e?: MouseEvent, href?: string): void {
+    public openSiyuanDesktopWindow(
+        e?: MouseEvent | IPosition,
+        href?: string,
+    ): void {
         const params = {
-            x: e?.screenX | 0,
-            y: e?.screenY | 0,
+            x: e?.x ?? e?.screenX ?? 0,
+            y: e?.y ?? e?.screenY ?? 0,
             title: "desktop",
             alwaysOnTop: false, // 桌面端禁用置顶
             autoHideMenuBar: false, // 禁用自动隐藏菜单栏
@@ -232,10 +271,13 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     /* 打开思源移动端窗口 */
-    public openSiyuanMobileWindow(e?: MouseEvent, href?: string): void {
+    public openSiyuanMobileWindow(
+        e?: MouseEvent | IPosition,
+        href?: string,
+    ): void {
         const params = {
-            x: e?.screenX | 0,
-            y: e?.screenY | 0,
+            x: e?.x ?? e?.screenX ?? 0,
+            y: e?.y ?? e?.screenY ?? 0,
             title: "mobile",
             alwaysOnTop: true, // 移动端启用置顶
             autoHideMenuBar: false,
@@ -252,7 +294,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     /* 打开思源窗口 */
-    public openSiyuanWindow(url: URL, e?: MouseEvent): void {
+    public openSiyuanWindow(
+        url: URL,
+        e?: MouseEvent | IPosition,
+    ): void {
         switch (this.config.window.siyuan.editorType) {
             case EditorType.desktop:
                 this.openSiyuanDesktopWindow(e, url.href);
