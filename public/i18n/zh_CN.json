@@ -6,6 +6,12 @@
     },
     "openFocusedEditor": {
       "label": "在新窗口打开并聚焦"
+    },
+    "openDesktopWindow": {
+      "label": "打开思源桌面端窗口"
+    },
+    "openMobildWindow": {
+      "label": "打开思源移动端窗口"
     }
   },
   "message": {
