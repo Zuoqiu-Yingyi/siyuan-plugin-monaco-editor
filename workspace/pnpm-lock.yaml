@@ -250,7 +250,7 @@ importers:
         version: 4.9.5
       vite:
         specifier: ^4.3.9
-        version: 4.3.9(@types/node@20.2.5)(less@4.1.3)
+        version: 4.3.9(less@4.1.3)
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -1077,7 +1077,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.3.9(@types/node@20.2.5)(less@4.1.3)
+      vite: 4.3.9(less@4.1.3)
       vue: 3.3.4
     dev: true
 
@@ -2699,6 +2699,14 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /rollup@3.23.1:
+    resolution: {integrity: sha512-ybRdFVHOoljGEFILHLd2g/qateqUdjE6YS41WXq4p3C/WwD3xtWxV4FYWETA1u9TeXQc5K8L8zHE5d/scOvrOQ==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
@@ -3361,6 +3369,39 @@ packages:
         optional: true
     dependencies:
       '@types/node': 20.2.5
+      esbuild: 0.17.19
+      less: 4.1.3
+      postcss: 8.4.24
+      rollup: 3.23.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite@4.3.9(less@4.1.3):
+    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
       esbuild: 0.17.19
       less: 4.1.3
       postcss: 8.4.24

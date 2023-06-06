@@ -9,7 +9,7 @@ type DOMEvent = Event;
 type GlobalResponse = Response;
 type GlobalRequest = Request;
 
-declare namespace Electron {
+export declare namespace Electron {
   const NodeEventEmitter: typeof import('events').EventEmitter;
 
   type Accelerator = string;
