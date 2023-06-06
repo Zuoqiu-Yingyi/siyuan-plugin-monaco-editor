@@ -1,4 +1,19 @@
 {
+  "displayName": "網頁視圖",
+  "menu": {
+    "openEditor": {
+      "label": "在新窗口打開"
+    },
+    "openFocusedEditor": {
+      "label": "在新窗口打開並聚焦"
+    },
+    "openDesktopWindow": {
+      "label": "打開思源桌面端窗口"
+    },
+    "openMobildWindow": {
+      "label": "打開思源移動端窗口"
+    }
+  },
   "message": {
     "nonStandardURL": "不規範，請輸入規範的 URL 地址"
   },

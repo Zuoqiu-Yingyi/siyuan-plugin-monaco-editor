@@ -1,4 +1,19 @@
 {
+  "displayName": "Web Page View",
+  "menu": {
+    "openEditor": {
+      "label": "Open in a New Window"
+    },
+    "openFocusedEditor": {
+      "label": "Open in a New Window and Focus"
+    },
+    "openDesktopWindow": {
+      "label": "Open SiYuan Desktop Window"
+    },
+    "openMobildWindow": {
+      "label": "Open SiYuan Mobile Window"
+    }
+  },
   "message": {
     "nonStandardURL": "is not standardized, please enter the URL address of the specification"
   },
