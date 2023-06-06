@@ -19,6 +19,7 @@ import "./index.less";
 
 import siyuan from "siyuan";
 import { dataURL2svg } from "@workspace/utils/misc/dataurl";
+import { FLAG_MOBILE } from "@workspace/utils/env/front-end";
 
 import Global from './Global.svelte'
 import icon from "./assets/jupyter-icon.svg";
@@ -62,7 +63,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
         const dialog = new siyuan.Dialog({
             title,
             content: `<div id="${this.SETTINGS_DIALOG_ID}"/>`,
-            width: siyuan.isMobile() ? "92vw" : "520px",
+            width: FLAG_MOBILE ? "92vw" : "520px",
         });
         const global = new Global({
             target: dialog.element.querySelector(`#${this.SETTINGS_DIALOG_ID}`),
@@ -87,7 +88,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
                 new siyuan.Dialog({
                     title: this.i18n.document_settings,
                     content: '<div class="b3-dialog__content">This is a dialog</div>',
-                    width: siyuan.isMobile() ? "92vw" : "520px",
+                    width: FLAG_MOBILE ? "92vw" : "520px",
                 });
             }
         });
@@ -95,7 +96,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
         // menu.addSeparator();
 
         /* 显示菜单 */
-        if (siyuan.isMobile()) {
+        if (FLAG_MOBILE) {
             menu.fullscreen();
         } else {
             menu.open({

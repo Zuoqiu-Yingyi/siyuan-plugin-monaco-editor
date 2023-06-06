@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-06
+
+- 更新依赖 | Update dependencies.
+
 ## 2023-06-04
 
 - 添加附属仓库 `metadata` 的管理脚本 | Add management scripts for sub-repository `metadata`.
