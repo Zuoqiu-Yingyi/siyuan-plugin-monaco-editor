@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.1.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/compare/v1.0.1...v1.1.0) (2023-06-06)
+
+
+### Features
+
+* **webview:** 改进顶部工具栏菜单项隐藏时的菜单位置 | Improve the menu position when the top toolbar menu item is hidden. ([d627c81](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/d627c81618a5f412bd8011242d4f14ef17b43036))
+* **webview:** 新增块菜单菜单项 `在新窗口打开` 用 `在新窗口打开并聚焦` | Add block menu item `Open in new window` with `Open in new window and focus`. ([4461104](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/4461104fa1c787a64f3cabd7b9fee50ae8d09852))
+* **webview:** 新增超链接地址提示功能 | Add hyperlink address prompt function. ([aaca46c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/aaca46c52073a40427ca12328b029c221e45545e))
+* **webview:** 添加顶部工具栏菜单项 | Add top toolbar menu items. ([400eaae](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/400eaae0b2cc77b61c43052c201a03cd8ec1611e))
+* **webview:** 设置页签图标为网页图标 | Set the tab icon to the web icon. ([c76238a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/c76238aa92d6d4586d1b8735dbcef28a1e391cb4))
+* **webview:** 设置页签图标为网页图标 | Set the tab icon to the web icon. ([9d57359](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/9d57359b464402088eb6e37e8f1217915329a46a))
+
+
+### Bug Fixes
+
+* **webview:** 修复页签图标未显示问题 | Fix the issue of tab icon not displayed. ([ca43c09](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/ca43c09bdc6dc98accb9abee06c02517eccf9ea7))
+
+
+### Miscellaneous
+
+* **webview:** release v1.0.2 ([9f04d1c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/9f04d1c5be0146a84fd3cea8d0ebbbe007262eb5))
+
 ## [1.0.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/compare/v1.0.0...v1.0.1) (2023-05-31)
 
 
