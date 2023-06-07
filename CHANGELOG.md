@@ -3,6 +3,7 @@
 ## 2023-06-07
 
 - 添加附属仓库 `custom-fonts` 的管理脚本 | Add management scripts for sub-repository `custom-fonts`.
+- 支持嵌入 `Twitter Color Emoji` 字体 | Support embedding `Twitter Color Emoji` font.
 
 ## 2023-06-06
 
