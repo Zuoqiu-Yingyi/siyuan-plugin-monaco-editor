@@ -15,12 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
+/* 字体处理 */
 
-export function merge(...args: any[]): Object {
-    return deepmerge.all(args);
+import { FontData } from "@workspace/types/misc/browser";
+
+export interface IFonts {
+    families: string[],
+    map: Map<string, FontData[]>,
 }
 
-export function mergeIgnoreArray(...args: any[]): Object {
-    return deepmerge.all(args, { arrayMerge: (_target, source, _options) => source });
+/* 字体按照字体族分类 */
+export function classify(fonts: FontData[]): IFonts {
+    const fontList: IFonts = {
+        families: [],
+        map: new Map<string, FontData[]>(),
+    };
+    fonts.forEach(font => {
+        const list = fontList.map.get(font.family);
+        if (list) {
+            list.push(font);
+        }
+        else {
+            fontList.families.push(font.family);
+            fontList.map.set(font.family, [font]);
+        }
+    });
+    return fontList;
 }

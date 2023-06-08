@@ -16,21 +16,6 @@
  */
 
 /**
- * 基础样式
- * @params pluginName: 插件名称
- * @return: css 代码
- */
-export function baseStyle(pluginName: string): string {
-    return `
-@font-face {
-    font-family: "Twitter Color Emoji";
-    font-style: normal;
-    src: url("plugins/${pluginName}/static/fonts/TwitterColorEmoji/TwitterColorEmoji-14.0.2.ttf");
-}
-`;
-}
-
-/**
  * 清洗字体名称
  * @params font: 字体名称
  * @return: 清洗后的字体名称(有效的 CSS 字体名称)
@@ -49,12 +34,21 @@ export function washFontName(font: string): string {
 }
 
 /**
+ * 清洗字体列表
+ * @params fonts: 字体名称列表
+ * @return: 清洗后的字体名称(有效的 CSS 字体名称)
+ */
+export function washFontList(fonts: string[]): string[] {
+    return fonts.filter(font => !/^\s*$/.test(font)).map(washFontName);
+}
+
+/**
  * 字体样式
  * @params fontList.base: 基础字体列表
  * @params fontList.code: 代码字体列表
  * @params fontList.graph: 关系图字体列表
  * @params fontList.math: 数学公式字体列表
- * @params fontList.emoji: Emoji 字体列表
+ * @params fontList.emoji: 表情符号字体列表
  * @return: css 代码
  */
 export function fontFamilyStyle(fontList: {
@@ -67,23 +61,23 @@ export function fontFamilyStyle(fontList: {
     const css: string[] = [];
     css.push(":root {");
     if (fontList.base?.length > 0) {
-        const base = fontList.base.map(washFontName);
+        const base = washFontList(fontList.base);
         css.push(`    --b3-font-family: ${base.join(", ")};`);
     }
     if (fontList.code?.length > 0) {
-        const code = fontList.code.map(washFontName);
+        const code = washFontList(fontList.code);
         css.push(`    --b3-font-family-code: ${code.join(", ")};`);
     }
     if (fontList.graph?.length > 0) {
-        const graph = fontList.graph.map(washFontName);
+        const graph = washFontList(fontList.graph);
         css.push(`    --b3-font-family-graph: ${graph.join(", ")};`);
     }
     if (fontList.math?.length > 0) {
-        const math = fontList.math.map(washFontName);
+        const math = washFontList(fontList.math);
         css.push(`    --b3-font-family-math: ${math.join(", ")};`);
     }
     if (fontList.emoji?.length > 0) {
-        const emoji = fontList.emoji.map(washFontName);
+        const emoji = washFontList(fontList.emoji);
         css.push(`    --b3-font-family-emoji: ${emoji.join(", ")};`);
     }
     css.push("}");

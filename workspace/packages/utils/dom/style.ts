@@ -17,6 +17,8 @@
 
 /* 样式标签管理 */
 
+import { moveElementToHead } from ".";
+
 /**
  * 更新样式标签 <style>
  * @params element: 样式标签 DOM 节点
@@ -32,13 +34,14 @@ export function updateStyle(element: HTMLStyleElement, css: string): void {
  * @params css: CSS 代码
  * @return: 样式标签 DOM 节点
  */
-export function updateStyleByID(id: string, css: string): HTMLStyleElement {
-    let style = document.getElementById(id);
+export function updateStyleById(id: string, css: string): HTMLStyleElement {
+    let style = document.getElementById(id) as HTMLStyleElement | null;
     if (!style) {
         style = document.createElement("style");
         style.id = id;
-        document.head.appendChild(style);
+        moveElementToHead(style);
     }
-    updateStyle(style as HTMLStyleElement, css);
-    return style as HTMLStyleElement;
+    updateStyle(style, css);
+    return style;
 }
+

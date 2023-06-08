@@ -5,6 +5,7 @@
 - 将推特表情符号字体由 `Twitter Color Emoji` 替换为 `Twemoji Mozilla` | Replace the Twitter emoji font from `Twitter Color Emoji` to `Twemoji Mozilla`.
   - [13rac1/twemoji-color-font: Twitter Unicode emoji color OpenType-SVG font for Linux/MacOS/Windows](https://github.com/13rac1/twemoji-color-font)
   - [mozilla/twemoji-colr: Twemoji font in COLR/CPAL layered format](https://github.com/mozilla/twemoji-colr)
+- 实现自定义字体列表功能 | Implement custom font list feature.
 
 ## 2023-06-07
 

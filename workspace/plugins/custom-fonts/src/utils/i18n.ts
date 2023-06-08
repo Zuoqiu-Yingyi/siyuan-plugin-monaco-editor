@@ -15,12 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
+import {
+    i18nCheck,
+    i18nChecks,
+} from "@workspace/types/siyuan/i18n";
 
-export function merge(...args: any[]): Object {
-    return deepmerge.all(args);
-}
+import zh_Hans from "~/public/i18n/zh_CN.json";
+import zh_Hant from "~/public/i18n/zh_CHT.json";
+import en from "~/public/i18n/en_US.json";
 
-export function mergeIgnoreArray(...args: any[]): Object {
-    return deepmerge.all(args, { arrayMerge: (_target, source, _options) => source });
-}
+export type I18N = typeof zh_Hans;
+
+i18nChecks([
+    i18nCheck<I18N, typeof zh_Hans>(),
+    i18nCheck<I18N, typeof zh_Hant>(),
+    i18nCheck<I18N, typeof en>(),
+]);

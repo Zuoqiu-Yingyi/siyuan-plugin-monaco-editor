@@ -15,12 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
-
-export function merge(...args: any[]): Object {
-    return deepmerge.all(args);
+/* CSS 片段 */
+export interface ICSS {
+    enable: boolean, // 是否启用
+    code: string, // CSS 代码片段
 }
 
-export function mergeIgnoreArray(...args: any[]): Object {
-    return deepmerge.all(args, { arrayMerge: (_target, source, _options) => source });
+/* 字体列表 */
+export interface IFont {
+    enable: boolean, // 是否启用
+    list: string[], // 字体列表
+}
+
+/* 字体设置 */
+export interface IFonts {
+    base: IFont, // 基础字体列表
+    code: IFont, // 代码字体列表
+    graph: IFont, // 关系图字体列表
+    math: IFont, // 数学公式字体列表
+    emoji: IFont, // 表情符号字体列表
+}
+
+export interface IConfig {
+    css: ICSS, // css 代码片段
+    fonts: IFonts, // 字体设置
 }

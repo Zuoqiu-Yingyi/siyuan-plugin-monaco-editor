@@ -38,3 +38,22 @@ export function removeElementById(id: string): boolean {
     }
     return false;
 }
+
+
+/**
+ * 移动 style 节点到 head 标签末尾
+ * @params element: DOM 节点
+ */
+export function moveElementToHead(element: HTMLElement | null): void {
+    if (element) {
+        document.head.appendChild(element);
+    }
+}
+
+/**
+ * 通过 ID 移动 DOM 节点到 head 标签末尾
+ * @params id: 标签 ID
+ */
+export function moveElementToHeadById(id: string): void {
+    moveElementToHead(document.getElementById(id));
+}

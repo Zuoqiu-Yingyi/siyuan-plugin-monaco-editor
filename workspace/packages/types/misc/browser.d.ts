@@ -15,12 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
-
-export function merge(...args: any[]): Object {
-    return deepmerge.all(args);
-}
-
-export function mergeIgnoreArray(...args: any[]): Object {
-    return deepmerge.all(args, { arrayMerge: (_target, source, _options) => source });
+export interface FontData {
+    style: string,
+    family: string,
+    fullName: string,
+    postscriptName: string,
 }
