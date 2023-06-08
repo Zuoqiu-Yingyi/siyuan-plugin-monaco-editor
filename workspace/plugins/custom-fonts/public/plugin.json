@@ -2,7 +2,7 @@
     "name": "custom-fonts",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "minAppVersion": "2.9.0",
     "backends": [
         "all"

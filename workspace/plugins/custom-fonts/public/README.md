@@ -28,6 +28,9 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that allows yo
 
 ### Function Introduction
 
+* Built-in [Twitter emoji (Twemoji)](https://github.com/mozilla/twemoji-colr) font
+
+  * This font can be referenced by the font family name `Twemoji Mozilla`
 * Check the font list in the system where the kernel is located
 
   * Some fonts in this list cannot be loaded when using a server.

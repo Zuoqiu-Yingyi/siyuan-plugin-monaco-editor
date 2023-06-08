@@ -28,6 +28,9 @@
 
 ### 功能介绍
 
+* 内置 [Twitter Emoji (Twemoji)](https://github.com/mozilla/twemoji-colr) 表情符号字体
+
+  * 可通过字体族名 `Twemoji Mozilla` 引用该字体
 * 查看内核所在系统的字体列表
 
   * 在使用伺服时该列表中的部分字体无法加载
