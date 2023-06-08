@@ -1,4 +1,6 @@
+
 {
+    "displayName": "Jupyter 客户端",
     "document_settings": "文档设置",
     "global_settings": "全局设置",
     "top_bar_title": "Jupyter 客户端"

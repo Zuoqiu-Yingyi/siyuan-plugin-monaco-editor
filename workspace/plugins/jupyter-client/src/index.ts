@@ -56,7 +56,7 @@ export default class JupyterClientPlugin extends siyuan.Plugin {
     }
 
     openSetting() {
-        this.openGlobalSettingsDialog(this.name);
+        this.openGlobalSettingsDialog(`${this.i18n.displayName} <code class="fn__code">${this.name}</code>`);
     }
 
     private async openGlobalSettingsDialog(title: string) {

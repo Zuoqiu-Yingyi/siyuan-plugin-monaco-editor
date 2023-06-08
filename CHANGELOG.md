@@ -1,12 +1,13 @@
 # 更改日志 | CHANGE LOG
 
-## 2023-06-07
+## 2023-06-08
 
 - 将推特表情符号字体由 `Twitter Color Emoji` 替换为 `Twemoji Mozilla` | Replace the Twitter emoji font from `Twitter Color Emoji` to `Twemoji Mozilla`.
   - [13rac1/twemoji-color-font: Twitter Unicode emoji color OpenType-SVG font for Linux/MacOS/Windows](https://github.com/13rac1/twemoji-color-font)
   - [mozilla/twemoji-colr: Twemoji font in COLR/CPAL layered format](https://github.com/mozilla/twemoji-colr)
 - 实现自定义字体列表功能 | Implement custom font list feature.
 - 添加 CD 配置 | Add CD configuration.
+- 改进设置对话框标题内容 | Improve the title content of the settings dialog.
 
 ## 2023-06-07
 
