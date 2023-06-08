@@ -6,6 +6,7 @@
   - [13rac1/twemoji-color-font: Twitter Unicode emoji color OpenType-SVG font for Linux/MacOS/Windows](https://github.com/13rac1/twemoji-color-font)
   - [mozilla/twemoji-colr: Twemoji font in COLR/CPAL layered format](https://github.com/mozilla/twemoji-colr)
 - 实现自定义字体列表功能 | Implement custom font list feature.
+- 添加 CD 配置 | Add CD configuration.
 
 ## 2023-06-07
 
