@@ -1,0 +1,107 @@
+{
+  "displayName": "自定义字体",
+  "menu": {
+    "allFonts": {
+      "label": "所有字体"
+    }
+  },
+  "message": {
+    "notSupportQueryLocalFonts": "当前应用不支持查询本地字体！",
+    "loading": "加载中..."
+  },
+  "settings": {
+    "cssSettings": {
+      "enable": {
+        "description": "启用该 CSS 片段",
+        "title": "启用"
+      },
+      "snippet": {
+        "description": "CSS 片段中可使用 <a href='https://developer.mozilla.org/zh-CN/docs/Web/CSS/@font-face'>@font-face</a> 动态加载字体文件",
+        "placeholder": "请在这里输入 CSS 代码片段",
+        "title": "CSS 片段"
+      },
+      "title": "CSS 片段"
+    },
+    "fontsSettings": {
+      "base": {
+        "enable": {
+          "description": "启用自定义基础字体列表功能，关闭后则使用主题定义的基础字体列表",
+          "title": "启用"
+        },
+        "fontsList": {
+          "description": "自定义基础字体列表，每行一个字体名称",
+          "placeholder": "请在这里输入自定义的基础字体列表",
+          "title": "自定义基础字体列表"
+        },
+        "title": "基础字体"
+      },
+      "code": {
+        "enable": {
+          "description": "启用自定义代码字体列表功能，关闭后则使用主题定义的代码字体列表",
+          "title": "启用"
+        },
+        "fontsList": {
+          "description": "自定义代码字体列表，每行一个字体名称",
+          "placeholder": "请在这里输入自定义的代码字体列表",
+          "title": "自定义代码字体列表"
+        },
+        "title": "代码字体"
+      },
+      "emoji": {
+        "enable": {
+          "description": "启用自定义表情符号字体列表功能，关闭后则使用主题定义的表情符号字体列表",
+          "title": "启用"
+        },
+        "fontsList": {
+          "description": "自定义表情符号字体列表，每行一个字体名称",
+          "placeholder": "请在这里输入自定义的表情符号字体列表",
+          "title": "自定义表情符号字体列表"
+        },
+        "title": "表情符号字体"
+      },
+      "graph": {
+        "enable": {
+          "description": "启用自定义图表字体列表功能，关闭后则使用主题定义的图表字体列表",
+          "title": "启用"
+        },
+        "fontsList": {
+          "description": "自定义图表字体列表，每行一个字体名称",
+          "placeholder": "请在这里输入自定义的图表字体列表",
+          "title": "自定义图表字体列表"
+        },
+        "title": "图表字体"
+      },
+      "math": {
+        "enable": {
+          "description": "启用自定义数学字体列表功能，关闭后则使用主题定义的数学字体列表",
+          "title": "启用"
+        },
+        "fontsList": {
+          "description": "自定义数学字体列表，每行一个字体名称",
+          "placeholder": "请在这里输入自定义的数学字体列表",
+          "title": "自定义数学字体列表"
+        },
+        "title": "数学字体"
+      },
+      "title": "字体设置"
+    },
+    "generalSettings": {
+      "reset": {
+        "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
+        "text": "重置",
+        "title": "重置设置选项"
+      },
+      "showSystemFonts": {
+        "description": "显示内核所在系统的字体列表",
+        "text": "查看",
+        "title": "系统字体列表"
+      },
+      "showUsableFonts": {
+        "description": "显示当前可用的字体列表",
+        "text": "查看",
+        "title": "可用字体列表"
+      },
+      "title": "常规设置"
+    }
+  }
+}
