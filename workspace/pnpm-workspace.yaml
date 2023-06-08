@@ -1,5 +1,0 @@
-packages:
-  - tools/*
-  - packages/*
-  - plugins/*
-  - widgets/*
