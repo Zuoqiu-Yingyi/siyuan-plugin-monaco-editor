@@ -80,7 +80,6 @@ export default class CustomFontsPlugin extends siyuan.Plugin {
 
     onLayoutReady(): void {
         moveElementToHeadById(this.STYLE_ELEMENT_ID);
-        this.openSetting();
     }
 
     onunload(): void {
