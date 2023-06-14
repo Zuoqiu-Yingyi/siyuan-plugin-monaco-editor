@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -25,14 +25,14 @@ importers:
         specifier: ^2.8.8
         version: 2.8.8
       siyuan:
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.7.4
+        version: 0.7.4
       turbo:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.3
+        version: 1.10.3
       zhi-siyuan-api:
-        specifier: ^1.7.2
-        version: 1.7.2
+        specifier: ^1.9.4
+        version: 1.9.4
 
   packages/components:
     dependencies:
@@ -328,7 +328,7 @@ packages:
   /@babel/code-frame@7.12.11:
     resolution: {integrity: sha512-Zt1yodBx1UcyiePMSkWnU4hPqhwq7hGi2nFL1LeA3EUl+q2LQx16MISgJ0+z7dnmgvP9QtIleuETGOiOH1RcIw==}
     dependencies:
-      '@babel/highlight': 7.18.6
+      '@babel/highlight': 7.22.5
     dev: true
 
   /@babel/helper-string-parser@7.21.5:
@@ -339,11 +339,16 @@ packages:
     resolution: {integrity: sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==}
     engines: {node: '>=6.9.0'}
 
-  /@babel/highlight@7.18.6:
-    resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
+  /@babel/helper-validator-identifier@7.22.5:
+    resolution: {integrity: sha512-aJXu+6lErq8ltp+JhkJUfk1MTGyuA4v7f3pA+BJ5HLfNC6nAQ0Cpi9uOquUj8Hehg0aUiHzWQbOVJGao6ztBAQ==}
+    engines: {node: '>=6.9.0'}
+    dev: true
+
+  /@babel/highlight@7.22.5:
+    resolution: {integrity: sha512-BSKlD1hgnedS5XRnGOljZawtag7H1yPfQp0tdNJCHoH6AZ+Pcm9VvkrK59/Yy593Ypg0zMxH2BxD1VPYUQ7UIw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.19.1
+      '@babel/helper-validator-identifier': 7.22.5
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: true
@@ -2824,8 +2829,8 @@ packages:
       is-arrayish: 0.3.2
     dev: true
 
-  /siyuan@0.7.3:
-    resolution: {integrity: sha512-LyuMvrKwbZrjak5qvoXLoSV3RDn3XWgqexf6kif6rGz2KTkWso6f4pkTp5Cj3yooik8hYnqNjNgxsdFMwQ9Y4g==}
+  /siyuan@0.7.4:
+    resolution: {integrity: sha512-Lj+GgxRqjB0YZt4XmBBOgoMrZ9Cwd82h/CxHACi2t23baXC7W2zYG8eYWkZMDcLy50gQC94PzuLZrq9pZIeasw==}
     dev: true
 
   /slash@3.0.0:
@@ -3240,65 +3245,65 @@ packages:
       typescript: 5.1.3
     dev: true
 
-  /turbo-darwin-64@1.10.2:
-    resolution: {integrity: sha512-sVLpVVANByfMgqf7OYPcZM4KiDnjGu7ITvAzBSa9Iwe14yoWLn8utrNsWCRaQEB6kEqBGLPmvL7AKwkl8M2Gqg==}
+  /turbo-darwin-64@1.10.3:
+    resolution: {integrity: sha512-IIB9IomJGyD3EdpSscm7Ip1xVWtYb7D0x7oH3vad3gjFcjHJzDz9xZ/iw/qItFEW+wGFcLSRPd+1BNnuLM8AsA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.10.2:
-    resolution: {integrity: sha512-TKG91DSoYQjsCft4XBx4lYycVT5n3UQB/nOKgv/WJCSfwshLWulya3yhP8JT5erv9rPF8gwgnx87lrCmT4EAVA==}
+  /turbo-darwin-arm64@1.10.3:
+    resolution: {integrity: sha512-SBNmOZU9YEB0eyNIxeeQ+Wi0Ufd+nprEVp41rgUSRXEIpXjsDjyBnKnF+sQQj3+FLb4yyi/yZQckB+55qXWEsw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.10.2:
-    resolution: {integrity: sha512-ZIzAkfrzjJFkSM/uEfxU6JjseCsT5PHRu0s0lmYce37ApQbv/HC7tI0cFhuosI30+O8109/mkyZykKE7AQfgqA==}
+  /turbo-linux-64@1.10.3:
+    resolution: {integrity: sha512-kvAisGKE7xHJdyMxZLvg53zvHxjqPK1UVj4757PQqtx9dnjYHSc8epmivE6niPgDHon5YqImzArCjVZJYpIGHQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.10.2:
-    resolution: {integrity: sha512-G4uZA+RBQ5S1X/oUxO5KoLL2NDMkrrBZF52+00jQv6UEb9lWDgwzqSwoAGjdXxeDCrqMW5rBVwb/IBIF2/yhwA==}
+  /turbo-linux-arm64@1.10.3:
+    resolution: {integrity: sha512-Qgaqln0IYRgyL0SowJOi+PNxejv1I2xhzXOI+D+z4YHbgSx87ox1IsALYBlK8VRVYY8VCXl+PN12r1ioV09j7A==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.10.2:
-    resolution: {integrity: sha512-ObfQO37kGu1jBzFs/L+hybrCXBwdnimotJwzg7pCoSyGijKITlugrpJoPDKlg0eMr3/1Y6KUeHy26vZaDXrbuQ==}
+  /turbo-windows-64@1.10.3:
+    resolution: {integrity: sha512-rbH9wManURNN8mBnN/ZdkpUuTvyVVEMiUwFUX4GVE5qmV15iHtZfDLUSGGCP2UFBazHcpNHG1OJzgc55GFFrUw==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.10.2:
-    resolution: {integrity: sha512-7S6dx4738R/FIT2cxbsunqgHN5LelXzuzkcaZgdkU33oswRf/6KOfOABzQLdTX7Uos59cBSdwayf6KQJxuOXUg==}
+  /turbo-windows-arm64@1.10.3:
+    resolution: {integrity: sha512-ThlkqxhcGZX39CaTjsHqJnqVe+WImjX13pmjnpChz6q5HHbeRxaJSFzgrHIOt0sUUVx90W/WrNRyoIt/aafniw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.10.2:
-    resolution: {integrity: sha512-m9sR5XHhuzxUQACf0vI2qCG5OqDYAZiPTaAsTwECnwUF4/cXwEmcYddbLJnO+K9orNvcnjjent5oBNBVQ/o0ow==}
+  /turbo@1.10.3:
+    resolution: {integrity: sha512-U4gKCWcKgLcCjQd4Pl8KJdfEKumpyWbzRu75A6FCj6Ctea1PIm58W6Ltw1QXKqHrl2pF9e1raAskf/h6dlrPCA==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.10.2
-      turbo-darwin-arm64: 1.10.2
-      turbo-linux-64: 1.10.2
-      turbo-linux-arm64: 1.10.2
-      turbo-windows-64: 1.10.2
-      turbo-windows-arm64: 1.10.2
+      turbo-darwin-64: 1.10.3
+      turbo-darwin-arm64: 1.10.3
+      turbo-linux-64: 1.10.3
+      turbo-linux-arm64: 1.10.3
+      turbo-windows-64: 1.10.3
+      turbo-windows-arm64: 1.10.3
     dev: true
 
   /type-check@0.4.0:
@@ -3636,22 +3641,29 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zhi-blog-api@1.5.2:
-    resolution: {integrity: sha512-fK0mNn8flCA9XSZBwkPrswTLZ/vMT41fW7A3UOLeU6vIKmAgGva8mMNFxm0/UbdT4mjeGkFKeenW7uzSowGRcA==}
+  /zhi-blog-api@1.6.8:
+    resolution: {integrity: sha512-lC6s90TGuxMO8d6WlpnAVBCjPUJpT3YrRSpN3ikuvO5uK1JYimydu8YNhje3Byq+K05QGWeYEVXRb+DYUEkWrA==}
     dependencies:
-      zhi-lib-base: 0.0.2
+      zhi-lib-base: 0.3.1
     dev: true
 
-  /zhi-lib-base@0.0.2:
-    resolution: {integrity: sha512-0iO8/F3qHtkO2cF5LppV1MzaR5E2E6iZfGyR409CIaPAFKKkQMyQ6ZA1cFlxjSLs07ZONMqiEGCjDmVATnG3ag==}
+  /zhi-common@1.10.0:
+    resolution: {integrity: sha512-LK74xyZkhbe+1F7A74TjhaZEQXG33B9ZqSJa12Vp6ubyVH+HNcZLpucEDGlkG5YdmU+oL3iBwDkfOjyuTJar2A==}
+    dependencies:
+      zhi-lib-base: 0.3.1
     dev: true
 
-  /zhi-siyuan-api@1.7.2:
-    resolution: {integrity: sha512-Bq8YGa35RkMqD+943bwqHD/x7A5lxakKTNba78KTeJMm0ivjqwqVynTcr/cq6mr1iUPTu3+BEmKFY1z4bjs7Zg==}
+  /zhi-lib-base@0.3.1:
+    resolution: {integrity: sha512-DYN8ebg9c18zBdpQvFtriWmrpYRyaYCJA6cG7ho57zPP4v4yhXWCn4NkPy2rOo9dJAkT57viHfrQp+GJbG6lVw==}
+    dev: true
+
+  /zhi-siyuan-api@1.9.4:
+    resolution: {integrity: sha512-hIsWgZJeZuCcLaHjmu5FmPH0Qx7IRTGFZEEBzfNEzImcLj36x1Lbm4XwGxJyFMnqJ8wA4DIBAAxThHeeiqasqg==}
     dependencies:
       cross-fetch: 3.1.6
-      zhi-blog-api: 1.5.2
-      zhi-lib-base: 0.0.2
+      zhi-blog-api: 1.6.8
+      zhi-common: 1.10.0
+      zhi-lib-base: 0.3.1
     transitivePeerDependencies:
       - encoding
     dev: true

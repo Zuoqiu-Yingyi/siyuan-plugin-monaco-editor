@@ -1,4 +1,4 @@
-// Type definitions for Electron 25.0.1
+// Type definitions for Electron 25.1.0
 // Project: http://electronjs.org/
 // Definitions by: The Electron Team <https://github.com/electron/electron>
 // Definitions: https://github.com/electron/typescript-definitions
@@ -9,7 +9,7 @@ type DOMEvent = Event;
 type GlobalResponse = Response;
 type GlobalRequest = Request;
 
-export declare namespace Electron {
+declare namespace Electron {
   const NodeEventEmitter: typeof import('events').EventEmitter;
 
   type Accelerator = string;
@@ -7741,12 +7741,14 @@ export declare namespace Electron {
 
     /**
      * A stable identifier on Windows that can be used for device permissions.
+     *
+     * @platform win32
      */
     deviceInstanceId?: string;
     /**
      * A string suitable for display to the user for describing this device.
      */
-    displayName: string;
+    displayName?: string;
     /**
      * Unique identifier for the port.
      */
@@ -7756,21 +7758,23 @@ export declare namespace Electron {
      */
     portName: string;
     /**
-     * Optional USB product ID.
+     * The USB product ID.
      */
-    productId: string;
+    productId?: string;
     /**
      * The USB device serial number.
      */
-    serialNumber: string;
+    serialNumber?: string;
     /**
      * Represents a single serial port on macOS can be enumerated by multiple drivers.
+     *
+     * @platform darwin
      */
     usbDriverName?: string;
     /**
-     * Optional USB vendor ID.
+     * The USB vendor ID.
      */
-    vendorId: string;
+    vendorId?: string;
   }
 
   interface ServiceWorkerInfo {
@@ -8707,6 +8711,26 @@ export declare namespace Electron {
      * reused for new connections.
      */
     setSSLConfig(config: SSLConfigConfig): void;
+    /**
+     * Sets the handler which can be used to override which USB classes are protected.
+     * The return value for the handler is a string array of USB classes which should
+     * be considered protected (eg not available in the renderer).  Valid values for
+     * the array are:
+     *
+     * * `audio`
+     * * `audio-video`
+     * * `hid`
+     * * `mass-storage`
+     * * `smart-card`
+     * * `video`
+     * * `wireless`
+     *
+     * Returning an empty string array from the handler will allow all USB classes;
+     * returning the passed in array will maintain the default list of protected USB
+     * classes (this is also the default behavior if a handler is not defined). To
+     * clear the handler, call `setUSBProtectedClassesHandler(null)`.
+     */
+    setUSBProtectedClassesHandler(handler: ((details: USBProtectedClassesHandlerHandlerDetails) => string[]) | (null)): void;
     /**
      * Overrides the `userAgent` and `acceptLanguages` for this session.
      *
@@ -17244,6 +17268,13 @@ export declare namespace Electron {
     origin?: string;
   }
 
+  interface USBProtectedClassesHandlerHandlerDetails {
+    /**
+     * The current list of protected USB classes. Possible class values are:
+     */
+    protectedClasses: Array<'audio' | 'audio-video' | 'hid' | 'mass-storage' | 'smart-card' | 'video' | 'wireless'>;
+  }
+
   interface VisibleOnAllWorkspacesOptions {
     /**
      * Sets whether the window should be visible above fullscreen windows.
@@ -18348,6 +18379,7 @@ export declare namespace Electron {
     type UpdateTargetUrlEvent = Electron.UpdateTargetUrlEvent;
     type UploadProgress = Electron.UploadProgress;
     type UsbDeviceRevokedDetails = Electron.UsbDeviceRevokedDetails;
+    type USBProtectedClassesHandlerHandlerDetails = Electron.USBProtectedClassesHandlerHandlerDetails;
     type VisibleOnAllWorkspacesOptions = Electron.VisibleOnAllWorkspacesOptions;
     type WebContentsAudioStateChangedEventParams = Electron.WebContentsAudioStateChangedEventParams;
     type WebContentsDidRedirectNavigationEventParams = Electron.WebContentsDidRedirectNavigationEventParams;
@@ -18672,6 +18704,7 @@ export declare namespace Electron {
     type UpdateTargetUrlEvent = Electron.UpdateTargetUrlEvent;
     type UploadProgress = Electron.UploadProgress;
     type UsbDeviceRevokedDetails = Electron.UsbDeviceRevokedDetails;
+    type USBProtectedClassesHandlerHandlerDetails = Electron.USBProtectedClassesHandlerHandlerDetails;
     type VisibleOnAllWorkspacesOptions = Electron.VisibleOnAllWorkspacesOptions;
     type WebContentsAudioStateChangedEventParams = Electron.WebContentsAudioStateChangedEventParams;
     type WebContentsDidRedirectNavigationEventParams = Electron.WebContentsDidRedirectNavigationEventParams;
@@ -18930,6 +18963,7 @@ export declare namespace Electron {
     type UpdateTargetUrlEvent = Electron.UpdateTargetUrlEvent;
     type UploadProgress = Electron.UploadProgress;
     type UsbDeviceRevokedDetails = Electron.UsbDeviceRevokedDetails;
+    type USBProtectedClassesHandlerHandlerDetails = Electron.USBProtectedClassesHandlerHandlerDetails;
     type VisibleOnAllWorkspacesOptions = Electron.VisibleOnAllWorkspacesOptions;
     type WebContentsAudioStateChangedEventParams = Electron.WebContentsAudioStateChangedEventParams;
     type WebContentsDidRedirectNavigationEventParams = Electron.WebContentsDidRedirectNavigationEventParams;
@@ -19269,6 +19303,7 @@ export declare namespace Electron {
     type UpdateTargetUrlEvent = Electron.UpdateTargetUrlEvent;
     type UploadProgress = Electron.UploadProgress;
     type UsbDeviceRevokedDetails = Electron.UsbDeviceRevokedDetails;
+    type USBProtectedClassesHandlerHandlerDetails = Electron.USBProtectedClassesHandlerHandlerDetails;
     type VisibleOnAllWorkspacesOptions = Electron.VisibleOnAllWorkspacesOptions;
     type WebContentsAudioStateChangedEventParams = Electron.WebContentsAudioStateChangedEventParams;
     type WebContentsDidRedirectNavigationEventParams = Electron.WebContentsDidRedirectNavigationEventParams;

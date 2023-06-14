@@ -18,8 +18,8 @@
     "devDependencies": {
         "eslint": "^7.32.0",
         "prettier": "^2.8.8",
-        "siyuan": "^0.7.3",
-        "turbo": "^1.10.2",
-        "zhi-siyuan-api": "^1.7.2"
+        "siyuan": "^0.7.4",
+        "turbo": "^1.10.3",
+        "zhi-siyuan-api": "^1.9.4"
     }
 }
