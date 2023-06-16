@@ -1,0 +1,21 @@
+{
+    "name": "@workspace/api",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "typescript": "^5.1.3",
+        "vitest": "^0.32.1"
+    },
+    "dependencies": {
+        "@workspace/tsconfig": "workspace:^",
+        "@workspace/types": "workspace:^",
+        "@workspace/utils": "workspace:^"
+    }
+}

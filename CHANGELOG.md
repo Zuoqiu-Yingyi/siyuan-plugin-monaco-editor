@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-16
+
+- 迁移仓库 `siyuan-api-interface` 至 `workspace/packages` 目录 | Migrate repository `siyuan-api-interface` to `workspace/packages` directory.
+
 ## 2023-06-14
 
 - 更新第三方依赖 | Update third-party dependencies.
