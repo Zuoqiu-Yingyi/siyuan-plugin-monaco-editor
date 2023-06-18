@@ -2,5 +2,29 @@
     "name": "metadata",
     "author": "Zuoqiu-Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/widget-metadata",
-    "version": "0.2.1"
+    "version": "0.2.1",
+    "displayName": {
+        "default": "Document Metadata",
+        "zh_CN": "文档元数据",
+        "zh_CHT": "文檔元數據"
+    },
+    "description": {
+        "default": "Manage block attributes for SiYuan document blocks and can also be used to customize YAML Front Matter (YFM) metadata when exported.",
+        "zh_CN": "管理思源文档块的块属性，也可用于自定义导出时的 YAML Front Matter (YFM) 元数据。",
+        "zh_CHT": "管理思源文件塊的塊屬性，也可用於自定義匯出時的 YAML Front Matter (YFM) 元數據。"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
 }

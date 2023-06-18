@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-18
+
+- 完善 `metadata` 的配置清单 | Improve the manifest of `metadata`.
+
 ## 2023-06-17
 
 - 新增 `json-schema` 相关依赖 | Add `json-schema` related dependencies.
