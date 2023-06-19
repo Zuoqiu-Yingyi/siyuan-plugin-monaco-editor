@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-19
+
+- 完善 `README*.md` | Improve `README*.md`.
+
 ## 2023-06-18
 
 - 完善 `metadata` 的配置清单 | Improve the manifest of `metadata`.

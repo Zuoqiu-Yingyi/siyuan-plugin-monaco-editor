@@ -31,8 +31,8 @@ importers:
         specifier: ^1.10.3
         version: 1.10.3
       zhi-siyuan-api:
-        specifier: ^1.14.0
-        version: 1.14.0
+        specifier: ^1.16.0
+        version: 1.16.0
 
   packages/apis:
     dependencies:
@@ -4302,8 +4302,8 @@ packages:
     resolution: {integrity: sha512-/wwfo0Z/86E5BW+mXN9amWAMEi0KLEoiOTNFb6BBtVuhDhypmZLRmfIvFk+E+UJU7bedTnkc6mRLAp7D+O9piw==}
     dev: true
 
-  /zhi-siyuan-api@1.14.0:
-    resolution: {integrity: sha512-yZc9nTgMb9qvMSw4kkiqpPWWblN7XauTB6rZ/pWMwB8tyhVXIV2ZF9Q+HVhOjtEy4eHDVvpx/XALtSNS3AdWbw==}
+  /zhi-siyuan-api@1.16.0:
+    resolution: {integrity: sha512-wk9/FHr2+4fkaHaz4BBuS0ldIo0cBrZi4UQi2dtjaAXvvyYQJC68IjE67C4+aHu0wnieDL4Dygo2O9yLk18PGA==}
     dependencies:
       zhi-blog-api: 1.8.0
       zhi-common: 1.11.2
