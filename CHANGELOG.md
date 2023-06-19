@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-20
+
+- 添加 `icon.png` | Add `icon.png`.
+
 ## 2023-06-19
 
 - 完善 `README*.md` | Improve `README*.md`.
