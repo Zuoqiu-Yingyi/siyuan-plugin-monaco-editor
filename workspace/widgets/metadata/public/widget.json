@@ -2,7 +2,7 @@
     "name": "metadata",
     "author": "Zuoqiu-Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/widget-metadata",
-    "version": "0.2.1",
+    "version": "1.0.0",
     "displayName": {
         "default": "Document Metadata",
         "zh_CN": "文档元数据",
