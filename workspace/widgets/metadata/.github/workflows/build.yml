@@ -1,0 +1,93 @@
+# 构建并部署 | Build and deploy
+
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      # REF https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  PACKAGE_PATH: ./workspace/widgets/metadata
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      # REF https://github.com/marketplace/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ## 将要拉取的仓库 | repository will to pull
+          repository: Zuoqiu-Yingyi/siyuan-packages-monorepo
+
+      # Install Node.js
+      # REF https://github.com/marketplace/actions/setup-node-js-environment
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          ## Node.js 版本号 | Node.js version
+          node-version: 20
+
+          ## Node.js 源 | Node.js registry
+          registry-url: https://registry.npmjs.org
+
+      # Install pnpm
+      # REF https://github.com/marketplace/actions/setup-pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          ## pnpm 版本号 | pnpm version
+          version: 8
+
+          ## 是否安装 npm 包 | if install npm package?
+          run_install: false
+
+      # Get pnpm store directory
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      # Setup pnpm cache
+      # REF https://github.com/marketplace/actions/cache
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd $GITHUB_WORKSPACE
+          cd ./workspace
+          pnpm install
+
+      # Build package
+      - name: Build package
+        run: |
+          cd $GITHUB_WORKSPACE
+          cd $PACKAGE_PATH
+          pnpm build
+
+      # Deploy to publish branch
+      # REF https://github.com/marketplace/actions/github-pages
+      - name: Deploy to publish branch
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          ## 构建产物目录 | directory of build artifacts
+          build_dir: ${{ env.PACKAGE_PATH }}/dist
+
+          ## 提交到目标分支
+          target_branch: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_ACTIONS }}

@@ -3,6 +3,7 @@
 ## 2023-06-21
 
 - 重构 `apis.siyuan` | Refactor `apis.siyuan`.
+- 添加 CD 配置 | Add CD configuration.
 
 ## 2023-06-20
 
