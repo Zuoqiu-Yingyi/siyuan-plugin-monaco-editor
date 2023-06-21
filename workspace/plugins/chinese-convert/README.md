@@ -1,4 +1,4 @@
-> **[READ ONLY] Subtree split of the [siyuan-packages-monorepo](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo) [/workspace/plugin/openCC](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo/tree/main/workspace/plugin/openCC)**
+> **[READ ONLY] Subtree split of the [siyuan-packages-monorepo](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo) [/workspace/plugin/chinese-convert](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo/tree/main/workspace/plugin/chinese-convert)**
 
 <div align="center">
 <img alt="icon" src="./public/icon.png" style="width: 8em; height: 8em;">
@@ -24,9 +24,9 @@
 ### RELEASE STEPS
 
 1. Update the version number in `<subrepo-root-dir>/package.json` and `<subrepo-root-dir>/public/plugin.json`, then commit the changes in [monorepo](https://github.com/Zuoqiu-Yingyi/siyuan-packages-monorepo).
-2. Run script `./scripts/git-subtree/openCC/push.ps1` with the folowing command in **monorepo root dir** to push the subtree to sub-repository (`dev` branch).
+2. Run script `./scripts/git-subtree/chinese-convert/push.ps1` with the folowing command in **monorepo root dir** to push the subtree to sub-repository (`dev` branch).
    ```powershell
-   pwsh -f "./scripts/git-subtree/openCC/push.ps1"
+   pwsh -f "./scripts/git-subtree/chinese-convert/push.ps1"
    ```
 3. Create a pull request from `dev` branch to `main` branch in sub-repository.
 4. Merge the pull request.
