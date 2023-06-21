@@ -1,14 +1,32 @@
+<!--
+ Copyright (C) 2023 Zuoqiu Yingyi
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
+ 
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <script setup lang="ts">
-import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, watch, toRef } from "vue";
+import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, watch } from "vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import moment from "moment";
 
-import { Client } from "./../client/Client";
-import { notify } from "./../utils/notify";
-import { tokenSplit, isCustomAttrKey } from "./../utils/string";
+import { Client } from "@workspace/apis/siyuan/client/Client";
+import { notify } from "@/utils/notify";
+import { tokenSplit, isCustomAttrKey } from "@/utils/string";
 
-import { IForm, IAttr } from "./../types/form";
-import { IData, IAL } from "./../types/data";
+import { IForm, IAttr } from "@/types/form";
+import { IData } from "@/types/data";
+import { TagData } from "@arco-design/web-vue";
 
 const i18n = inject("i18n") as I18n;
 const t = i18n.global.t as VueI18nTranslation;
@@ -418,6 +436,7 @@ onUpdated(() => {
                         :sm="12"
                         :xl="6"
                     >
+                        <!-- 文档创建时间 -->
                         <a-form-item field="created">
                             <template #label>
                                 {{ $t("created") }}
@@ -439,6 +458,7 @@ onUpdated(() => {
                         :sm="12"
                         :xl="6"
                     >
+                        <!-- 文档更新时间 -->
                         <a-form-item field="updated">
                             <template #label>
                                 {{ $t("updated") }}
@@ -460,6 +480,7 @@ onUpdated(() => {
                         :sm="12"
                         :xl="6"
                     >
+                        <!-- 文档标题 -->
                         <a-form-item field="title">
                             <template #label>
                                 {{ $t("title") }}
@@ -481,6 +502,7 @@ onUpdated(() => {
                         :sm="12"
                         :xl="6"
                     >
+                        <!-- 文档命名 -->
                         <a-form-item field="name">
                             <template #label>
                                 {{ $t("name") }}
@@ -492,7 +514,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.basics.name"
-                                @change="value => updateNativeAttr('name', value)"
+                                @change="(value: string | string[]) => updateNativeAttr('name', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -501,6 +523,7 @@ onUpdated(() => {
                         :xs="24"
                         :md="12"
                     >
+                        <!-- 文档别名 -->
                         <a-form-item field="alias">
                             <template #label>
                                 {{ $t("alias") }}
@@ -512,7 +535,7 @@ onUpdated(() => {
                             </template>
                             <a-input-tag
                                 v-model:model-value="form.basics.alias"
-                                @change="value => updateNativeAttr('alias', value as string[])"
+                                @change="(value: any) => updateNativeAttr('alias', value as string[])"
                                 style="text-align: left"
                                 allow-clear
                             />
@@ -522,6 +545,7 @@ onUpdated(() => {
                         :xs="24"
                         :md="12"
                     >
+                        <!-- 文档标签 -->
                         <a-form-item field="tags">
                             <template #label>
                                 {{ $t("tags") }}
@@ -533,7 +557,7 @@ onUpdated(() => {
                             </template>
                             <a-input-tag
                                 v-model:model-value="form.basics.tags"
-                                @change="value => updateNativeAttr('tags', value as string[])"
+                                @change="(value: any) => updateNativeAttr('tags', value as string[])"
                                 style="text-align: left"
                                 allow-clear
                                 unique-value
@@ -541,6 +565,7 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col :span="24">
+                        <!-- 文档书签 -->
                         <a-form-item field="bookmark">
                             <template #label>
                                 {{ $t("bookmark") }}
@@ -552,7 +577,7 @@ onUpdated(() => {
                             </template>
                             <a-select
                                 v-model:model-value="form.basics.bookmark"
-                                @change="value => updateNativeAttr('bookmark', value as string)"
+                                @change="(value: any) => updateNativeAttr('bookmark', value as string)"
                                 :loading="loading"
                                 :options="options"
                                 allow-clear
@@ -563,6 +588,7 @@ onUpdated(() => {
                         </a-form-item>
                     </a-col>
                     <a-col :span="24">
+                        <!-- 文档备注 -->
                         <a-form-item field="memo">
                             <template #label>
                                 {{ $t("memo") }}
@@ -574,7 +600,7 @@ onUpdated(() => {
                             </template>
                             <a-textarea
                                 v-model:model-value="form.basics.memo"
-                                @change="value => updateNativeAttr('memo', value)"
+                                @change="(value: any) => updateNativeAttr('memo', value)"
                                 class="textarea"
                                 auto-size
                             />
@@ -582,6 +608,8 @@ onUpdated(() => {
                     </a-col>
                 </a-row>
             </a-collapse-item>
+
+            <!-- 自定义属性 -->
             <a-collapse-item
                 class="collapse-item"
                 :header="$t('attributes.custom')"
@@ -652,6 +680,8 @@ onUpdated(() => {
                     </a-col>
                 </a-row>
             </a-collapse-item>
+
+            <!-- 其他属性 -->
             <a-collapse-item
                 class="collapse-item"
                 :header="$t('attributes.other')"
@@ -662,6 +692,7 @@ onUpdated(() => {
                         :sm="12"
                         :xs="24"
                     >
+                        <!-- 文档 ID -->
                         <a-form-item field="id">
                             <template #label>
                                 {{ $t("id") }}
@@ -682,6 +713,7 @@ onUpdated(() => {
                         :sm="12"
                         :xs="24"
                     >
+                        <!-- 文档图标 -->
                         <a-form-item field="icon">
                             <template #label>
                                 {{ $t("icon") }}
@@ -693,13 +725,14 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.others.icon"
-                                @change="value => updateNativeAttr('icon', value)"
+                                @change="(value: any) => updateNativeAttr('icon', value)"
                                 allow-clear
                             />
                         </a-form-item>
                     </a-col>
 
                     <a-col :span="24">
+                        <!-- 文档浏览位置 -->
                         <a-form-item field="scroll">
                             <template #label>
                                 {{ $t("scroll") }}
@@ -711,13 +744,14 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.others.scroll"
-                                @change="value => updateNativeAttr('scroll', value)"
+                                @change="(value: any) => updateNativeAttr('scroll', value)"
                                 allow-clear
                             />
                         </a-form-item>
                     </a-col>
 
                     <a-col :span="24">
+                        <!-- 文档题头图 -->
                         <a-form-item field="title-img">
                             <template #label>
                                 {{ $t("title-img") }}
@@ -729,7 +763,7 @@ onUpdated(() => {
                             </template>
                             <a-input
                                 v-model:model-value="form.others['title-img']"
-                                @change="value => updateNativeAttr('title-img', value)"
+                                @change="(value: any) => updateNativeAttr('title-img', value)"
                                 allow-clear
                             />
                         </a-form-item>
@@ -737,7 +771,7 @@ onUpdated(() => {
 
                     <!-- 未知属性 -->
                     <a-col
-                        v-for="(value, key, index) in form.unknowns"
+                        v-for="(_value, key, index) in form.unknowns"
                         :span="24"
                     >
                         <a-divider
@@ -745,11 +779,11 @@ onUpdated(() => {
                             class="divider"
                             margin="0.5em"
                         />
-                        <a-form-item :field="key as string">
+                        <a-form-item :field="(key as string)">
                             <template #label> [{{ key }}] </template>
                             <a-input
                                 v-model:model-value="form.unknowns[key]"
-                                @change="value => updateNativeAttr(key as string, value)"
+                                @change="(value: any) => updateNativeAttr(key as string, value)"
                                 allow-clear
                             />
                         </a-form-item>

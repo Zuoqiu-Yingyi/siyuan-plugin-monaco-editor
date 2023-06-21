@@ -1,3 +1,20 @@
+<!--
+ Copyright (C) 2023 Zuoqiu Yingyi
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
+ 
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <script setup lang="ts">
 import { inject, ref, unref, onMounted, watch } from "vue";
 import { I18n } from "vue-i18n";
@@ -6,17 +23,12 @@ import Breadcrumb from "./components/Breadcrumb.vue";
 import Export from "./components/Export.vue";
 import Form from "./components/Form.vue";
 
-import { Client } from "./client/Client";
-import { notify } from "./utils/notify";
-import { dumpForm } from "./utils/export";
+import { Client } from "@workspace/apis/siyuan/client/Client";
 import { getArcoLang } from "./utils/language";
 
-import { ISiyuan } from "./types/siyuan/siyuan";
-import { IData, IAL } from "./types/data";
-import { IForm } from "./types/form";
+import { IData } from "./types/data";
 
 const client = inject("client") as Client;
-const siyuan = inject("siyuan") as ISiyuan;
 const data = inject("data") as IData;
 const i18n = inject("i18n") as I18n;
 

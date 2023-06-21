@@ -1,15 +1,32 @@
+<!--
+ Copyright (C) 2023 Zuoqiu Yingyi
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
+ 
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <script setup lang="ts">
-import { shallowReactive, reactive, shallowRef, watch, inject, ref, unref, onUpdated } from "vue";
+import { reactive, shallowRef, watch, inject, ref, onUpdated } from "vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import { TableColumnData, TableData, TableDraggable, TableRowSelection } from "@arco-design/web-vue";
 
-import { Client } from "./../client/Client";
-import { notify } from "./../utils/notify";
-import { Parser, dumpIAL } from "./../utils/export";
-import { isCustomAttrKey } from "./../utils/string";
+import { Client } from "@workspace/apis/siyuan/client/Client";
+import { notify } from "@/utils/notify";
+import { Parser, dumpIAL } from "@/utils/export";
+import { isCustomAttrKey } from "@/utils/string";
 
-import { IMetadata } from "./../types/metadata";
-import { IData, IAL } from "./../types/data";
+import { IMetadata } from "@/types/metadata";
+import { IData, IAL } from "@/types/data";
 
 const i18n = inject("i18n") as I18n;
 const t = i18n.global.t as VueI18nTranslation;
@@ -244,7 +261,7 @@ function save(attrs: Record<string, string | null>, then?: (response: any) => vo
 
             if (then) then(response);
         })
-        .catch(error => {
+        .catch((error: Error) => {
             notify(error.toString());
         });
 }
@@ -342,27 +359,36 @@ onUpdated(() => {
             :pagination="false"
             :bordered="{ cell: true }"
             @change="onChange"
-            @selection-change="rowKeys => onSelectionChange(rowKeys as string[])"
+            @selection-change="(rowKeys: any) => onSelectionChange(rowKeys as string[])"
             column-resizable
             size="mini"
             class="table"
         >
+            <!-- 导出时属性名 -->
             <template #_key="{ record, rowIndex }">
                 <a-input
                     size="mini"
                     v-model="record._key"
-                    @change="value => onChangeInput(record, value)"
+                    @change="(value: any) => onChangeInput(record, value as string)"
                 />
             </template>
+
+            <!-- 属性值 -->
             <template #value="{ record, rowIndex }">
-                <pre class="value">{{ record.value }}</pre>
+                <pre
+                    class="value"
+                    :title="record.value"
+                    >{{ record.value }}</pre
+                >
             </template>
+
+            <!-- 属性值解析器 -->
             <template #parser="{ record, rowIndex }">
                 <a-select
                     v-if="record.parser !== undefined"
                     v-model:model-value="record.parser"
                     :options="Object.values(Parser)"
-                    @change="value => onChangeSelect(record, value as Parser)"
+                    @change="(value: any) => onChangeSelect(record, value as Parser)"
                     size="mini"
                 >
                 </a-select>
