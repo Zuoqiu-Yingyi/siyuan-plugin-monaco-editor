@@ -4,6 +4,7 @@
 
 - 重构 `apis.siyuan` | Refactor `apis.siyuan`.
 - 添加 CD 配置 | Add CD configuration.
+- 添加附属仓库 `chinese-convert` 的管理脚本 | Add management scripts for sub-repository `chinese-convert`.
 
 ## 2023-06-20
 
