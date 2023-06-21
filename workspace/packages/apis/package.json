@@ -1,5 +1,5 @@
 {
-    "name": "@workspace/api",
+    "name": "@workspace/apis",
     "version": "0.0.0",
     "type": "module",
     "private": true,

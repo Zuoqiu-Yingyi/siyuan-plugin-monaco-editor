@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-06-21
+
+- 重构 `apis.siyuan` | Refactor `apis.siyuan`.
+
 ## 2023-06-20
 
 - 添加 `icon.png` | Add `icon.png`.

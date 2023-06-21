@@ -10,20 +10,20 @@ import {
     TOKEN,
 } from "./config";
 
-import fullTextSearchBlock from "./../types/siyuan/fullTextSearchBlock";
-import getBlockAttrs from "./../types/siyuan/getBlockAttrs";
-import getBlockBreadcrumb from "./../types/siyuan/getBlockBreadcrumb";
-import getBookmarkLabels from "./../types/siyuan/getBookmarkLabels";
-import getConf from "./../types/siyuan/getConf";
-import getDocInfo from "./../types/siyuan/getDocInfo";
-import getRecentDocs from "./../types/siyuan/getRecentDocs";
-import listDocsByPath from "./../types/siyuan/listDocsByPath";
-import lsNotebooks from "./../types/siyuan/lsNotebooks";
-import renameDoc from "./../types/siyuan/renameDoc";
-import searchDocs from "./../types/siyuan/searchDocs";
-import setBlockAttrs from "./../types/siyuan/setBlockAttrs";
-import sql from "./../types/siyuan/sql";
-import version from "./../types/siyuan/version";
+import fullTextSearchBlock from "../types/siyuan/search/fullTextSearchBlock";
+import getBlockAttrs from "../types/siyuan/attr/getBlockAttrs";
+import getBlockBreadcrumb from "../types/siyuan/block/getBlockBreadcrumb";
+import getBookmarkLabels from "../types/siyuan/attr/getBookmarkLabels";
+import getConf from "../types/siyuan/system/getConf";
+import getDocInfo from "../types/siyuan/block/getDocInfo";
+import getRecentDocs from "../types/siyuan/storage/getRecentDocs";
+import listDocsByPath from "../types/siyuan/filetree/listDocsByPath";
+import lsNotebooks from "../types/siyuan/notebook/lsNotebooks";
+import renameDoc from "../types/siyuan/filetree/renameDoc";
+import searchDocs from "../types/siyuan/filetree/searchDocs";
+import setBlockAttrs from "../types/siyuan/attr/setBlockAttrs";
+import sql from "../types/siyuan/query/sql";
+import version from "../types/siyuan/system/version";
 
 import {
     GroupBy,

@@ -15,23 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ShallowReactive } from "vue";
-import { IConfig } from "./config";
+import getConf from "@workspace/apis/siyuan/types/siyuan/system/getConf";
+import lsNotebooks from "@workspace/apis/siyuan/types/siyuan/notebook/lsNotebooks";
 
-export interface IAL {
-    [key: string]: string;
-}
-
-export interface IData {
-    url: URL;
-    doc_id: string;
-    doc_path: string;
-    doc_notebook: string;
-    block_id: string;
-    block_ial: IAL;
-    block_config: IConfig;
-    element?: HTMLElement;
-    paths: string[];
-    hpaths: string[];
-    ial: IAL;
+export interface ISiyuan {
+    config: getConf.Conf;
+    notebooks: lsNotebooks.Notebook[];
 }

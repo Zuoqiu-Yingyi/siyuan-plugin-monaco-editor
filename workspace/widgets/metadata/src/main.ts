@@ -12,11 +12,11 @@ import { mapLang } from "@workspace/utils/locale/language";
 /* 组件 */
 import App from "./App.vue";
 
-import { Client } from "./client/Client";
+import { Client } from "@workspace/apis/siyuan/client/Client";
 import { setThemeMode } from "./utils/theme";
 
 /* 类型 */
-import { ISiyuan } from "./types/siyuan/siyuan";
+import { ISiyuan } from "./types/siyuan";
 import { IData } from "./types/data";
 
 /* 语言包 */
