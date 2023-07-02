@@ -31,8 +31,6 @@ import {
 import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import { classify } from "@workspace/utils/font";
 
-import type { FontData } from "@workspace/types/misc/browser";
-
 import { type IListItem } from "@workspace/components/siyuan/list/list";
 import List from "@workspace/components/siyuan/list/List.svelte"
 
