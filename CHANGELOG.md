@@ -4,6 +4,7 @@
 
 - 更新依赖项 | Update dependencies.
 - 网页视图支持自定义网页背景颜色 | Web view supports custom web page background color.
+- 添加附属仓库 `custom-block` 的管理脚本 | Add management scripts for sub-repository `custom-block`.
 
 ## 2023-06-21
 
