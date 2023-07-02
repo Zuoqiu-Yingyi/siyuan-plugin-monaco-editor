@@ -20,13 +20,12 @@ import { inject, ref, shallowRef, reactive, shallowReactive, toRaw, onUpdated, w
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import moment from "moment";
 
-import { Client } from "@workspace/apis/siyuan/client/Client";
+import { Client } from "@siyuan-community/siyuan-sdk";
 import { notify } from "@/utils/notify";
 import { tokenSplit, isCustomAttrKey } from "@/utils/string";
 
 import { IForm, IAttr } from "@/types/form";
 import { IData } from "@/types/data";
-import { TagData } from "@arco-design/web-vue";
 
 const i18n = inject("i18n") as I18n;
 const t = i18n.global.t as VueI18nTranslation;

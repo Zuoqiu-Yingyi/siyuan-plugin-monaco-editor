@@ -12,7 +12,7 @@ import { mapLang } from "@workspace/utils/locale/language";
 /* 组件 */
 import App from "./App.vue";
 
-import { Client } from "@workspace/apis/siyuan/client/Client";
+import { Client } from "@siyuan-community/siyuan-sdk";
 import { setThemeMode } from "./utils/theme";
 
 /* 类型 */
@@ -46,10 +46,10 @@ async function init() {
     const client = new Client();
 
     if (import.meta.env.DEV) { // 开发环境
-        client.update(
-            new URL(import.meta.env.VITE_SIYUAN_SERVE),
-            import.meta.env.VITE_SIYUAN_TOKEN,
-        )
+        client.updateOptions({
+            baseURL: import.meta.env.VITE_SIYUAN_SERVE,
+            token: import.meta.env.VITE_SIYUAN_TOKEN,
+        });
     }
 
     var siyuan: ISiyuan;

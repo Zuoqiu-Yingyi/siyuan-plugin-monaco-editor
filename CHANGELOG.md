@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-02
+
+- 更新依赖项 | Update dependencies.
+
 ## 2023-06-21
 
 - 重构 `apis.siyuan` | Refactor `apis.siyuan`.

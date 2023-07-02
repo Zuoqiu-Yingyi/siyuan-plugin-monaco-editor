@@ -20,7 +20,7 @@ import { reactive, shallowRef, watch, inject, ref, onUpdated } from "vue";
 import { I18n, VueI18nTranslation } from "vue-i18n";
 import { TableColumnData, TableData, TableDraggable, TableRowSelection } from "@arco-design/web-vue";
 
-import { Client } from "@workspace/apis/siyuan/client/Client";
+import { Client } from "@siyuan-community/siyuan-sdk";
 import { notify } from "@/utils/notify";
 import { Parser, dumpIAL } from "@/utils/export";
 import { isCustomAttrKey } from "@/utils/string";

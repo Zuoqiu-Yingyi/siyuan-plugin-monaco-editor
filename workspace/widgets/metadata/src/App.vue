@@ -23,7 +23,7 @@ import Breadcrumb from "./components/Breadcrumb.vue";
 import Export from "./components/Export.vue";
 import Form from "./components/Form.vue";
 
-import { Client } from "@workspace/apis/siyuan/client/Client";
+import { Client } from "@siyuan-community/siyuan-sdk";
 import { getArcoLang } from "./utils/language";
 
 import { IData } from "./types/data";
