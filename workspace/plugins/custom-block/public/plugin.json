@@ -1,0 +1,37 @@
+{
+    "name": "custom-fonts",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts",
+    "version": "0.0.0",
+    "minAppVersion": "2.9.0",
+    "backends": [
+        "all"
+    ],
+    "frontends": [
+        "all"
+    ],
+    "displayName": {
+        "default": "Custom Block Style",
+        "zh_CN": "自定义块样式",
+        "zh_CHT": "自定義塊樣式"
+    },
+    "description": {
+        "default": "Use custom block attributes to style various blocks.",
+        "zh_CN": "使用自定义块属性设置各种块的样式。",
+        "zh_CHT": "使用自定義塊屬性設定各種塊的樣式。"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}
