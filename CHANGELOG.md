@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-03
+
+- 实现使用块菜单编辑块 `style` 属性功能 | Implement the function of using block menu to edit block `style` attribute.
+
 ## 2023-07-02
 
 - 更新依赖项 | Update dependencies.

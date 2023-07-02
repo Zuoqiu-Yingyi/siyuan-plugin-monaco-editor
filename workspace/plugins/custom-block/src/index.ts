@@ -17,9 +17,16 @@
 
 import siyuan from "siyuan";
 
-import { FLAG_MOBILE } from "@workspace/utils/env/front-end";
+import { Client } from "@siyuan-community/siyuan-sdk";
+
+import Item from "@workspace/components/siyuan/menu/Item.svelte"
+
 import { Logger } from "@workspace/utils/logger";
 import { merge } from "@workspace/utils/misc/merge";
+import {
+    getBlockMenuContext,
+    type BlockMenuDetail,
+} from "@workspace/utils/siyuan/menu/block";
 
 import { DEFAULT_CONFIG } from "./configs/default";
 import type { IConfig } from "./types/config";
@@ -29,6 +36,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
 
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
+    public readonly client: InstanceType<typeof Client>;
 
     protected readonly STYLE_ELEMENT_ID: string;
     protected readonly SETTINGS_DIALOG_ID: string;
@@ -41,6 +49,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
         super(options);
 
         this.logger = new Logger(this.name);
+        this.client = new Client();
         this.SETTINGS_DIALOG_ID = `plugin-${this.name}-settings-dialog`;
     }
 
@@ -51,6 +60,9 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
+                /* 开始监听块菜单事件 */
+                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+                this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
             });
     }
 
@@ -58,9 +70,72 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
+        /* 停止监听块菜单事件 */
+        this.eventBus.off("click-blockicon", this.blockMenuEventListener);
+        this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
     }
 
     openSetting(): void {
+    }
+
+    /* 添加块菜单项 */
+    protected readonly blockMenuEventListener = (e: CustomEvent<BlockMenuDetail>) => {
+        // this.logger.debug(e);
+        const detail = e.detail; // 获取菜单信息
+        const context = getBlockMenuContext(detail); // 获取块菜单上下文
+
+        if (context) {
+            const submenu: siyuan.IMenuItemOption[] = []; // 子菜单
+
+            if (!context.isDocumentBlock // 不是文档块
+                && !context.isMultiBlock // 不是多个块
+            ) {
+                /* 添加一个输入框以设置块的 style 属性 */
+                submenu.push({
+                    element: globalThis.document.createElement("div"), // 避免生成其他内容
+                    bind: (element) => {
+                        element.innerHTML = ""; // 删除所有下级节点
+
+                        /* 挂载一个 svelte 菜单项组件 */
+                        const item = new Item({
+                            target: element,
+                            props: {
+                                input: true,
+                                icon: "#iconTheme",
+                                label: this.i18n.menu.style.label,
+                                accelerator: "style",
+                            },
+                        });
+
+                        /* 异步获取该块的 style 属性 */
+                        this.client.getBlockAttrs({
+                            id: context.id,
+                        }).then(response => {
+                            /* 设置该块的 style 属性 */
+                            item.$set({
+                                value: response.data.style || "",
+                            });
+
+                            /* 每当 input 中值变化时, 更新该块的 style 属性 */
+                            item.$on("changed", e => {
+                                this.client.setBlockAttrs({
+                                    id: context.id,
+                                    attrs: {
+                                        style: e.detail.value,
+                                    },
+                                });
+                            });
+                        });
+                    },
+                });
+            }
+
+            detail.menu.addItem({
+                icon: "iconTheme",
+                label: this.i18n.displayName,
+                submenu,
+            });
+        }
     }
 
     /* 重置插件配置 */

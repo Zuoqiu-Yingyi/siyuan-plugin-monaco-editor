@@ -1,0 +1,8 @@
+{
+    "displayName": "Custom Block Style",
+    "menu": {
+        "style": {
+            "label": "block style"
+        }
+    }
+}

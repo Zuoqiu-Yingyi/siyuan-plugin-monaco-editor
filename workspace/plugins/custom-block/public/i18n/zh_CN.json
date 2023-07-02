@@ -1,0 +1,8 @@
+{
+    "displayName": "自定义块样式",
+    "menu": {
+        "style": {
+            "label": "块样式"
+        }
+    }
+}
