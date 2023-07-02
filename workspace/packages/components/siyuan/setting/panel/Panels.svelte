@@ -61,9 +61,11 @@
         {/if}
 
         {#each panels as panel (panel.key)}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
             <li
+                role="button"
                 on:click={() => changed(panel.key)}
+                on:keyup={() => changed(panel.key)}
                 data-name={panel.name}
                 class:b3-list-item--focus={panel.key === focus}
                 class="b3-list-item"

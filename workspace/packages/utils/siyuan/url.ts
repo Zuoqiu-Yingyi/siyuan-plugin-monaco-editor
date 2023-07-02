@@ -45,7 +45,11 @@ export function editorType2Pathname(editorEype: EditorType): Pathname {
  * @params params: URL 查询参数
  * @return: URL
  */
-export function buildSiyuanWebURL(pathname: Pathname, params?: { id?: BlockID, focus?: boolean, url?: string }, origin = globalThis.origin): URL {
+export function buildSiyuanWebURL(
+    pathname: Pathname,
+    params?: { id?: BlockID, focus?: boolean, url?: string },
+    origin = globalThis.origin,
+): URL {
     const url = new URL(origin);
     url.pathname = pathname;
 

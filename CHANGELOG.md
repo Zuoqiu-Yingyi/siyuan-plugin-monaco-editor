@@ -3,6 +3,7 @@
 ## 2023-07-02
 
 - 更新依赖项 | Update dependencies.
+- 网页视图支持自定义网页背景颜色 | Web view supports custom web page background color.
 
 ## 2023-06-21
 

@@ -18,6 +18,10 @@
     "nonStandardURL": "不規範，請輸入規範的 URL 地址"
   },
   "settings": {
+    "backgroundColor": {
+      "description": "網頁的背景顏色",
+      "title": "背景顏色"
+    },
     "general": "常規",
     "generalSettings": {
       "reset": {

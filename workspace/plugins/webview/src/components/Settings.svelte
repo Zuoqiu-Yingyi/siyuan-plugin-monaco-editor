@@ -173,6 +173,23 @@
             />
         </Item>
 
+        <!-- 背景颜色 -->
+        <Item
+            title={i18n.settings.backgroundColor.title}
+            text={i18n.settings.backgroundColor.description}
+        >
+            <Input
+                slot="input"
+                type={ItemType.text}
+                settingKey="text"
+                settingValue={config.general.backgroundColor}
+                on:changed={e => {
+                    config.general.backgroundColor = e.detail.value;
+                    updated();
+                }}
+            />
+        </Item>
+
         <!-- 重置设置 -->
         <Item
             title={i18n.settings.generalSettings.reset.title}

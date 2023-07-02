@@ -33,8 +33,10 @@
     }
 </script>
 
+<!-- svelte-ignore a11y-interactive-supports-focus -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+    role="button"
     data-type={name}
     on:click={changed}
     class:item--focus={focus}
