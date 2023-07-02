@@ -21,9 +21,9 @@ import type { Electron } from "@workspace/types/electron";
 import { isElectron } from "@workspace/utils/env/front-end";
 import { merge } from "@workspace/utils/misc/merge";
 
-import type { IWindowParams } from "./../types/config";
-import { createMenuTemplate } from "../configs/menuTemplae";
-import type WebviewPlugin from "..";
+import type { IWindowParams } from "@/types/config";
+import { createMenuTemplate } from "@/configs/menuTemplae";
+import type WebviewPlugin from "@/index";
 
 /* 菜单栏状态 */
 export enum MenuBarStatus {

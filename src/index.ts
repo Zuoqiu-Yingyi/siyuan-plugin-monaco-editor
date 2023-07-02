@@ -228,6 +228,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return this.config.general.useragent || global.navigator.userAgent;
     }
 
+    /* 获得背景颜色 */
+    public get backgroundColor(): string {
+        return this.config.general.backgroundColor;
+    }
+
     /* 打开新标签页 */
     public openWebviewTab(href: string, title?: string, icon: string = "iconLanguage") {
         siyuan.openTab({
@@ -263,7 +268,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
             const url = new URL(href);
             const window = openNewWindow(
                 url,
-                this.config.window.params,
+                {
+                    backgroundColor: this.backgroundColor,
+                    ...this.config.window.params,
+                },
                 params,
                 webPreferences,
                 this,
