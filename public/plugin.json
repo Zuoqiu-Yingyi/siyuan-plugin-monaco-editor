@@ -1,7 +1,7 @@
 {
-    "name": "custom-fonts",
+    "name": "custom-block",
     "author": "Zuoqiu Yingyi",
-    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-block",
     "version": "0.0.0",
     "minAppVersion": "2.9.0",
     "backends": [
