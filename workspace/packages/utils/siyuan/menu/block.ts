@@ -21,7 +21,8 @@ import siyuan from "siyuan";
 import { BlockID } from "@workspace/types/siyuan";
 import { IProtyle } from "@workspace/types/siyuan/protyle";
 
-import { BlockType } from "./../block";
+// import { BlockType } from "./../block";
+import * as sdk from "@siyuan-community/siyuan-sdk";
 
 /* 块菜单上下文 */
 export interface IBlockMenuDetail {
@@ -55,9 +56,10 @@ export interface IOtherBlockMenuDetail extends IBlockMenuDetail {
 export type BlockMenuDetail = IDocumentBlockMenuDetail | IOtherBlockMenuDetail;
 
 export interface IBlockContext {
-    id: BlockID; // 块 ID
-    type: BlockType; // 块类型
     element: HTMLElement; // 块 DOM
+    id: BlockID; // 块 ID
+    type: sdk.siyuan.NodeType; // 块类型
+    subtype?: sdk.siyuan.BlockSubType; // 块子类型
 }
 
 export interface IBlockMenuContext extends IBlockContext {
@@ -72,9 +74,9 @@ export function getBlockMenuContext(detail: BlockMenuDetail): IBlockMenuContext 
 
     if (data) { // 文档块
         const context: IBlockContext = {
-            id: data.id,
-            type: BlockType.NodeDocument,
             element: protyle.wysiwyg.element,
+            id: data.id,
+            type: sdk.siyuan.NodeType.NodeDocument,
         };
         return {
             ...context,
@@ -88,9 +90,10 @@ export function getBlockMenuContext(detail: BlockMenuDetail): IBlockMenuContext 
             const blocks: IBlockContext[] = [];
             blockElements.forEach((item: HTMLElement) => {
                 blocks.push({
-                    id: item.dataset.nodeId as BlockID,
-                    type: item.dataset.type as BlockType,
                     element: item,
+                    id: item.dataset.nodeId as BlockID,
+                    type: item.dataset.type as sdk.siyuan.NodeType,
+                    subtype: item.dataset.subtype as sdk.siyuan.BlockSubType,
                 });
             });
             return {

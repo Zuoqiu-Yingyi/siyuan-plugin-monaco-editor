@@ -17,10 +17,16 @@
 
 import siyuan from "siyuan";
 
+/* 静态资源 */
+import "./styles/index.less";
+// REF: https://zhuanlan.zhihu.com/p/401882229
+import menu from "./assets/symbols/icon-custom-block-menu.symbol?raw";
+import danmaku from "./assets/symbols/icon-custom-block-render-danmaku.symbol?raw";
+
+/* SDK */
 import { Client } from "@siyuan-community/siyuan-sdk";
 
-import Item from "@workspace/components/siyuan/menu/Item.svelte"
-
+/* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
 import { merge } from "@workspace/utils/misc/merge";
 import {
@@ -28,11 +34,19 @@ import {
     type BlockMenuDetail,
 } from "@workspace/utils/siyuan/menu/block";
 
+/* 项目资源 */
 import { DEFAULT_CONFIG } from "./configs/default";
+import { featureFilter } from "./utils/filter";
+import { MenuItemMode } from "./utils/enums";
+import handlers from "@/utils/handlers";
+
+/* 类型 */
 import type { IConfig } from "./types/config";
+
 
 export default class CustomBlockPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
+    static readonly ROOT_ATTRIBUTE_NAME = "plugin-custom-block";
 
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
@@ -54,6 +68,13 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
     }
 
     onload(): void {
+        /* 注册图标 */
+        this.addIcons([
+            menu,
+            danmaku,
+        ].join(""));
+
+        /* 加载数据 */
         this.loadData(CustomBlockPlugin.GLOBAL_CONFIG_NAME)
             .then(config => {
                 this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
@@ -63,6 +84,8 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
                 /* 开始监听块菜单事件 */
                 this.eventBus.on("click-blockicon", this.blockMenuEventListener);
                 this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
+
+                this.updateRootAttr();
             });
     }
 
@@ -73,6 +96,8 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
         /* 停止监听块菜单事件 */
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
+
+        this.removeRootAttr();
     }
 
     openSetting(): void {
@@ -85,53 +110,68 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
         const context = getBlockMenuContext(detail); // 获取块菜单上下文
 
         if (context) {
-            const submenu: siyuan.IMenuItemOption[] = []; // 子菜单
+            const submenu: siyuan.IMenuItemOption[] = []; // 下级菜单
 
-            if (!context.isDocumentBlock // 不是文档块
-                && !context.isMultiBlock // 不是多个块
-            ) {
-                /* 添加一个输入框以设置块的 style 属性 */
-                submenu.push({
-                    element: globalThis.document.createElement("div"), // 避免生成其他内容
-                    bind: (element) => {
-                        element.innerHTML = ""; // 删除所有下级节点
+            /* 获得可使用的功能 */
+            const features = this.config.features.filter(feature => featureFilter(feature, context));
 
-                        /* 挂载一个 svelte 菜单项组件 */
-                        const item = new Item({
-                            target: element,
-                            props: {
-                                input: true,
-                                icon: "#iconTheme",
-                                label: this.i18n.menu.style.label,
-                                accelerator: "style",
+            /* 生成菜单项 */
+            features.forEach(feature => {
+                switch (feature.mode) {
+                    /* 文本输入框 */
+                    case MenuItemMode.input: {
+                        /* 派遣多个编辑任务: 如需编辑多个属性, 则需多个输入框 */
+                        feature.tasks.forEach(task => {
+                            submenu.push({
+                                id: feature.id,
+                                element: globalThis.document.createElement("div"), // 避免生成其他内容
+                                bind: element => handlers[task.type](
+                                    this,
+                                    feature,
+                                    context,
+                                    {
+                                        element,
+                                        ...task.params,
+                                    },
+                                ),
+                            });
+                        });
+                        break;
+                    }
+                    /* 按钮 */
+                    case MenuItemMode.button: {
+                        submenu.push({
+                            id: feature.id,
+                            icon: feature.icon,
+                            label: this.i18n.menu[feature.id].label,
+                            accelerator: feature.accelerator,
+                            click: async () => {
+                                for (const task of feature.tasks) {
+                                    await handlers[task.type](
+                                        this,
+                                        feature,
+                                        context,
+                                        task.params,
+                                    );
+                                }
                             },
                         });
-
-                        /* 异步获取该块的 style 属性 */
-                        this.client.getBlockAttrs({
-                            id: context.id,
-                        }).then(response => {
-                            /* 设置该块的 style 属性 */
-                            item.$set({
-                                value: response.data.style || "",
-                            });
-
-                            /* 每当 input 中值变化时, 更新该块的 style 属性 */
-                            item.$on("changed", e => {
-                                this.client.setBlockAttrs({
-                                    id: context.id,
-                                    attrs: {
-                                        style: e.detail.value,
-                                    },
-                                });
-                            });
+                        break;
+                    }
+                    /* 分割线 */
+                    case MenuItemMode.separator: {
+                        submenu.push({
+                            type: "separator",
                         });
-                    },
-                });
-            }
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            });
 
             detail.menu.addItem({
-                icon: "iconTheme",
+                icon: "icon-custom-block-menu",
                 label: this.i18n.displayName,
                 submenu,
             });
@@ -148,6 +188,24 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
         if (config && config !== this.config) {
             this.config = config;
         }
+        this.updateRootAttr();
         return this.saveData(CustomBlockPlugin.GLOBAL_CONFIG_NAME, this.config);
+    }
+
+    /* 更新根节点属性 */
+    public updateRootAttr() {
+        const features = this.config.features.filter(feature => feature.enable && feature.token); // 激活的功能
+        const tokens = features.map(feature => feature.token); // 激活的功能令牌列表
+
+        /* 设置 HTML 根节点的属性 */
+        globalThis.document.documentElement.setAttribute(
+            CustomBlockPlugin.ROOT_ATTRIBUTE_NAME,
+            tokens.join(" "),
+        );
+    }
+
+    /* 移除根节点属性 */
+    public removeRootAttr() {
+        globalThis.document.documentElement.removeAttribute(CustomBlockPlugin.ROOT_ATTRIBUTE_NAME);
     }
 };
