@@ -30,7 +30,7 @@
     export let plugin: InstanceType<typeof WebviewPlugin>;
 
     export let useragent: string = plugin.useragent; // 用户代理
-    export let backgroundColor: string = plugin.backgroundColor; // 用户代理
+    export let background: string = plugin.background; // 用户代理
 
     const i18n = plugin.i18n as unknown as I18N;
 
@@ -338,7 +338,7 @@
             bind:this={webview}
             {src}
             {useragent}
-            style:background-color={backgroundColor}
+            style:background={background}
             class:pointer-events-disable={webview_pointer_events_disable}
             class="fn__flex-1"
             allowpopups
