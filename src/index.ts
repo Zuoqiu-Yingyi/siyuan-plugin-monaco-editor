@@ -194,9 +194,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     openSetting(): void {
         const that = this;
-        const id = globalThis.crypto.randomUUID();
         const dialog = new siyuan.Dialog({
-            title: that.name,
+            title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
             content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
             width: FLAG_MOBILE ? "92vw" : "720px",
             height: FLAG_MOBILE ? undefined : "640px",
@@ -226,6 +225,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
     /* 获得 UA */
     public get useragent(): string {
         return this.config.general.useragent || global.navigator.userAgent;
+    }
+
+    /* 获得背景颜色 */
+    public get background(): string {
+        return this.config.general.background;
     }
 
     /* 打开新标签页 */
@@ -263,7 +267,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
             const url = new URL(href);
             const window = openNewWindow(
                 url,
-                this.config.window.params,
+                {
+                    backgroundColor: this.background,
+                    ...this.config.window.params,
+                },
                 params,
                 webPreferences,
                 this,

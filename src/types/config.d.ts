@@ -22,6 +22,7 @@ import { IMouseStatus, type IKeyboardStatus } from "@workspace/utils/shortcut";
 /* 常规设置 */
 export interface IGeneral {
     useragent: string, // 用户代理
+    background: string, // 背景颜色/图片
 }
 
 /* 打开的目标类型 */
@@ -69,6 +70,7 @@ export interface ISiyuanWindow {
 export interface IConfig {
     /* 常规设置 */
     general: IGeneral,
+
     /* 标签页打开 */
     tab: {
         enable: boolean, // 是否启用

@@ -30,6 +30,7 @@
     export let plugin: InstanceType<typeof WebviewPlugin>;
 
     export let useragent: string = plugin.useragent; // 用户代理
+    export let background: string = plugin.background; // 用户代理
 
     const i18n = plugin.i18n as unknown as I18N;
 
@@ -81,7 +82,7 @@
                     const url = new URL(`http://${address}`);
                     webview.loadURL(url.href.replace(/^http:/, ""));
                 } catch (error) {
-                    plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error", globalThis.crypto.randomUUID());
+                    plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error");
                 }
             }
         }
@@ -327,6 +328,7 @@
     </div>
 
     <!-- 主体 -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
         on:mouseenter={e => (webview_pointer_events_disable = e.button === 0 ? false : true)}
         on:mouseleave={() => (webview_pointer_events_disable = true)}
@@ -336,12 +338,14 @@
             bind:this={webview}
             {src}
             {useragent}
+            style:background={background}
             class:pointer-events-disable={webview_pointer_events_disable}
             class="fn__flex-1"
             allowpopups
         />
     </div>
     {#if status_display}
+        <!-- 状态提示 (显示超链接地址) -->
         <div
             class="webview-status tooltip"
             in:fade={{ delay: 0, duration: 125 }}

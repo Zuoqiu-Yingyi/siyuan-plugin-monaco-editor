@@ -39,7 +39,7 @@ After installing this plugin, click <kbd>SiYuan Settings</kbd> > <kbd>Marketplac
 - General Settings
   - `User-Agent field (User-Agent, UA)`
     - This is an input field.
-    - Default content: *&lt;empty&gt;*
+    - Default content: `<empty>`
     - For details on this field, please refer to [User-Agent - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent).
     - Users can browse web pages using a custom UA to replace the default UA.
     - This option can only be used on desktop devices.
@@ -47,6 +47,11 @@ After installing this plugin, click <kbd>SiYuan Settings</kbd> > <kbd>Marketplac
       - When opening hyperlinks in a new window
     - When the input field is empty, the default UA `SiYuan/x.y.z https://b3log.org/siyuan Electron` will be used.
       - `x.y.z` is the current version number of SiYuan.
+  - `Web Page Background`
+    - This is an input field
+    - Default content: `transparent`
+    - User can define the background color or background image of the web page.
+    - For details on this field, please refer to [background - CSS: Cascading Style Sheets | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/background).
   - `Reset Settings Options`
     - This is a button.
     - Resets all settings options to their default settings.

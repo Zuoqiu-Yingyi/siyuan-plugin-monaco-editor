@@ -47,6 +47,11 @@
       - 在新窗口打开超链接
     - 输入框为空时，将使用默认的 UA `SiYuan/x.y.z https://b3log.org/siyuan Electron`
       - `x.y.z` 为思源当前版本号
+  - `网页背景`
+    - 这是一个输入框
+    - 默认内容: `transparent`
+    - 用户可以在这里定义网页的背景颜色或背景图片
+    - 该字段详情请参考 [background - CSS：层叠样式表 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background)
   - `重置设置选项`
     - 这是一个按钮
     - 重置所有设置选项为默认选项

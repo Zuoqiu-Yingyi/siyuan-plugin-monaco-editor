@@ -18,6 +18,10 @@
     "nonStandardURL": "is not standardized, please enter the URL address of the specification"
   },
   "settings": {
+    "background": {
+      "description": "The background color or background image of the web page",
+      "title": "Web Page Background"
+    },
     "general": "General",
     "generalSettings": {
       "reset": {

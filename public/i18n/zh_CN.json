@@ -1,14 +1,14 @@
 {
   "displayName": "网页视图",
   "menu": {
+    "openDesktopWindow": {
+      "label": "打开思源桌面端窗口"
+    },
     "openEditor": {
       "label": "在新窗口打开"
     },
     "openFocusedEditor": {
       "label": "在新窗口打开并聚焦"
-    },
-    "openDesktopWindow": {
-      "label": "打开思源桌面端窗口"
     },
     "openMobildWindow": {
       "label": "打开思源移动端窗口"
@@ -18,6 +18,10 @@
     "nonStandardURL": "不规范，请输入规范的 URL 地址"
   },
   "settings": {
+    "background": {
+      "description": "网页的背景颜色或背景图片",
+      "title": "网页背景"
+    },
     "general": "常规",
     "generalSettings": {
       "reset": {
