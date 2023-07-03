@@ -1,7 +1,10 @@
 {
     "displayName": "自定義塊樣式",
     "menu": {
-        "style": {
+        "custom-block-render-danmaku": {
+            "label": "彈幕"
+        },
+        "custom-block-style": {
             "label": "塊樣式"
         }
     }
