@@ -175,16 +175,16 @@
 
         <!-- 背景颜色 -->
         <Item
-            title={i18n.settings.backgroundColor.title}
-            text={i18n.settings.backgroundColor.description}
+            title={i18n.settings.background.title}
+            text={i18n.settings.background.description}
         >
             <Input
                 slot="input"
                 type={ItemType.text}
                 settingKey="text"
-                settingValue={config.general.backgroundColor}
+                settingValue={config.general.background}
                 on:changed={e => {
-                    config.general.backgroundColor = e.detail.value;
+                    config.general.background = e.detail.value;
                     updated();
                 }}
             />

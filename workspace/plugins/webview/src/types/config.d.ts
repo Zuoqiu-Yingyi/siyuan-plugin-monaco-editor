@@ -22,7 +22,7 @@ import { IMouseStatus, type IKeyboardStatus } from "@workspace/utils/shortcut";
 /* 常规设置 */
 export interface IGeneral {
     useragent: string, // 用户代理
-    backgroundColor: string, // 背景颜色
+    background: string, // 背景颜色/图片
 }
 
 /* 打开的目标类型 */

@@ -24,7 +24,7 @@ import { EditorType } from "@workspace/utils/siyuan";
 export const DEFAULT_CONFIG: IConfig = {
     general: {
         useragent: "",
-        backgroundColor: "transparent",
+        background: "transparent",
     },
     tab: {
         enable: true,

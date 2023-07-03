@@ -228,8 +228,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
     }
 
     /* 获得背景颜色 */
-    public get backgroundColor(): string {
-        return this.config.general.backgroundColor;
+    public get background(): string {
+        return this.config.general.background;
     }
 
     /* 打开新标签页 */
@@ -268,7 +268,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
             const window = openNewWindow(
                 url,
                 {
-                    backgroundColor: this.backgroundColor,
+                    backgroundColor: this.background,
                     ...this.config.window.params,
                 },
                 params,

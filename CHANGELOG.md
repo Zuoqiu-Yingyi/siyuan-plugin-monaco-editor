@@ -5,6 +5,7 @@
 - 新增弹幕功能 | Add bullet-screen function.
 - 修复在非安全上下文中无法使用 `crypto.randomUUID` 的问题 | Fix the issue that `crypto.randomUUID` cannot be used in an insecure context.
   - REF: https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/issues/7
+- 新增网页背景设置项介绍 | Add web page background setting item introduction.
 
 ## 2023-07-03
 
