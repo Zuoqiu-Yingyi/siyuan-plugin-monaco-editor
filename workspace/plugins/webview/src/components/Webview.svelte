@@ -82,7 +82,7 @@
                     const url = new URL(`http://${address}`);
                     webview.loadURL(url.href.replace(/^http:/, ""));
                 } catch (error) {
-                    plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error", globalThis.crypto.randomUUID());
+                    plugin.siyuan.showMessage(`${plugin.name}:\nURL <code class="fn__code">${address}</code> ${i18n.message.nonStandardURL}\n`, undefined, "error");
                 }
             }
         }
