@@ -2,10 +2,13 @@
     "displayName": "Custom Block Style",
     "menu": {
         "custom-block-render-danmaku": {
-            "label": "Bullet screen"
+            "label": "Bullet Screen"
+        },
+        "custom-block-render-scroll": {
+            "label": "Scrolling Display"
         },
         "custom-block-style": {
-            "label": "block style"
+            "label": "Block Style"
         }
     }
 }
