@@ -7,6 +7,7 @@
   - REF: https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/issues/7
 - 新增网页背景设置项介绍 | Add web page background setting item introduction.
 - 设置面板组件兼容 `v2.9.4` | Settings panel component compatible with `v2.9.4`.
+- 新增滚动显示功能 | Add scrolling display function.
 
 ## 2023-07-03
 

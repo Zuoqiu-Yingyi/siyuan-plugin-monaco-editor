@@ -4,6 +4,9 @@
         "custom-block-render-danmaku": {
             "label": "彈幕"
         },
+        "custom-block-render-scroll": {
+            "label": "滾屏顯示"
+        },
         "custom-block-style": {
             "label": "塊樣式"
         }

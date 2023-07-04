@@ -73,5 +73,27 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 滚屏显示
+            id: "custom-block-render-scroll",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconScrollWrapped",
+            accelerator: "render: scroll",
+            token: "render-scroll",
+            type: {
+                default: { enable: true },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: false },
+            },
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-render",
+                        token: "scroll",
+                    },
+                },
+            ],
+        },
     ],
 };

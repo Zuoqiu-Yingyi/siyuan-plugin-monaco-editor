@@ -13,17 +13,20 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-:root[plugin-custom-block~=render-danmaku] {
-    .protyle-wysiwyg {
+:root {
 
-        &[custom-block-render~=danmaku]>[data-node-id],
-        [custom-block-render~=danmaku][data-node-id] {
-            /* 使用滚动动画 */
-            animation: var(--custom-block-render-danmaku-time) danmaku linear infinite normal;
+    &[plugin-custom-block~=render-danmaku] {
+        .protyle-wysiwyg {
 
-            &:hover {
-                /* 鼠标悬浮时暂停 */
-                animation-play-state: paused;
+            &[custom-block-render~=danmaku]>[data-node-id],
+            [custom-block-render~=danmaku][data-node-id] {
+                /* 使用滚动动画 */
+                animation: var(--custom-block-render-danmaku-time) danmaku linear infinite normal;
+
+                &:hover {
+                    /* 鼠标悬浮时暂停 */
+                    animation-play-state: paused;
+                }
             }
         }
     }
