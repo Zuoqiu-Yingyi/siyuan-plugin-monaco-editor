@@ -82,7 +82,9 @@
     </ul>
 
     <!-- 面板主体 -->
-    <slot {focus}>Container</slot>
+    <div class="config__tab-wrap">
+        <slot {focus}>Container</slot>
+    </div>
 </div>
 
 <style lang="less">

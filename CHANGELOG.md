@@ -6,6 +6,7 @@
 - 修复在非安全上下文中无法使用 `crypto.randomUUID` 的问题 | Fix the issue that `crypto.randomUUID` cannot be used in an insecure context.
   - REF: https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/issues/7
 - 新增网页背景设置项介绍 | Add web page background setting item introduction.
+- 设置面板组件兼容 `v2.9.4` | Settings panel component compatible with `v2.9.4`.
 
 ## 2023-07-03
 
