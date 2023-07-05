@@ -1,6 +1,9 @@
 {
     "displayName": "自定义块样式",
     "menu": {
+        "custom-block-render-content": {
+            "label": "显示块内容"
+        },
         "custom-block-render-danmaku": {
             "label": "弹幕"
         },
