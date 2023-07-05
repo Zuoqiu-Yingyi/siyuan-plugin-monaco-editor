@@ -113,5 +113,23 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 显示块内容
+            id: "custom-block-render-content",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconMarkdown",
+            accelerator: "render: content",
+            token: "render-content",
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-render",
+                        token: "content",
+                    },
+                },
+            ],
+        },
     ],
 };

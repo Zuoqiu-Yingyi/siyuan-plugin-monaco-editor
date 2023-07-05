@@ -1,0 +1,66 @@
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+.content(@element, @attr) {
+    @selecter: ~"[@{attr}]";
+
+    @{element}@{selecter}::after {
+        content: attr(@attr);
+        font-size: 0.75em;
+        text-align: right;
+    }
+}
+
+/* 显示块内容 */
+:root {
+
+    &[plugin-custom-block~=render-content] {
+        .protyle-wysiwyg {
+
+            &[custom-block-render~=content],
+            [custom-block-render~=content] {
+
+                &[data-node-id],
+                & [data-node-id] {
+                    &[data-content] {
+                        &::after {
+                            content: attr(data-content);
+                            font-size: 0.75em;
+                            text-align: right;
+                        }
+                    }
+
+                    /* 块级元素 */
+                    /* HTML 块 */
+                    .content(protyle-html, data-content);
+
+                    /* 行级元素 */
+                    /* 块引用 */
+                    // 会造成嵌入块面包屑的副作用
+                    // .content(span, data-id);
+
+                    /* 超链接 */
+                    .content(span, data-href);
+
+                    /* 行级备注 */
+                    .content(span, data-inline-memo-content);
+
+                    /* 公式内容 */
+                    .content(span, data-content);
+                }
+            }
+        }
+    }
+}
