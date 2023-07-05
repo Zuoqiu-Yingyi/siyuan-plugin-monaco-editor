@@ -4,6 +4,9 @@
         "custom-block-render-danmaku": {
             "label": "Bullet Screen"
         },
+        "custom-block-render-id": {
+            "label": "Display Block ID"
+        },
         "custom-block-render-scroll": {
             "label": "Scrolling Display"
         },

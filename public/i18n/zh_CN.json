@@ -4,6 +4,9 @@
         "custom-block-render-danmaku": {
             "label": "弹幕"
         },
+        "custom-block-render-id": {
+            "label": "显示块 ID"
+        },
         "custom-block-render-scroll": {
             "label": "滚屏显示"
         },
