@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-05
+
+- 新增显示块 ID 功能 | Add display block ID function.
+
 ## 2023-07-04
 
 - 新增弹幕功能 | Add bullet-screen function.

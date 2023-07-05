@@ -95,5 +95,23 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 显示块 ID
+            id: "custom-block-render-id",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconInfo",
+            accelerator: "render: id",
+            token: "render-id",
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-render",
+                        token: "id",
+                    },
+                },
+            ],
+        },
     ],
 };
