@@ -10,6 +10,9 @@
         "custom-block-render-id": {
             "label": "Display Block ID"
         },
+        "custom-block-render-index": {
+            "label": "Display Block Index"
+        },
         "custom-block-render-scroll": {
             "label": "Scrolling Display"
         },

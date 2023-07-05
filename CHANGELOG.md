@@ -4,6 +4,7 @@
 
 - 新增显示块 ID 功能 | Add display block ID function.
 - 新增显示块内容功能 | Add display block content function.
+- 新增显示块序号功能 | Add display block index function.
 
 ## 2023-07-04
 
