@@ -13,22 +13,14 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@import (reference) url(./utils.less);
+.render(@attr, @pseudo: ~"::after") {
+    @selecter: ~"[@{attr}]";
 
-/* 显示块 ID */
-:root {
-
-    &[plugin-custom-block~=render-id] {
-        .protyle-wysiwyg {
-
-            &[custom-block-render~=id],
-            [custom-block-render~=id] {
-
-                &,
-                & * {
-                    .render(data-node-id);
-                }
-            }
+    &@{selecter} {
+        &@{pseudo} {
+            content: attr(@attr);
+            font-size: 0.75em;
+            text-align: right;
         }
     }
 }

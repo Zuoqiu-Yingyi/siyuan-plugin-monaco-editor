@@ -95,6 +95,12 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 分割线
+            id: "custom-block-separator-2",
+            enable: true,
+            mode: MenuItemMode.separator,
+            multi: true,
+        },
         { // 显示块 ID
             id: "custom-block-render-id",
             enable: true,
@@ -109,6 +115,28 @@ export const DEFAULT_CONFIG: IConfig = {
                     params: {
                         name: "custom-block-render",
                         token: "id",
+                    },
+                },
+            ],
+        },
+        { // 显示块序号
+            id: "custom-block-render-index",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: false,
+            icon: "iconSpreadOdd",
+            accelerator: "render: index",
+            token: "render-index",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-render",
+                        token: "index",
                     },
                 },
             ],

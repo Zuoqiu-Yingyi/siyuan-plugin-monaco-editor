@@ -10,6 +10,9 @@
         "custom-block-render-id": {
             "label": "显示块 ID"
         },
+        "custom-block-render-index": {
+            "label": "显示块序号"
+        },
         "custom-block-render-scroll": {
             "label": "滚屏显示"
         },

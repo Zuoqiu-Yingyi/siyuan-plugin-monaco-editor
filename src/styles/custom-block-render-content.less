@@ -13,15 +13,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-.content(@element, @attr) {
-    @selecter: ~"[@{attr}]";
-
-    @{element}@{selecter}::after {
-        content: attr(@attr);
-        font-size: 0.75em;
-        text-align: right;
-    }
-}
+@import (reference) url(./utils.less);
 
 /* 显示块内容 */
 :root {
@@ -34,31 +26,29 @@
 
                 &[data-node-id],
                 & [data-node-id] {
-                    &[data-content] {
-                        &::after {
-                            content: attr(data-content);
-                            font-size: 0.75em;
-                            text-align: right;
-                        }
-                    }
+                    .render(data-content);
 
                     /* 块级元素 */
                     /* HTML 块 */
-                    .content(protyle-html, data-content);
+                    .protyle-html {
+                        .render(data-content);
+                    }
 
                     /* 行级元素 */
                     /* 块引用 */
                     // 会造成嵌入块面包屑的副作用
                     // .content(span, data-id);
 
-                    /* 超链接 */
-                    .content(span, data-href);
+                    span {
+                        /* 超链接 */
+                        .render(data-href);
 
-                    /* 行级备注 */
-                    .content(span, data-inline-memo-content);
+                        /* 行级备注 */
+                        .render(data-inline-memo-content);
 
-                    /* 公式内容 */
-                    .content(span, data-content);
+                        /* 公式内容 */
+                        .render(data-content);
+                    }
                 }
             }
         }

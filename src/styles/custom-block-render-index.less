@@ -15,18 +15,16 @@
 
 @import (reference) url(./utils.less);
 
-/* 显示块 ID */
+/* 显示块序号 */
 :root {
 
-    &[plugin-custom-block~=render-id] {
+    &[plugin-custom-block~=render-index] {
         .protyle-wysiwyg {
 
-            &[custom-block-render~=id],
-            [custom-block-render~=id] {
+            &[custom-block-render~=index] {
 
-                &,
-                & * {
-                    .render(data-node-id);
+                >* {
+                    .render(data-node-index, ~"::before");
                 }
             }
         }
