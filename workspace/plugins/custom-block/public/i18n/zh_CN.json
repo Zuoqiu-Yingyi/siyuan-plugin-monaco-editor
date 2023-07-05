@@ -13,6 +13,9 @@
         "custom-block-render-index": {
             "label": "显示块序号"
         },
+        "custom-block-render-outline": {
+            "label": "显示块轮廓"
+        },
         "custom-block-render-scroll": {
             "label": "滚屏显示"
         },

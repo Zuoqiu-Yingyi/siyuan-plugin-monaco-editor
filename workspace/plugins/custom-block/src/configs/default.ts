@@ -159,5 +159,23 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 显示块轮廓
+            id: "custom-block-render-outline",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconMax",
+            accelerator: "render: outline",
+            token: "render-outline",
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-render",
+                        token: "outline",
+                    },
+                },
+            ],
+        },
     ],
 };

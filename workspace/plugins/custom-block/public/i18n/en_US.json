@@ -13,6 +13,9 @@
         "custom-block-render-index": {
             "label": "Display Block Index"
         },
+        "custom-block-render-outline": {
+            "label": "Display Block Outline"
+        },
         "custom-block-render-scroll": {
             "label": "Scrolling Display"
         },

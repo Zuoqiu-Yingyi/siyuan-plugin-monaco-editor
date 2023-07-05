@@ -26,12 +26,12 @@
 
                 &[data-node-id],
                 & [data-node-id] {
-                    .render(data-content);
+                    .render-attr(data-content);
 
                     /* 块级元素 */
                     /* HTML 块 */
                     .protyle-html {
-                        .render(data-content);
+                        .render-attr(data-content);
                     }
 
                     /* 行级元素 */
@@ -41,13 +41,13 @@
 
                     span {
                         /* 超链接 */
-                        .render(data-href);
+                        .render-attr(data-href);
 
                         /* 行级备注 */
-                        .render(data-inline-memo-content);
+                        .render-attr(data-inline-memo-content);
 
                         /* 公式内容 */
-                        .render(data-content);
+                        .render-attr(data-content);
                     }
                 }
             }

@@ -13,11 +13,26 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@import (once) url(./define.less);
+/* 显示块 ID */
+:root {
 
-@import (once) url(./custom-block-render-content.less);
-@import (once) url(./custom-block-render-danmaku.less);
-@import (once) url(./custom-block-render-id.less);
-@import (once) url(./custom-block-render-index.less);
-@import (once) url(./custom-block-render-outline.less);
-@import (once) url(./custom-block-render-scroll.less);
+    &[plugin-custom-block~=render-outline] {
+        .protyle-wysiwyg {
+
+            &[custom-block-render~=outline],
+            [custom-block-render~=outline] {
+
+                &[data-node-id],
+                & [data-node-id] {
+                    margin: 2px !important;
+                    padding: 2px !important;
+                    outline: 1px dotted var(--b3-theme-on-surface);
+                    
+                    &:hover {
+                        outline-style: solid;
+                    }
+                }
+            }
+        }
+    }
+}
