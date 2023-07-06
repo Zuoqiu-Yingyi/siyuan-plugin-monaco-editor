@@ -21,6 +21,9 @@
         },
         "custom-block-style": {
             "label": "块样式"
+        },
+        "custom-block-width-full": {
+            "label": "全宽显示"
         }
     }
 }

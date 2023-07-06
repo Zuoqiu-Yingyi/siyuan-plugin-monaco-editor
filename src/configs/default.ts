@@ -46,7 +46,7 @@ export const DEFAULT_CONFIG: IConfig = {
             ],
         },
         { // 分割线
-            id: "custom-block-separator-1",
+            id: "custom-block-separator-0",
             enable: true,
             mode: MenuItemMode.separator,
             multi: false,
@@ -54,6 +54,37 @@ export const DEFAULT_CONFIG: IConfig = {
                 default: { enable: true },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: false },
             },
+        },
+        { // 全宽显示
+            id: "custom-block-width-full",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconHideDock",
+            accelerator: "width: full",
+            token: "width-full",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeAudio]: { enable: true },
+                [sdk.siyuan.NodeType.NodeIFrame]: { enable: true },
+                [sdk.siyuan.NodeType.NodeVideo]: { enable: true },
+                [sdk.siyuan.NodeType.NodeWidget]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.toggle,
+                    params: {
+                        name: "custom-block-width",
+                        token: "full",
+                    },
+                },
+            ],
+        },
+        { // 分割线
+            id: "custom-block-separator-1",
+            enable: true,
+            mode: MenuItemMode.separator,
+            multi: false,
         },
         { // 弹幕
             id: "custom-block-render-danmaku",

@@ -21,6 +21,9 @@
         },
         "custom-block-style": {
             "label": "Block Style"
+        },
+        "custom-block-width-full": {
+            "label": "Full-width Display"
         }
     }
 }
