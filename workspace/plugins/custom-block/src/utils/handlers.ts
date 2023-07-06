@@ -16,6 +16,8 @@
  */
 
 import Item from "@workspace/components/siyuan/menu/Item.svelte"
+import { Iterator } from "@workspace/utils/misc/iterator";
+
 import type { IBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 
 import {
@@ -56,6 +58,29 @@ export default {
                 id: context.id,
                 attrs: {
                     [params.name]: e.detail.value,
+                },
+            });
+        });
+    },
+    /* 切换块属性 */
+    [TaskType.switch]: async (plugin, _feature, context, params: { name: string, values: (string | null)[] }) => {
+        context.blocks.forEach(async block => {
+            const response = await plugin.client.getBlockAttrs({ id: block.id });
+            const attrs = response.data;
+            let value: string;
+            if (attrs.hasOwnProperty(params.name)) {
+                /* 如果属性已存在, 则切换属性值 */
+                const index = params.values.findIndex(value => value === attrs[params.name]);
+                value = params.values[(index + 1) % params.values.length];
+            }
+            else {
+                /* 属性不存在, 直接更新该属性 */
+                value = params.values[0];
+            }
+            plugin.client.setBlockAttrs({
+                id: block.id,
+                attrs: {
+                    [params.name]: value,
                 },
             });
         });

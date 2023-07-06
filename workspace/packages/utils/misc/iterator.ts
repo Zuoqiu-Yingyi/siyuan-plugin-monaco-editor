@@ -15,25 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 块菜单项模式 */
-export enum MenuItemMode {
-    input, // 输入框
-    button, // 按钮
-    separator, // 分割线
-}
+/* 迭代器 */
 
-/* 任务类型 */
-export enum TaskType {
-    edit, // 编辑块属性
-
-    update, // 更新块属性 (覆盖整个块属性)
-    delete, // 删除块属性 (删除整个块属性)
-    switch, // 切换块属性 (切换整个块属性)
-
-    insert, // 插入块属性 (在块属性中插入一个 Token)
-    remove, // 移除块属性 (在块属性中移除一个 Token)
-    toggle, // 切换块属性 (在块属性中增删一个 Token)
-    replace, // 替换块属性 (在块属性中替换一个 Token)
-
-    fullscreen, // 全屏
+export function* Iterator(items: any[], loop: boolean = false) {
+    // REF [ES6中的迭代器(Iterator)和生成器(Generator) - 小火柴的蓝色理想 - 博客园](https://www.cnblogs.com/xiaohuochai/p/7253466.html)
+    if (loop) {
+        for (let i = 0; true; i = (i + 1) % items.length) {
+            yield items[i];
+        }
+    }
+    else {
+        for (let i = 0; i < items.length; ++i) {
+            yield items[i];
+        }
+    }
 }

@@ -5,6 +5,7 @@
 - 新增显示块轮廓功能 | Add display block outline function.
 - 新增全宽显示功能 | Add full-width display function.
 - 新增全屏显示功能 | Add full-screen display function.
+- 新增文本排版模式功能 | Add text layout mode function.
 
 ## 2023-07-05
 
