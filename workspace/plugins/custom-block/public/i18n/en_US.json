@@ -25,6 +25,15 @@
         "custom-block-style": {
             "label": "Block Style"
         },
+        "custom-block-table-width-auto": {
+            "label": "Table - Auto Width"
+        },
+        "custom-block-table-width-default": {
+            "label": "Table - Default Width"
+        },
+        "custom-block-table-width-equal": {
+            "label": "Table - Equally Cells Width"
+        },
         "custom-block-width-full": {
             "label": "Full-width Display"
         },

@@ -25,6 +25,15 @@
         "custom-block-style": {
             "label": "块样式"
         },
+        "custom-block-table-width-auto": {
+            "label": "表格-自动宽度"
+        },
+        "custom-block-table-width-default": {
+            "label": "表格-默认宽度"
+        },
+        "custom-block-table-width-equal": {
+            "label": "表格-单元格等宽"
+        },
         "custom-block-width-full": {
             "label": "全宽显示"
         },

@@ -16,7 +16,6 @@
  */
 
 import Item from "@workspace/components/siyuan/menu/Item.svelte"
-import { Iterator } from "@workspace/utils/misc/iterator";
 
 import type { IBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 
@@ -25,6 +24,34 @@ import {
 } from "./enums";
 import CustomBlockPlugin from "@/index";
 import type { IFeature } from "@/types/config";
+
+/* 分离 token */
+function splitToken(token: string): string[] { 
+    return token.trim().split(/\s+/); // 以空白字符分割
+}
+
+/* 插入 token */
+function insertToken(tokens: string[], token: string): string[] { 
+    if (tokens.includes(token)) return tokens; // 如果已经存在该 token, 则不做任何操作
+    else return [...tokens, token]; // 否则插入该 token
+}
+
+/* 移除 token */
+function removeToken(tokens: string[], token: string): string[] { 
+    return tokens.filter(t => t !== token); // 删除该 token
+}
+
+/* 切换 token */
+function toggleToken(tokens: string[], token: string): string[] { 
+    if (tokens.includes(token)) return removeToken(tokens, token); // 如果已经存在该 token, 则删除该 token
+    else return insertToken(tokens, token); // 否则插入该 token
+}
+
+/* 替换 token */
+function replaceToken(tokens: string[], token: string, newToken: string): string[] {
+    return tokens.map(t => t === token ? newToken : t); // 将所有 token 中的 token 替换为 newToken
+}
+
 
 export default {
     /* 编辑属性 */
@@ -62,6 +89,33 @@ export default {
             });
         });
     },
+    /* 更新块属性 */
+    [TaskType.update]: async (plugin, _feature, context, params: { name: string, value: string }) => {
+        context.blocks.forEach(async block => {
+            plugin.client.setBlockAttrs({
+                id: block.id,
+                attrs: {
+                    [params.name]: params.value,
+                },
+            });
+        });
+    },
+    /* 删除块属性 */
+    [TaskType.delete]: async (plugin, _feature, context, params: { name: string }) => {
+        context.blocks.forEach(async block => {
+            const response = await plugin.client.getBlockAttrs({ id: block.id });
+            const attrs = response.data;
+            if (attrs.hasOwnProperty(params.name)) {
+                /* 如果属性已存在, 则删除属性值 */
+                plugin.client.setBlockAttrs({
+                    id: block.id,
+                    attrs: {
+                        [params.name]: null,
+                    },
+                });
+            }
+        });
+    },
     /* 切换块属性 */
     [TaskType.switch]: async (plugin, _feature, context, params: { name: string, values: (string | null)[] }) => {
         context.blocks.forEach(async block => {
@@ -85,47 +139,92 @@ export default {
             });
         });
     },
-    /* 增删某个 token */
-    [TaskType.toggle]: async (plugin, feature, context, params: { name: string, token: string }) => {
+    /* 插入某个 token */
+    [TaskType.insert]: async (plugin, _feature, context, params: { name: string, token: string }) => {
         context.blocks.forEach(async block => {
             const response = await plugin.client.getBlockAttrs({ id: block.id });
             const attrs = response.data;
+            let value: string;
             if (attrs.hasOwnProperty(params.name)) {
                 /* 属性存在 */
-                const tokens = attrs[params.name].trim().split(/\s+/);
-                if (tokens.some(token => token === params.token)) {
-                    /* token 存在, 删除该 token 后更新属性 */
-                    plugin.client.setBlockAttrs({
-                        id: block.id,
-                        attrs: {
-                            [params.name]: tokens.filter(token => token !== params.token).join(" "),
-                        },
-                    });
-                    return;
-                }
-                else {
-                    /* token 不存在, 添加该 token 后更新属性 */
-                    plugin.client.setBlockAttrs({
-                        id: block.id,
-                        attrs: {
-                            [params.name]: tokens.concat(params.token).join(" "),
-                        },
-                    });
-                }
+                const tokens = splitToken(attrs[params.name]);
+                value = insertToken(tokens, params.token).join(" ");
             }
             else {
                 /* 属性不存在, 直接更新该属性 */
+                value = params.token;
+            }
+            plugin.client.setBlockAttrs({
+                id: block.id,
+                attrs: {
+                    [params.name]: value,
+                },
+            });
+        });
+    },
+    /* 移除某个 token */
+    [TaskType.remove]: async (plugin, _feature, context, params: { name: string, token: string }) => {
+        context.blocks.forEach(async block => {
+            const response = await plugin.client.getBlockAttrs({ id: block.id });
+            const attrs = response.data;
+            let value: string;
+            if (attrs.hasOwnProperty(params.name)) {
+                /* 属性存在 */
+                const tokens = splitToken(attrs[params.name]);
+                value = removeToken(tokens, params.token).join(" ");
                 plugin.client.setBlockAttrs({
                     id: block.id,
                     attrs: {
-                        [params.name]: params.token,
+                        [params.name]: value,
+                    },
+                });
+            }
+        });
+    },
+    /* 增删某个 token */
+    [TaskType.toggle]: async (plugin, _feature, context, params: { name: string, token: string }) => {
+        context.blocks.forEach(async block => {
+            const response = await plugin.client.getBlockAttrs({ id: block.id });
+            const attrs = response.data;
+            let value: string;
+            if (attrs.hasOwnProperty(params.name)) {
+                /* 属性存在 */
+                const tokens = splitToken(attrs[params.name]);
+                value = toggleToken(tokens, params.token).join(" ");
+            }
+            else {
+                /* 属性不存在, 直接更新该属性 */
+                value = params.token;
+            }
+            plugin.client.setBlockAttrs({
+                id: block.id,
+                attrs: {
+                    [params.name]: value,
+                },
+            });
+        });
+    },
+    /* 替换某个 token */
+    [TaskType.replace]: async (plugin, _feature, context, params: { name: string, token: string, newToken: string }) => {
+        context.blocks.forEach(async block => {
+            const response = await plugin.client.getBlockAttrs({ id: block.id });
+            const attrs = response.data;
+            let value: string;
+            if (attrs.hasOwnProperty(params.name)) {
+                /* 属性存在 */
+                const tokens = splitToken(attrs[params.name]);
+                value = replaceToken(tokens, params.token, params.newToken).join(" ");
+                plugin.client.setBlockAttrs({
+                    id: block.id,
+                    attrs: {
+                        [params.name]: value,
                     },
                 });
             }
         });
     },
     /* 全屏/取消全屏 */
-    [TaskType.fullscreen]: async (plugin, _feature, context, _params: any) => {
+    [TaskType.fullscreen]: async (_plugin, _feature, context, _params: unknown) => {
         if (context.isDocumentBlock) {
             /* 文档块 */
             context.element.parentElement.parentElement.classList.toggle('fullscreen');
