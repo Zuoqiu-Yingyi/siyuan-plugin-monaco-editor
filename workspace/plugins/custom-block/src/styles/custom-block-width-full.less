@@ -13,12 +13,24 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@import (once) url(./define.less);
+/* 全宽显示 */
 
-@import (once) url(./custom-block-render-content.less);
-@import (once) url(./custom-block-render-danmaku.less);
-@import (once) url(./custom-block-render-id.less);
-@import (once) url(./custom-block-render-index.less);
-@import (once) url(./custom-block-render-outline.less);
-@import (once) url(./custom-block-render-scroll.less);
-@import (once) url(./custom-block-width-full.less);
+:root {
+    &[plugin-custom-block~=width-full] {
+        .protyle-wysiwyg {
+            [custom-block-width~=full] {
+                &[data-node-id] {
+                    .iframe-content {
+
+                        &,
+                        >iframe,
+                        >video,
+                        >audio {
+                            width: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

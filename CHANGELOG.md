@@ -3,6 +3,7 @@
 ## 2023-07-06
 
 - 新增显示块轮廓功能 | Add display block outline function.
+- 新增全宽显示功能 | Add full-width display function.
 
 ## 2023-07-05
 
