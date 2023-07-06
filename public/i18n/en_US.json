@@ -1,6 +1,9 @@
 {
     "displayName": "Custom Block Style",
     "menu": {
+        "custom-block-fullscreen": {
+            "label": "Full-screen Display"
+        },
         "custom-block-render-content": {
             "label": "Display Block Content"
         },

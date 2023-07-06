@@ -33,4 +33,6 @@ export enum TaskType {
     remove, // 移除块属性 (在块属性中移除一个 Token)
     toggle, // 切换块属性 (在块属性中增删一个 Token)
     replace, // 替换块属性 (在块属性中替换一个 Token)
+
+    fullscreen, // 全屏
 }

@@ -99,6 +99,33 @@ export default {
             }
         });
     },
+    /* 全屏/取消全屏 */
+    [TaskType.fullscreen]: async (plugin, _feature, context, _params: any) => {
+        if (context.isDocumentBlock) {
+            /* 文档块 */
+            context.element.parentElement.parentElement.classList.toggle('fullscreen');
+        }
+        else {
+            /* 非文档块 */
+            let element;
+            switch (context.element.dataset.type) {
+                case 'NodeVideo':
+                    element = context.element.querySelector('video');
+                    break;
+                case 'NodeIFrame':
+                case 'NodeWidget':
+                    element = context.element.querySelector('iframe');
+                    break;
+                case 'NodeHTMLBlock':
+                    element = context.element.querySelector('protyle-html');
+                    break;
+                default:
+                    element = context.element;
+                    break;
+            }
+            element.requestFullscreen();
+        }
+    },
 } as Record<TaskType, (
     plugin: InstanceType<typeof CustomBlockPlugin>, // 插件对象
     feature: IFeature, // 菜单功能定义
