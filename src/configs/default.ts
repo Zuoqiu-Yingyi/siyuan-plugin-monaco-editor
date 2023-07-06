@@ -235,7 +235,7 @@ export const DEFAULT_CONFIG: IConfig = {
             accelerator: "writing-mode",
             token: "writing-mode",
             type: {
-                default: { enable: false},
+                default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
                 [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
                 [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
@@ -258,6 +258,80 @@ export const DEFAULT_CONFIG: IConfig = {
                             // "sideways-lr",
                             null,
                         ],
+                    },
+                },
+            ],
+        },
+        { // 分割线
+            id: "custom-block-separator-B320E3AA-01A7-45AB-8C64-B58578CDA111",
+            enable: true,
+            mode: MenuItemMode.separator,
+            multi: true,
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: true },
+            },
+        },
+        { // 表格-默认宽度
+            id: "custom-block-table-width-default",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconUndo",
+            accelerator: "table-width: null",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.delete,
+                    params: {
+                        name: "custom-block-table-width",
+                    },
+                },
+            ],
+        },
+        { // 表格-自动宽度
+            id: "custom-block-table-width-auto",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "icon-custom-block-width-auto",
+            accelerator: "table-width: auto",
+            token: "table-width-auto",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.update,
+                    params: {
+                        name: "custom-block-table-width",
+                        value: "auto",
+                    },
+                },
+            ],
+        },
+        { // 表格-单元格等宽
+            id: "custom-block-table-width-equal",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "icon-custom-block-width-equal",
+            accelerator: "table-width: equal",
+            token: "table-width-equal",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.update,
+                    params: {
+                        name: "custom-block-table-width",
+                        value: "equal",
                     },
                 },
             ],

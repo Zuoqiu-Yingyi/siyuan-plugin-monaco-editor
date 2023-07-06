@@ -22,13 +22,15 @@ import "./styles/index.less";
 // REF: https://zhuanlan.zhihu.com/p/401882229
 import menu from "./assets/symbols/icon-custom-block-menu.symbol?raw";
 import danmaku from "./assets/symbols/icon-custom-block-render-danmaku.symbol?raw";
+import width_auto from "./assets/symbols/icon-custom-block-width-auto.symbol?raw";
+import width_equal from "./assets/symbols/icon-custom-block-width-equal.symbol?raw";
 
 /* SDK */
 import { Client } from "@siyuan-community/siyuan-sdk";
 
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
-import { merge } from "@workspace/utils/misc/merge";
+import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import {
     getBlockMenuContext,
     type BlockMenuDetail,
@@ -72,12 +74,14 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
         this.addIcons([
             menu,
             danmaku,
+            width_auto,
+            width_equal,
         ].join(""));
 
         /* 加载数据 */
         this.loadData(CustomBlockPlugin.GLOBAL_CONFIG_NAME)
             .then(config => {
-                this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
+                this.config = mergeIgnoreArray(DEFAULT_CONFIG, config || {}) as IConfig;
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
@@ -180,7 +184,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
 
     /* 重置插件配置 */
     public async resetConfig(): Promise<void> {
-        return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);
+        return this.updateConfig(mergeIgnoreArray(DEFAULT_CONFIG) as IConfig);
     }
 
     /* 更新插件配置 */

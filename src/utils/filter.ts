@@ -32,9 +32,14 @@ export function isValidBlock(feature: IFeature, block: IBlockContext): boolean {
             /* 该块类型不支持 */
             if (!type.enable) return false;
         }
+        /* 存在默认 */
+        else if (feature.type.default) {
+            /* 默认不支持 */
+            if (!feature.type.default.enable) return false;
+        }
     }
     /* 通过块类型校验 */
-    
+
     /* 定义了块子类型, 需要进一步判断 */
     if (feature.subtype) {
         const subtype = feature.subtype[block.subtype];
@@ -42,6 +47,11 @@ export function isValidBlock(feature: IFeature, block: IBlockContext): boolean {
         if (subtype) {
             /* 该块子类型不支持 */
             if (!subtype.enable) return false;
+        }
+        /* 存在默认 */
+        else if (feature.subtype.default) {
+            /* 默认不支持 */
+            if (!feature.subtype.default.enable) return false;
         }
     }
     /* 通过块子类型校验 */

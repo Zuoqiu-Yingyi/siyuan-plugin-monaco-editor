@@ -13,24 +13,24 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/* 表格单元格等宽 */
+
 :root {
-    /* 弹幕滚动时间 */
-    --custom-block-render-danmaku-time: 16s;
+    &[plugin-custom-block~=table-width-equal] {
+        .protyle-wysiwyg {
+            [custom-block-table-width~=equal] {
+                &[data-node-id].table {
+                    table {
+                        /* 等宽 */
+                        table-layout: fixed;
 
-    /* 滚屏模式最大高度 */
-    --custom-block-render-scroll-max-height: 50vh;
-
-    /* 表格单元格宽度 */
-    --custom-block-table-cell-equal-width: 16em;
-}
-
-/* 弹幕滚动动画 */
-@keyframes danmaku {
-    0% {
-        transform: translateX(100%);
-    }
-
-    100% {
-        transform: translateX(-100%);
+                        td {
+                            /* 等宽 */
+                            width: var(--custom-block-table-cell-equal-width);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
