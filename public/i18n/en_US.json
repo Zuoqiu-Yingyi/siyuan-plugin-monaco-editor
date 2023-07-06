@@ -27,6 +27,9 @@
         },
         "custom-block-width-full": {
             "label": "Full-width Display"
+        },
+        "custom-block-writing-mode": {
+            "label": "Text Layout Mode"
         }
     }
 }

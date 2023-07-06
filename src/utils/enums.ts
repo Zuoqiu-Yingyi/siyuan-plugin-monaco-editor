@@ -28,6 +28,7 @@ export enum TaskType {
 
     update, // 更新块属性 (覆盖整个块属性)
     delete, // 删除块属性 (删除整个块属性)
+    switch, // 切换块属性 (切换整个块属性)
 
     insert, // 插入块属性 (在块属性中插入一个 Token)
     remove, // 移除块属性 (在块属性中移除一个 Token)

@@ -27,6 +27,9 @@
         },
         "custom-block-width-full": {
             "label": "全宽显示"
+        },
+        "custom-block-writing-mode": {
+            "label": "文本排版模式"
         }
     }
 }

@@ -1,0 +1,48 @@
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * 自定义文字排版模式 writing-mode
+ * REF [writing-mode - CSS（层叠样式表） | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/writing-mode)
+ * horizontal-tb：(默认)对于左对齐(ltr)文本，内容从左到右水平流动。对于右对齐(rtr)文本，内容从右到左水平流动。下一水平行位于上一行下方。
+ * vertical-rl：对于左对齐(ltr)文本，内容从上到下垂直流动，下一垂直行位于上一行左侧。对于右对齐(rtr)文本，内容从下到上垂直流动，下一垂直行位于上一行右侧。
+ * vertical-lr：对于左对齐(ltr)文本，内容从上到下垂直流动，下一垂直行位于上一行右侧。对于右对齐(rtr)文本，内容从下到上垂直流动，下一垂直行位于上一行左侧。
+ * sideways-rl：对于左对齐(ltr)文本，内容从下到上垂直流动。对于右对齐(rtr)文本，内容从上到下垂直流动。所有字形（即使是垂直文本中的字形）都朝向右侧。 (默认样式顺时针旋转 90°)
+ * sideways-lr：对于左对齐(ltr)文本，内容从上到下垂直流动。对于右对齐(rtr)文本，内容从下到上垂直流动。所有字形（即使是垂直文本中的字形）都朝向左侧。 (默认样式逆时针旋转 90°)
+ */
+
+.writing-mode(@mode) {
+    &[custom-block-writing-mode="@{mode}"] {
+        writing-mode: @mode;
+    }
+}
+
+:root {
+    &[plugin-custom-block~=writing-mode] {
+        .protyle-wysiwyg {
+
+            &,
+            [data-node-id] {
+                .writing-mode(horizontal-tb);
+                .writing-mode(vertical-rl);
+                .writing-mode(vertical-lr);
+
+                // 仅 Firefox 支持
+                .writing-mode(sideways-rl);
+                .writing-mode(sideways-lr);
+            }
+        }
+    }
+}
