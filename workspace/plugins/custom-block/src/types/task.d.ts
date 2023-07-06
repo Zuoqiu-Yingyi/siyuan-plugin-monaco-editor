@@ -18,7 +18,7 @@
 import { TaskType } from "@/utils/enums";
 
 /* 块菜单任务 */
-export type Task = IEditTask | IToggleTask;
+export type Task = IEditTask | IToggleTask | iconFullscreen;
 
 /* 块菜单任务 */
 export interface ITask {
@@ -41,4 +41,9 @@ export interface IToggleTask extends ITask {
         name: string, // 属性名
         token: string, // 需要增删的 token
     },
+}
+
+/* 全屏任务 */
+export interface IFullscreenTask extends ITask {
+    type: TaskType, // 任务类型
 }

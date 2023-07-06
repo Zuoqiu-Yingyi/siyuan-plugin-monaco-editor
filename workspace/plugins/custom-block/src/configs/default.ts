@@ -80,6 +80,18 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 全屏显示
+            id: "custom-block-fullscreen",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: false,
+            icon: "iconFullscreen",
+            tasks: [
+                {
+                    type: TaskType.fullscreen,
+                },
+            ],
+        },
         { // 分割线
             id: "custom-block-separator-1",
             enable: true,

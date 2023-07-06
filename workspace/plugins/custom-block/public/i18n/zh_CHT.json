@@ -1,6 +1,9 @@
 {
     "displayName": "自定義塊樣式",
     "menu": {
+        "custom-block-fullscreen": {
+            "label": "全屏顯示"
+        },
         "custom-block-render-content": {
             "label": "顯示塊內容"
         },
