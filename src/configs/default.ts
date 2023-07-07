@@ -192,6 +192,23 @@ export const DEFAULT_CONFIG: IConfig = {
             icon: "iconMarkdown",
             accelerator: "render: content",
             token: "render-content",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeListItem]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
+                
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
+                [sdk.siyuan.NodeType.NodeHeading]: { enable: true },
+                [sdk.siyuan.NodeType.NodeParagraph]: { enable: true },
+                [sdk.siyuan.NodeType.NodeMathBlock]: { enable: true },
+                [sdk.siyuan.NodeType.NodeTable]: { enable: true },
+                [sdk.siyuan.NodeType.NodeCodeBlock]: { enable: true },
+                [sdk.siyuan.NodeType.NodeHTMLBlock]: { enable: true },
+            },
             tasks: [
                 {
                     type: TaskType.toggle,
@@ -368,7 +385,7 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
-        { // 列表-脑图视图
+        { // 列表-导图视图
             id: "custom-block-list-view-map",
             enable: true,
             mode: MenuItemMode.button,
