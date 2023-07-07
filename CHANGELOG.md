@@ -3,6 +3,7 @@
 ## 2023-07-08
 
 - 新增列表看板视图 | Add list kanban view.
+- 完善文档 | Improve documentation.
 
 ## 2023-07-07
 
