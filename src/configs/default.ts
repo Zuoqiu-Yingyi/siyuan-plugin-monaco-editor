@@ -414,5 +414,28 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 列表-看板视图
+            id: "custom-block-list-view-board",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconSplitLR",
+            accelerator: "list-view: board",
+            token: "list-view-board",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.update,
+                    params: {
+                        name: "custom-block-list-view",
+                        value: "board",
+                    },
+                },
+            ],
+        },
     ],
 };

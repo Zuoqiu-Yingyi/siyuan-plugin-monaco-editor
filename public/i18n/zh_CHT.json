@@ -4,11 +4,14 @@
         "custom-block-fullscreen": {
             "label": "全屏顯示"
         },
+        "custom-block-list-view-board": {
+            "label": "列表-看板視圖"
+        },
         "custom-block-list-view-default": {
             "label": "列表-默認視圖"
         },
         "custom-block-list-view-map": {
-            "label": "列表-腦圖視圖"
+            "label": "列表-導圖視圖"
         },
         "custom-block-list-view-table": {
             "label": "列表-表格視圖"
