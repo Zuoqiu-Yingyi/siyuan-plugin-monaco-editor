@@ -368,6 +368,29 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 列表-脑图视图
+            id: "custom-block-list-view-map",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconGraph",
+            accelerator: "list-view: map",
+            token: "list-view-map",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.update,
+                    params: {
+                        name: "custom-block-list-view",
+                        value: "map",
+                    },
+                },
+            ],
+        },
         { // 列表-表格视图
             id: "custom-block-list-view-table",
             enable: true,

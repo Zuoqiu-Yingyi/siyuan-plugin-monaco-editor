@@ -3,6 +3,7 @@
 ## 2023-07-07
 
 - 新增列表表格视图 | Add list table view.
+- 新增列表脑图视图 | Add list mind-map view.
 
 ## 2023-07-06
 

@@ -7,6 +7,9 @@
         "custom-block-list-view-default": {
             "label": "List - Default View"
         },
+        "custom-block-list-view-map": {
+            "label": "List - Mind-Map View"
+        },
         "custom-block-list-view-table": {
             "label": "List - Table View"
         },
