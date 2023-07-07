@@ -336,5 +336,60 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             ],
         },
+        { // 分割线
+            id: "custom-block-separator-92B49367-D643-4AEC-B90F-7EB86DF4890A",
+            enable: true,
+            mode: MenuItemMode.separator,
+            multi: true,
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+            },
+        },
+        { // 列表-默认视图
+            id: "custom-block-list-view-default",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconUndo",
+            accelerator: "list-view: null",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.delete,
+                    params: {
+                        name: "custom-block-list-view",
+                    },
+                },
+            ],
+        },
+        { // 列表-表格视图
+            id: "custom-block-list-view-table",
+            enable: true,
+            mode: MenuItemMode.button,
+            multi: true,
+            icon: "iconTable",
+            accelerator: "list-view: table",
+            token: "list-view-table",
+            type: {
+                default: { enable: false },
+                [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeList]: { enable: true },
+            },
+            tasks: [
+                {
+                    type: TaskType.update,
+                    params: {
+                        name: "custom-block-list-view",
+                        value: "table",
+                    },
+                },
+            ],
+        },
     ],
 };
