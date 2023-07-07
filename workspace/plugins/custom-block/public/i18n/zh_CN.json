@@ -4,6 +4,12 @@
         "custom-block-fullscreen": {
             "label": "全屏显示"
         },
+        "custom-block-list-view-default": {
+            "label": "列表-默认视图"
+        },
+        "custom-block-list-view-table": {
+            "label": "列表-表格视图"
+        },
         "custom-block-render-content": {
             "label": "显示块内容"
         },

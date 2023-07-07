@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-07
+
+- 新增列表表格视图 | Add list table view.
+
 ## 2023-07-06
 
 - 新增显示块轮廓功能 | Add display block outline function.

@@ -1,0 +1,111 @@
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * 以表格的形式显示列表块
+ * 需要对一个列表容器设置自定义属性 type: table
+ * 详情请参考: [土法列表表格-这回原理我也说不清了 · 语雀](https: //www.yuque.com/siyuannote/docs/yev84m)
+ * REF [UserZYF](https://github.com/UserZYF) 修复上述实现方案
+ */
+
+:root {
+    &[plugin-custom-block~=list-view-table] {
+        .protyle-content {
+
+            [custom-block-list-view=table] {
+                &[data-node-id].list {
+                    &>[data-node-id].li {
+                        >.protyle-attr {
+                            >.protyle-attr--refcount {
+                                /* 引用数按钮 */
+                                right: 2px;
+                            }
+                        }
+                    }
+                }
+
+                [data-node-id].list,
+                [data-node-id].li {
+                    border: 0;
+                    padding: 0;
+                    margin: 0 !important;
+                }
+
+                [data-node-id].list {
+                    /* 嵌套列表块 */
+                    // width: 100%;
+                    // width: auto;
+
+                    // display: flex;
+                    // flex-direction: column;
+                    flex: 1;
+                }
+
+                [data-node-id].li {
+                    /* 列表项 */
+                    // width: auto;
+                    display: flex;
+                    // overflow-x: auto;
+                    outline: 1px solid var(--b3-theme-on-surface);
+
+                    &::before,
+                    &::after {
+                        /* 去除辅助线 */
+                        display: none;
+                    }
+
+                    >[data-node-id].list {
+                        /* 次级列表前间隔 */
+                        margin-left: 0 !important;
+                        padding-left: 0;
+                    }
+
+                    >[data-node-id] {
+                        &:not(.li, .list) {
+                            /* 列表项内容 */
+                            margin-right: 0.5em;
+                            align-items: center;
+                            display: flex;
+                            min-width: 128px;
+                            text-align: justify;
+                            flex-shrink: 0;
+                        }
+
+                        &[data-type="NodeBlockQueryEmbed"],
+                        &[data-node-id].sb,
+                        &[data-node-id].bq {
+                            /* 列表项内的容器块与嵌入恢复上下排列 */
+                            display: block;
+                        }
+
+                    }
+
+                    >.protyle-action {
+                        /* 列表项标志居中 */
+                        position: absolute;
+                        top: calc(50% - 0.125em);
+                        transform: translate(0, -50%);
+                    }
+                }
+
+                // >[data-node-id].list>[data-node-id].li,
+                >[data-node-id].li {
+                    /* 最顶层的列表项滚动 */
+                    overflow-x: auto;
+                }
+            }
+        }
+    }
+}
