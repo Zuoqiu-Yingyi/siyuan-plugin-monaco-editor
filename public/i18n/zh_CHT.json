@@ -7,6 +7,9 @@
         "custom-block-list-view-default": {
             "label": "列表-默認視圖"
         },
+        "custom-block-list-view-map": {
+            "label": "列表-腦圖視圖"
+        },
         "custom-block-list-view-table": {
             "label": "列表-表格視圖"
         },
