@@ -4,6 +4,9 @@
         "custom-block-fullscreen": {
             "label": "Full-screen Display"
         },
+        "custom-block-list-view-board": {
+            "label": "List - Kanban View"
+        },
         "custom-block-list-view-default": {
             "label": "List - Default View"
         },

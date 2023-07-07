@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-08
+
+- 新增列表看板视图 | Add list kanban view.
+
 ## 2023-07-07
 
 - 新增列表表格视图 | Add list table view.
