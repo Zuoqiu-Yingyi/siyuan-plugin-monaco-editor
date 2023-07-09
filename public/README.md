@@ -40,7 +40,7 @@ Use <kbd>Block Menu</kbd> > <kbd>Plugins</kbd> > <kbd>Custom Block Styles</kbd> 
 | Display Block ID      | `block-render`:`id`                                                        | Document Block: Display block ID for all blocks in this document<br />Other Blocks: Display block ID for the block and its subblocks                                                                                                                                                                                                                                                     |       ✔        |      ✔      |      ✔      |     ✔      |     ✔     |       ✔       |        ✔        |       ✔       |      ✔      |     ✔      |     ✔      |    ✔    |      ✔      |      ✔      |      ✔       |      ✔       |      ✔      |
 | Display Block Index   | `block-render`:`index`                                                     | Display the index of top-level blocks in the document                                                                                                                                                                                                                                                                                                                                    |       ✔        |             |             |            |           |               |                 |               |             |            |            |         |             |             |              |              |             |
 | Display Block Content | `block-render`:`content`                                                   | Document Block: Display hidden content for all blocks in this document<br />Other Blocks: Display hidden content for all blocks within the block<br />Display link address for hyperlinks<br />Display formula text for inline formulas<br />Display note text for inline notes<br />Display formula text for formula blocks<br />Display corresponding text for other renderable blocks |       ✔        |      ✔      |      ✔      |     ✔      |     ✔     |       ✔       |        ✔        |       ✔       |      ✔      |     ✔      |            |         |             |             |              |      ✔       |             |
-| Display Block Outline | `block-render`:`outline`                                                   | Document Block: Display outline for all blocks in this document<br />Other Blocks: Display outline for the block and its subblocks                                                                                                                                                                                                                                                       |       ✔        |      ✔      |      ✔      |     ✔      |     ✔     |       ✔       |        ✔        |       ✔       |      ✔      |     ✔      |     ✔      |    ✔    |      ✔      |      ✔      |      ✔       |      ✔       |      ✔      |
+| Display Block Outline | `block-render`:`outline`                                                   | Document Block: Display outline for all blocks in this document<br />Other Blocks: Display outline for this block                                                                                                                                                                                                                                                                        |       ✔        |      ✔      |      ✔      |     ✔      |     ✔     |       ✔       |        ✔        |       ✔       |      ✔      |     ✔      |     ✔      |    ✔    |      ✔      |      ✔      |      ✔       |      ✔       |      ✔      |
 | Layout Mode           | `block-writing-mode`:`vertical-rl`<br />`block-writing-mode`:`vertical-lr` | Document Block: Switch the writing mode for all blocks in this document<br />Other Blocks: Switch the writing mode for the block and its subblocks<br />`vertical-rl`: Display text vertically from right to left<br />`vertical-lr`: Display text vertically from left to right                                                                                                         |       ✔        |      ✔      |      ✔      |     ✔      |     ✔     |       ✔       |        ✔        |               |      ✔      |            |            |         |             |             |              |              |             |
 | Table - Default Width | None                                                                       | Default style<br />Columns in the table without manually adjusted width will not wrap                                                                                                                                                                                                                                                                                                    |                |             |             |            |           |               |                 |               |      ✔      |            |            |         |             |             |              |              |             |
 | Table - Auto Width    | `block-table-width`:`auto`                                                 | Table maximum width is the same as the width of the document<br />Content in table cells wraps automatically                                                                                                                                                                                                                                                                             |                |             |             |            |           |               |                 |               |      ✔      |            |            |         |             |             |              |              |             |
@@ -52,6 +52,28 @@ Use <kbd>Block Menu</kbd> > <kbd>Plugins</kbd> > <kbd>Custom Block Styles</kbd> 
 
 ### Setting Introduction
 
+* `General Settings`
+
+  * `Reset Settings Options`
+
+    * This is a button
+    * Reset all settings options to their default values
+    * Clicking this button will trigger a confirmation dialog
+
+      * Clicking the confirm button in the dialog will reset all options of this plugin to their default values and automatically refresh the current interface
+* `Menu Settings`
+
+  * `Menu`
+
+    * This is a switch
+    * Default state: *On*
+    * Turn off the switch to disable the corresponding menu items
+  * `Style`
+
+    * This is a switch
+    * Default state: *On*
+    * Turn off the switch to disable the built-in styles of the plugin
+    * If the theme is compatible with the corresponding style, you can turn off this switch
 
 ## CHANGELOG
 
