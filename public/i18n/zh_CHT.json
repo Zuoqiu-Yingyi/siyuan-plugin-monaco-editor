@@ -52,5 +52,24 @@
         "custom-block-writing-mode": {
             "label": "文本排版模式"
         }
+    },
+    "settings": {
+        "featureSettings": {
+            "menu": {
+                "label": "菜單"
+            },
+            "style": {
+                "label": "樣式"
+            },
+            "title": "功能設置"
+        },
+        "generalSettings": {
+            "reset": {
+                "description": "重置所有設置選項為默認選項（重置後將刷新頁面）",
+                "text": "重置",
+                "title": "重置設置選項"
+            },
+            "title": "常規設置"
+        }
     }
 }

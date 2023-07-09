@@ -63,7 +63,7 @@ export function isValidBlock(feature: IFeature, block: IBlockContext): boolean {
 /* 过滤受支持功能的过滤器 */
 export function featureFilter(feature: IFeature, context: IBlockMenuContext): boolean {
     /* 功能未启用 */
-    if (!feature.enable) return false;
+    // if (!feature.enable) return false;
 
     /* 选择了多个块 */
     if (context.isMultiBlock) {

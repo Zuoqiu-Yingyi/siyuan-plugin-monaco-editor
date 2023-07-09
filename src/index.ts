@@ -29,12 +29,16 @@ import width_equal from "./assets/symbols/icon-custom-block-width-equal.symbol?r
 import { Client } from "@siyuan-community/siyuan-sdk";
 
 /* 工作空间资源 */
+import { FLAG_MOBILE } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import {
     getBlockMenuContext,
     type BlockMenuDetail,
 } from "@workspace/utils/siyuan/menu/block";
+
+/* 组件 */
+import Settings from "./components/Settings.svelte";
 
 /* 项目资源 */
 import { DEFAULT_CONFIG } from "./configs/default";
@@ -105,6 +109,20 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
     }
 
     openSetting(): void {
+        const that = this;
+        const dialog = new siyuan.Dialog({
+            title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
+            content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
+            width: FLAG_MOBILE ? "92vw" : "720px",
+            height: FLAG_MOBILE ? undefined : "640px",
+        });
+        const settings = new Settings({
+            target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
+            props: {
+                config: this.config,
+                plugin: this,
+            },
+        });
     }
 
     /* 添加块菜单项 */
@@ -129,6 +147,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
                             submenu.push({
                                 id: feature.id,
                                 element: globalThis.document.createElement("div"), // 避免生成其他内容
+                                disabled: !feature.enable,
                                 bind: element => handlers[task.type](
                                     this,
                                     feature,
@@ -149,6 +168,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
                             icon: feature.icon,
                             label: this.i18n.menu[feature.id].label,
                             accelerator: feature.accelerator,
+                            disabled: !feature.enable,
                             click: async () => {
                                 for (const task of feature.tasks) {
                                     await handlers[task.type](
@@ -198,7 +218,7 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
 
     /* 更新根节点属性 */
     public updateRootAttr() {
-        const features = this.config.features.filter(feature => feature.enable && feature.token); // 激活的功能
+        const features = this.config.features.filter(feature => feature.enable && feature.style && feature.token); // 激活的功能
         const tokens = features.map(feature => feature.token); // 激活的功能令牌列表
 
         /* 设置 HTML 根节点的属性 */

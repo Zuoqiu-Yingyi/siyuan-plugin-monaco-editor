@@ -62,6 +62,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: false,
             icon: "iconHideDock",
             accelerator: "width: full",
+            style: true,
             token: "width-full",
             type: {
                 default: { enable: false },
@@ -105,6 +106,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "icon-custom-block-render-danmaku",
             accelerator: "render: danmaku",
+            style: true,
             token: "render-danmaku",
             tasks: [
                 {
@@ -123,6 +125,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconScrollWrapped",
             accelerator: "render: scroll",
+            style: true,
             token: "render-scroll",
             type: {
                 default: { enable: true },
@@ -151,6 +154,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconInfo",
             accelerator: "render: id",
+            style: true,
             token: "render-id",
             tasks: [
                 {
@@ -169,6 +173,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: false,
             icon: "iconSpreadOdd",
             accelerator: "render: index",
+            style: true,
             token: "render-index",
             type: {
                 default: { enable: false },
@@ -191,6 +196,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconMarkdown",
             accelerator: "render: content",
+            style: true,
             token: "render-content",
             type: {
                 default: { enable: false },
@@ -226,6 +232,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconMax",
             accelerator: "render: outline",
+            style: true,
             token: "render-outline",
             tasks: [
                 {
@@ -250,6 +257,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconEdit",
             accelerator: "writing-mode",
+            style: true,
             token: "writing-mode",
             type: {
                 default: { enable: false },
@@ -316,6 +324,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "icon-custom-block-width-auto",
             accelerator: "table-width: auto",
+            style: true,
             token: "table-width-auto",
             type: {
                 default: { enable: false },
@@ -338,6 +347,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "icon-custom-block-width-equal",
             accelerator: "table-width: equal",
+            style: true,
             token: "table-width-equal",
             type: {
                 default: { enable: false },
@@ -392,6 +402,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconGraph",
             accelerator: "list-view: map",
+            style: true,
             token: "list-view-map",
             type: {
                 default: { enable: false },
@@ -415,6 +426,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconTable",
             accelerator: "list-view: table",
+            style: true,
             token: "list-view-table",
             type: {
                 default: { enable: false },
@@ -438,6 +450,7 @@ export const DEFAULT_CONFIG: IConfig = {
             multi: true,
             icon: "iconSplitLR",
             accelerator: "list-view: board",
+            style: true,
             token: "list-view-board",
             type: {
                 default: { enable: false },
