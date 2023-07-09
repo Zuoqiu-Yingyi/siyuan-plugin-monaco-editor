@@ -338,7 +338,7 @@
             bind:this={webview}
             {src}
             {useragent}
-            style:background={background}
+            style:background
             class:pointer-events-disable={webview_pointer_events_disable}
             class="fn__flex-1"
             allowpopups

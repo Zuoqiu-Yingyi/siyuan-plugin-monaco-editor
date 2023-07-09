@@ -113,8 +113,30 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 }
                 globalThis.addEventListener(this.config.window.open.mouse.type, this.openWindowEventListener, true);
 
-                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+                /* 文档块菜单 */
                 this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
+                /* 其他块菜单 */
+                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+
+                /* 快捷键/命令 */
+                this.addCommand({
+                    langKey: "openDesktopWindow",
+                    langText: this.i18n.menu.openDesktopWindow.label,
+                    hotkey: "⇧⌘N",
+                    customHotkey: "",
+                    callback: () => {
+                        this.openSiyuanDesktopWindow();
+                    },
+                });
+                this.addCommand({
+                    langKey: "openMobildWindow",
+                    langText: this.i18n.menu.openMobildWindow.label,
+                    hotkey: "",
+                    customHotkey: "",
+                    callback: () => {
+                        this.openSiyuanMobileWindow();
+                    },
+                });
             })
 
     }
