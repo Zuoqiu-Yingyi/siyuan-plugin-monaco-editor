@@ -5,6 +5,7 @@
 - 新增快捷键与命令 | Add keyboard shortcuts and commands.
 - 新增设置面板 | Add settings panel.
 - 添加预览图 | Add preview image.
+- 添加 CD 脚本 | Add CD scripts.
 
 ## 2023-07-08
 
