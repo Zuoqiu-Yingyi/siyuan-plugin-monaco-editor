@@ -18,8 +18,8 @@
 /* 块菜单 */
 import siyuan from "siyuan";
 
-import { BlockID } from "@workspace/types/siyuan";
-import { IProtyle } from "@workspace/types/siyuan/protyle";
+import type { BlockID } from "@workspace/types/siyuan";
+import type { IProtyle } from "@workspace/types/siyuan/protyle";
 
 // import { BlockType } from "./../block";
 import * as sdk from "@siyuan-community/siyuan-sdk";
