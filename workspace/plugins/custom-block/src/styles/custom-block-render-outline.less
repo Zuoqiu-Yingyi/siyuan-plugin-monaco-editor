@@ -14,23 +14,37 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* 显示块 ID */
+
+.outline() {
+    outline: 1px dotted var(--b3-theme-on-surface);
+
+    &:hover {
+        outline-style: solid;
+    }
+}
+
 :root {
 
     &[plugin-custom-block~=render-outline] {
         .protyle-wysiwyg {
 
-            &[custom-block-render~=outline],
-            [custom-block-render~=outline] {
+            // 文档下所有块显示其轮廓
+            &[custom-block-render~=outline] {
 
-                &[data-node-id],
-                & [data-node-id] {
+                [data-node-id] {
                     margin: 2px !important;
                     padding: 2px !important;
-                    outline: 1px dotted var(--b3-theme-on-surface);
-                    
-                    &:hover {
-                        outline-style: solid;
-                    }
+
+                    .outline();
+                }
+            }
+
+            // 显示该块轮廓
+            [custom-block-render~=outline] {
+
+                &[data-node-id] {
+
+                    .outline();
                 }
             }
         }
