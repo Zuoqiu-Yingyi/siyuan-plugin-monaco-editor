@@ -37,7 +37,7 @@
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
     import { MenuBarStatus } from "@/utils/window";
-    import { EditorType } from "~/../../packages/utils/siyuan";
+    import { EditorType } from "@workspace/utils/siyuan";
 
     export let config: IConfig; // 传入的配置项
     export let plugin: InstanceType<typeof WebviewPlugin>; // 插件实例
