@@ -21,6 +21,7 @@
     export let icon: string = ""; // 图标
     export let label: string = ""; // 菜单项文本/input 提示
     export let input: boolean = false; // 是否为输入框
+    export let disabled : boolean = false; // 是否禁用
     export let value: string = ""; // 输入框内容
     export let accelerator: string = ""; // 捷径提示
 
@@ -54,6 +55,7 @@
         <div class="fn__hr--small" />
         <input
             placeholder={label}
+            {disabled}
             bind:value={value}
             on:change={changed}
             class="b3-text-field fn__size200"

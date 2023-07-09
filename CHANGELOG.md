@@ -3,6 +3,8 @@
 ## 2023-07-09
 
 - 新增快捷键与命令 | Add keyboard shortcuts and commands.
+- 新增设置面板 | Add settings panel.
+
 ## 2023-07-08
 
 - 新增列表看板视图 | Add list kanban view.

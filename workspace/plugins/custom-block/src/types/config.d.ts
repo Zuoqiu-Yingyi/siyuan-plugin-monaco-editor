@@ -37,6 +37,7 @@ export interface IFeature {
     enable: boolean, // 是否启用
     mode: MenuItemMode, // 菜单项模式
     multi: boolean, // 是否支持多选块
+    style?: boolean, // 是否启用该样式
     token?: string, // 用于激活某个样式的令牌 (添加到 HTML 的属性中)
     icon?: string, // 图标引用 ID
     accelerator?: string, // 捷径提示

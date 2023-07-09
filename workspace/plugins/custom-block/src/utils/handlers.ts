@@ -63,6 +63,7 @@ export default {
             target: params.element,
             props: {
                 input: true,
+                disabled: !feature.enable,
                 icon: feature.icon,
                 label: plugin.i18n.menu[feature.id].label,
                 accelerator: params.name,

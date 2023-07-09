@@ -52,5 +52,24 @@
         "custom-block-writing-mode": {
             "label": "Text Layout Mode"
         }
+    },
+    "settings": {
+        "featureSettings": {
+            "menu": {
+                "label": "Menu"
+            },
+            "style": {
+                "label": "Style"
+            },
+            "title": "Feature"
+        },
+        "generalSettings": {
+            "reset": {
+                "description": "Reset all settings options to default (The page will be refreshed after resetting)",
+                "text": "Reset",
+                "title": "Reset settings options"
+            },
+            "title": "General"
+        }
     }
 }
