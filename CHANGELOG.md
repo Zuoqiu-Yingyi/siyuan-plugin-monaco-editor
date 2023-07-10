@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-11
+
+- 实现 monaco 编辑器初始化 | Implement monaco editor initialization.
+
 ## 2023-07-10
 
 - 添加附属仓库 `monaco-editor` 的管理脚本 | Add management scripts for sub-repository `monaco-editor`.

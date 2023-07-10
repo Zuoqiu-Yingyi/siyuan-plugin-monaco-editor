@@ -16,29 +16,33 @@
  */
 
 export function mapLang(lang: string, preset: string[] = []): string {
-    lang = lang.replaceAll("_", "-");
+    lang = lang
+        .replaceAll("_", "-")
+        .toLowerCase();
 
     switch (true) {
         case lang in preset:
             break;
 
-        case lang.startsWith("zh-CNS"):
+        case lang.startsWith("zh-chs"):
+        case lang.startsWith("zh-cns"):
             lang = "zh-Hans";
             break;
-        case lang.startsWith("zh-CNT"):
+        case lang.startsWith("zh-cht"):
+        case lang.startsWith("zh-cnt"):
             lang = "zh-Hant";
             break;
 
-        case lang.startsWith("zh-Hans"):
-        case lang.startsWith("zh-CN"):
-        case lang.startsWith("zh-SG"):
+        case lang.startsWith("zh-hans"):
+        case lang.startsWith("zh-cn"):
+        case lang.startsWith("zh-sg"):
             lang = "zh-Hans";
             break;
 
-        case lang.startsWith("zh-Hant"):
-        case lang.startsWith("zh-TW"):
-        case lang.startsWith("zh-HK"):
-        case lang.startsWith("zh-MO"):
+        case lang.startsWith("zh-hant"):
+        case lang.startsWith("zh-tw"):
+        case lang.startsWith("zh-hk"):
+        case lang.startsWith("zh-mo"):
             lang = "zh-Hant";
             break;
 
@@ -48,6 +52,12 @@ export function mapLang(lang: string, preset: string[] = []): string {
 
         case lang.startsWith("en"):
             lang = "en";
+            break;
+        case lang.startsWith("es"):
+            lang = "es";
+            break;
+        case lang.startsWith("fr"):
+            lang = "fr";
             break;
         default:
             break;
