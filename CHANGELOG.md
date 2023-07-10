@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-10
+
+- 添加附属仓库 `monaco-editor` 的管理脚本 | Add management scripts for sub-repository `monaco-editor`.
+
 ## 2023-07-09
 
 - 新增快捷键与命令 | Add keyboard shortcuts and commands.
