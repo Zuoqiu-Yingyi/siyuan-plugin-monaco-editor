@@ -15,8 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 插件入口 */
-import siyuan from "siyuan";
+import { mapLang } from "@workspace/utils/locale/language";
 
-export default class MonacoEditorPlugin extends siyuan.Plugin {
+// REF: https://www.npmjs.com/package/monaco-editor-nls
+export function mapLocale(locale: string): string {
+    switch (mapLang(locale)) {
+        case "zh-Hans":
+            return "zh-cn";
+        case "zh-Hant":
+            return "zh-tw";
+
+        case "de":
+            return "de";
+        case "es":
+            return "es";
+        case "fr":
+            return "fr";
+        case "it":
+            return "it";
+        case "ja":
+            return "ja";
+        case "ko":
+            return "ko";
+        case "ru":
+            return "ru";
+
+        case "en":
+        default:
+            return "en";
+    }
 }

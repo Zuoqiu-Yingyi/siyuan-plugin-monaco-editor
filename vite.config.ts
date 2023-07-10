@@ -17,27 +17,41 @@
 
 import { defineConfig } from "vite";
 import { resolve } from "path"
+
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { less } from "svelte-preprocess-less";
+
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
     base: `./`,
     plugins: [
+        (monacoEditorPlugin as any).default({}),
         svelte({
             preprocess: {
                 style: less(),
             },
+        }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: "./node_modules/monaco-editor/min",
+                    dest: "./libs/monaco-editor",
+                    rename: "min",
+                },
+            ],
         }),
     ],
     resolve: {
         alias: {
             "~": resolve(__dirname, "./"),
             "@": resolve(__dirname, "./src"),
-        }
+        },
     },
     build: {
-        minify: true,
+        // minify: true,
         // sourcemap: "inline",
         lib: {
             entry: resolve(__dirname, "src/index.ts"),
@@ -45,6 +59,10 @@ export default defineConfig({
             formats: ["cjs"],
         },
         rollupOptions: {
+            input: {
+                index: resolve(__dirname, "src/index.ts"),
+                editor: resolve(__dirname, "editor/index.html"),
+            },
             external: [
                 "siyuan",
                 /^@electron\/.*$/,
@@ -63,7 +81,7 @@ export default defineConfig({
                 assetFileNames: assetInfo => {
                     // console.log(chunkInfo);
                     switch (assetInfo.name) {
-                        case "style.css":
+                        // case "style.css":
                         case "index.css":
                             return "index.css";
 
