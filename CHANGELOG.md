@@ -3,6 +3,7 @@
 ## 2023-07-10
 
 - 添加附属仓库 `monaco-editor` 的管理脚本 | Add management scripts for sub-repository `monaco-editor`.
+- 初始化仓库 | Initialize repository.
 
 ## 2023-07-09
 
