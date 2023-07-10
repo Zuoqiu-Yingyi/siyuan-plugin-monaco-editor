@@ -24,6 +24,12 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use c
 
 ![preview image](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-custom-block/public/preview.png)
 
+## Q & A
+
+1. If I am unable to click on a block label in the list map view, how do I open the block menu?
+
+    Use the shortcut key <kbd>Shift + ↑</kbd> to select the specific block, then use the shortcut key <kbd>Ctrl + /</kbd> to open the block menu for that block.
+
 ## INTRODUCTION
 
 ### Function Introduction
