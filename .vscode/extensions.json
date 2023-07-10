@@ -1,11 +1,3 @@
 {
-    "recommendations": [
-        "zixuanchen.vitest-explorer",
-        "vue.vscode-typescript-vue-plugin",
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "tamasfe.even-better-toml",
-        "fivethree.vscode-svelte-snippets",
-        "vue.volar"
-    ]
+  "recommendations": ["svelte.svelte-vscode"]
 }
