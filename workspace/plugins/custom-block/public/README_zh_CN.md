@@ -22,7 +22,13 @@
 
 ## 预览
 
-![预览图片](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts/public/preview.png)
+![预览图片](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-custom-block/public/preview.png)
+
+## 常见问题
+
+1. 在列表导图视图中若无法点击块标, 如何打开块菜单?
+
+    使用快捷键 <kbd>Shift + ↑</kbd> 选择指定的块, 然后使用快捷键 <kbd>Ctrl + /</kbd>打开该块的块菜单
 
 ## 介绍
 

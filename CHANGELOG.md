@@ -4,6 +4,7 @@
 
 - 添加附属仓库 `monaco-editor` 的管理脚本 | Add management scripts for sub-repository `monaco-editor`.
 - 初始化仓库 | Initialize repository.
+- 在 `README.md` 中添加常见问题 | Add Q&A in `README.md`.
 
 ## 2023-07-09
 
