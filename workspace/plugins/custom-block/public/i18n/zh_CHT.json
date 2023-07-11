@@ -1,4 +1,10 @@
 {
+    "config": {
+        "reset": {
+            "description": "插件配置已更新，需要重置所有設置選項為默認選項（重置後將刷新頁面）",
+            "title": "重置設置選項"
+        }
+    },
     "displayName": "自定義塊樣式",
     "menu": {
         "custom-block-fullscreen": {

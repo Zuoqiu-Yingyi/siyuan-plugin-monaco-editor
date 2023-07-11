@@ -48,5 +48,6 @@ export interface IFeature {
 
 /* 主要配置 */
 export interface IConfig {
+    version: string, // 版本号
     features: IFeature[],
 }

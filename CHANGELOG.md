@@ -5,6 +5,7 @@
 - 实现 monaco 编辑器初始化 | Implement monaco editor initialization.
 - 优化列表导图视图 | Optimize list mind-map view.
 - 更新依赖项 | Update dependencies.
+- 添加重置设置选项提示对话框 | Add reset settings option prompt dialog.
 
 ## 2023-07-10
 

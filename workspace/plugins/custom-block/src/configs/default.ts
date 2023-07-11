@@ -16,6 +16,7 @@
  */
 
 import * as sdk from "@siyuan-community/siyuan-sdk";
+import manifest from "~/public/plugin.json";
 
 import type { IConfig } from "@/types/config";
 
@@ -25,6 +26,7 @@ import {
 } from "@/utils/enums";
 
 export const DEFAULT_CONFIG: IConfig = {
+    version: "1.0.1",
     features: [
         { // 自定义块 style 属性
             id: "custom-block-style",
