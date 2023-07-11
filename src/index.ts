@@ -19,6 +19,7 @@ import siyuan from "siyuan";
 
 /* 静态资源 */
 import "./styles/index.less";
+
 // REF: https://zhuanlan.zhihu.com/p/401882229
 import menu from "./assets/symbols/icon-custom-block-menu.symbol?raw";
 import danmaku from "./assets/symbols/icon-custom-block-render-danmaku.symbol?raw";
@@ -32,6 +33,7 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 import { FLAG_MOBILE } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
 import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
+import { compare } from "@workspace/utils/misc/version";
 import {
     getBlockMenuContext,
     type BlockMenuDetail,
@@ -98,6 +100,17 @@ export default class CustomBlockPlugin extends siyuan.Plugin {
     }
 
     onLayoutReady(): void {
+        if (compare(this.config.version, DEFAULT_CONFIG.version) < 0) {
+            /* 需要重置设置选项 */
+            siyuan.confirm(
+                `${this.i18n.config.reset.title} <code class="fn__code">${this.displayName} [${this.name}]</code>`, // 标题
+                this.i18n.config.reset.description, // 文本
+                async () => {
+                    await this.resetConfig(); // 重置配置
+                    globalThis.location.reload(); // 刷新页面
+                }, // 确认按钮回调
+            );
+        }
     }
 
     onunload(): void {

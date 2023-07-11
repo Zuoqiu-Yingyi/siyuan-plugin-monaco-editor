@@ -1,4 +1,10 @@
 {
+    "config": {
+        "reset": {
+            "description": "The plugin configuration has been updated and requires resetting all settings options to default (The page will be refreshed after resetting)",
+            "title": "Reset settings options"
+        }
+    },
     "displayName": "Custom Block Styles",
     "menu": {
         "custom-block-fullscreen": {
