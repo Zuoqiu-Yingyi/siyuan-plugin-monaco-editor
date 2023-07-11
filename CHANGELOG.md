@@ -3,6 +3,7 @@
 ## 2023-07-11
 
 - 实现 monaco 编辑器初始化 | Implement monaco editor initialization.
+- 优化列表导图视图 | Optimize list mind-map view.
 
 ## 2023-07-10
 

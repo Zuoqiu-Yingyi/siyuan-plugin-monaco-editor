@@ -206,7 +206,7 @@ export const DEFAULT_CONFIG: IConfig = {
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
                 [sdk.siyuan.NodeType.NodeListItem]: { enable: true },
                 [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
-                
+
                 [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
                 [sdk.siyuan.NodeType.NodeHeading]: { enable: true },
                 [sdk.siyuan.NodeType.NodeParagraph]: { enable: true },
@@ -371,7 +371,10 @@ export const DEFAULT_CONFIG: IConfig = {
             type: {
                 default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
             },
         },
         { // 列表-默认视图
@@ -379,12 +382,15 @@ export const DEFAULT_CONFIG: IConfig = {
             enable: true,
             mode: MenuItemMode.button,
             multi: true,
-            icon: "iconUndo",
+            icon: "iconList",
             accelerator: "list-view: null",
             type: {
                 default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
             },
             tasks: [
                 {
@@ -407,7 +413,10 @@ export const DEFAULT_CONFIG: IConfig = {
             type: {
                 default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
             },
             tasks: [
                 {
@@ -431,7 +440,10 @@ export const DEFAULT_CONFIG: IConfig = {
             type: {
                 default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
             },
             tasks: [
                 {
@@ -455,7 +467,10 @@ export const DEFAULT_CONFIG: IConfig = {
             type: {
                 default: { enable: false },
                 [sdk.siyuan.NodeType.NodeDocument]: { enable: true },
+                [sdk.siyuan.NodeType.NodeSuperBlock]: { enable: true },
                 [sdk.siyuan.NodeType.NodeList]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockquote]: { enable: true },
+                [sdk.siyuan.NodeType.NodeBlockQueryEmbed]: { enable: true },
             },
             tasks: [
                 {

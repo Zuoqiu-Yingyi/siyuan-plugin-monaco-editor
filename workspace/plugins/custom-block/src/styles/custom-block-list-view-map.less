@@ -61,30 +61,54 @@
                 }
 
                 [data-node-id] {
+                    // 列表块
+                    &.list {
+                        /* 整个导图列表取消缩进 */
+                        margin: 0;
+                        padding: 0 0 0 1em;
+
+                        /* 竖直居中 */
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+
+                        &::after {
+                            /* 后继承线 */
+                            content: "";
+                            position: absolute;
+                            left: -1em;
+                            top: @height;
+                            border-bottom: var(--custom-block-list-guides-line-width) solid var(--b3-theme-on-surface);
+                            width: 2em;
+                            height: 0;
+                        }
+                    }
+
+                    // 列表项块
                     &.li {
                         /* 列表项文字设置居中 */
                         display: flex;
-                        align-items: center;
+                        // align-items: center;
 
-                        &:first-of-type::after,
-                        &:nth-last-of-type(2)::before {
+                        &:first-child::after,
+                        &:nth-last-child(2)::before {
                             /* 取消多余线条 */
                             border: none !important;
                         }
 
-                        &:first-of-type::before {
+                        &:first-child::before {
                             /* 上框线 */
                             border-top-left-radius: var(--custom-block-border-radius);
                         }
 
-                        &:nth-last-of-type(2)::after {
+                        &:nth-last-child(2)::after {
                             /* 下框线 */
                             // height: calc(50% - var(--custom-block-list-guides-line-width) / 2);
                             border-bottom: var(--custom-block-list-guides-line-width) solid var(--b3-theme-on-surface) !important;
                             border-bottom-left-radius: var(--custom-block-border-radius) !important;
                         }
 
-                        &:first-of-type:nth-last-of-type(2) {
+                        &:first-child:nth-last-child(2) {
                             // 单子项居中
                             // top: 50%;
                             // transform: translate(0, -50%);
@@ -163,29 +187,38 @@
                                 /* 块内边距 */
                                 padding: 4px;
 
-                                /* 叶子节点的轮廓 */
-                                outline: 1px solid var(--b3-theme-on-surface);
-                                border-radius: var(--custom-block-border-radius);
+                                // 叶子节点的轮廓
 
-                                // 文字框
-                                &:is(.p, .h1, .h2, .h3, .h4, .h5, .h6) {
+                                // 段落块 & 标题块
+                                &[data-type="NodeParagraph"],
+                                &[data-type="NodeHeading"] {
                                     /* 段落块/标题块内边距为 0 */
                                     padding: 0;
 
                                     >[contenteditable][spellcheck] {
                                         white-space: pre; // 保留换行
                                         padding: 0 0.5em;
+
+                                        border-radius: var(--custom-block-border-radius);
+                                        outline: 1px solid var(--b3-theme-on-surface);
+                                        min-width: var(--custom-block-list-view-map-min-width);
                                     }
                                 }
 
                                 // 公式块
-                                &:is(.render-node[data-type="NodeMathBlock"]) {
+                                &[data-type="NodeMathBlock"] {
                                     min-height: 0 !important;
 
                                     .katex-display {
                                         margin: 0;
                                         padding: 0.25em;
                                     }
+                                }
+
+                                // 其他块
+                                &:not([data-type="NodeParagraph"], [data-type="NodeHeading"], [data-type="NodeMathBlock"]) {
+                                    outline: 1px solid var(--b3-theme-on-surface);
+                                    border-radius: var(--custom-block-border-radius);
                                 }
                             }
 
@@ -196,34 +229,7 @@
                                 display: block;
                             }
                         }
-
                     }
-
-                    &.list {
-                        /* 整个导图列表取消缩进 */
-                        margin: 0;
-                        padding: 0 0 0 1em;
-                        // transition: all 500ms;
-
-                        &::after {
-                            /* 后继承线 */
-                            content: "";
-                            position: absolute;
-                            left: -1em;
-                            top: @height;
-                            border-bottom: var(--custom-block-list-guides-line-width) solid var(--b3-theme-on-surface);
-                            width: 2em;
-                            height: 0;
-                        }
-                    }
-                }
-
-                &.list>[data-node-id].li:first-of-type:nth-last-of-type(2),
-                &>[data-node-id].list>[data-node-id].li:first-of-type:nth-last-of-type(2),
-                [data-node-id]:not(.li)>[data-node-id].list>[data-node-id].li:first-of-type:nth-last-of-type(2) {
-                    /* 修复顶层列表项错位问题 */
-                    top: 0;
-                    transform: none;
                 }
             }
         }
