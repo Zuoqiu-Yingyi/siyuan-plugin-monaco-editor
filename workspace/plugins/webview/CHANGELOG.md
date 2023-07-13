@@ -1,5 +1,84 @@
 # Changelog
 
+## [1.2.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/compare/v1.1.0...v1.2.0) (2023-07-03)
+
+
+### Features
+
+* **custom-block:** 实现使用块菜单编辑块 `style` 属性功能 | Implement the function of using block menu to edit block `style` attribute. ([6454c4d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/6454c4d547739981e58d611130426c6012923a0b))
+* **custom-block:** 新增弹幕功能 | Add bullet-screen function. ([e2fd9bb](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/e2fd9bbfe7384d13509d0e03fd3ccedaef1aadd5))
+* **custom-fonts:** 实现自定义字体列表功能 | Implement custom font list feature. ([de87fbc](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/de87fbc0ef0dc1830012c799b537ea4d8184952e))
+* **custom-fonts:** 实现自定义字体列表功能 | Implement custom font list feature. ([d665e36](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/d665e368a65cff5e3cfc55357a7768545b1d61fd))
+* **custom-fonts:** 支持嵌入 `Twitter Color Emoji` 字体 | Support embedding `Twitter Color Emoji` font. ([45b0329](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/45b0329e8f97441c2095ab44e84228bd03725248))
+* **custom-fonts:** 支持嵌入 `Twitter Color Emoji` 字体 | Support embedding `Twitter Color Emoji` font. ([7a4fdfe](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/7a4fdfe5dc294188339bd0d2e36ff216923584e3))
+* **custom-fonts:** 支持嵌入 `Twitter Color Emoji` 字体 | Support embedding `Twitter Color Emoji` font. ([69844b8](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/69844b826b04786452b64387bb8aca650d9df7de))
+* **webview:** 网页视图支持自定义网页背景颜色 | Web view supports custom web page background color. ([62aab8e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/62aab8eb805eea1ebe0f369bd6c4774120f31b29))
+* **webview:** 网页视图支持自定义网页背景颜色 | Web view supports custom web page background color. ([2eefbcd](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/2eefbcd0c69b311ce472e34692e0eebc936a9dab))
+
+
+### Bug Fixes
+
+* **webview:** 修复在非安全上下文中无法使用 `crypto.randomUUID` 的问题 | Fix the issue that `crypto.randomUUID` cannot be used in an insecure context. ([0d6b387](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/0d6b387191f0fc25c1585d90a4dec41cb2878924))
+
+
+### Performance Improvements
+
+* 改进设置对话框标题内容 | Improve the title content of the settings dialog. ([cc2a9aa](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/cc2a9aadfea66e1659fd2bc53302978b719e0f3d))
+* 改进设置对话框标题内容 | Improve the title content of the settings dialog. ([6c31975](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/6c31975c1c91781e528868ae1c903fa6be5ee9ef))
+
+
+### Code Refactoring
+
+* 重构 `apis.siyuan` | Refactor `apis.siyuan`. ([a102e9f](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/a102e9f94a06ab81258f932950712fece1117477))
+* 重构 `apis.siyuan` | Refactor `apis.siyuan`. ([43d97e0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/43d97e0c793607b9847816f440d44e17ce0e5ed9))
+
+
+### Continuous Integration
+
+* **custom-fonts:** 添加 CD 配置 | Add CD configuration. ([6f6d4da](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/6f6d4daa170de6f10b03e74f26575d92ad7bbcd3))
+* **custom-fonts:** 添加 CD 配置 | Add CD configuration. ([2cb23cf](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/2cb23cf640cc8cc145210075103a79ffea841cf5))
+* **metadata:** 添加 CD 配置 | Add CD configuration. ([7eccd4b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/7eccd4b9e13c38542c467b9829b8d582aaf58fa0))
+* **metadata:** 添加 CD 配置 | Add CD configuration. ([adb93d3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/adb93d37d487ab4b11358f3880fe3040a75c864d))
+
+
+### Build System
+
+* 更新依赖项 | Update dependencies. ([9a8156c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/9a8156cbd62501bbcea214be0a222ac364934243))
+* 更新依赖项 | Update dependencies. ([e23d68d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/e23d68db60fb772320fb7fb2f824dca51ad65942))
+
+
+### Documentation
+
+* **metadata:** 完善 `README*.md` | Improve `README*.md`. ([29d3fef](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/29d3fef9f2117c9ab40d418f0394580013533ad2))
+* **metadata:** 完善 `README*.md` | Improve `README*.md`. ([6eecaa7](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/6eecaa7c99c1fc0e3e35956a533161f237993398))
+* **metadata:** 添加 `icon.png` | Add `icon.png`. ([90894a0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/90894a0b3e92a20705cac101946793d8c0d59620))
+* **metadata:** 添加 `icon.png` | Add `icon.png`. ([a7d29e6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/a7d29e692de6ef1cac2a844a3baebf34bd5e59e5))
+* **webview:** 新增网页背景设置项介绍 | Add web page background setting item introduction. ([957046b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/957046baa1ed519e52a5cc540f10e5ee517f7997))
+
+
+### Miscellaneous
+
+* **apis:** 新增 `json-schema` 相关依赖 | Add `json-schema` related dependencies. ([a9f501e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/a9f501e30e06435368117b05e5392d7b96784f9d))
+* **apis:** 新增 `json-schema` 相关依赖 | Add `json-schema` related dependencies. ([2b396a6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/2b396a64d7f712aa00ba7a6ca67a50100628c725))
+* **apis:** 迁移仓库 `siyuan-api-interface` 至 `workspace/packages` 目录 | Migrate repository `siyuan-api-interface` to `workspace/packages` directory. ([daad4fc](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/daad4fcb11ddc53b6d4c8e11daf88b88d7e3fb56))
+* **custom-fonts:** release v1.0.0 ([dbdb4b8](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/dbdb4b82da1ea1b6b2993fb1f2f6d4a77de046ec))
+* **custom-fonts:** release v1.0.0 ([34c3029](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/34c3029cadfec6fac0ebb23666dcd238edadcd1b))
+* **custom-fonts:** 将推特表情符号字体由 `Twitter Color Emoji` 替换为 `Twemoji Mozilla` | Replace the Twitter emoji font from `Twitter Color Emoji` to `Twemoji Mozilla`. ([75ef9c6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/75ef9c61842011f8583ba5a644f6fd9136d86031))
+* **custom-fonts:** 将推特表情符号字体由 `Twitter Color Emoji` 替换为 `Twemoji Mozilla` | Replace the Twitter emoji font from `Twitter Color Emoji` to `Twemoji Mozilla`. ([7c0d873](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/7c0d873275698cfffbd7105650edf5c9375fb2b3))
+* **custom-fonts:** 添加附属仓库 `custom-fonts` 的管理脚本 | Add management scripts for sub-repository `custom-fonts`. ([56b391d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/56b391d2adde3966edececce5934752f457fef80))
+* **metadata:** release v1.0.0 ([5db9aca](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/5db9aca20a0a47162a095bb92a72c87d34ff3e6c))
+* **metadata:** 完善 `metadata` 的配置清单 | Improve the manifest of `metadata`. ([390874c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/390874c3aeb4ead1306532a632980518bbf47209))
+* **metadata:** 完善 `metadata` 的配置清单 | Improve the manifest of `metadata`. ([6d0faa5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/6d0faa5d833b72cf610a8fd2d29bb36aecf5e7c3))
+* **openCC:** 初始化仓库 | Initialize repository. ([769da9d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/769da9d771e70173f252874aaa5e470479eadf24))
+* readd `custom-block` ([92bb56e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/92bb56e88d1555b30831b94183245a2a29902871))
+* readd `custom-fonts` ([5f39fa6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/5f39fa685b6fb3b58cd2b9606320c90ea056c8a0))
+* **scripts:** 添加附属仓库 `chinese-convert` 的管理脚本 | Add management scripts for sub-repository `chinese-convert`. ([79dc1a6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/79dc1a61462870b06df35620fdb37b54a7e51872))
+* **script:** 添加附属仓库 `custom-block` 的管理脚本 | Add management scripts for sub-repository `custom-block`. ([f800477](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/f8004779fb5c5f10100bd8c000138329c7dc0dcb))
+* **webview:** release v1.1.1 ([1995248](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/19952489a5804b9578ed91d0ca02115b072809cd))
+* 更新依赖 | Update dependencies. ([42fa457](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/42fa45766941fa6fd91e1ebc707e92cb9b681055))
+* 更新依赖 | Update dependencies. ([cd82e8e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/cd82e8e20b29ff57471995baeb4669cff1dc54f4))
+* 更新第三方依赖 | Update third-party dependencies. ([432097b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/commit/432097b660140b0ca2ff49fcb6e7e18859057794))
+
 ## [1.1.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/compare/v1.0.1...v1.1.0) (2023-06-06)
 
 
