@@ -31,6 +31,8 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that allows yo
 - Open hyperlinks in SiYuan Note new tabs (desktop only)
 - Open hyperlinks in a new window
 - Open the SiYuan Note editor in a new window
+- Block reference context menu
+- Hyperlink context menu
 
 ### Setting Introduction
 
