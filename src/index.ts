@@ -31,6 +31,7 @@ import {
     Pathname,
     buildSiyuanWebURL,
     editorType2Pathname,
+    isStaticPathname,
     parseSiyuanURL,
 } from "@workspace/utils/siyuan/url";
 import {
@@ -598,68 +599,58 @@ export default class WebviewPlugin extends siyuan.Plugin {
             }
 
             /* 静态文件服务 */
-            case link.href.startsWith("stage/"): // 安装目录/resources/stage
+            case isStaticPathname(link.href): {
+                const href = link.href.startsWith("/")
+                    ? `${globalThis.location.origin}${link.href}`
+                    : `${globalThis.document.baseURI}${link.href}`;
 
-            case link.href.startsWith("appearance/"): // 工作空间/conf/appearance
-            case link.href.startsWith("export/"): // 工作空间/temp/export
-            case link.href.startsWith("history/"): // 工作空间/history
-
-            case link.href.startsWith("assets/"): // 工作空间/data/assets
-            case link.href.startsWith("emojies/"): // 工作空间/data/emojies
-            case link.href.startsWith("plugins/"): // 工作空间/data/plugins
-            case link.href.startsWith("plugins/"): // 工作空间/data/plugins
-            case link.href.startsWith("snippets/"): // 工作空间/data/snippets
-            case link.href.startsWith("templates/"): // 工作空间/data/templates
-            case link.href.startsWith("widgets/"): // 工作空间/data/widgets
-                {
-                    const href = `${globalThis.document.baseURI}${link.href}`;
-                    if (FLAG_ELECTRON && FLAG_DESKTOP) {
-                        /* 在后台页签中打开 */
-                        submenu.push({
-                            icon: "iconFile",
-                            label: this.i18n.menu.openTabBackground.label,
-                            click: () => this.openWebviewTab(
-                                href,
-                                link.title,
-                                undefined,
-                                { keepCursor: true },
-                            ),
-                        });
-                        /* 在页签右侧打开 */
-                        submenu.push({
-                            icon: "iconLayoutRight",
-                            label: this.i18n.menu.openTabRight.label,
-                            click: () => this.openWebviewTab(
-                                href,
-                                link.title,
-                                undefined,
-                                { position: "right" },
-                            ),
-                        });
-                        /* 在页签下侧打开 */
-                        submenu.push({
-                            icon: "iconLayoutBottom",
-                            label: this.i18n.menu.openTabBottom.label,
-                            click: () => this.openWebviewTab(
-                                href,
-                                link.title,
-                                undefined,
-                                { position: "bottom" },
-                            ),
-                        });
-                    }
-                    /* 使用新窗口打开 */
+                if (FLAG_ELECTRON && FLAG_DESKTOP) {
+                    /* 在后台页签中打开 */
                     submenu.push({
-                        icon: "iconOpenWindow",
-                        label: this.i18n.menu.openByNewWindow.label,
-                        click: () => this.openWebpageWindow(
+                        icon: "iconFile",
+                        label: this.i18n.menu.openTabBackground.label,
+                        click: () => this.openWebviewTab(
                             href,
                             link.title,
-                            calculateScreenPosition(element),
+                            undefined,
+                            { keepCursor: true },
                         ),
                     });
-                    break;
+                    /* 在页签右侧打开 */
+                    submenu.push({
+                        icon: "iconLayoutRight",
+                        label: this.i18n.menu.openTabRight.label,
+                        click: () => this.openWebviewTab(
+                            href,
+                            link.title,
+                            undefined,
+                            { position: "right" },
+                        ),
+                    });
+                    /* 在页签下侧打开 */
+                    submenu.push({
+                        icon: "iconLayoutBottom",
+                        label: this.i18n.menu.openTabBottom.label,
+                        click: () => this.openWebviewTab(
+                            href,
+                            link.title,
+                            undefined,
+                            { position: "bottom" },
+                        ),
+                    });
                 }
+                /* 使用新窗口打开 */
+                submenu.push({
+                    icon: "iconOpenWindow",
+                    label: this.i18n.menu.openByNewWindow.label,
+                    click: () => this.openWebpageWindow(
+                        href,
+                        link.title,
+                        calculateScreenPosition(element),
+                    ),
+                });
+                break;
+            }
 
             /* 其他超链接 */
             default: {
