@@ -27,18 +27,20 @@ export function getBlockID(e: Event): BlockID | void {
     const path = e.composedPath();
     for (let i = 0; i < path.length; ++i) {
         const dataset = (path[i] as HTMLElement).dataset;
-        switch (true) {
-            case dataset.nodeId && regexp.id.test(dataset.nodeId):
-                return dataset.nodeId;
-            case dataset.id && regexp.id.test(dataset.id):
-                return dataset.id;
-            case dataset.oid && regexp.id.test(dataset.oid):
-                return dataset.oid;
-            case dataset.rootId && regexp.id.test(dataset.rootId):
-                return dataset.rootId;
+        if (dataset) {
+            switch (true) {
+                case dataset.nodeId && regexp.id.test(dataset.nodeId):
+                    return dataset.nodeId;
+                case dataset.id && regexp.id.test(dataset.id):
+                    return dataset.id;
+                case dataset.oid && regexp.id.test(dataset.oid):
+                    return dataset.oid;
+                case dataset.rootId && regexp.id.test(dataset.rootId):
+                    return dataset.rootId;
 
-            default:
-                break
+                default:
+                    break
+            }
         }
     }
     return;

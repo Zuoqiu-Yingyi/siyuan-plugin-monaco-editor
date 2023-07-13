@@ -19,3 +19,12 @@ export interface IPosition {
     screenX?: number,
     screenY?: number,
 }
+
+/* 计算元素相对于屏幕的位置 */
+export function calculateScreenPosition(element: HTMLElement): IPosition { 
+    const rect = element.getBoundingClientRect();
+    return {
+        screenX: Math.round(globalThis.screenX + rect.x),
+        screenY: Math.round(globalThis.screenY + rect.y),
+    };
+}

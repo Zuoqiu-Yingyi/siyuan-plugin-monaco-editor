@@ -1,17 +1,29 @@
 {
   "displayName": "網頁視圖",
   "menu": {
+    "openByNewWindow": {
+      "label": "使用新窗口打開"
+    },
+    "openDesktopWindow": {
+      "label": "打開思源桌面端窗口"
+    },
     "openEditor": {
       "label": "在新窗口打開"
     },
     "openFocusedEditor": {
       "label": "在新窗口打開並聚焦"
     },
-    "openDesktopWindow": {
-      "label": "打開思源桌面端窗口"
-    },
     "openMobildWindow": {
       "label": "打開思源移動端窗口"
+    },
+    "openTabBackground": {
+      "label": "在後台分頁中打開"
+    },
+    "openTabBottom": {
+      "label": "在分頁下側打開"
+    },
+    "openTabRight": {
+      "label": "在分頁右側打開"
     }
   },
   "message": {

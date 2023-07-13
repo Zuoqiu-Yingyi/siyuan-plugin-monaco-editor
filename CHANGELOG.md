@@ -3,6 +3,7 @@
 ## 2023-07-12
 
 - 添加块引用菜单 | Add block reference menu.
+- 添加超链接菜单 | Add hyperlink menu.
 
 ## 2023-07-11
 
