@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-12
+
+- 添加块引用菜单 | Add block reference menu.
+
 ## 2023-07-11
 
 - 实现 monaco 编辑器初始化 | Implement monaco editor initialization.

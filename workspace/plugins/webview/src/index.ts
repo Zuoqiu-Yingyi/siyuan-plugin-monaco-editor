@@ -35,8 +35,13 @@ import {
 } from "@workspace/utils/siyuan/url";
 import {
     getBlockMenuContext,
-    type BlockMenuDetail,
 } from "@workspace/utils/siyuan/menu/block";
+import type {
+    IClickBlockIconEvent,
+    IClickEditorTitleIconEvent,
+    IOpenMenuBlockRefEvent,
+    IOpenMenuLinkEvent,
+} from "@workspace/types/siyuan/events";
 
 // import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 
@@ -56,6 +61,7 @@ import {
 } from "./utils/window";
 import { EditorType } from "~/../../packages/utils/siyuan";
 import type { IPosition } from "./types";
+import type { BlockID } from "@workspace/types/siyuan";
 
 export default class WebviewPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -117,6 +123,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
                 /* 其他块菜单 */
                 this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+                /* 块引用菜单 */
+                this.eventBus.on("open-menu-blockref", this.blockRefMenuEventListener);
+                /* 超链接菜单 */
+                this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
                 /* 快捷键/命令 */
                 this.addCommand({
@@ -212,6 +222,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
+        this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
+        this.eventBus.off("open-menu-link", this.linkMenuEventListener);
     }
 
     openSetting(): void {
@@ -364,6 +376,23 @@ export default class WebviewPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 通过 ID 打开思源窗口 */
+    public openSiyuanWindowByID(element: HTMLElement, id: BlockID, focus) {
+        const url = buildSiyuanWebURL(
+            editorType2Pathname(this.config.window.siyuan.editorType),
+            {
+                id,
+                focus,
+            }
+        );
+
+        const rect = element.getBoundingClientRect();
+        this.openSiyuanWindow(url, {
+            screenX: globalThis.screenX + rect.x,
+            screenY: globalThis.screenY + rect.y,
+        } as any);
+    }
+
     /* 是否为有效的 URL 协议 */
     protected isUrlSchemeAvailable(url: string, protocols: IProtocols): boolean {
         for (const key in protocols) {
@@ -408,34 +437,57 @@ export default class WebviewPlugin extends siyuan.Plugin {
         return meta;
     }
 
-    /* 添加块菜单项 */
-    protected readonly blockMenuEventListener = (e: any) => {
+    /* 块引用菜单 */
+    protected readonly blockRefMenuEventListener = (e: IOpenMenuBlockRefEvent) => {
         // this.logger.debug(e);
-        const detail = e.detail as BlockMenuDetail;
+
+        const submenu: siyuan.IMenuItemOption[] = [];
+        const element = e.detail.element;
+        const id = element.dataset.id;
+
+        /* 新窗口打开块 */
+        submenu.push({
+            icon: "iconOpenWindow",
+            label: this.i18n.menu.openEditor.label,
+            click: (element) => this.openSiyuanWindowByID(element, id, false),
+        });
+
+        /* 新窗口打开块并聚焦 */
+        submenu.push({
+            icon: "iconFocus",
+            label: this.i18n.menu.openFocusedEditor.label,
+            click: (element) => this.openSiyuanWindowByID(element, id, true),
+        });
+
+        e.detail.menu.addItem({
+            icon: "iconLanguage",
+            label: this.i18n.displayName,
+            submenu,
+        });
+    }
+
+    /* 超链接菜单 */
+    protected readonly linkMenuEventListener = (e: IOpenMenuLinkEvent) => {
+        // this.logger.debug(e);
+        // TODO: 在后台页签中打开
+        // TODO: 在页签右侧打开
+        // TODO: 在页签下侧打开
+        // TODO: 使用新窗口打开
+    }
+
+    /* 块菜单 */
+    protected readonly blockMenuEventListener = (e: IClickBlockIconEvent | IClickEditorTitleIconEvent) => {
+        // this.logger.debug(e);
+        const detail = e.detail;
         const context = getBlockMenuContext(e.detail);
         if (context) {
             const submenu: siyuan.IMenuItemOption[] = [];
-            const clickEventListener = (element: HTMLElement, focus: boolean) => {
-                const url = buildSiyuanWebURL(
-                    editorType2Pathname(this.config.window.siyuan.editorType),
-                    {
-                        id: context.id,
-                        focus,
-                    }
-                );
-
-                const rect = element.getBoundingClientRect();
-                this.openSiyuanWindow(url, {
-                    screenX: globalThis.screenX + rect.x,
-                    screenY: globalThis.screenY + rect.y,
-                } as any);
-            };
 
             /* 新窗口打开块 */
             submenu.push({
                 icon: "iconOpenWindow",
                 label: this.i18n.menu.openEditor.label,
-                click: (element) => clickEventListener(element, false),
+                click: (element) => this.openSiyuanWindowByID(element, context.id, false),
             });
 
             if (!context.isDocumentBlock // 不是文档块
@@ -445,7 +497,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 submenu.push({
                     icon: "iconFocus",
                     label: this.i18n.menu.openFocusedEditor.label,
-                    click: (element) => clickEventListener(element, true),
+                    click: (element) => this.openSiyuanWindowByID(element, context.id, true),
                 });
             }
 

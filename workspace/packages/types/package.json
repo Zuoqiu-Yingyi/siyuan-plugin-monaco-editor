@@ -6,6 +6,8 @@
         "access": "public"
     },
     "dependencies": {
+        "@workspace/components": "workspace:^",
+        "@workspace/utils": "workspace:^"
     },
     "devDependencies": {
         "ts-toolbelt": "^9.6.0"
