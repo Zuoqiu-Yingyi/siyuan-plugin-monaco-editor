@@ -1,6 +1,9 @@
 {
   "displayName": "网页视图",
   "menu": {
+    "openByNewWindow": {
+      "label": "使用新窗口打开"
+    },
     "openDesktopWindow": {
       "label": "打开思源桌面端窗口"
     },
@@ -12,6 +15,15 @@
     },
     "openMobildWindow": {
       "label": "打开思源移动端窗口"
+    },
+    "openTabBackground": {
+      "label": "在后台页签中打开"
+    },
+    "openTabBottom": {
+      "label": "在页签下侧打开"
+    },
+    "openTabRight": {
+      "label": "在页签右侧打开"
     }
   },
   "message": {

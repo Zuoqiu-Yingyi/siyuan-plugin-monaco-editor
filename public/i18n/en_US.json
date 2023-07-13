@@ -1,17 +1,29 @@
 {
   "displayName": "Web Page View",
   "menu": {
+    "openByNewWindow": {
+      "label": "Open with New Window"
+    },
+    "openDesktopWindow": {
+      "label": "Open SiYuan Desktop Window"
+    },
     "openEditor": {
       "label": "Open in a New Window"
     },
     "openFocusedEditor": {
       "label": "Open in a New Window and Focus"
     },
-    "openDesktopWindow": {
-      "label": "Open SiYuan Desktop Window"
-    },
     "openMobildWindow": {
       "label": "Open SiYuan Mobile Window"
+    },
+    "openTabBackground": {
+      "label": "Open in background tab"
+    },
+    "openTabBottom": {
+      "label": "Open Below the Tab"
+    },
+    "openTabRight": {
+      "label": "Open Right the Tab"
     }
   },
   "message": {
