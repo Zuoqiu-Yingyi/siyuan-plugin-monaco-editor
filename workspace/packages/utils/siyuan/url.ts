@@ -84,3 +84,30 @@ export function parseSiyuanURL(url: URL) {
         return null;
     }
 }
+
+/**
+ * 判断一个超链接是否为思源静态文件服务
+ * @param href: 超链接地址
+ */
+export function isStaticPathname(href: string): boolean {
+    if (href.startsWith("/")) href = href.substring(1);
+    switch (true) {
+        case href.startsWith("stage/"): // 安装目录/resources/stage
+
+        case href.startsWith("appearance/"): // 工作空间/conf/appearance
+        case href.startsWith("export/"): // 工作空间/temp/export
+        case href.startsWith("history/"): // 工作空间/history
+
+        case href.startsWith("assets/"): // 工作空间/data/assets
+        case href.startsWith("emojies/"): // 工作空间/data/emojies
+        case href.startsWith("plugins/"): // 工作空间/data/plugins
+        case href.startsWith("plugins/"): // 工作空间/data/plugins
+        case href.startsWith("snippets/"): // 工作空间/data/snippets
+        case href.startsWith("templates/"): // 工作空间/data/templates
+        case href.startsWith("widgets/"): // 工作空间/data/widgets
+            return true;
+
+        default:
+            return false;
+    }
+}

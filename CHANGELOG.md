@@ -4,6 +4,7 @@
 
 - 添加块引用菜单 | Add block reference menu.
 - 添加超链接菜单 | Add hyperlink menu.
+- 优化思源静态文件服务的判断 | Optimize the judgment of siyuan static file service.
 
 ## 2023-07-11
 
