@@ -1,3 +1,22 @@
 {
-    "displayName": "代码编辑器"
+    "displayName": "代码编辑器",
+    "dock": {
+        "kramdown": {
+            "ariaLabel": "编辑 kramdown"
+        },
+        "title": "代码编辑"
+    },
+    "editor": {
+        "action": {
+            "save": {
+                "label": "保存"
+            },
+            "saveAs": {
+                "label": "另存为"
+            },
+            "toggleWordWrap": {
+                "label": "切换自动换行"
+            }
+        }
+    }
 }

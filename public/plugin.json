@@ -1,0 +1,39 @@
+{
+    "name": "monaco-editor",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview",
+    "version": "0.0.0",
+    "minAppVersion": "2.9.5",
+    "backends": [
+        "all"
+    ],
+    "frontends": [
+        "desktop",
+        "desktop-window",
+        "browser-desktop"
+    ],
+    "displayName": {
+        "default": "Code Editor",
+        "zh_CN": "代码编辑器",
+        "zh_CHT": "程式碼編輯器"
+    },
+    "description": {
+        "default": "Use the <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> to view and edit code.",
+        "zh_CN": "使用 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 查看与编辑代码。",
+        "zh_CHT": "使用 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 檢視與編輯程式碼。"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}

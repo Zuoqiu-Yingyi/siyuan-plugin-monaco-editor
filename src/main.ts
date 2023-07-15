@@ -17,42 +17,59 @@
 
 /* 界面入口 */
 import Main from "./components/Main.svelte";
+import constants from "./constants";
 import "./styles/main.less";
 
-/**
- * Monaco Editor 环境
- * REF: https://github.com/microsoft/monaco-editor/blob/main/docs/integrate-esm.md#using-vite
- */
-self.MonacoEnvironment = {
-    getWorker: function (workerId, label) {
-        const getWorkerModule = (moduleUrl, label) => {
-            return new Worker(self.MonacoEnvironment.getWorkerUrl(moduleUrl, label), {
-                name: label,
-                type: "module",
-            });
-        };
+import {
+    FLAG_ELECTRON,
+    FLAG_IFRAME,
+} from "@workspace/utils/env/front-end";
 
-        switch (label) {
-            case "json":
-                return getWorkerModule("/monaco-editor/esm/vs/language/json/json.worker?worker", label);
-            case "css":
-            case "scss":
-            case "less":
-                return getWorkerModule("/monaco-editor/esm/vs/language/css/css.worker?worker", label);
-            case "html":
-            case "handlebars":
-            case "razor":
-                return getWorkerModule("/monaco-editor/esm/vs/language/html/html.worker?worker", label);
-            case "js":
-            case "ts":
-            case "javascript":
-            case "typescript":
-                return getWorkerModule("/monaco-editor/esm/vs/language/typescript/ts.worker?worker", label);
-            default:
-                return getWorkerModule("/monaco-editor/esm/vs/editor/editor.worker?worker", label);
-        }
-    },
-};
+import type { Electron } from "@workspace/types/electron";
+
+/* 通道端口 */
+var port: MessagePort;
+
+/**
+ * 初始化监听器
+ */
+async function initListener(e: MessageEvent | Electron.IpcRendererEvent) {
+    port = e.ports[0];
+    port.onmessage = messageListener;
+}
+
+/**
+ * 消息监听器
+ */
+async function messageListener(e: MessageEvent) {
+    console.log(e);
+}
+
+switch (true) {
+    case FLAG_ELECTRON: {
+        /**
+         * 使用 ipcRenderer 获取 MessagePortMain
+         * REF: https://www.electronjs.org/zh/docs/latest/api/ipc-renderer
+         * REF: https://www.electronjs.org/zh/docs/latest/tutorial/ipc
+         * REF: https://www.electronjs.org/zh/docs/latest/api/message-channel-main
+         */
+        const { ipcRenderer } = globalThis.require("electron") as { ipcRenderer: Electron.IpcRenderer };
+        ipcRenderer.once(constants.INIT_CHANNEL_NAME, initListener);
+        break;
+    }
+    case FLAG_IFRAME: {
+        /**
+         * 使用 addEventListener("message") 获取 MessagePort
+         * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage#the_dispatched_event
+         * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/MessagePort
+         * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/page2.html
+         */
+        globalThis.addEventListener("message", initListener, { once: true });
+        break;
+    }
+    default:
+        break;
+}
 
 const main = new Main({
     target: globalThis.document.body,

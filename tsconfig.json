@@ -16,7 +16,7 @@
         "isolatedModules": true,
         "lib": [
             "ESNext",
-            "DOM"
+            "DOM",
         ],
         "baseUrl": "./",
         "paths": {
@@ -25,23 +25,24 @@
             ],
             "@/*": [
                 "src/*"
-            ]
-        }
+            ],
+        },
     },
     "include": [
         "public/i18n/*.json",
         "src/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.js",
-        "src/**/*.svelte"
+        "src/**/*.svelte",
     ],
     "exclude": [
+        "dist",
         "node_modules",
-        "temp"
+        "temp",
     ],
     "references": [
         {
-            "path": "./tsconfig.node.json"
-        }
-    ]
+            "path": "./tsconfig.node.json",
+        },
+    ],
 }

@@ -15,81 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { defineConfig } from "vite";
-import { resolve } from "path"
+import { defineConfig, UserConfig } from "vite";
+import viteShareConfig from "./vite.share.config";
+import vitePluginConfig from "./vite.plugin.config";
+import viteIframesConfig from "./vite.iframes.config";
 
-import monacoEditorPlugin from 'vite-plugin-monaco-editor';
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { less } from "svelte-preprocess-less";
+import deepmerge from "deepmerge";
 
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+// REF: https://cn.vitejs.dev/config/#conditional-config
+export default defineConfig(async env => {
+    var config: UserConfig;
+    // console.log(env);
 
-// https://vitejs.dev/config/
-export default defineConfig({
-    base: `./`,
-    plugins: [
-        (monacoEditorPlugin as any).default({}),
-        svelte({
-            preprocess: {
-                style: less(),
-            },
-        }),
-        viteStaticCopy({
-            targets: [
-                {
-                    src: "./node_modules/monaco-editor/min",
-                    dest: "./libs/monaco-editor",
-                    rename: "min",
-                },
-            ],
-        }),
-    ],
-    resolve: {
-        alias: {
-            "~": resolve(__dirname, "./"),
-            "@": resolve(__dirname, "./src"),
-        },
-    },
-    build: {
-        // minify: true,
-        // sourcemap: "inline",
-        lib: {
-            entry: resolve(__dirname, "src/index.ts"),
-            fileName: "index",
-            formats: ["cjs"],
-        },
-        rollupOptions: {
-            input: {
-                index: resolve(__dirname, "src/index.ts"),
-                editor: resolve(__dirname, "editor/index.html"),
-            },
-            external: [
-                "siyuan",
-                /^@electron\/.*$/,
-            ],
-            output: {
-                entryFileNames: chunkInfo => {
-                    // console.log(chunkInfo);
-                    switch (chunkInfo.name) {
-                        case "index":
-                            return "[name].js";
+    switch (env.mode) {
+        case "iframes":
+            config = deepmerge.all([viteShareConfig, viteIframesConfig]);
+            break;
 
-                        default:
-                            return "assets/[name]-[hash].js";
-                    }
-                },
-                assetFileNames: assetInfo => {
-                    // console.log(chunkInfo);
-                    switch (assetInfo.name) {
-                        // case "style.css":
-                        case "index.css":
-                            return "index.css";
+        case "plugin":
+        default:
+            config = deepmerge.all([viteShareConfig, vitePluginConfig]);
+            break;
+    }
 
-                        default:
-                            return "assets/[name]-[hash][extname]";
-                    }
-                },
-            },
-        },
-    },
+    // console.log(config);
+    return config;
 });
