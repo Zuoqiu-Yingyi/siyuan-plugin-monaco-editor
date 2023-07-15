@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-15
+
+- 实现侧边栏编辑器 | Implement sidebar editor.
+
 ## 2023-07-12
 
 - 添加块引用菜单 | Add block reference menu.

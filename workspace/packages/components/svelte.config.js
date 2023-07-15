@@ -16,7 +16,7 @@
  */
 
 // REF https://github.com/sveltejs/language-tools/issues/699
-import sveltePreprocess from 'svelte-preprocess';
+import sveltePreprocess from "svelte-preprocess";
 import { less } from "svelte-preprocess-less";
 
 export default {

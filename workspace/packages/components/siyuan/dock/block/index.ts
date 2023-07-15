@@ -15,12 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
+import type { TooltipsDirection } from "../../misc/tooltips";
 
-export function merge<T>(...args: Partial<T>[]): T {
-    return deepmerge.all<T>(args);
+export interface IIcon {
+    icon: string; // 图标 ID
+    type?: string; // data-type 属性值
+    active?: boolean; // 是否激活
+    ariaLabel?: string; // 提示标签内容
+    tooltipsDirection?: TooltipsDirection; // 提示标签方向
+    onClick?: (element: HTMLElement, e: MouseEvent) => void; // 按钮点击回调函数
 }
 
-export function mergeIgnoreArray<T>(...args: Partial<T>[]): T {
-    return deepmerge.all<T>(args, { arrayMerge: (_target, source, _options) => source });
+export interface IBar {
+    logo: string; // svg 图标引用 ID
+    title: string; // 标题
+    icons: IIcon[]; // 按钮列表
 }

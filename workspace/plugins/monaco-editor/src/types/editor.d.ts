@@ -15,12 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepmerge from "deepmerge";
+import type { editor as Editor } from "monaco-editor";
+import type { IMonacoEditorOptions } from "@/types/config";
 
-export function merge<T>(...args: Partial<T>[]): T {
-    return deepmerge.all<T>(args);
+/* 编辑器模式 */
+export interface IEditorModel {
+    value: string; // 编辑器内容
+    language?: string; // 编辑器语言模式
+    uri?: Editor.Uri; // 通过 URI 推断编辑器语言模式
 }
 
-export function mergeIgnoreArray<T>(...args: Partial<T>[]): T {
-    return deepmerge.all<T>(args, { arrayMerge: (_target, source, _options) => source });
+/* 侧边栏编辑器 */
+export interface IDockEditor {
+    modified: IEditorModel,
+    options: IMonacoEditorOptions,
 }

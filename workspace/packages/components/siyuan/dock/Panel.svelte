@@ -15,15 +15,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<script lang="ts">
-    export let icon: string;
-    export let className: string = undefined;
-    export let style: string = undefined;
-</script>
-
-<svg
-    {style}
-    class={className}
->
-    <use xlink:href={icon} />
-</svg>
+<div class="fn__flex-1 fn__flex-column">
+    <slot />
+</div>

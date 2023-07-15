@@ -16,14 +16,17 @@
 -->
 
 <script lang="ts">
-    export let icon: string;
-    export let className: string = undefined;
-    export let style: string = undefined;
+    import Svg from "./../../misc/Svg.svelte";
+
+    export let icon: string = ""; // 图标
+    export let title: string = ""; // 标题
 </script>
 
-<svg
-    {style}
-    class={className}
->
-    <use xlink:href={icon} />
-</svg>
+<div class="block__logo">
+    {#if icon}
+        <Svg {icon} />
+    {/if}
+    {#if title}
+        {title}
+    {/if}
+</div>

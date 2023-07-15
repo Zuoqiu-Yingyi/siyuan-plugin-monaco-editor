@@ -23,6 +23,11 @@ import type {
     IOtherBlockMenuDetail,
 } from "@workspace/utils/siyuan/menu/block";
 
+export interface IClickEditorContentDetail {
+    event: PointerEvent;
+    protyle: IProtyle;
+}
+
 export interface IOpenMenuLinkDetail {
     element: HTMLSpanElement,
     menu: InstanceType<typeof siyuan.Menu>;
@@ -40,6 +45,10 @@ export interface IClickBlockIconEvent extends CustomEvent<IOtherBlockMenuDetail>
 }
 
 export interface IClickEditorTitleIconEvent extends CustomEvent<IDocumentBlockMenuDetail> {
+    type: "click-editorcontent";
+}
+
+export interface IClickEditorContentEvent extends CustomEvent<IClickEditorContentDetail> {
     type: "click-editorcontent";
 }
 

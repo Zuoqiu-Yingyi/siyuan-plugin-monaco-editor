@@ -11,7 +11,8 @@
         "less": "^4.1.3",
         "svelte": "^3.59.2",
         "svelte-preprocess": "^5.0.4",
-        "svelte-preprocess-less": "^0.4.0"
+        "svelte-preprocess-less": "^0.4.0",
+        "typescript": "^5.1.6"
     },
     "dependencies": {
         "@workspace/tsconfig": "workspace:^",

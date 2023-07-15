@@ -18,6 +18,7 @@
 import siyuan from "siyuan";
 
 export const FLAG_ELECTRON = isElectron();
+export const FLAG_IFRAME = isIframe();
 export const FLAG_DESKTOP = isDesktop();
 export const FLAG_BROWSER = isBrowser();
 export const FLAG_MOBILE = isMobile();
@@ -32,6 +33,10 @@ export function hasNodeProcess(): boolean {
 
 export function isElectron(): boolean {
     return hasNodeProcess() && hasNodeRequire();
+}
+
+export function isIframe(): boolean {
+    return globalThis.self !== globalThis.top;
 }
 
 export function isDesktop(): boolean {

@@ -1,3 +1,22 @@
 {
-    "displayName": "Code Editor"
+    "displayName": "Code Editor",
+    "dock": {
+        "kramdown": {
+            "ariaLabel": "Edit kramdown"
+        },
+        "title": "Code Edit"
+    },
+    "editor": {
+        "action": {
+            "save": {
+                "label": "Save"
+            },
+            "saveAs": {
+                "label": "Save As"
+            },
+            "toggleWordWrap": {
+                "label": "Toggle Word Wrap"
+            }
+        }
+    }
 }
