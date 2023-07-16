@@ -15,7 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export default {
-    INIT_CHANNEL_NAME: "monaco-editor-init", // 初始化通道名称
-    MESSAGE_EVENT_NAME: "message", // 消息事件名称
-} as const;
+export const FLAG_ELECTRON = isElectron();
+export const FLAG_IFRAME = isIframe();
+export const FLAG_POPUP = isPopup();
+
+export function hasNodeRequire(): boolean {
+    return !!globalThis.require;
+}
+
+export function hasNodeProcess(): boolean {
+    return !!globalThis.process;
+}
+
+export function isElectron(): boolean {
+    return hasNodeProcess() && hasNodeRequire();
+}
+
+export function isIframe(): boolean {
+    return globalThis.self !== globalThis.top;
+}
+
+export function isPopup(): boolean {
+    return !globalThis.opener;
+}

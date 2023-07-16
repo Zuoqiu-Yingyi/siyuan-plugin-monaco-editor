@@ -17,8 +17,8 @@
 
 <script lang="ts">
     export let icon: string;
-    export let className: string = undefined;
-    export let style: string = undefined;
+    export let className: string = "";
+    export let style: string = "";
 </script>
 
 <svg
