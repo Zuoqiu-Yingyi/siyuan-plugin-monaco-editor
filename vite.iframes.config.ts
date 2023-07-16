@@ -21,7 +21,7 @@ import { resolve } from "path"
 // https://vitejs.dev/config/
 export default {
     build: {
-        minify: true,
+        minify: false,
         // sourcemap: "inline",
         rollupOptions: {
             input: {

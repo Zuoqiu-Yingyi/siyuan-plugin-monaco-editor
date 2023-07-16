@@ -18,7 +18,9 @@
 <script lang="ts">
     import type { ComponentEvents } from "svelte";
     import Bar from "@workspace/components/siyuan/dock/block/Bar.svelte";
-    import Editor from "./Editor.svelte";
+
+    import EditorIframe from "./EditorIframe.svelte";
+    import { EditorBridgeMaster } from "@/bridge/master";
 
     import regexp from "@workspace/utils/regexp";
     import type { IBar } from "@workspace/components/siyuan/dock/block/index";
@@ -48,7 +50,7 @@
         }
     }
 
-    function save(e: ComponentEvents<Editor>["save"]) {
+    function save(e: ComponentEvents<EditorIframe>["save"]) {
         if (kramdown) {
             plugin.client
                 .updateBlock({
@@ -64,11 +66,9 @@
 </script>
 
 <Bar {...bar} />
-<Editor
+<EditorIframe
     on:save={save}
-    {...editor}
     {plugin}
-    embed={true}
     savable={true}
-    locale={globalThis.siyuan.config.lang}
+    {...editor}
 />

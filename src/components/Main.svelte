@@ -19,7 +19,7 @@
     import Editor from "./Editor.svelte";
 </script>
 
-<Editor />
+<!-- <Editor /> -->
 
 <style lang="less">
 </style>

@@ -15,7 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export default {
-    INIT_CHANNEL_NAME: "monaco-editor-init", // 初始化通道名称
-    MESSAGE_EVENT_NAME: "message", // 消息事件名称
-} as const;
+import { EditorBridgeMaster } from "~/src/bridge/master";
+
+export abstract class Handler {
+    constructor(
+        public readonly bridge: InstanceType<typeof EditorBridgeMaster>,
+    ) {
+
+    }
+
+    public abstract readonly message
+}

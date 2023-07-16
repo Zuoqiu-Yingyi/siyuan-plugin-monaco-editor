@@ -32,10 +32,11 @@ import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { getElementScreenPosition } from "@workspace/utils/misc/position";
 
 import type { IClickBlockIconEvent, IClickEditorContentEvent } from "@workspace/types/siyuan/events";
+import type { Electron } from "@workspace/types/electron";
 
 import Dock from "./components/Dock.svelte";
 import { DEFAULT_CONFIG, siyuanConfig2EditorOptions } from "./configs/default";
-import { Editor } from "./editor";
+import { EditorBridgeMaster } from "./bridge/master";
 
 import type {
     IConfig, IEditorOptions,
@@ -102,6 +103,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 type: "-dock-panel",
                 init() {
                     // plugin.logger.debug(this);
+
                     (this.element as HTMLElement).classList.add("fn__flex-column");
                     const dock = new Dock({
                         target: this.element,

@@ -17,8 +17,9 @@
 
 import type { editor as Editor } from "monaco-editor";
 import type { IMonacoEditorOptions } from "@/types/config";
+import type MonacoEditorPlugin from "@/index";
 
-/* 编辑器模式 */
+/* 编辑器模态 */
 export interface IEditorModel {
     value: string; // 编辑器内容
     language?: string; // 编辑器语言模式
@@ -29,4 +30,18 @@ export interface IEditorModel {
 export interface IDockEditor {
     modified: IEditorModel,
     options: IMonacoEditorOptions,
+}
+
+/* 插件接口 */
+export type IPlugin = Pick<
+    MonacoEditorPlugin,
+    "name" | "i18n" | "logger",
+>;
+
+export interface IEditorEvent {
+    changed: {
+        value: string;
+        event: Editor.IModelContentChangedEvent;
+    }; // 内容更改事件
+    save: { value: string }; // 保存事件
 }
