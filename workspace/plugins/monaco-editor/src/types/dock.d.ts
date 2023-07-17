@@ -15,10 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IBlockIcon } from "./../misc";
+import type { BlockID } from "@workspace/types/siyuan";
+import type { Inline, Language } from "@/handlers/block";
 
-export interface IBar {
-    logo?: string; // svg 图标引用 ID
-    title?: string; // 标题
-    icons?: IBlockIcon[]; // 按钮列表
+export interface IDockData {
+    id: BlockID;
+    realTime: boolean;
+    inline: Inline;
+    language: Language;
 }

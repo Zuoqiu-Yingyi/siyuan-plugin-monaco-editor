@@ -5,10 +5,10 @@
             "ariaLabel": "Edit with kramdown"
         },
         "inline": {
-            "ariaLabel": "Inline elements use <span> tags"
+            "ariaLabel": "markdown: Edit standard markdown\nkramdown: Inline elements use <span> tags"
         },
         "refresh": {
-            "ariaLabel": "Real-time update"
+            "ariaLabel": "Save changes in real time"
         },
         "title": "Code Edit"
     },

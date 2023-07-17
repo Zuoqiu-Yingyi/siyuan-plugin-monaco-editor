@@ -5,10 +5,10 @@
             "ariaLabel": "使用 kramdown 編輯"
         },
         "inline": {
-            "ariaLabel": "行內元素使用 <span> 標籤"
+            "ariaLabel": "markdown: 編輯標準 markdown\nkramdown: 行內元素使用 <span> 標籤"
         },
         "refresh": {
-            "ariaLabel": "實時更新"
+            "ariaLabel": "實時保存更改"
         },
         "title": "程式碼編輯"
     },

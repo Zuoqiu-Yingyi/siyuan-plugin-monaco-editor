@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-18
+
+- 重构侧边栏组件 | Refactor sidebar component.
+
 ## 2023-07-17
 
 - 实现块处理器 | Implement block handler.

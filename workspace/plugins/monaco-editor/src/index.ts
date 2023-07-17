@@ -44,6 +44,7 @@ import type {
 import type { I18N } from "@/utils/i18n";
 import type { BlockID } from "@workspace/types/siyuan";
 import { Inline, Language } from "./handlers/block";
+import type { IDockData } from "./types/dock";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -102,10 +103,10 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 },
                 data: {
                     id: "",
-                    refresh: false,
+                    realTime: false,
                     inline: Inline.mark,
                     language: Language.kramdown,
-                },
+                } as IDockData,
                 type: "-dock-panel",
                 init() {
                     // plugin.logger.debug(this);
@@ -115,65 +116,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         target: this.element,
                         props: {
                             plugin,
-                            id: this.data.id,
-                            realTime: this.data.refresh,
-                            inline: this.data.inline,
-                            language: this.data.language,
-
-                            bar: {
-                                logo: "#iconCode",
-                                title: plugin.i18n.dock.title,
-                                icons: [
-                                    { // 实时更新按钮
-                                        icon: "#iconRefresh",
-                                        type: "refresh",
-                                        active: this.data.refresh,
-                                        ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
-                                        onClick: (_e, _element, active) => {
-                                            active = !active;
-                                            plugin.dock.component.$set({ realTime: active });
-                                            return active;
-                                        },
-                                    },
-                                    { // 行内元素是否使用 <span> 标签
-                                        icon: "#iconInlineCode",
-                                        type: "inline",
-                                        active: this.data.inline === Inline.span,
-                                        ariaLabel: plugin.i18n.dock.inline.ariaLabel,
-                                        onClick: (_e, _element, active) => {
-                                            active = !active;
-                                            if (active) {
-                                                plugin.dock.component.$set({ inline: Inline.span });
-                                            }
-                                            else {
-                                                plugin.dock.component.$set({ inline: Inline.mark });
-                                            }
-                                            return active;
-                                        },
-                                    },
-                                    { // kramdown 模式按钮
-                                        icon: "#iconMarkdown",
-                                        type: "kramdown",
-                                        active: this.data.language === Language.kramdown,
-                                        ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
-                                        onClick: (_e, _element, active) => {
-                                            active = !active;
-                                            if (active) {
-                                                plugin.dock.component.$set({ language: Language.kramdown });
-                                            }
-                                            else {
-                                                plugin.dock.component.$set({ language: Language.markdown });
-                                            }
-                                            return active;
-                                        },
-                                    },
-                                    {
-                                        icon: "#iconMin",
-                                        type: "min",
-                                        ariaLabel: `${globalThis.siyuan.languages.min} ${siyuan.adaptHotkey("⌘W")}`,
-                                    },
-                                ],
-                            },
                             editor: {
                                 modified: {
                                     value: "",
@@ -181,6 +123,67 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                                 },
                                 options: plugin.config.editor.options,
                             },
+                            ...(this.data as IDockData),
+
+                            // id: this.data.id,
+                            // realTime: this.data.refresh,
+                            // inline: this.data.inline,
+                            // language: this.data.language,
+
+                            // bar: {
+                            //     logo: "#iconCode",
+                            //     title: plugin.i18n.dock.title,
+                            //     icons: [
+                            //         { // 实时更新按钮
+                            //             icon: "#iconRefresh",
+                            //             type: "refresh",
+                            //             active: this.data.refresh,
+                            //             ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
+                            //             onClick: (_e, _element, active) => {
+                            //                 active = !active;
+                            //                 plugin.dock.component.$set({ realTime: active });
+                            //                 return active;
+                            //             },
+                            //         },
+                            //         { // 行内元素是否使用 <span> 标签
+                            //             icon: "#iconInlineCode",
+                            //             type: "inline",
+                            //             active: this.data.inline === Inline.span,
+                            //             ariaLabel: plugin.i18n.dock.inline.ariaLabel,
+                            //             onClick: (_e, _element, active) => {
+                            //                 active = !active;
+                            //                 if (active) {
+                            //                     plugin.dock.component.$set({ inline: Inline.span });
+                            //                 }
+                            //                 else {
+                            //                     plugin.dock.component.$set({ inline: Inline.mark });
+                            //                 }
+                            //                 return active;
+                            //             },
+                            //         },
+                            //         { // kramdown 模式按钮
+                            //             icon: "#iconMarkdown",
+                            //             type: "kramdown",
+                            //             active: this.data.language === Language.kramdown,
+                            //             ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
+                            //             onClick: (_e, _element, active) => {
+                            //                 active = !active;
+                            //                 if (active) {
+                            //                     plugin.dock.component.$set({ language: Language.kramdown });
+                            //                 }
+                            //                 else {
+                            //                     plugin.dock.component.$set({ language: Language.markdown });
+                            //                 }
+                            //                 return active;
+                            //             },
+                            //         },
+                            //         {
+                            //             icon: "#iconMin",
+                            //             type: "min",
+                            //             ariaLabel: `${globalThis.siyuan.languages.min} ${siyuan.adaptHotkey("⌘W")}`,
+                            //         },
+                            //     ],
+                            // },
                         },
                     });
                     plugin.dock.model = this;
