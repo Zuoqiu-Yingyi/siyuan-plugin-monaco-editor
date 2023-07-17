@@ -17,13 +17,13 @@
 
 <script lang="ts">
     import type { ComponentProps } from "svelte";
-    import type { IBreadcrumbIcon } from ".";
+    import type { IBlockIcon } from "./../misc";
 
     import Bar from "./Bar.svelte";
-    import Icon from "./Icon.svelte";
+    import BlockIcon from "./../misc/BlockIcon.svelte";
 
     export let items: ComponentProps<Bar>["items"] = [];
-    export let icons: IBreadcrumbIcon[] = [];
+    export let icons: IBlockIcon[] = [];
 </script>
 
 <div class="protyle-breadcrumb">
@@ -37,7 +37,7 @@
             {:else}
                 <span class="fn__space" />
             {/if}
-            <Icon {...icon} />
+            <BlockIcon {...icon} />
         {/each}
     </slot>
 </div>

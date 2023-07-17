@@ -17,13 +17,13 @@
 
 <script lang="ts">
     import Logo from "./Logo.svelte";
-    import Icon from "./Icon.svelte";
+    import BlockIcon from "./../misc/BlockIcon.svelte";
     import type { IBar } from ".";
 
     export let logo: IBar["logo"] = ""; // 图标
     export let title: IBar["title"] = ""; // 标题
 
-    export let icons: IBar["icons"] = []; // 按钮图标
+    export let icons: IBar["icons"] = []; // 图标按钮
 </script>
 
 <div class="block__icons">
@@ -46,7 +46,7 @@
             name="icon"
             {icon}
         >
-            <Icon {...icon} />
+            <BlockIcon {...icon} />
         </slot>
     {/each}
 </div>

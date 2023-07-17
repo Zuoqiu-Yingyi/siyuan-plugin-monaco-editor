@@ -16,7 +16,7 @@
 -->
 
 <script lang="ts">
-    import Svg from "./../../misc/Svg.svelte";
+    import Svg from "./../misc/Svg.svelte";
 
     export let icon: string = ""; // 图标
     export let title: string = ""; // 标题

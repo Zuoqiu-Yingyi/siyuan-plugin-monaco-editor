@@ -5,6 +5,7 @@
 - 实现块处理器 | Implement block handler.
 - 添加面包屑组件 | Add breadcrumb component.
 - 添加标签页组件 | Add tab component.
+- 移除重复组件 | Remove duplicate components.
 
 ## 2023-07-16
 

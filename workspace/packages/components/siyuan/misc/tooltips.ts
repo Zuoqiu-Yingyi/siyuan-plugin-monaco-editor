@@ -16,6 +16,8 @@
  */
 
 export enum TooltipsDirection {
+    none = "",
+
     n = "b3-tooltips__n",
     ne = "b3-tooltips__ne",
     e = "b3-tooltips__e",

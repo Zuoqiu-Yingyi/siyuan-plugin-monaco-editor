@@ -18,9 +18,12 @@
 <script lang="ts">
     import type { ComponentProps } from "svelte";
     import Breadcrumb from "./../breadcrumb/Breadcrumb.svelte";
-    export let fullscreen = false; // 是否为全屏模式
-    export let items: ComponentProps<Breadcrumb>["items"] = [];
-    export let icons: ComponentProps<Breadcrumb>["icons"] = [];
+
+    export let fullscreen: boolean = false; // 是否为全屏模式
+
+    export let breadcrumb: boolean = true; // 是否显示面包屑
+    export let breadcrumbItems: ComponentProps<Breadcrumb>["items"] = [];
+    export let breadcrumbIcons: ComponentProps<Breadcrumb>["icons"] = [];
 </script>
 
 <div
@@ -28,10 +31,12 @@
     class="fn__flex-column"
 >
     <slot name="breadcrumb">
-        <Breadcrumb
-            {items}
-            {icons}
-        />
+        {#if breadcrumb}
+            <Breadcrumb
+                items={breadcrumbItems}
+                icons={breadcrumbIcons}
+            />
+        {/if}
     </slot>
     <div class="protyle-preview">
         <slot name="content" />

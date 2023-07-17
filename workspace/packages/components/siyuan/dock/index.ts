@@ -15,27 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export interface IEventIcon {
-    click: {
-        event: MouseEvent,
-        element: HTMLElement,
-    };
+import type { IBlockIcon } from "./../misc";
+
+export interface IBar {
+    logo: string; // svg 图标引用 ID
+    title: string; // 标题
+    icons: IBlockIcon[]; // 按钮列表
 }
-
-export type IBreadcrumbElement = IBreadcrumbItem | IBreadcrumbArrow;
-
-export interface IBreadcrumbItem {
-    type: "item";
-    itemId?: string; // 块 ID (item 点击跳转)
-    iconId?: string; // 块 ID (svg 悬浮预览)
-    icon?: string; // svg 图标引用
-    text?: string; // 文本
-    textTitle?: string; // 文本标题
-    textEllipsis?: boolean; // 文本收缩
-}
-
-export interface IBreadcrumbArrow {
-    type: "arrow";
-    icon?: string; // svg 图标引用
-}
-
