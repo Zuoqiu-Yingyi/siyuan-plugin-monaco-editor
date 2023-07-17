@@ -17,25 +17,81 @@
 
 <script lang="ts">
     import type { ComponentEvents } from "svelte";
-    import Bar from "@workspace/components/siyuan/dock/block/Bar.svelte";
+    import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
 
     import EditorIframe from "./EditorIframe.svelte";
 
     import regexp from "@workspace/utils/regexp";
-    import type { IBar } from "@workspace/components/siyuan/dock/block/index";
+    import type { IBar } from "@workspace/components/siyuan/dock/index";
 
     import type MonacoEditorPlugin from "@/index";
     import type { IDockEditor } from "@/types/editor";
     import { BlockHandler, Language, Inline, type IBlockEditHandler } from "@/handlers/block";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
-    export let id: string; // 块 ID
-    export let realTime: boolean = false; // 是否启用实时更新模式
-    export let inline: Inline; // 是否启用 kramdown 模式
-    export let language: Language; // 是否启用 kramdown 模式
-
-    export let bar: IBar; // 标题栏配置
     export let editor: IDockEditor; // 编辑器配置
+
+    export let id: string = ""; // 块 ID
+    export let realTime: boolean = false; // 是否启用实时更新模式
+    export let inline: Inline = Inline.mark; // 是否启用 kramdown 模式
+    export let language: Language = Language.kramdown; // 是否启用 kramdown 模式
+
+    export let bar: IBar = {
+        // 标题栏配置
+        logo: "#iconCode",
+        title: plugin.i18n.dock.title,
+        icons: [
+            {
+                // 实时更新按钮
+                icon: "#iconRefresh",
+                type: "refresh",
+                active: realTime,
+                ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
+                onClick: (_e, _element, active) => {
+                    active = !active;
+                    realTime = active;
+                    return active;
+                },
+            },
+            {
+                // 行内元素是否使用 <span> 标签
+                icon: "#iconInlineCode",
+                type: "inline",
+                active: inline === Inline.span,
+                ariaLabel: plugin.i18n.dock.inline.ariaLabel,
+                onClick: (_e, _element, active) => {
+                    active = !active;
+                    if (active) {
+                        inline = Inline.span;
+                    } else {
+                        inline = Inline.mark;
+                    }
+                    return active;
+                },
+            },
+            {
+                // kramdown 模式按钮
+                icon: "#iconMarkdown",
+                type: "kramdown",
+                active: language === Language.kramdown,
+                ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
+                onClick: (_e, _element, active) => {
+                    active = !active;
+                    if (active) {
+                        language = Language.kramdown;
+                    } else {
+                        language = Language.markdown;
+                    }
+                    return active;
+                },
+            },
+            {
+                icon: "#iconMin",
+                type: "min",
+                ariaLabel: `${globalThis.siyuan.languages.min} ${plugin.siyuan.adaptHotkey("⌘W")}`,
+            },
+        ],
+    };
 
     const blockHandler = new BlockHandler(plugin);
     let handler: IBlockEditHandler;
