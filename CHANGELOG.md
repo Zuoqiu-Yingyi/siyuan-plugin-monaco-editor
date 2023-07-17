@@ -3,6 +3,7 @@
 ## 2023-07-17
 
 - 实现块处理器 | Implement block handler.
+- 添加面包屑组件 | Add breadcrumb component.
 
 ## 2023-07-16
 

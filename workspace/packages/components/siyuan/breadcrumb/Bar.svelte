@@ -16,17 +16,24 @@
 -->
 
 <script lang="ts">
-    export let icon: string;
-    export let id: string = "";
-    export let className: string = "";
-    export let style: string = "";
+    import type { IBreadcrumbElement } from ".";
+    import Svg from "./../misc/Svg.svelte";
+    import Item from "./Item.svelte";
+
+    export let items: IBreadcrumbElement[] = [];
 </script>
 
-<svg
-    {style}
-    data-id={id}
-    class:popover__block={id}
-    class={className}
->
-    <use xlink:href={icon} />
-</svg>
+<div class="protyle-breadcrumb__bar protyle-breadcrumb__bar--nowrap">
+    <slot>
+        {#each items as item, i (i)}
+            {#if item.type === "item"}
+                <Item {...item} />
+            {:else if item.type === "arrow"}
+                <Svg
+                    className="protyle-breadcrumb__arrow"
+                    icon={item.icon || "#iconRight"}
+                />
+            {/if}
+        {/each}
+    </slot>
+</div>
