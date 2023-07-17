@@ -6,6 +6,7 @@
 - 添加面包屑组件 | Add breadcrumb component.
 - 添加标签页组件 | Add tab component.
 - 移除重复组件 | Remove duplicate components.
+- 调整 Webview 组件结构 | Adjust the structure of the Webview component.
 
 ## 2023-07-16
 

@@ -19,7 +19,8 @@
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
 
-    import BlockButton from "@workspace/components/siyuan/misc/BlockButton.svelte";
+    import Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+    import BlockIcon from "@workspace/components/siyuan/misc/BlockIcon.svelte";
     import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
     import type { Electron } from "@workspace/types/electron";
     import type WebviewPlugin from "@/index";
@@ -248,14 +249,14 @@
     });
 </script>
 
-<div
-    class:fullscreen
-    class="fn__flex fn__flex-1 fn__flex-column content"
->
+<Tab {fullscreen}>
     <!-- 地址栏 -->
-    <div class="protyle-breadcrumb">
+    <div
+        slot="breadcrumb"
+        class="protyle-breadcrumb"
+    >
         <!-- 后退按钮 -->
-        <BlockButton
+        <BlockIcon
             on:click={onGoBack}
             icon="#iconLeft"
             ariaLabel={i18n.webview.goForwardOnePage}
@@ -264,7 +265,7 @@
         />
 
         <!-- 前进按钮 -->
-        <BlockButton
+        <BlockIcon
             on:click={onGoForward}
             icon="#iconRight"
             ariaLabel={i18n.webview.goBackOnePage}
@@ -273,7 +274,7 @@
         />
 
         <!-- 刷新/终止加载按钮 -->
-        <BlockButton
+        <BlockIcon
             on:click={onRefreshOrStop}
             icon={loading ? "#iconClose" : "#iconRefresh"}
             ariaLabel={loading ? i18n.webview.stopLoadingThisPage : i18n.webview.reloadCurrentPage}
@@ -293,7 +294,7 @@
         <!-- <div class="fn__space" /> -->
 
         <!-- 使用默认程序(一般为浏览器)打开当前页面链接 -->
-        <BlockButton
+        <BlockIcon
             on:click={onOpenWithDefaultProgram}
             icon="#iconLanguage"
             ariaLabel={i18n.webview.openWithDefaultProgram}
@@ -301,7 +302,7 @@
         />
 
         <!-- 使用新窗口打开当前页面链接 -->
-        <BlockButton
+        <BlockIcon
             on:click={onOpenWithNewWindow}
             icon="#iconOpenWindow"
             ariaLabel={i18n.webview.openWithNewWindow}
@@ -309,7 +310,7 @@
         />
 
         <!-- 打开/关闭全屏模式 -->
-        <BlockButton
+        <BlockIcon
             on:click={onEnterOrExitFullscreen}
             icon={fullscreen ? "#iconFullscreenExit" : "#iconFullscreen"}
             ariaLabel={fullscreen ? i18n.webview.exitFullscreen : i18n.webview.enterFullscreen}
@@ -318,7 +319,7 @@
         />
 
         <!-- 打开/关闭开发者工具 -->
-        <BlockButton
+        <BlockIcon
             on:click={onOpenOrCloseDevTools}
             icon="#iconBug"
             ariaLabel={devtools_opened ? i18n.webview.closeDevTools : i18n.webview.openDevTools}
@@ -330,9 +331,10 @@
     <!-- 主体 -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
+        slot="content"
         on:mouseenter={e => (webview_pointer_events_disable = e.button === 0 ? false : true)}
         on:mouseleave={() => (webview_pointer_events_disable = true)}
-        class="protyle-preview"
+        class="content fn__flex fn__flex-1"
     >
         <webview
             bind:this={webview}
@@ -340,41 +342,42 @@
             {useragent}
             style:background
             class:pointer-events-disable={webview_pointer_events_disable}
-            class="fn__flex-1"
+            class="webview fn__flex-1"
             allowpopups
         />
+        {#if status_display}
+            <!-- 状态提示 (显示超链接地址) -->
+            <div
+                class="webview-status tooltip"
+                in:fade={{ delay: 0, duration: 125 }}
+                out:fade={{ delay: 500, duration: 250 }}
+            >
+                <span>{status}</span>
+            </div>
+        {/if}
     </div>
-    {#if status_display}
-        <!-- 状态提示 (显示超链接地址) -->
-        <div
-            class="webview-status tooltip"
-            in:fade={{ delay: 0, duration: 125 }}
-            out:fade={{ delay: 500, duration: 250 }}
-        >
-            <span>{status}</span>
-        </div>
-    {/if}
-</div>
+</Tab>
 
 <style lang="less">
+    .protyle-breadcrumb {
+        height: 32px;
+
+        .address-field {
+            margin: 4px;
+        }
+    }
+
+    // .protyle-preview {
+    //     user-select: none;
+    // }
     .content {
-        .protyle-breadcrumb {
-            height: 32px;
+        user-select: none;
+    }
 
-            .address-field {
-                margin: 4px;
-            }
-        }
-
-        .protyle-preview {
-            user-select: none;
-        }
-
-        .webview-status {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
+    .webview-status {
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 
     .pointer-events-disable {
