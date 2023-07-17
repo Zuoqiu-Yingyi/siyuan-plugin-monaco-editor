@@ -113,10 +113,8 @@
         if (webview) {
             if (webview.isDevToolsOpened()) {
                 webview.closeDevTools();
-                devtools_opened = false;
             } else {
                 webview.openDevTools();
-                devtools_opened = true;
             }
         }
     }
@@ -209,13 +207,21 @@
         });
 
         /**
-         * 在标签页打开链接
+         * 开发者工具中打开超链接
          * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-devtools-open-url
          */
         webview.addEventListener("devtools-open-url", e => {
             // plugin.logger.debug(e);
             plugin.openWebviewTab(e.url);
         });
+
+        /**
+         * 开启/关闭开发者工具
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-devtools-opened
+         * REF https://www.electronjs.org/zh/docs/latest/api/webview-tag#event-devtools-closed
+         */
+        webview.addEventListener("devtools-opened", e => (devtools_opened = true));
+        webview.addEventListener("devtools-closed", e => (devtools_opened = false));
 
         /**
          * 焦点为链接时在状态栏显示链接

@@ -44,7 +44,7 @@
     export let disabled: IBlockIcon["disabled"] = false;
     export let type: IBlockIcon["type"] = "";
     export let ariaLabel: IBlockIcon["ariaLabel"] = "";
-    export let onClick: IBlockIcon["onClick"] = () => false;
+    export let onClick: IBlockIcon["onClick"] = (_event, _element, active) => active;
     export let tooltipsDirection: IBlockIcon["tooltipsDirection"] = TooltipsDirection.none;
 
     let button: HTMLButtonElement;

@@ -3,6 +3,7 @@
 ## 2023-07-18
 
 - 重构侧边栏组件 | Refactor sidebar component.
+- 优化开发者工具 | Optimize developer tools.
 
 ## 2023-07-17
 
