@@ -2,7 +2,13 @@
     "displayName": "Code Editor",
     "dock": {
         "kramdown": {
-            "ariaLabel": "Edit kramdown"
+            "ariaLabel": "Edit with kramdown"
+        },
+        "inline": {
+            "ariaLabel": "Inline elements use <span> tags"
+        },
+        "refresh": {
+            "ariaLabel": "Real-time update"
         },
         "title": "Code Edit"
     },

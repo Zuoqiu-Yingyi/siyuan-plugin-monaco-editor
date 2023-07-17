@@ -20,55 +20,60 @@
     import Bar from "@workspace/components/siyuan/dock/block/Bar.svelte";
 
     import EditorIframe from "./EditorIframe.svelte";
-    import { EditorBridgeMaster } from "@/bridge/master";
 
     import regexp from "@workspace/utils/regexp";
     import type { IBar } from "@workspace/components/siyuan/dock/block/index";
 
     import type MonacoEditorPlugin from "@/index";
     import type { IDockEditor } from "@/types/editor";
+    import { BlockHandler, Language, Inline, type IBlockEditHandler } from "@/handlers/block";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let id: string; // 块 ID
-    export let kramdown: boolean; // 是否启用 kramdown 模式
+    export let realTime: boolean = false; // 是否启用实时更新模式
+    export let inline: Inline; // 是否启用 kramdown 模式
+    export let language: Language; // 是否启用 kramdown 模式
 
     export let bar: IBar; // 标题栏配置
     export let editor: IDockEditor; // 编辑器配置
 
+    const blockHandler = new BlockHandler(plugin);
+    let handler: IBlockEditHandler;
+    let savable: boolean = false;
+
     $: {
         if (regexp.id.test(id)) {
-            if (kramdown) {
-                plugin.client
-                    .getBlockKramdown({ id })
-                    .then(response => {
-                        editor.modified.value = response.data.kramdown;
-                    })
-                    .catch(err => plugin.logger.error(err));
-            } else {
-                // TODO: markdown 模式
-            }
+            blockHandler.makeEditHandler(id, inline, language).then(h => (handler = h));
         }
     }
 
-    function save(e: ComponentEvents<EditorIframe>["save"]) {
-        if (kramdown) {
-            plugin.client
-                .updateBlock({
-                    id,
-                    dataType: "markdown",
-                    data: e.detail.value,
-                })
-                .catch(err => plugin.logger.error(err));
-        } else {
-            // TODO: markdown 模式
+    $: {
+        if (handler) {
+            savable = !!handler.update;
+            editor = {
+                modified: handler.model,
+                options: handler.options,
+            };
+        }
+    }
+
+    function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
+        if (handler?.update) {
+            plugin.client.updateBlock({
+                id,
+                dataType: "markdown",
+                data: handler.update(e.detail.value),
+            });
         }
     }
 </script>
 
 <Bar {...bar} />
 <EditorIframe
-    on:save={save}
+    on:save={update}
+    on:changed={update}
     {plugin}
-    savable={true}
+    {savable}
+    changable={realTime}
     {...editor}
 />

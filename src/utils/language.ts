@@ -15,20 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import MonacoEditorPlugin from "@/index";
+/* 将 heightlight.js 的语言映射为 monaco 支持的语言 */
+export function heightlight2monaco(language: string): string {
+    switch (language) {
+        case "mindmap":
+            return "markdown";
+        case "echarts":
+            return "json";
 
-type Plugin = InstanceType<typeof MonacoEditorPlugin>;
-
-export class Handler {
-    public readonly client: Plugin["client"];
-    public readonly logger: Plugin["logger"];
-    public readonly lute: Plugin["lute"];
-
-    constructor(
-        public readonly plugin: Plugin,
-    ) {
-        this.client = this.plugin.client;
-        this.logger = this.plugin.logger;
-        this.lute = this.plugin.lute;
+        case "c#":
+            return "csharp";
+        case "js":
+            return "javascript";
+        case "ts":
+            return "typescript";
+        case "objectivec":
+            return "objective-c";
+        case "solidity":
+            return "sol";
+        case "vbscript":
+            return "vb";
+        default:
+            return language;
     }
 }
