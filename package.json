@@ -17,7 +17,7 @@
         "svelte": "^4.0.5",
         "svelte-preprocess-less": "^0.4.0",
         "typescript": "^5.1.6",
-        "vite": "^4.4.3"
+        "vite": "^4.4.4"
     },
     "dependencies": {
         "@workspace/components": "workspace:^",
