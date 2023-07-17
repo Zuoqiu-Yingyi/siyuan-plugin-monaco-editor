@@ -129,13 +129,16 @@
 
     /* 更改编辑器内容 */
     $: {
+        const temp = changable;
         if (inited) {
+            changable = false; // 避免触发 changed 监听器
             if (diff) {
                 diffEditor.getOriginalEditor().setValue(original.value);
                 diffEditor.getModifiedEditor().setValue(modified.value);
             } else {
                 editor.setValue(modified.value);
             }
+            changable = temp;
         }
     }
 

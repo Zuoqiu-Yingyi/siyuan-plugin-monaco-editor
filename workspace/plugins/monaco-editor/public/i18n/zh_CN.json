@@ -2,7 +2,13 @@
     "displayName": "代码编辑器",
     "dock": {
         "kramdown": {
-            "ariaLabel": "编辑 kramdown"
+            "ariaLabel": "使用 kramdown 编辑"
+        },
+        "inline": {
+            "ariaLabel": "行内元素使用 <span> 标签"
+        },
+        "refresh": {
+            "ariaLabel": "实时更新"
         },
         "title": "代码编辑"
     },

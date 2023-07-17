@@ -2,7 +2,13 @@
     "displayName": "程式碼編輯器",
     "dock": {
         "kramdown": {
-            "ariaLabel": "編輯 kramdown"
+            "ariaLabel": "使用 kramdown 編輯"
+        },
+        "inline": {
+            "ariaLabel": "行內元素使用 <span> 標籤"
+        },
+        "refresh": {
+            "ariaLabel": "實時更新"
         },
         "title": "程式碼編輯"
     },

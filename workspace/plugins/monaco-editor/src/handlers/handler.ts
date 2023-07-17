@@ -15,14 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { EditorBridgeMaster } from "~/src/bridge/master";
+import MonacoEditorPlugin from "@/index";
 
-export abstract class Handler {
+type Plugin = InstanceType<typeof MonacoEditorPlugin>;
+
+export class Handler {
+    public readonly client: Plugin["client"];
+    public readonly logger: Plugin["logger"];
+    public readonly lute: Plugin["lute"];
+
     constructor(
-        public readonly bridge: InstanceType<typeof EditorBridgeMaster>,
+        public readonly plugin: Plugin,
     ) {
-
+        this.client = this.plugin.client;
+        this.logger = this.plugin.logger;
+        this.lute = this.plugin.lute;
     }
-
-    public abstract readonly message
 }

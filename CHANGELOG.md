@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-17
+
+- 实现块处理器 | Implement block handler.
+
 ## 2023-07-16
 
 - 实现 iframe 编辑器 | Implement iframe editor.

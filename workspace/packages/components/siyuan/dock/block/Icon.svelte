@@ -26,19 +26,19 @@
     export let active: IIcon["active"] = false; // 按钮是否激活
     export let ariaLabel: IIcon["ariaLabel"] = ""; // 提示标签内容
     export let tooltipsDirection: IIcon["tooltipsDirection"] = TooltipsDirection.sw; // 提示标签方向
-    export let onClick: IIcon["onClick"] = (_element, _e) => {}; // 按钮点击回调函数
+    export let onClick: IIcon["onClick"] = () => false; // 按钮点击回调函数
 
-    let element: HTMLSpanElement;
+    let element: HTMLButtonElement;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span
+<button
     bind:this={element}
-    on:click={e => onClick(element, e)}
+    on:click={e => {active = onClick(e, element, active)}}
     data-type={type}
     aria-label={ariaLabel}
     class:toolbar__item--active={active}
     class="block__icon b3-tooltips {tooltipsDirection}"
 >
     <Svg {icon} />
-</span>
+</button>

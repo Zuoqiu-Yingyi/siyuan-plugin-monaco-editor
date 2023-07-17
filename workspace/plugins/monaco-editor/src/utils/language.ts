@@ -15,21 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { ComponentProps } from "svelte";
+/* 将 heightlight.js 的语言映射为 monaco 支持的语言 */
+export function heightlight2monaco(language: string): string {
+    switch (language) {
+        case "mindmap":
+            return "markdown";
+        case "echarts":
+            return "json";
 
-import type { TooltipsDirection } from "../../misc/tooltips";
-
-export interface IIcon {
-    icon: string; // 图标 ID
-    type?: string; // data-type 属性值
-    active?: boolean; // 是否激活
-    ariaLabel?: string; // 提示标签内容
-    tooltipsDirection?: TooltipsDirection; // 提示标签方向
-    onClick?: (e: MouseEvent, element: HTMLElement, active: boolean) => boolean; // 按钮点击回调函数
-}
-
-export interface IBar {
-    logo: string; // svg 图标引用 ID
-    title: string; // 标题
-    icons: IIcon[]; // 按钮列表
+        case "c#":
+            return "csharp";
+        case "js":
+            return "javascript";
+        case "ts":
+            return "typescript";
+        case "objectivec":
+            return "objective-c";
+        case "solidity":
+            return "sol";
+        case "vbscript":
+            return "vb";
+        default:
+            return language;
+    }
 }

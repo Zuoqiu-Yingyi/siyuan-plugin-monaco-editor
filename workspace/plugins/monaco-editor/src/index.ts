@@ -43,6 +43,7 @@ import type {
 } from "./types/config";
 import type { I18N } from "@/utils/i18n";
 import type { BlockID } from "@workspace/types/siyuan";
+import { Inline, Language } from "./handlers/block";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -51,6 +52,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
     public readonly client: InstanceType<typeof Client>;
+    public readonly lute: ReturnType<typeof siyuan.Lute["New"]>;
+    public config: IConfig;
 
     protected readonly EDITOR_URL: URL;
     protected readonly SETTINGS_DIALOG_ID: string;
@@ -61,13 +64,14 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         model?: siyuan.IModel,
         component?: InstanceType<typeof Dock>,
     };
-    protected config: IConfig;
 
     constructor(options: any) {
         super(options);
 
         this.logger = new Logger(this.name);
         this.client = new Client();
+        this.lute = globalThis.Lute.New();
+
         this.EDITOR_URL = new URL(`${globalThis.document.baseURI}plugins/${this.name}/editor`);
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
 
@@ -98,7 +102,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 },
                 data: {
                     id: "",
-                    kramdown: true,
+                    refresh: false,
+                    inline: Inline.mark,
+                    language: Language.kramdown,
                 },
                 type: "-dock-panel",
                 init() {
@@ -110,26 +116,56 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         props: {
                             plugin,
                             id: this.data.id,
-                            kramdown: this.data.kramdown,
+                            realTime: this.data.refresh,
+                            inline: this.data.inline,
+                            language: this.data.language,
 
                             bar: {
                                 logo: "#iconCode",
                                 title: plugin.i18n.dock.title,
                                 icons: [
-                                    {
-                                        icon: "#iconMarkdown",
-                                        type: "kramdown",
-                                        active: this.data.kramdown,
-                                        ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
-                                        onClick: (element, _e) => {
-                                            element.classList.toggle("toolbar__item--active");
-                                            if (element.classList.contains("toolbar__item--active")) {
-                                                plugin.dock.component.$set({ kramdown: true });
+                                    { // 实时更新按钮
+                                        icon: "#iconRefresh",
+                                        type: "refresh",
+                                        active: this.data.refresh,
+                                        ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
+                                        onClick: (_e, _element, active) => {
+                                            active = !active;
+                                            plugin.dock.component.$set({ realTime: active });
+                                            return active;
+                                        },
+                                    },
+                                    { // 行内元素是否使用 <span> 标签
+                                        icon: "#iconInlineCode",
+                                        type: "inline",
+                                        active: this.data.inline === Inline.span,
+                                        ariaLabel: plugin.i18n.dock.inline.ariaLabel,
+                                        onClick: (_e, _element, active) => {
+                                            active = !active;
+                                            if (active) {
+                                                plugin.dock.component.$set({ inline: Inline.span });
                                             }
                                             else {
-                                                plugin.dock.component.$set({ kramdown: false });
+                                                plugin.dock.component.$set({ inline: Inline.mark });
                                             }
-                                        }
+                                            return active;
+                                        },
+                                    },
+                                    { // kramdown 模式按钮
+                                        icon: "#iconMarkdown",
+                                        type: "kramdown",
+                                        active: this.data.language === Language.kramdown,
+                                        ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
+                                        onClick: (_e, _element, active) => {
+                                            active = !active;
+                                            if (active) {
+                                                plugin.dock.component.$set({ language: Language.kramdown });
+                                            }
+                                            else {
+                                                plugin.dock.component.$set({ language: Language.markdown });
+                                            }
+                                            return active;
+                                        },
                                     },
                                     {
                                         icon: "#iconMin",
@@ -175,8 +211,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                 /* 其他块菜单 */
                 this.eventBus.on("click-blockicon", this.blockMenuEventListener);
-                // /* 文档块菜单 */
-                // this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
+                /* 文档块菜单 */
+                this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
                 // /* 块引用菜单 */
                 // this.eventBus.on("open-menu-blockref", this.blockRefMenuEventListener);
                 // /* 超链接菜单 */
@@ -216,7 +252,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
-        // this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
+        this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
         // this.eventBus.off("open-menu-link", this.linkMenuEventListener);
     }
@@ -279,8 +315,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected blockMenuEventListener = (e: IClickBlockIconEvent) => {
         const context = getBlockMenuContext(e.detail);
 
-        /* 非文档块, 非多个块 */
-        if (!context.isDocumentBlock && !context.isMultiBlock) {
+        /* 非多个块 */
+        if (!context.isMultiBlock) {
             this.updateDockEditor(context.id);
         }
     }
