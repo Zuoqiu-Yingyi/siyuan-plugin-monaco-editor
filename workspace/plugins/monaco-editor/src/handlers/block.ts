@@ -18,9 +18,10 @@
 /* 块处理器 */
 import * as sdk from "@siyuan-community/siyuan-sdk";
 
-import { Handler } from "./handler";
+import { Handler, type IHandler } from "./handler";
 import { heightlight2monaco } from "@/utils/language";
 
+import type { editor as Editor } from "monaco-editor";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
@@ -40,9 +41,9 @@ export enum Inline {
     span, // 使用 <span> 标签
 }
 
-export interface IBlockEditHandler {
-    model: IEditorModel; // 编辑器模式
-    options: IMonacoEditorOptions; // 编辑器配置
+export interface IBlockHandler extends IHandler {
+    modified: IEditorModel; // 编辑器模式
+    options?: IMonacoEditorOptions; // 编辑器配置
     update?: (value: string) => string; // 处理编辑器内容的方法 (若未定义则不能更新)
 }
 
@@ -74,13 +75,13 @@ export class BlockHandler extends Handler {
      * @param inline: 行内元素样式
      * @param language: 语言模式
      */
-    public async makeEditHandler(
+    public async makeHandler(
         id: BlockID,
         inline: Inline,
         language: Language,
-    ): Promise<IBlockEditHandler> {
-        const handler: IBlockEditHandler = {
-            model: {
+    ): Promise<IBlockHandler> {
+        const handler: IBlockHandler = {
+            modified: {
                 value: "",
                 language: "markdown",
             },
@@ -103,11 +104,11 @@ export class BlockHandler extends Handler {
                         switch (inline) {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.client.exportMdContent({ id });
-                                handler.model.value = response.data.content;
+                                handler.modified.value = response.data.content;
                                 break;
                             }
                             case Inline.span: { // 使用 <span> 标签
-                                handler.model.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
+                                handler.modified.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                                 break;
                             }
                         }
@@ -120,8 +121,8 @@ export class BlockHandler extends Handler {
                     case NodeType.NodeIFrame:
                     case NodeType.NodeWidget:
                     case NodeType.NodeHTMLBlock: {
-                        handler.model.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
-                        handler.model.language = "html";
+                        handler.modified.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
+                        handler.modified.language = "html";
                         handler.options.tabSize = this.customTabSize;
                         handler.update = value => value;
                         break;
@@ -132,13 +133,13 @@ export class BlockHandler extends Handler {
                         const markdown = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                         const result = /^\s*\{\{(.*)\}\}\s*$/s.exec(markdown);
                         if (result && result.length === 2) { // 正确提取出 SQL 代码
-                            handler.model.value = result[1];
-                            handler.model.language = "sql";
+                            handler.modified.value = result[1];
+                            handler.modified.language = "sql";
                             handler.options.tabSize = this.customTabSize;
                             handler.update = value => `{{${value}}}`;
                         }
                         else { // 回退为 markdown 编辑
-                            handler.model.value = markdown;
+                            handler.modified.value = markdown;
                             handler.update = value => value;
                         }
                         break;
@@ -150,13 +151,13 @@ export class BlockHandler extends Handler {
                         const result = /^\s*`{3,}([^\n]*)\n(.*)\n`{3,}\s*$/s.exec(markdown);
                         if (result && result.length === 3) { // 正确提取出语言标签与内容
                             const language = result[1].trim()
-                            handler.model.value = result[2];
-                            handler.model.language = heightlight2monaco(language);
+                            handler.modified.value = result[2];
+                            handler.modified.language = heightlight2monaco(language);
                             handler.options.tabSize = this.customTabSize;
                             handler.update = value => `\`\`\`${language}\n${value}\n\`\`\``;
                         }
                         else { // 回退为 markdown 编辑
-                            handler.model.value = markdown;
+                            handler.modified.value = markdown;
                             handler.update = value => value;
                         }
                         break;
@@ -168,13 +169,13 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.model.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
                                     break;
                                 }
                             }
                             case Inline.span: { // 使用 <span> 标签
                                 const response = await this.client.getBlockDOM({ id });
-                                handler.model.value = this.lute.BlockDOM2StdMd(response.data.dom);
+                                handler.modified.value = this.lute.BlockDOM2StdMd(response.data.dom);
                                 break;
                             }
                         }
@@ -191,12 +192,12 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.model.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
                                     break;
                                 }
                             }
                             case Inline.span: { // 使用 <span> 标签
-                                handler.model.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
+                                handler.modified.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                                 break;
                             }
                         }
@@ -209,12 +210,12 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.model.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
                                     break;
                                 }
                             }
                             case Inline.span: { // 使用 <span> 标签
-                                handler.model.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
+                                handler.modified.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                                 break;
                             }
                         }
@@ -231,11 +232,11 @@ export class BlockHandler extends Handler {
                         switch (inline) {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.client.getBlockKramdown({ id });
-                                handler.model.value = this.removeLastIAL(response.data.kramdown);
+                                handler.modified.value = this.removeLastIAL(response.data.kramdown);
                                 break;
                             }
                             case Inline.span: { // 使用 <span> 标签
-                                handler.model.value = this.lute.BlockDOM2Md(response_getDoc.data.content);
+                                handler.modified.value = this.lute.BlockDOM2Md(response_getDoc.data.content);
                                 break;
                             }
                         }
@@ -246,11 +247,11 @@ export class BlockHandler extends Handler {
                         switch (inline) {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.client.getBlockKramdown({ id });
-                                handler.model.value = response.data.kramdown;
+                                handler.modified.value = response.data.kramdown;
                                 break;
                             }
                             case Inline.span: { // 使用 <span> 标签
-                                handler.model.value = this.lute.BlockDOM2Md(response_getDoc.data.content);
+                                handler.modified.value = this.lute.BlockDOM2Md(response_getDoc.data.content);
                                 break;
                             }
                         }

@@ -18,16 +18,17 @@
 <script lang="ts">
     import type { ComponentEvents } from "svelte";
     import { get } from "svelte/store";
-    import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
 
+    import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
     import EditorIframe from "./EditorIframe.svelte";
 
     import regexp from "@workspace/utils/regexp";
-    import type { IBar } from "@workspace/components/siyuan/dock/index";
+    import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
 
+    import type { IBar } from "@workspace/components/siyuan/dock/index";
     import type MonacoEditorPlugin from "@/index";
     import type { IDockEditor } from "@/types/editor";
-    import { BlockHandler, Language, Inline, type IBlockEditHandler } from "@/handlers/block";
+    import { BlockHandler, Language, Inline, type IBlockHandler } from "@/handlers/block";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let editor: IDockEditor; // 编辑器配置
@@ -48,6 +49,7 @@
                 type: "refresh",
                 active: realTime,
                 ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
+                tooltipsDirection: TooltipsDirection.sw,
                 onClick: (_e, _element, props) => {
                     let active = get(props.active);
                     active = !active;
@@ -61,6 +63,7 @@
                 type: "inline",
                 active: inline === Inline.span,
                 ariaLabel: plugin.i18n.dock.inline.ariaLabel,
+                tooltipsDirection: TooltipsDirection.sw,
                 onClick: (_e, _element, props) => {
                     let active = get(props.active);
                     active = !active;
@@ -78,6 +81,7 @@
                 type: "kramdown",
                 active: language === Language.kramdown,
                 ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
+                tooltipsDirection: TooltipsDirection.sw,
                 onClick: (_e, _element, props) => {
                     let active = get(props.active);
                     active = !active;
@@ -93,27 +97,26 @@
                 icon: "#iconMin",
                 type: "min",
                 ariaLabel: `${globalThis.siyuan.languages.min} ${plugin.siyuan.adaptHotkey("⌘W")}`,
+                tooltipsDirection: TooltipsDirection.sw,
             },
         ],
     };
 
     const blockHandler = new BlockHandler(plugin);
-    let handler: IBlockEditHandler;
+    let handler: IBlockHandler;
     let savable: boolean = false;
 
     $: {
         if (regexp.id.test(id)) {
-            blockHandler.makeEditHandler(id, inline, language).then(h => (handler = h));
+            blockHandler.makeHandler(id, inline, language).then(h => (handler = h));
         }
     }
 
     $: {
         if (handler) {
             savable = !!handler.update;
-            editor = {
-                modified: handler.model,
-                options: handler.options,
-            };
+            editor.modified = handler.modified;
+            editor.options = handler.options;
         }
     }
 

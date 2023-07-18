@@ -19,8 +19,11 @@ import type { default as Monaco, editor as Editor } from "monaco-editor";
 
 import type { I18N } from "@/utils/i18n";
 import type {
-    IEditorModel,
     IEditorEvent,
+    IEditorModel,
+    IEditorProps,
+    IEditorFunction,
+    IEditorOptions,
 } from "./editor";
 import type { IMonacoEditorOptions } from "./config";
 
@@ -43,28 +46,25 @@ export interface IMessageEditorInit extends IMessage {
         name: string; // 插件名称
         i18n: I18N; // 插件国际化字段
 
-        locale: string; // 编辑器界面语言
-        diff: boolean; // 是否为差异对比模式
-        savable: boolean; // 是否可保存 (是否显示保存按钮+是否派生保存事件)
-        changable: boolean; // 是否可更改 (是否派生更改事件)
-        original?: IEditorModel; // 编辑器原始内容 (仅差异对比模式)
-        modified: IEditorModel; // 编辑器变更内容
-        options: IMonacoEditorOptions; // 编辑器配置
+        diff: IEditorProps["diff"];
+        locale: IEditorProps["locale"];
+
+        savable: IEditorFunction["savable"];
+        changable: IEditorFunction["changable"];
+
+        original?: IEditorOptions["original"];
+        modified?: IEditorOptions["modified"];
+        options?: IEditorOptions["options"];
+        originalOptions?: IEditorOptions["originalOptions"];
+        modifiedOptions?: IEditorOptions["modifiedOptions"];
+        diffOptions?: IEditorOptions["diffOptions"];
     };
 }
 
 /* 设置编辑器设置项 */
 export interface IMessageEditorSet extends IMessage {
     channel: "editor-set";
-    data: {
-        savable?: boolean; // 是否可保存 (保存按钮+派生保存事件)
-        changable?: boolean; // 是否可更改 (派生更改事件)
-
-        original?: IEditorModel; // 编辑器原始内容 (仅差异对比模式)
-        modified?: IEditorModel; // 编辑器变更内容
-        options?: Editor.IEditorOptions & Editor.IGlobalEditorOptions; // 编辑器配置
-        diffOptions?: Editor.IDiffEditorOptions; // 差异对比编辑器配置
-    };
+    data: Partial<IEditorFunction> & Partial<IEditorOptions>;
 }
 
 /* 来自从机的消息 */

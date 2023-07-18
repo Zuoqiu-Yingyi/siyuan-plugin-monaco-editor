@@ -41,10 +41,12 @@
     import { TooltipsDirection } from "./tooltips";
 
     export let icon: IBlockIconProps["icon"] = "#iconHelp";
+
     export let show: IBlockIconProps["show"] = true;
     export let none: IBlockIconProps["none"] = false;
     export let active: IBlockIconProps["active"] = false;
     export let disabled: IBlockIconProps["disabled"] = false;
+
     export let type: IBlockIconProps["type"] = "";
     export let ariaLabel: IBlockIconProps["ariaLabel"] = "";
     export let tooltipsDirection: IBlockIconProps["tooltipsDirection"] = TooltipsDirection.none;

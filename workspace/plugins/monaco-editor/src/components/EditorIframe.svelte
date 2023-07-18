@@ -18,24 +18,25 @@
 <script lang="ts">
     import { onMount, createEventDispatcher } from "svelte";
 
-    import type { editor as Editor } from "monaco-editor";
     import type MonacoEditorPlugin from "@/index";
     import { EditorBridgeMaster } from "@/bridge/master";
 
-    import type { IEditorEvent, IEditorModel } from "@/types/editor";
-    import type { IMonacoEditorOptions } from "@/types/config";
+    import type { IEditorEvent, IEditorProps } from "@/types/editor";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
 
-    export let diff: boolean = false; // 是否为差异对比模式
-    export let savable: boolean = false; // 是否可保存 (保存按钮+派生保存事件)
-    export let changable: boolean = false; // 是否可更改 (派生更改事件)
+    export let diff: IEditorProps["diff"] = false;
+    export let locale: IEditorProps["locale"] = globalThis.siyuan.config.lang;
 
-    export let locale = globalThis.siyuan.config.lang; // 界面语言
-    export let original: IEditorModel = { value: "" }; // 编辑器原始内容
-    export let modified: IEditorModel = { value: "" }; // 编辑器内容 (差异对比模式下的变更内容)
-    export let options: IMonacoEditorOptions = {}; // 编辑器配置 (编辑器初始化 & 常规模式更新)
-    export let diffOptions: Editor.IDiffEditorOptions = {}; // 对比编辑器配置 (仅用于差异对比模式更新)
+    export let savable: IEditorProps["savable"] = false;
+    export let changable: IEditorProps["changable"] = false;
+
+    export let original: IEditorProps["original"] = { value: "" };
+    export let modified: IEditorProps["modified"] = { value: "" };
+    export let options: IEditorProps["options"] = {};
+    export let originalOptions: IEditorProps["originalOptions"] = {};
+    export let modifiedOptions: IEditorProps["modifiedOptions"] = {};
+    export let diffOptions: IEditorProps["diffOptions"] = {};
 
     let iframe: HTMLIFrameElement; // iframe
     var inited = false;
@@ -51,6 +52,8 @@
     $: if (inited) bridge.set({ original });
     $: if (inited) bridge.set({ modified });
     $: if (inited) bridge.set({ options });
+    $: if (inited) bridge.set({ originalOptions });
+    $: if (inited) bridge.set({ modifiedOptions });
     $: if (inited) bridge.set({ diffOptions });
 
     bridge.addEventListener("editor-ready", e => {
@@ -59,13 +62,18 @@
                 name: plugin.name,
                 i18n: plugin.i18n,
 
-                locale,
                 diff,
+                locale,
+
                 savable,
                 changable,
+
                 original,
                 modified,
                 options,
+                originalOptions,
+                modifiedOptions,
+                diffOptions,
             });
             inited = true;
         } else {

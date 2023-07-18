@@ -19,6 +19,35 @@ import type { editor as Editor } from "monaco-editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import type MonacoEditorPlugin from "@/index";
 
+export type IStandaloneEditorOptions = Editor.IEditorOptions & Editor.IGlobalEditorOptions;
+
+/* 编辑器功能开关 */
+export interface IEditorFunction {
+    savable: boolean; // 是否可保存 (保存按钮+派生保存事件)
+    changable: boolean; // 是否可更改 (派生更改事件)
+}
+
+/* 编辑器配置项 */
+export interface IEditorOptions {
+    original: IEditorModel; // 编辑器原始内容
+    modified: IEditorModel; // 编辑器内容 (差异对比模式下的变更内容)
+    options: IMonacoEditorOptions; // 编辑器配置 (编辑器初始化 & 常规模式更新)
+    originalOptions: IStandaloneEditorOptions; // 编辑器配置 (更新原始编辑器内容)
+    modifiedOptions: IStandaloneEditorOptions; // 编辑器配置 (更新变更编辑器内容)
+    diffOptions: Editor.IDiffEditorOptions; // 对比编辑器配置 (仅用于差异对比模式更新)
+}
+
+/* 编辑器参数 */
+export interface IEditorProps extends IEditorFunction, IEditorOptions {
+    /* 上下文 */
+    plugin: IPlugin; // 插件接口
+
+    /* 编辑器样式 */
+    embed: boolean; // 是否为嵌入模式 (嵌入在思源页面中)
+    diff: boolean; // 是否为差异对比模式
+    locale: string; // 界面语言
+}
+
 /* 编辑器模态 */
 export interface IEditorModel {
     value: string; // 编辑器内容
