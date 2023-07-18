@@ -16,6 +16,9 @@
     "openMobildWindow": {
       "label": "打開思源移動端窗口"
     },
+    "openTab": {
+      "label": "在新頁簽中打開"
+    },
     "openTabBackground": {
       "label": "在後台分頁中打開"
     },

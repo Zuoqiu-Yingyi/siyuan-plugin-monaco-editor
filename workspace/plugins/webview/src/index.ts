@@ -527,9 +527,29 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 const url = new URL(link.href);
                 const param = parseSiyuanURL(url);
 
+                /* 在新页签中打开 */
+                submenu.push({
+                    icon: "iconAdd",
+                    label: this.i18n.menu.openTab.label,
+                    click: () => {
+                        siyuan.openTab({
+                            app: this.app,
+                            doc: {
+                                id: param.id,
+                                action: [
+                                    "cb-get-focus", // 光标定位到块
+                                    "cb-get-hl", // 高亮块
+                                ],
+                                zoomIn: param.focus,
+                            },
+                            keepCursor: false, // 焦点不跳转到新 tab
+                            removeCurrentTab: false, // 不移除原页签
+                        });
+                    },
+                });
                 /* 在后台页签中打开 */
                 submenu.push({
-                    icon: "iconFile",
+                    icon: "iconMin",
                     label: this.i18n.menu.openTabBackground.label,
                     click: () => {
                         siyuan.openTab({
@@ -598,16 +618,27 @@ export default class WebviewPlugin extends siyuan.Plugin {
                 break;
             }
 
-            /* 静态文件服务 */
+            /* 静态文件服务超链接 */
             case isStaticPathname(link.href): {
                 const href = link.href.startsWith("/")
                     ? `${globalThis.location.origin}${link.href}`
                     : `${globalThis.document.baseURI}${link.href}`;
 
                 if (FLAG_ELECTRON && FLAG_DESKTOP) {
+                    /* 在新页签中打开 */
+                    submenu.push({
+                        icon: "iconAdd",
+                        label: this.i18n.menu.openTab.label,
+                        click: () => this.openWebviewTab(
+                            href,
+                            link.title,
+                            undefined,
+                            { keepCursor: false },
+                        ),
+                    });
                     /* 在后台页签中打开 */
                     submenu.push({
-                        icon: "iconFile",
+                        icon: "iconMin",
                         label: this.i18n.menu.openTabBackground.label,
                         click: () => this.openWebviewTab(
                             href,

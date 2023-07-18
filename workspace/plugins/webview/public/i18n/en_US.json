@@ -16,6 +16,9 @@
     "openMobildWindow": {
       "label": "Open SiYuan Mobile Window"
     },
+    "openTab": {
+      "label": "Open in new tab"
+    },
     "openTabBackground": {
       "label": "Open in background tab"
     },

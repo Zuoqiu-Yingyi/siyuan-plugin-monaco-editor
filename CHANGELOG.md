@@ -6,6 +6,7 @@
 - 优化开发者工具 | Optimize developer tools.
 - 优化 BlockIcon 组件 | Optimize BlockIcon component.
 - 差异编辑器支持单独配置 | Diff editor supports separate configuration.
+- 超链接添加 `在新页签中打开` 菜单项 | Hyperlinks add `Open in new tab` menu item.
 
 ## 2023-07-17
 
