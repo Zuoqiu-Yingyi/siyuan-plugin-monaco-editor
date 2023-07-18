@@ -22,26 +22,27 @@
     import loader from "@monaco-editor/loader";
 
     import { mapLocale } from "@/utils/locale";
-    import type { IEditorEvent, IEditorModel, IPlugin } from "@/types/editor";
-    import type { IMonacoEditorOptions } from "@/types/config";
+    import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
 
     import { merge } from "@workspace/utils/misc/merge";
     import { SaveFileAs } from "@workspace/utils/misc/save";
     import { FLAG_ELECTRON } from "@workspace/utils/env/native-front-end";
 
-    export let plugin: IPlugin; // 插件接口
+    export let plugin: IEditorProps["plugin"];
 
-    export let embed: boolean = false; // 是否为嵌入模式 (嵌入在思源页面中)
+    export let embed: IEditorProps["embed"] = false;
+    export let diff: IEditorProps["diff"] = false;
+    export let locale: IEditorProps["locale"] = "zh-Hans";
 
-    export let diff: boolean = false; // 是否为差异对比模式
-    export let savable: boolean = false; // 是否可保存 (保存按钮+派生保存事件)
-    export let changable: boolean = false; // 是否可更改 (派生更改事件)
+    export let savable: IEditorProps["savable"] = false;
+    export let changable: IEditorProps["changable"] = false;
 
-    export let locale = "zh-Hans"; // 界面语言
-    export let original: IEditorModel = { value: "" }; // 编辑器原始内容
-    export let modified: IEditorModel = { value: "" }; // 编辑器内容 (差异对比模式下的变更内容)
-    export let options: IMonacoEditorOptions = {}; // 编辑器配置 (编辑器初始化 & 常规模式更新)
-    export let diffOptions: Editor.IDiffEditorOptions = {}; // 对比编辑器配置 (仅用于差异对比模式更新)
+    export let original: IEditorProps["original"] = { value: "" };
+    export let modified: IEditorProps["modified"] = { value: "" };
+    export let options: IEditorProps["options"] = {};
+    export let originalOptions: IEditorProps["originalOptions"] = {};
+    export let modifiedOptions: IEditorProps["modifiedOptions"] = {};
+    export let diffOptions: IEditorProps["diffOptions"] = {};
 
     let editorElement: HTMLDivElement; // 编辑器挂载的元素
 
@@ -90,10 +91,19 @@
         };
     })();
 
-    function updateOptions(options: Editor.IEditorOptions & Editor.IGlobalEditorOptions) {
+    function updateOptions(options: IStandaloneEditorOptions) {
+        updateOriginalOptions(options);
+        updateModifiedOptions(options);
+    }
+
+    function updateOriginalOptions(options: IStandaloneEditorOptions) {
         if (diff) {
-            // diffEditor?.updateOptions(options);
             diffEditor?.getOriginalEditor().updateOptions(options);
+        }
+    }
+
+    function updateModifiedOptions(options: IStandaloneEditorOptions) {
+        if (diff) {
             diffEditor?.getModifiedEditor().updateOptions(options);
         } else {
             editor?.updateOptions(options);
@@ -102,7 +112,7 @@
 
     function updateDiffOptions(diffOptions: Editor.IDiffEditorOptions) {
         if (diff) {
-            diffEditor?.updateOptions(options);
+            diffEditor?.updateOptions(diffOptions);
         }
     }
 
@@ -153,6 +163,16 @@
     $: {
         if (inited) {
             updateOptions(options);
+        }
+    }
+    $: {
+        if (inited) {
+            updateOriginalOptions(originalOptions);
+        }
+    }
+    $: {
+        if (inited) {
+            updateModifiedOptions(modifiedOptions);
         }
     }
 

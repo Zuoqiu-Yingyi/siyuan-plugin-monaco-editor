@@ -17,12 +17,25 @@
 
 import MonacoEditorPlugin from "@/index";
 
+import type { editor as Editor } from "monaco-editor";
+import type { IEditorModel } from "@/types/editor";
+import type { IMonacoEditorOptions } from "@/types/config";
+
 type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
-export class Handler {
+export interface IHandler {
+    original?: IEditorModel; // 编辑器模式 (原始内容)
+    modified?: IEditorModel; // 编辑器模式 (变更内容)
+    options?: IMonacoEditorOptions; // 编辑器配置
+    diffOptions?: Editor.IDiffEditorOptions; // 差异对比编辑器配置
+    update?: (value: string) => string; // 处理编辑器内容的方法 (若未定义则不能更新)
+}
+
+export abstract class Handler {
     public readonly client: Plugin["client"];
     public readonly logger: Plugin["logger"];
     public readonly lute: Plugin["lute"];
+    public readonly i18n: Plugin["i18n"];
 
     constructor(
         public readonly plugin: Plugin,
@@ -30,5 +43,8 @@ export class Handler {
         this.client = this.plugin.client;
         this.logger = this.plugin.logger;
         this.lute = this.plugin.lute;
+        this.i18n = this.plugin.i18n;
     }
+
+    public abstract makeHandler(...args: any[]): Promise<IHandler>;
 }
