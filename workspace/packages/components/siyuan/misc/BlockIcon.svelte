@@ -33,30 +33,67 @@
 -->
 
 <script lang="ts">
+    import { onDestroy } from "svelte";
+    import { writable, type Unsubscriber } from "svelte/store";
+
     import Svg from "./Svg.svelte";
-    import type { IBlockIcon } from "./index";
+    import type { IBlockIconProps, IBlockIconStores } from "./index";
     import { TooltipsDirection } from "./tooltips";
 
-    export let icon: IBlockIcon["icon"] = "#iconHelp";
-    export let show: IBlockIcon["show"] = true;
-    export let none: IBlockIcon["none"] = false;
-    export let active: IBlockIcon["active"] = false;
-    export let disabled: IBlockIcon["disabled"] = false;
-    export let type: IBlockIcon["type"] = "";
-    export let ariaLabel: IBlockIcon["ariaLabel"] = "";
-    export let onClick: IBlockIcon["onClick"] = (_event, _element, active) => active;
-    export let tooltipsDirection: IBlockIcon["tooltipsDirection"] = TooltipsDirection.none;
+    export let icon: IBlockIconProps["icon"] = "#iconHelp";
+    export let show: IBlockIconProps["show"] = true;
+    export let none: IBlockIconProps["none"] = false;
+    export let active: IBlockIconProps["active"] = false;
+    export let disabled: IBlockIconProps["disabled"] = false;
+    export let type: IBlockIconProps["type"] = "";
+    export let ariaLabel: IBlockIconProps["ariaLabel"] = "";
+    export let tooltipsDirection: IBlockIconProps["tooltipsDirection"] = TooltipsDirection.none;
+    export let onClick: IBlockIconProps["onClick"] = () => null;
 
     let button: HTMLButtonElement;
+
+    /* 外部响应式变量 */
+    const props: IBlockIconStores = {
+        icon: writable(icon),
+        show: writable(show),
+        none: writable(none),
+        active: writable(active),
+        disabled: writable(disabled),
+        type: writable(type),
+        ariaLabel: writable(ariaLabel),
+        tooltipsDirection: writable(tooltipsDirection),
+    } as const;
+
+    $: props.icon.set(icon);
+    $: props.show.set(show);
+    $: props.none.set(none);
+    $: props.active.set(active);
+    $: props.disabled.set(disabled);
+    $: props.type.set(type);
+    $: props.ariaLabel.set(ariaLabel);
+    $: props.tooltipsDirection.set(tooltipsDirection);
+
+    const unsubscribes: Unsubscriber[] = [
+        props.icon.subscribe(v => (icon = v)), //
+        props.show.subscribe(v => (show = v)), //
+        props.none.subscribe(v => (none = v)), //
+        props.active.subscribe(v => (active = v)), //
+        props.disabled.subscribe(v => (disabled = v)), //
+        props.type.subscribe(v => (type = v)), //
+        props.ariaLabel.subscribe(v => (ariaLabel = v)), //
+        props.tooltipsDirection.subscribe(v => (tooltipsDirection = v)), //
+    ];
+
+    onDestroy(() => {
+        unsubscribes.forEach(unsubscribe => unsubscribe());
+    });
 </script>
 
 <button
     bind:this={button}
     on:click
     on:dblclick
-    on:click={e => {
-        active = onClick(e, button, active);
-    }}
+    on:click={e => onClick(e, button, props)}
     data-type={type}
     aria-label={ariaLabel}
     class:fn__none={none}

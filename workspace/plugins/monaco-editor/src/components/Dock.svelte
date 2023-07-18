@@ -17,6 +17,7 @@
 
 <script lang="ts">
     import type { ComponentEvents } from "svelte";
+    import { get } from "svelte/store";
     import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
 
     import EditorIframe from "./EditorIframe.svelte";
@@ -47,10 +48,11 @@
                 type: "refresh",
                 active: realTime,
                 ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
-                onClick: (_e, _element, active) => {
+                onClick: (_e, _element, props) => {
+                    let active = get(props.active);
                     active = !active;
                     realTime = active;
-                    return active;
+                    props.active.set(active);
                 },
             },
             {
@@ -59,14 +61,15 @@
                 type: "inline",
                 active: inline === Inline.span,
                 ariaLabel: plugin.i18n.dock.inline.ariaLabel,
-                onClick: (_e, _element, active) => {
+                onClick: (_e, _element, props) => {
+                    let active = get(props.active);
                     active = !active;
                     if (active) {
                         inline = Inline.span;
                     } else {
                         inline = Inline.mark;
                     }
-                    return active;
+                    props.active.set(active);
                 },
             },
             {
@@ -75,14 +78,15 @@
                 type: "kramdown",
                 active: language === Language.kramdown,
                 ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
-                onClick: (_e, _element, active) => {
+                onClick: (_e, _element, props) => {
+                    let active = get(props.active);
                     active = !active;
                     if (active) {
                         language = Language.kramdown;
                     } else {
                         language = Language.markdown;
                     }
-                    return active;
+                    props.active.set(active);
                 },
             },
             {

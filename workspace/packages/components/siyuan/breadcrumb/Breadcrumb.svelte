@@ -17,13 +17,13 @@
 
 <script lang="ts">
     import type { ComponentProps } from "svelte";
-    import type { IBlockIcon } from "./../misc";
+    import type { IBlockIconProps } from "./../misc";
 
     import Bar from "./Bar.svelte";
     import BlockIcon from "./../misc/BlockIcon.svelte";
 
     export let items: ComponentProps<Bar>["items"] = [];
-    export let icons: IBlockIcon[] = [];
+    export let icons: IBlockIconProps[] = [];
 </script>
 
 <div class="protyle-breadcrumb">

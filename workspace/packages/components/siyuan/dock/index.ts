@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IBlockIcon } from "./../misc";
+import type { IBlockIconProps } from "./../misc";
 
 export interface IBar {
     logo?: string; // svg 图标引用 ID
     title?: string; // 标题
-    icons?: IBlockIcon[]; // 按钮列表
+    icons?: IBlockIconProps[]; // 按钮列表
 }

@@ -4,6 +4,7 @@
 
 - 重构侧边栏组件 | Refactor sidebar component.
 - 优化开发者工具 | Optimize developer tools.
+- 优化 BlockIcon 组件 | Optimize BlockIcon component.
 
 ## 2023-07-17
 

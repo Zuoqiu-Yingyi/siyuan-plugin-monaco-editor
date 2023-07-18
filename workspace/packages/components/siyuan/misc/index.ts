@@ -15,9 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import type { Writable } from "svelte/store";
 import type { TooltipsDirection } from "./tooltips";
 
-export interface IBlockIcon {
+/* 状态变量 */
+export interface IBlockIconStatus {
     icon: string; // svg 图标引用 ID
     none?: boolean; // 是否隐藏 .fn__none (display: none)
     show?: boolean; // 是否显示 .block__icon--show (opacity: 1)
@@ -26,9 +28,18 @@ export interface IBlockIcon {
     type?: string; // data-type
     ariaLabel?: string; // 提示标签内容 aria-label
     tooltipsDirection?: TooltipsDirection; // 提示标签方向
+}
+
+/* 响应式状态变量 */
+export type IBlockIconStores = {
+    [P in keyof IBlockIconStatus]?: Writable<IBlockIconStatus[P]>
+}
+
+/* 组件属性 */
+export interface IBlockIconProps extends IBlockIconStatus {
     onClick?: (
         e: MouseEvent,
         element: HTMLElement,
-        active: boolean,
-    ) => boolean; // 按钮点击回调函数
+        props: IBlockIconStores,
+    ) => any; // 按钮点击回调函数
 }
