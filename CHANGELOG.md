@@ -5,6 +5,7 @@
 - 在新页签/新窗口中打开编辑器 | Open editor in new tab/new window.
 - 编辑资源文件 | Edit asset files.
 - 编辑本地文件 | Edit local files.
+- 查看网络文件 | View network files.
 
 ## 2023-07-18
 

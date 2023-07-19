@@ -40,6 +40,9 @@
         "editAssetFile": {
             "label": "Edit Asset File"
         },
+        "editLocalFile": {
+            "label": "Edit Local File"
+        },
         "export": {
             "accelerator": "Export"
         },
@@ -60,6 +63,9 @@
         },
         "standard": {
             "accelerator": "Standard"
+        },
+        "viewNetworkFile": {
+            "label": "View Network File"
         }
     }
 }

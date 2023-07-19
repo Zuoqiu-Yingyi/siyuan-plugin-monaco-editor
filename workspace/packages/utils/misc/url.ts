@@ -25,3 +25,9 @@ export function uri2path(uri: string): string {
         return url.pathname;
     }
 }
+
+/* 获得路径中文件的扩展名 */
+export function getPathExtension(path: string): string {
+    const filename = path.split("/").pop()!;
+    return filename.substring(filename.lastIndexOf("."));
+}

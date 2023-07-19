@@ -21,6 +21,7 @@ import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
+import { getPathExtension } from "@workspace/utils/misc/url";
 
 export interface IAssetHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
@@ -59,9 +60,6 @@ export class AssetHandler extends Handler {
 
     /**
      * 生产一个块处理器
-     * @param id: 块 ID
-     * @param inline: 行内元素样式
-     * @param language: 语言模式
      */
     public async makeHandler(options: IAssetHandlerOptions): Promise<IAssetHandler> {
         const { pathname } = options;
@@ -69,7 +67,7 @@ export class AssetHandler extends Handler {
         const handler: IAssetHandler = {
             modified: {
                 value: "",
-                language: pathname.substring(pathname.lastIndexOf(".")),
+                language: getPathExtension(path),
             },
             options: {
                 tabSize: this.customTabSize,
