@@ -46,11 +46,13 @@ export interface IMessageEditorInit extends IMessage {
         name: string; // 插件名称
         i18n: I18N; // 插件国际化字段
 
+        path?: IEditorProps["path"];
+
         diff: IEditorProps["diff"];
         locale: IEditorProps["locale"];
 
-        savable: IEditorFunction["savable"];
-        changable: IEditorFunction["changable"];
+        savable?: IEditorFunction["savable"];
+        changable?: IEditorFunction["changable"];
 
         original?: IEditorOptions["original"];
         modified?: IEditorOptions["modified"];

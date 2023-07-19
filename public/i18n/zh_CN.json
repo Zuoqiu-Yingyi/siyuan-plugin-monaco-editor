@@ -1,11 +1,19 @@
 {
+    "button": {
+        "fullscreen": {
+            "ariaLabel": "全屏"
+        },
+        "realTime": {
+            "ariaLabel": "实时保存更改"
+        }
+    },
     "displayName": "代码编辑器",
     "dock": {
-        "kramdown": {
-            "ariaLabel": "使用 kramdown 编辑"
-        },
         "inline": {
             "ariaLabel": "markdown: 编辑标准 markdown\nkramdown: 行内元素使用 <span> 标签"
+        },
+        "kramdown": {
+            "ariaLabel": "使用 kramdown 编辑"
         },
         "refresh": {
             "ariaLabel": "实时保存更改"
@@ -23,6 +31,29 @@
             "toggleWordWrap": {
                 "label": "切换自动换行"
             }
+        }
+    },
+    "menu": {
+        "export": {
+            "accelerator": "导出"
+        },
+        "openByNewWindow": {
+            "label": "使用新窗口打开"
+        },
+        "openInNewTab": {
+            "label": "在新页签中打开"
+        },
+        "openTabBackground": {
+            "label": "在后台页签中打开"
+        },
+        "openTabBottom": {
+            "label": "在页签下侧打开"
+        },
+        "openTabRight": {
+            "label": "在页签右侧打开"
+        },
+        "standard": {
+            "accelerator": "标准"
         }
     }
 }

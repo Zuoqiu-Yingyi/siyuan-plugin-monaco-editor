@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build": "npm run build:plugin && npm run build:iframes",
+        "build:dev": "vite build --mode plugin --sourcemap inline && vite build --mode iframes --sourcemap inline",
         "build:plugin": "vite build --mode plugin",
         "build:iframes": "vite build --mode iframes",
         "preview": "vite preview",

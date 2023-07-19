@@ -18,33 +18,39 @@
 /* 插件入口 */
 import siyuan from "siyuan";
 
+/* 静态资源 */
+import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw"
+import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw"
+
+/* SDK */
 import { Client } from "@siyuan-community/siyuan-sdk";
 
-import {
-    FLAG_ELECTRON,
-    FLAG_DESKTOP,
-    FLAG_MOBILE,
-} from "@workspace/utils/env/front-end";
+/* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { getElementScreenPosition } from "@workspace/utils/misc/position";
 
-import type { IClickBlockIconEvent, IClickEditorContentEvent } from "@workspace/types/siyuan/events";
-import type { Electron } from "@workspace/types/electron";
-
+/* 组件 */
 import Dock from "./components/Dock.svelte";
+
+/* 项目资源 */
 import { DEFAULT_CONFIG, siyuanConfig2EditorOptions } from "./configs/default";
-import { EditorBridgeMaster } from "./bridge/master";
+import { Inline, Language } from "./handlers/block";
+
+/* 类型 */
+import type { IClickBlockIconEvent, IClickEditorContentEvent } from "@workspace/types/siyuan/events";
+import type { BlockID } from "@workspace/types/siyuan";
 
 import type {
     IConfig, IEditorOptions,
 } from "./types/config";
 import type { I18N } from "@/utils/i18n";
-import type { BlockID } from "@workspace/types/siyuan";
-import { Inline, Language } from "./handlers/block";
 import type { IDockData } from "./types/dock";
+import Tab from "./components/Tab.svelte";
+import { HandlerType, type IFacadeOptions } from "./facades/facade";
+import { EditorWindow } from "./utils/window";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -80,16 +86,19 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.tab = this.addTab({
             type: "-editor-tab",
             init() {
-                // const tab = this;
-                // new Editor({
-                //     // target,
-                //     target: tab.element,
-                //     props: {
-                //         src: tab.data.href,
-                //         tab,
-                //         plugin,
-                //     },
-                // });
+                // plugin.logger.debug(this);
+                const tab = this;
+                this.component = new Tab({
+                    // target,
+                    target: tab.element,
+                    props: {
+                        plugin,
+                        ...tab.data,
+                    },
+                });
+            },
+            destroy() {
+                this.component?.$destroy();
             },
         });
         this.dock = {
@@ -124,66 +133,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                                 options: plugin.config.editor.options,
                             },
                             ...(this.data as IDockData),
-
-                            // id: this.data.id,
-                            // realTime: this.data.refresh,
-                            // inline: this.data.inline,
-                            // language: this.data.language,
-
-                            // bar: {
-                            //     logo: "#iconCode",
-                            //     title: plugin.i18n.dock.title,
-                            //     icons: [
-                            //         { // 实时更新按钮
-                            //             icon: "#iconRefresh",
-                            //             type: "refresh",
-                            //             active: this.data.refresh,
-                            //             ariaLabel: plugin.i18n.dock.refresh.ariaLabel,
-                            //             onClick: (_e, _element, active) => {
-                            //                 active = !active;
-                            //                 plugin.dock.component.$set({ realTime: active });
-                            //                 return active;
-                            //             },
-                            //         },
-                            //         { // 行内元素是否使用 <span> 标签
-                            //             icon: "#iconInlineCode",
-                            //             type: "inline",
-                            //             active: this.data.inline === Inline.span,
-                            //             ariaLabel: plugin.i18n.dock.inline.ariaLabel,
-                            //             onClick: (_e, _element, active) => {
-                            //                 active = !active;
-                            //                 if (active) {
-                            //                     plugin.dock.component.$set({ inline: Inline.span });
-                            //                 }
-                            //                 else {
-                            //                     plugin.dock.component.$set({ inline: Inline.mark });
-                            //                 }
-                            //                 return active;
-                            //             },
-                            //         },
-                            //         { // kramdown 模式按钮
-                            //             icon: "#iconMarkdown",
-                            //             type: "kramdown",
-                            //             active: this.data.language === Language.kramdown,
-                            //             ariaLabel: plugin.i18n.dock.kramdown.ariaLabel,
-                            //             onClick: (_e, _element, active) => {
-                            //                 active = !active;
-                            //                 if (active) {
-                            //                     plugin.dock.component.$set({ language: Language.kramdown });
-                            //                 }
-                            //                 else {
-                            //                     plugin.dock.component.$set({ language: Language.markdown });
-                            //                 }
-                            //                 return active;
-                            //             },
-                            //         },
-                            //         {
-                            //             icon: "#iconMin",
-                            //             type: "min",
-                            //             ariaLabel: `${globalThis.siyuan.languages.min} ${siyuan.adaptHotkey("⌘W")}`,
-                            //         },
-                            //     ],
-                            // },
                         },
                     });
                     plugin.dock.model = this;
@@ -199,6 +148,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     onload(): void {
         // this.logger.debug(this);
+        /* 注册图标 */
+        this.addIcons([
+            icon_plugin, // 插件图标
+            icon_slash, // 斜杠图标
+        ].join(""));
+
         this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME)
             .then(config => {
                 this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
@@ -318,9 +273,215 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected blockMenuEventListener = (e: IClickBlockIconEvent) => {
         const context = getBlockMenuContext(e.detail);
 
-        /* 非多个块 */
-        if (!context.isMultiBlock) {
+        if (!context.isMultiBlock) { // 非多个块
+            /* 更新侧边栏编辑器 */
             this.updateDockEditor(context.id);
+
+            /* 添加菜单项 */
+            const facadeOptions: Partial<IFacadeOptions> = {
+                type: HandlerType.block,
+                breadcrumb: {
+                    id: context.id,
+                },
+            };
+            const submenu: siyuan.IMenuItemOption[] = [];
+            if (context.isDocumentBlock) { // 文档块
+                /* 文档导出预览 */
+                submenu.push({
+                    icon: "iconUpload",
+                    label: "Markdown",
+                    accelerator: this.i18n.menu.export.accelerator,
+                    submenu: this.buildOpenSubmenu(merge(
+                        facadeOptions,
+                        {
+                            handler: {
+                                id: context.id,
+                                inline: Inline.mark,
+                                language: Language.markdown,
+                            },
+                        },
+                    )),
+                });
+            }
+            else { // 其他块
+                /* 显示行内元素 IAL 的 Markdown */
+                submenu.push({
+                    icon: "iconMarkdown",
+                    label: "Markdown",
+                    accelerator: "{: style}",
+                    submenu: this.buildOpenSubmenu(merge(
+                        facadeOptions,
+                        {
+                            handler: {
+                                id: context.id,
+                                inline: Inline.mark,
+                                language: Language.markdown,
+                            },
+                        },
+                    )),
+                });
+            }
+
+            /* 标准 markdown */
+            submenu.push({
+                icon: "iconMarkdown",
+                label: "Markdown",
+                accelerator: this.i18n.menu.standard.accelerator,
+                submenu: this.buildOpenSubmenu(merge(
+                    facadeOptions,
+                    {
+                        handler: {
+                            id: context.id,
+                            inline: Inline.span,
+                            language: Language.markdown,
+                        },
+                    },
+                )),
+            });
+
+            /* 使用 <span> 标签的 kramdown */
+            submenu.push({
+                icon: "iconInlineCode",
+                label: "kramdown",
+                accelerator: "&lt;span&gt;",
+                submenu: this.buildOpenSubmenu(merge(
+                    facadeOptions,
+                    {
+                        handler: {
+                            id: context.id,
+                            inline: Inline.span,
+                            language: Language.kramdown,
+                        },
+                    },
+                )),
+            });
+
+            /* 使用标识符的 kramdown */
+            submenu.push({
+                icon: "iconMarkdown",
+                label: "kramdown",
+                accelerator: "*mark*",
+                submenu: this.buildOpenSubmenu(merge(
+                    facadeOptions,
+                    {
+                        handler: {
+                            id: context.id,
+                            inline: Inline.mark,
+                            language: Language.kramdown,
+                        },
+                    },
+                )),
+            });
+
+            e.detail.menu.addItem({
+                // icon: "icon-monaco-editor",
+                icon: "iconCode",
+                label: this.i18n.displayName,
+                submenu,
+            });
         }
+    }
+
+    /**
+     * 构建打开子菜单
+     * @param facadeOptions: 门面参数
+     * @param icon: 页签图标
+     * @param title: 页签标题
+     * @param options: 编辑器初始配置
+     */
+    protected buildOpenSubmenu(
+        facadeOptions: IFacadeOptions,
+        // icon: string = "icon-monaco-editor",
+        icon: string = "iconCode",
+        title: string = this.i18n.displayName,
+        options: IEditorOptions = this.config.editor.options,
+    ): siyuan.IMenuItemOption[] {
+        const submenu: siyuan.IMenuItemOption[] = [];
+        const custom = {
+            icon,
+            title,
+            fn: this.tab,
+            data: {
+                options,
+                facadeOptions,
+            },
+        }; // 自定义页签参数
+
+        /* 在新页签中打开 */
+        submenu.push({
+            icon: "iconAdd",
+            label: this.i18n.menu.openInNewTab.label,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在后台页签中打开 */
+        submenu.push({
+            icon: "iconMin",
+            label: this.i18n.menu.openTabBackground.label,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    keepCursor: true,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在页签右侧打开 */
+        submenu.push({
+            icon: "iconLayoutRight",
+            label: this.i18n.menu.openTabRight.label,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    position: "right",
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在页签下方打开 */
+        submenu.push({
+            icon: "iconLayoutBottom",
+            label: this.i18n.menu.openTabBottom.label,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    position: "bottom",
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在新窗口打开 */
+        submenu.push({
+            icon: "iconOpenWindow",
+            label: this.i18n.menu.openByNewWindow.label,
+            click: async element => {
+                const { x, y } = getElementScreenPosition(element);
+
+                const editor = new EditorWindow(this);
+                await editor.init(custom.data);
+                editor.open({
+                    x: Math.round(x),
+                    y: Math.round(y),
+                    title,
+                    ...this.config.window.options,
+                });
+            },
+        });
+        return submenu;
     }
 }

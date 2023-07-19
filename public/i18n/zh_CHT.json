@@ -1,11 +1,19 @@
 {
+    "button": {
+        "fullscreen": {
+            "ariaLabel": "全屏"
+        },
+        "realTime": {
+            "ariaLabel": "實時保存更改"
+        }
+    },
     "displayName": "程式碼編輯器",
     "dock": {
-        "kramdown": {
-            "ariaLabel": "使用 kramdown 編輯"
-        },
         "inline": {
             "ariaLabel": "markdown: 編輯標準 markdown\nkramdown: 行內元素使用 <span> 標籤"
+        },
+        "kramdown": {
+            "ariaLabel": "使用 kramdown 編輯"
         },
         "refresh": {
             "ariaLabel": "實時保存更改"
@@ -23,6 +31,29 @@
             "toggleWordWrap": {
                 "label": "切換自動換行"
             }
+        }
+    },
+    "menu": {
+        "export": {
+            "accelerator": "匯出"
+        },
+        "openByNewWindow": {
+            "label": "使用新窗口打開"
+        },
+        "openInNewTab": {
+            "label": "在新分頁中打開"
+        },
+        "openTabBackground": {
+            "label": "在後台分頁中打開"
+        },
+        "openTabBottom": {
+            "label": "在分頁下側打開"
+        },
+        "openTabRight": {
+            "label": "在分頁右側打開"
+        },
+        "standard": {
+            "accelerator": "標準"
         }
     }
 }

@@ -34,6 +34,13 @@ export type MessageEventListener<
 > = (messageEvent: IMessageEditorSlaveEventMap[K]) => void;
 export type ElectronMessageEventListener = (e: Electron.MessageEvent) => void;
 
+export interface IWindowParams extends Electron.BrowserWindowConstructorOptions {
+    x: number, // 窗口横坐标
+    y: number, // 窗口纵坐标
+    width: number, // 窗口宽度
+    height: number, // 窗口高度
+}
+
 export class EditorBridgeMaster {
     /* 创建消息通道 */
     public static createChannel(iframe: boolean = false) {
@@ -50,14 +57,13 @@ export class EditorBridgeMaster {
 
     /* 窗口默认设置 */
     public static readonly BROWSER_WINDOW_DEFAULT_OPTIONS: Electron.BrowserWindowConstructorOptions = {
-        x: 0,
-        y: 0,
         title: "Monaco Editor",
         alwaysOnTop: true,
         autoHideMenuBar: false,
         webPreferences: {
             nodeIntegration: true,
             webviewTag: true,
+            webSecurity: false,
             contextIsolation: false,
         },
     } as const;
@@ -76,33 +82,33 @@ export class EditorBridgeMaster {
         if (this.channel instanceof MessageChannel) {
             this.channel.port1.addEventListener(
                 "messageerror",
-                this.messageErrorEventListener,
+                e => this.plugin.logger.warn("message error", e),
             );
         }
         else {
-            this.channel.port1.addListener("close", this.messageErrorEventListener);
+            // this.channel.port1.addListener(
+            //     "close",
+            //     e => this.plugin.logger.info("browser window close"),
+            // );
         }
-    }
-
-    protected readonly messageErrorEventListener = (e: MessageEvent) => {
-        this.plugin.logger.warn(e);
     }
 
     /**
      * 创建新窗口形态的编辑器
      */
     public createEditorWindow(
-        options: Electron.BrowserWindowConstructorOptions = {},
-    ) {
-        options = merge(
+        options: IWindowParams,
+    ): Window | Electron.BrowserWindow {
+        const params = merge(
             EditorBridgeMaster.BROWSER_WINDOW_DEFAULT_OPTIONS,
             options,
         );
+        // this.plugin.logger.debug(params);
 
         if (FLAG_ELECTRON) {
             try {
                 const { BrowserWindow } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
-                const browser = new BrowserWindow(options);
+                const browser = new BrowserWindow(params);
                 // browser.removeMenu();
 
                 /* 启用 Electron 环境 */
@@ -145,10 +151,10 @@ export class EditorBridgeMaster {
                 this.url.href,
                 [
                     `popup = true`,
-                    `width = ${options.width}`,
-                    `height = ${options.height}`,
-                    `left = ${options.x}`,
-                    `top = ${options.y}`,
+                    `width = ${params.width}`,
+                    `height = ${params.height}`,
+                    `left = ${params.x}`,
+                    `top = ${params.y}`,
                 ].join(","),
             );
             // 可能会被浏览器阻止弹窗
@@ -238,7 +244,8 @@ export class EditorBridgeMaster {
         else { // 添加新的监听器
             /* 包装监听器 (以实现 once 功能) */
             const listenerWrapper: MessageEventListener<K> = e => {
-                if (e.data.channel === channel) {
+                // this.plugin.logger.debug(e);
+                if (e.data?.channel === channel) {
                     if (options?.once) {
                         this.removeEventListener(channel, listener);
                     }
