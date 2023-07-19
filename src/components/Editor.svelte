@@ -98,14 +98,14 @@
     })();
 
     function updateOptions(options: IStandaloneEditorOptions) {
-        if (inited) {
+        if (inited && options) {
             updateOriginalOptions(options);
             updateModifiedOptions(options);
         }
     }
 
     function updateOriginalOptions(options: IStandaloneEditorOptions) {
-        if (inited) {
+        if (inited && options) {
             if (diff) {
                 diffEditor?.getOriginalEditor().updateOptions(options);
             }
@@ -113,7 +113,7 @@
     }
 
     function updateModifiedOptions(options: IStandaloneEditorOptions) {
-        if (inited) {
+        if (inited && options) {
             if (diff) {
                 diffEditor?.getModifiedEditor().updateOptions(options);
             } else {
@@ -137,18 +137,18 @@
                 if (diffEditor && languages) {
                     monaco.editor.setModelLanguage(
                         diffEditor.getOriginalEditor().getModel(), //
-                        languages.map(original.language), //
+                        languages.map(original?.language ?? ""), //
                     );
                     monaco.editor.setModelLanguage(
                         diffEditor.getModifiedEditor().getModel(), //
-                        languages.map(modified.language), //
+                        languages.map(modified?.language ?? ""), //
                     );
                 }
             } else {
                 if (editor && languages) {
                     monaco.editor.setModelLanguage(
                         editor.getModel(), //
-                        languages.map(modified.language), //
+                        languages.map(modified?.language ?? ""), //
                     );
                 }
             }
@@ -161,10 +161,10 @@
         if (inited) {
             changable = false; // 避免触发 changed 监听器
             if (diff) {
-                diffEditor.getOriginalEditor().setValue(original.value);
-                diffEditor.getModifiedEditor().setValue(modified.value);
+                original && diffEditor.getOriginalEditor().setValue(original.value);
+                modified && diffEditor.getModifiedEditor().setValue(modified.value);
             } else {
-                editor.setValue(modified.value);
+                modified && editor.setValue(modified.value);
             }
             changable = temp;
         }
@@ -249,20 +249,27 @@
                 diffEditor.setModel({
                     original: monaco.editor.createModel(
                         original.value, //
-                        languages.map(original.language), //
+                        languages.map(original?.language ?? ""), //
                     ),
                     modified: monaco.editor.createModel(
                         modified.value, //
-                        languages.map(modified.language), //
+                        languages.map(modified?.language ?? ""), //
                     ),
                 });
                 editor = diffEditor.getModifiedEditor();
             } else {
                 // 常规编辑器
-                editor = monaco.editor.create(
-                    editorElement, //
-                    merge(options, modified, { language: languages.map(modified.language) }), //
-                );
+                if (modified) {
+                    editor = monaco.editor.create(
+                        editorElement, //
+                        merge(options, modified, { language: languages.map(modified.language) }), //
+                    );
+                } else {
+                    editor = monaco.editor.create(
+                        editorElement, //
+                        options, //
+                    );
+                }
             }
 
             /**
@@ -314,6 +321,7 @@
                 run: () => {
                     SaveFileAs({
                         data: editor.getValue(),
+                        filetype: languages.getMimeType(editor.getModel().getLanguageId()),
                     });
                 },
             });

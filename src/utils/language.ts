@@ -47,6 +47,8 @@ export class Languages {
     protected readonly _map_alias_id = new Map<string, string>(); // 语言别名 -> ID
     protected readonly _map_extension_id = new Map<string, string>(); // 语言文件扩展名 -> ID
     protected readonly _map_mimetype_id = new Map<string, string>(); // 语言 mine-type -> ID
+    protected readonly _map_id_extension = new Map<string, string>(); // 语言 ID -> 文件扩展名
+    protected readonly _map_id_mimetype = new Map<string, string>(); // 语言 ID -> mine-type
 
     constructor(langs: languages.ILanguageExtensionPoint[]) {
         langs.forEach(lang => {
@@ -62,17 +64,33 @@ export class Languages {
                 lang.extensions.forEach(extension => {
                     this._map_extension_id.set(this.wash(extension), id);
                 });
+                if (lang.extensions.length > 0) {
+                    this._map_id_extension.set(id, this.wash(lang.extensions.at(0)));
+                }
             }
             if (lang.mimetypes) {
                 lang.mimetypes.forEach(mimetype => {
                     this._map_mimetype_id.set(this.wash(mimetype), id);
                 });
+                if (lang.mimetypes.length > 0) {
+                    this._map_id_mimetype.set(id, this.wash(lang.mimetypes.at(0)));
+                }
             }
         });
     }
 
     protected wash(lang: string): string {
         return lang.trim().toLowerCase();
+    }
+
+    public getExtension(lang: string): string {
+        lang = this.wash(lang);
+        return this._map_id_extension.get(lang) ?? lang;
+    }
+
+    public getMimeType(lang: string): string {
+        lang = this.wash(lang);
+        return this._map_id_mimetype.get(lang) ?? lang;
     }
 
     /* 将语言映射到语言 ID */
