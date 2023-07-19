@@ -94,9 +94,6 @@ export class BlockHandler extends Handler {
 
     /**
      * 生产一个块处理器
-     * @param id: 块 ID
-     * @param inline: 行内元素样式
-     * @param language: 语言模式
      */
     public async makeHandler(options: IBlockHandlerOptions): Promise<IBlockHandler> {
         const { id, inline, language } = options;

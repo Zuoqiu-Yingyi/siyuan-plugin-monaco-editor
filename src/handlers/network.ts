@@ -16,26 +16,23 @@
  */
 
 /* 块处理器 */
-import { getPathExtension, uri2path } from "@workspace/utils/misc/url";
-import {
-    Handler,
-    type IBaseHandlerOptions,
-    type IHandler,
-} from "./handler";
+import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
+
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
+import { getPathExtension } from "@workspace/utils/misc/url";
 
-export interface ILocalHandler extends IHandler {
+export interface INetworkHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
     options: IMonacoEditorOptions; // 编辑器选项
-    update?: (value: string) => Promise<void>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+    update?: (value: string) => Promise<Blob>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
-export interface ILocalHandlerOptions extends IBaseHandlerOptions {
+export interface INetworkHandlerOptions extends IBaseHandlerOptions {
     uri: string; // 资源路径
 }
 
-export class LocalHandler extends Handler {
+export class NetworkHandler extends Handler {
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
@@ -45,42 +42,39 @@ export class LocalHandler extends Handler {
         this.customTabSize = this.plugin.config.editor.options.tabSize;
     }
 
-    /* 构造一个更新函数 */
-    protected createUpdateFunction(
-        path: string, // 文件绝对路径
-    ): (value: string) => Promise<void> {
-        return async (value: string) => {
-            const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
-            await fs.writeFile(path, value);
-        };
-    }
-
     /**
      * 生产一个块处理器
      */
-    public async makeHandler(options: ILocalHandlerOptions): Promise<ILocalHandler> {
+    public async makeHandler(options: INetworkHandlerOptions): Promise<INetworkHandler> {
         const { uri } = options;
-        const path = uri2path(uri);
-        const handler: ILocalHandler = {
+        const url = new URL(uri);
+        const handler: INetworkHandler = {
             modified: {
                 value: "",
-                language: getPathExtension(path),
+                language: getPathExtension(url.pathname),
             },
             options: {
                 tabSize: this.customTabSize,
             },
         }; // 生成的处理器
 
-        // this.logger.debug(uri, path);
-        const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
-        const stats = await fs.stat(path);
-        if (stats?.isFile()) {
-            const content = await fs.readFile(path, "utf-8");
-            handler.modified.value = content;
-            handler.update = this.createUpdateFunction(path);
+        // this.client.forwardProxy 无法访问部分资源
+        const response = await fetch(
+            uri,
+            {
+                method: "GET",
+            },
+        );
+        if (response.ok) {
+            handler.modified.value = await response.text();
+            if (!handler.modified.language.startsWith(".")) {
+                const content_type = response.headers.get("content-type");
+                const mine_type = content_type ? content_type.split(";")[0] : "";
+                handler.modified.language = mine_type ? mine_type : handler.modified.language;
+            }
         }
         else {
-            throw new Error(`file does not exist: ${path}`);
+            throw new Error(response.statusText);
         }
         return handler;
     }

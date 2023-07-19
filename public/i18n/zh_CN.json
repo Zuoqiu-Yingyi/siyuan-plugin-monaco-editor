@@ -40,6 +40,9 @@
         "editAssetFile": {
             "label": "编辑资源文件"
         },
+        "editLocalFile": {
+            "label": "编辑本地文件"
+        },
         "export": {
             "accelerator": "导出"
         },
@@ -60,6 +63,9 @@
         },
         "standard": {
             "accelerator": "标准"
+        },
+        "viewNetworkFile": {
+            "label": "查看网络文件"
         }
     }
 }

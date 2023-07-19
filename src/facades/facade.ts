@@ -60,18 +60,8 @@ import {
     type ILocalBreadcrumbOptions,
     type ILocalStore,
 } from "@/breadcrumb/local";
-
-export type IFacadeOptions = IFacadeBlockOptions
-    | IFacadeAssetOptions
-    | IFacadeLocalOptions;
-export type IStore = IBlockStore
-    | IAssetStore
-    | ILocalStore;
-export type IFacadeHandler = IBlockHandler
-    | IAssetHandler
-    | ILocalHandler;
-
-export type IFacadeWindowOptions = Pick<IFacadeOptions, "type" | "handler">;
+import { NetworkHandler, type INetworkHandlerOptions } from "@/handlers/network";
+import { NetworkBreadcrumb, type INetworkBreadcrumbOptions, type INetworkStore } from "@/breadcrumb/network";
 
 /* 处理器类型 */
 export enum HandlerType {
@@ -84,6 +74,21 @@ export enum HandlerType {
     history, // 历史文档
     snapshot, // 快照
 }
+
+export type IFacadeOptions = IFacadeBlockOptions
+    | IFacadeAssetOptions
+    | IFacadeLocalOptions
+    | IFacadeNetworkOptions;
+export type IStore = IBlockStore
+    | IAssetStore
+    | ILocalStore
+    | INetworkStore;
+export type IFacadeHandler = IBlockHandler
+    | IAssetHandler
+    | ILocalHandler
+    | INetworkStore;
+
+export type IFacadeWindowOptions = Pick<IFacadeOptions, "type" | "handler">;
 
 /* 门面参数 */
 export interface IFacadeBaseOptions {
@@ -110,6 +115,12 @@ export interface IFacadeLocalOptions extends IFacadeBaseOptions {
     breadcrumb: ILocalBreadcrumbOptions,
 }
 
+export interface IFacadeNetworkOptions extends IFacadeBaseOptions {
+    type: HandlerType.network,
+    handler: INetworkHandlerOptions,
+    breadcrumb: INetworkBreadcrumbOptions,
+}
+
 export interface ITabOptions {
     handler: IFacadeHandler;
     breadcrumb: IBreadcrumb;
@@ -128,6 +139,9 @@ export class Facade {
 
     protected localHandler: InstanceType<typeof LocalHandler>;
     protected localBreadcrumb: InstanceType<typeof LocalBreadcrumb>;
+
+    protected networkHandler: InstanceType<typeof NetworkHandler>;
+    protected networkBreadcrumb: InstanceType<typeof NetworkBreadcrumb>;
 
     constructor(
         protected readonly plugin: InstanceType<typeof MonacoEditorPlugin>,
@@ -154,6 +168,12 @@ export class Facade {
                 }
                 return this.localHandler as InstanceType<typeof LocalHandler>;
             }
+            case HandlerType.network: {
+                if (!(this.networkHandler instanceof NetworkHandler)) {
+                    this.networkHandler = new NetworkHandler(this.plugin);
+                }
+                return this.networkHandler as InstanceType<typeof NetworkHandler>;
+            }
             default:
                 throw new Error(type.toString());
         }
@@ -179,6 +199,12 @@ export class Facade {
                     this.localBreadcrumb = new LocalBreadcrumb(this.plugin);
                 }
                 return this.localBreadcrumb as InstanceType<typeof LocalBreadcrumb>;
+            }
+            case HandlerType.network: {
+                if (!(this.networkBreadcrumb instanceof NetworkBreadcrumb)) {
+                    this.networkBreadcrumb = new NetworkBreadcrumb(this.plugin);
+                }
+                return this.networkBreadcrumb as InstanceType<typeof NetworkBreadcrumb>;
             }
             default:
                 throw new Error(type.toString());

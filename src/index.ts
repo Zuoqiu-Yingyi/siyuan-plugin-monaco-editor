@@ -414,7 +414,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     if (FLAG_ELECTRON) { // 仅 Electron 环境可访问本地文件
                         submenu.push({
                             icon: "iconFile",
-                            label: this.i18n.menu.editAssetFile.label,
+                            label: this.i18n.menu.editLocalFile.label,
+                            accelerator: "file://",
                             submenu: this.buildOpenSubmenu({
                                 type: HandlerType.local,
                                 handler: {
@@ -426,9 +427,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             }),
                         });
                     }
-                    else {
-                        return;
-                    }
                     break;
                 }
                 case href.startsWith("//"):
@@ -436,11 +434,29 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 case href.startsWith("ftps://"):
                 case href.startsWith("http://"):
                 case href.startsWith("https://"): { // 网络资源
-
+                    const url = new URL(
+                        href.startsWith("//")
+                            ? `https:${href}`
+                            : href
+                    );
+                    submenu.push({
+                        icon: "iconLanguage",
+                        label: this.i18n.menu.viewNetworkFile.label,
+                        accelerator: `${url.protocol}//`,
+                        submenu: this.buildOpenSubmenu({
+                            type: HandlerType.network,
+                            handler: {
+                                uri: url.href,
+                            },
+                            breadcrumb: {
+                                uri: url.href,
+                            },
+                        }),
+                    });
                     break;
                 }
                 default:
-                    return;
+                    break;
             }
         }
         catch (err) {
