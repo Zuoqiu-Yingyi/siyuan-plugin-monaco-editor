@@ -29,6 +29,7 @@
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
     import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
+    import { Languages } from "@/utils/language";
 
     export let plugin: IEditorProps["plugin"];
 
@@ -53,6 +54,7 @@
     var monaco: typeof Monaco; // monaco-editor 实例
     var editor: Editor.IStandaloneCodeEditor; // 常规编辑器实例 (差异对比模式下的修改编辑器)
     var diffEditor: Editor.IStandaloneDiffEditor; // 差异对比编辑器实例
+    var languages: InstanceType<typeof Languages>; // 语言包实例
 
     var inited = false; // 编辑器是否初始化完成
 
@@ -132,19 +134,23 @@
     $: {
         if (inited) {
             if (diff) {
-                monaco.editor.setModelLanguage(
-                    diffEditor.getOriginalEditor().getModel(), //
-                    original.language, //
-                );
-                monaco.editor.setModelLanguage(
-                    diffEditor.getModifiedEditor().getModel(), //
-                    modified.language, //
-                );
+                if (diffEditor && languages) {
+                    monaco.editor.setModelLanguage(
+                        diffEditor.getOriginalEditor().getModel(), //
+                        languages.map(original.language), //
+                    );
+                    monaco.editor.setModelLanguage(
+                        diffEditor.getModifiedEditor().getModel(), //
+                        languages.map(modified.language), //
+                    );
+                }
             } else {
-                monaco.editor.setModelLanguage(
-                    editor.getModel(), //
-                    modified.language, //
-                );
+                if (editor && languages) {
+                    monaco.editor.setModelLanguage(
+                        editor.getModel(), //
+                        languages.map(modified.language), //
+                    );
+                }
             }
         }
     }
@@ -231,6 +237,9 @@
     onMount(() => {
         init.then(instance => {
             monaco = instance;
+            // plugin.logger.debug(monaco.languages.getLanguages());
+            languages = new Languages(monaco.languages.getLanguages());
+
             if (diff) {
                 // 差异对比编辑器
                 diffEditor = monaco.editor.createDiffEditor(
@@ -240,13 +249,11 @@
                 diffEditor.setModel({
                     original: monaco.editor.createModel(
                         original.value, //
-                        original.language, //
-                        original.uri, //
+                        languages.map(original.language), //
                     ),
                     modified: monaco.editor.createModel(
                         modified.value, //
-                        modified.language, //
-                        modified.uri, //
+                        languages.map(modified.language), //
                     ),
                 });
                 editor = diffEditor.getModifiedEditor();
@@ -254,7 +261,7 @@
                 // 常规编辑器
                 editor = monaco.editor.create(
                     editorElement, //
-                    merge(options, modified), //
+                    merge(options, modified, { language: languages.map(modified.language) }), //
                 );
             }
 

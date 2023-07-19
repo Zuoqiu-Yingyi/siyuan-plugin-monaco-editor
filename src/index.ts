@@ -28,19 +28,27 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
+import { isStaticPathname } from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { getElementScreenPosition } from "@workspace/utils/misc/position";
+import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 
 /* 组件 */
 import Dock from "./components/Dock.svelte";
+import Tab from "./components/Tab.svelte";
 
 /* 项目资源 */
-import { DEFAULT_CONFIG, siyuanConfig2EditorOptions } from "./configs/default";
+import {
+    DEFAULT_CONFIG,
+    siyuanConfig2EditorOptions,
+} from "./configs/default";
 import { Inline, Language } from "./handlers/block";
+import { EditorWindow } from "./utils/window";
+import { HandlerType, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
-import type { IClickBlockIconEvent, IClickEditorContentEvent } from "@workspace/types/siyuan/events";
+import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent } from "@workspace/types/siyuan/events";
 import type { BlockID } from "@workspace/types/siyuan";
 
 import type {
@@ -48,9 +56,6 @@ import type {
 } from "./types/config";
 import type { I18N } from "@/utils/i18n";
 import type { IDockData } from "./types/dock";
-import Tab from "./components/Tab.svelte";
-import { HandlerType, type IFacadeOptions } from "./facades/facade";
-import { EditorWindow } from "./utils/window";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -173,8 +178,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
                 // /* 块引用菜单 */
                 // this.eventBus.on("open-menu-blockref", this.blockRefMenuEventListener);
-                // /* 超链接菜单 */
-                // this.eventBus.on("open-menu-link", this.linkMenuEventListener);
+                /* 超链接菜单 */
+                this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
                 // /* 快捷键/命令 */
                 // this.addCommand({
@@ -212,7 +217,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
-        // this.eventBus.off("open-menu-link", this.linkMenuEventListener);
+        this.eventBus.off("open-menu-link", this.linkMenuEventListener);
     }
 
     openSetting(): void {
@@ -260,7 +265,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 编辑器点击事件监听器 */
-    protected clickEditorContentEventListener = (e: IClickEditorContentEvent) => {
+    protected readonly clickEditorContentEventListener = (e: IClickEditorContentEvent) => {
         // this.logger.debug(e);
         // this.logger.debug(this.dock);
         const block_id = getBlockID(e.detail.event);
@@ -270,7 +275,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 块菜单弹出事件监听器 */
-    protected blockMenuEventListener = (e: IClickBlockIconEvent) => {
+    protected readonly blockMenuEventListener = (e: IClickBlockIconEvent) => {
         const context = getBlockMenuContext(e.detail);
 
         if (!context.isMultiBlock) { // 非多个块
@@ -375,6 +380,57 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
             e.detail.menu.addItem({
                 // icon: "icon-monaco-editor",
+                icon: "iconCode",
+                label: this.i18n.displayName,
+                submenu,
+            });
+        }
+    }
+
+    /* 超链接菜单打开事件监听器 */
+    protected readonly linkMenuEventListener = (e: IOpenMenuLinkEvent) => {
+        const element = e.detail.element;
+        const href = element.dataset.href || "";
+        const submenu: siyuan.IMenuItemOption[] = [];
+        switch (true) {
+            case isStaticPathname(href): { // 静态文件资源
+                submenu.push({
+                    icon: "iconFile",
+                    label: this.i18n.menu.editAssetFile.label,
+                    submenu: this.buildOpenSubmenu({
+                        type: HandlerType.asset,
+                        handler: {
+                            pathname: href,
+                        },
+                        breadcrumb: {
+                            pathname: href,
+                        },
+                    }),
+                });
+                break;
+            }
+            case href.startsWith("file://"): { // 本地文件
+                if (FLAG_ELECTRON) { // 仅 Electron 环境可访问本地文件
+
+                }
+                else {
+                    return;
+                }
+                break;
+            }
+            case href.startsWith("//"):
+            case href.startsWith("ftp://"):
+            case href.startsWith("ftps://"):
+            case href.startsWith("http://"):
+            case href.startsWith("https://"): { // 网络资源
+
+                break;
+            }
+            default:
+                return;
+        }
+        if (submenu.length > 0) {
+            e.detail.menu.addItem({
                 icon: "iconCode",
                 label: this.i18n.displayName,
                 submenu,

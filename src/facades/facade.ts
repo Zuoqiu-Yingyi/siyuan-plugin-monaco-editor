@@ -18,23 +18,49 @@
 /* 处理器门面 */
 
 import type MonacoEditorPlugin from "@/index";
-import type { Breadcrumb, IBreadcrumb } from "@/breadcrumb/breadcrumb";
-import type { Handler, IBaseHandlerOptions, IHandler } from "@/handlers/handler";
-import { BlockHandler, type IBlockHandler, type IBlockHandlerOptions } from "@/handlers/block";
-import { BlockBreadcrumb, type IBlockBreadcrumbOptions, type IBlockStore } from "@/breadcrumb/block";
+import type {
+    Breadcrumb,
+    IBaseBreadcrumbOptions,
+    IBreadcrumb,
+} from "@/breadcrumb/breadcrumb";
+import type {
+    Handler,
+    IBaseHandlerOptions,
+    IHandler,
+} from "@/handlers/handler";
+import {
+    BlockHandler,
+    type IBlockHandler,
+    type IBlockHandlerOptions,
+} from "@/handlers/block";
+import {
+    BlockBreadcrumb,
+    type IBlockBreadcrumbOptions,
+    type IBlockStore,
+} from "@/breadcrumb/block";
+import {
+    AssetHandler,
+    type IAssetHandler,
+    type IAssetHandlerOptions,
+} from "@/handlers/asset";
+import {
+    AssetBreadcrumb,
+    type IAssetBreadcrumbOptions,
+    type IAssetStore,
+} from "@/breadcrumb/asset";
 
-export type IFacadeOptions = IFacadeBlockOptions;
-export type IStore = IBlockStore;
-export type IFacadeHandler = IBlockHandler;
+export type IFacadeOptions = IFacadeBlockOptions | IFacadeAssetOptions;
+export type IStore = IBlockStore | IAssetStore;
+export type IFacadeHandler = IBlockHandler | IAssetHandler;
 
 export type IFacadeWindowOptions = Pick<IFacadeOptions, "type" | "handler">;
 
 /* 处理器类型 */
 export enum HandlerType {
-    block, // 思源块
     inbox, // 收集箱
-    local, // 本地文件
+    block, // 思源块
     asset, // 资源文件
+    local, // 本地文件
     network, // 网络文件
     snippet, // 代码片段
     history, // 历史文档
@@ -45,13 +71,19 @@ export enum HandlerType {
 export interface IFacadeBaseOptions {
     type: HandlerType,
     handler: IBaseHandlerOptions,
-    breadcrumb: IBlockBreadcrumbOptions,
+    breadcrumb: IBaseBreadcrumbOptions,
 }
 
 export interface IFacadeBlockOptions extends IFacadeBaseOptions {
     type: HandlerType.block,
     handler: IBlockHandlerOptions,
     breadcrumb: IBlockBreadcrumbOptions,
+}
+
+export interface IFacadeAssetOptions extends IFacadeBaseOptions {
+    type: HandlerType.asset,
+    handler: IAssetHandlerOptions,
+    breadcrumb: IAssetBreadcrumbOptions,
 }
 
 export interface ITabOptions {
@@ -67,6 +99,9 @@ export class Facade {
     protected blockHandler: InstanceType<typeof BlockHandler>;
     protected blockBreadcrumb: InstanceType<typeof BlockBreadcrumb>;
 
+    protected assetHandler: InstanceType<typeof AssetHandler>;
+    protected assetBreadcrumb: InstanceType<typeof AssetBreadcrumb>;
+
     constructor(
         protected readonly plugin: InstanceType<typeof MonacoEditorPlugin>,
     ) { }
@@ -79,6 +114,12 @@ export class Facade {
                     this.blockHandler = new BlockHandler(this.plugin);
                 }
                 return this.blockHandler as InstanceType<typeof BlockHandler>;
+            }
+            case HandlerType.asset: {
+                if (!(this.assetHandler instanceof AssetHandler)) {
+                    this.assetHandler = new AssetHandler(this.plugin);
+                }
+                return this.assetHandler as InstanceType<typeof AssetHandler>;
             }
             default:
                 throw new Error(type.toString());
@@ -93,6 +134,12 @@ export class Facade {
                     this.blockBreadcrumb = new BlockBreadcrumb(this.plugin);
                 }
                 return this.blockBreadcrumb as InstanceType<typeof BlockBreadcrumb>;
+            }
+            case HandlerType.asset: {
+                if (!(this.assetBreadcrumb instanceof AssetBreadcrumb)) {
+                    this.assetBreadcrumb = new AssetBreadcrumb(this.plugin);
+                }
+                return this.assetBreadcrumb as InstanceType<typeof AssetBreadcrumb>;
             }
             default:
                 throw new Error(type.toString());

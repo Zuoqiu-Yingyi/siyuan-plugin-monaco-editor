@@ -18,7 +18,12 @@
 import * as sdk from "@siyuan-community/siyuan-sdk";
 import { getDocPaths } from "@workspace/utils/siyuan/breadcrumb";
 
-import { Breadcrumb, type IBaseBreadcrumbOptions, type IBaseStore, type IBreadcrumb } from "./breadcrumb";
+import {
+    Breadcrumb,
+    type IBaseBreadcrumbOptions,
+    type IBaseStore,
+    type IBreadcrumb,
+} from "./breadcrumb";
 
 import type { ComponentProps } from "svelte";
 import { get, type Writable } from "svelte/store";

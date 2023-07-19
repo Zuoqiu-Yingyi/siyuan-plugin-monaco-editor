@@ -22,7 +22,7 @@ import type { IEditorOptions } from "@/types/editor";
 type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
 export interface IHandler extends Partial<IEditorOptions> {
-    update?: (value: string) => Promise<string>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+    update?: (value: string) => Promise<any>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
 export interface IBaseHandlerOptions {
