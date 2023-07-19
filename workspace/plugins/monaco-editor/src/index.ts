@@ -392,49 +392,68 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const element = e.detail.element;
         const href = element.dataset.href || "";
         const submenu: siyuan.IMenuItemOption[] = [];
-        switch (true) {
-            case isStaticPathname(href): { // 静态文件资源
-                submenu.push({
-                    icon: "iconFile",
-                    label: this.i18n.menu.editAssetFile.label,
-                    submenu: this.buildOpenSubmenu({
-                        type: HandlerType.asset,
-                        handler: {
-                            pathname: href,
-                        },
-                        breadcrumb: {
-                            pathname: href,
-                        },
-                    }),
-                });
-                break;
-            }
-            case href.startsWith("file://"): { // 本地文件
-                if (FLAG_ELECTRON) { // 仅 Electron 环境可访问本地文件
-
+        try {
+            switch (true) {
+                case isStaticPathname(href): { // 静态文件资源
+                    submenu.push({
+                        icon: "iconFile",
+                        label: this.i18n.menu.editAssetFile.label,
+                        submenu: this.buildOpenSubmenu({
+                            type: HandlerType.asset,
+                            handler: {
+                                pathname: href,
+                            },
+                            breadcrumb: {
+                                pathname: href,
+                            },
+                        }),
+                    });
+                    break;
                 }
-                else {
+                case href.startsWith("file://"): { // 本地文件
+                    if (FLAG_ELECTRON) { // 仅 Electron 环境可访问本地文件
+                        submenu.push({
+                            icon: "iconFile",
+                            label: this.i18n.menu.editAssetFile.label,
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.local,
+                                handler: {
+                                    uri: href,
+                                },
+                                breadcrumb: {
+                                    uri: href,
+                                },
+                            }),
+                        });
+                    }
+                    else {
+                        return;
+                    }
+                    break;
+                }
+                case href.startsWith("//"):
+                case href.startsWith("ftp://"):
+                case href.startsWith("ftps://"):
+                case href.startsWith("http://"):
+                case href.startsWith("https://"): { // 网络资源
+
+                    break;
+                }
+                default:
                     return;
-                }
-                break;
             }
-            case href.startsWith("//"):
-            case href.startsWith("ftp://"):
-            case href.startsWith("ftps://"):
-            case href.startsWith("http://"):
-            case href.startsWith("https://"): { // 网络资源
-
-                break;
-            }
-            default:
-                return;
         }
-        if (submenu.length > 0) {
-            e.detail.menu.addItem({
-                icon: "iconCode",
-                label: this.i18n.displayName,
-                submenu,
-            });
+        catch (err) {
+            this.logger.warn(err);
+        }
+        finally {
+            if (submenu.length > 0) {
+                e.detail.menu.addItem({
+                    icon: "iconCode",
+                    label: this.i18n.displayName,
+                    submenu,
+                });
+            }
         }
     }
 

@@ -18,11 +18,7 @@
 /* 处理器门面 */
 
 import type MonacoEditorPlugin from "@/index";
-import type {
-    Breadcrumb,
-    IBaseBreadcrumbOptions,
-    IBreadcrumb,
-} from "@/breadcrumb/breadcrumb";
+
 import type {
     Handler,
     IBaseHandlerOptions,
@@ -34,24 +30,46 @@ import {
     type IBlockHandlerOptions,
 } from "@/handlers/block";
 import {
-    BlockBreadcrumb,
-    type IBlockBreadcrumbOptions,
-    type IBlockStore,
-} from "@/breadcrumb/block";
-import {
     AssetHandler,
     type IAssetHandler,
     type IAssetHandlerOptions,
 } from "@/handlers/asset";
 import {
+    LocalHandler,
+    type ILocalHandler,
+    type ILocalHandlerOptions,
+} from "@/handlers/local";
+
+import type {
+    Breadcrumb,
+    IBaseBreadcrumbOptions,
+    IBreadcrumb,
+} from "@/breadcrumb/breadcrumb";
+import {
+    BlockBreadcrumb,
+    type IBlockBreadcrumbOptions,
+    type IBlockStore,
+} from "@/breadcrumb/block";
+import {
     AssetBreadcrumb,
     type IAssetBreadcrumbOptions,
     type IAssetStore,
 } from "@/breadcrumb/asset";
+import {
+    LocalBreadcrumb,
+    type ILocalBreadcrumbOptions,
+    type ILocalStore,
+} from "@/breadcrumb/local";
 
-export type IFacadeOptions = IFacadeBlockOptions | IFacadeAssetOptions;
-export type IStore = IBlockStore | IAssetStore;
-export type IFacadeHandler = IBlockHandler | IAssetHandler;
+export type IFacadeOptions = IFacadeBlockOptions
+    | IFacadeAssetOptions
+    | IFacadeLocalOptions;
+export type IStore = IBlockStore
+    | IAssetStore
+    | ILocalStore;
+export type IFacadeHandler = IBlockHandler
+    | IAssetHandler
+    | ILocalHandler;
 
 export type IFacadeWindowOptions = Pick<IFacadeOptions, "type" | "handler">;
 
@@ -86,6 +104,12 @@ export interface IFacadeAssetOptions extends IFacadeBaseOptions {
     breadcrumb: IAssetBreadcrumbOptions,
 }
 
+export interface IFacadeLocalOptions extends IFacadeBaseOptions {
+    type: HandlerType.local,
+    handler: ILocalHandlerOptions,
+    breadcrumb: ILocalBreadcrumbOptions,
+}
+
 export interface ITabOptions {
     handler: IFacadeHandler;
     breadcrumb: IBreadcrumb;
@@ -101,6 +125,9 @@ export class Facade {
 
     protected assetHandler: InstanceType<typeof AssetHandler>;
     protected assetBreadcrumb: InstanceType<typeof AssetBreadcrumb>;
+
+    protected localHandler: InstanceType<typeof LocalHandler>;
+    protected localBreadcrumb: InstanceType<typeof LocalBreadcrumb>;
 
     constructor(
         protected readonly plugin: InstanceType<typeof MonacoEditorPlugin>,
@@ -121,6 +148,12 @@ export class Facade {
                 }
                 return this.assetHandler as InstanceType<typeof AssetHandler>;
             }
+            case HandlerType.local: {
+                if (!(this.localHandler instanceof LocalHandler)) {
+                    this.localHandler = new LocalHandler(this.plugin);
+                }
+                return this.localHandler as InstanceType<typeof LocalHandler>;
+            }
             default:
                 throw new Error(type.toString());
         }
@@ -140,6 +173,12 @@ export class Facade {
                     this.assetBreadcrumb = new AssetBreadcrumb(this.plugin);
                 }
                 return this.assetBreadcrumb as InstanceType<typeof AssetBreadcrumb>;
+            }
+            case HandlerType.local: {
+                if (!(this.localBreadcrumb instanceof LocalBreadcrumb)) {
+                    this.localBreadcrumb = new LocalBreadcrumb(this.plugin);
+                }
+                return this.localBreadcrumb as InstanceType<typeof LocalBreadcrumb>;
             }
             default:
                 throw new Error(type.toString());

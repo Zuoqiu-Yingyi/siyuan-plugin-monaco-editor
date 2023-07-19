@@ -16,23 +16,26 @@
  */
 
 /* 块处理器 */
-import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
-
+import { uri2path } from "@workspace/utils/misc/url";
+import {
+    Handler,
+    type IBaseHandlerOptions,
+    type IHandler,
+} from "./handler";
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
-import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
 
-export interface IAssetHandler extends IHandler {
+export interface ILocalHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
     options: IMonacoEditorOptions; // 编辑器选项
-    update?: (value: string) => Promise<Blob>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+    update?: (value: string) => Promise<void>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
-export interface IAssetHandlerOptions extends IBaseHandlerOptions {
-    pathname: string; // 资源路径
+export interface ILocalHandlerOptions extends IBaseHandlerOptions {
+    uri: string; // 资源路径
 }
 
-export class AssetHandler extends Handler {
+export class LocalHandler extends Handler {
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
@@ -44,16 +47,11 @@ export class AssetHandler extends Handler {
 
     /* 构造一个更新函数 */
     protected createUpdateFunction(
-        path: string, // 相对于工作空间目录的资源文件路径
-        wrap: (value: string) => Blob = v => (new Blob([v])), // 内容包装函数
-    ): (value: string) => Promise<Blob> {
+        path: string, // 文件绝对路径
+    ): (value: string) => Promise<void> {
         return async (value: string) => {
-            const blob = wrap(value);
-            await this.plugin.client.putFile({
-                path,
-                file: blob,
-            });
-            return blob;
+            const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
+            await fs.writeFile(path, value);
         };
     }
 
@@ -63,35 +61,29 @@ export class AssetHandler extends Handler {
      * @param inline: 行内元素样式
      * @param language: 语言模式
      */
-    public async makeHandler(options: IAssetHandlerOptions): Promise<IAssetHandler> {
-        const { pathname } = options;
-        const path = staticPathname2WorkspacePath(pathname);
-        const handler: IAssetHandler = {
+    public async makeHandler(options: ILocalHandlerOptions): Promise<ILocalHandler> {
+        const { uri } = options;
+        const handler: ILocalHandler = {
             modified: {
                 value: "",
-                language: pathname.substring(pathname.lastIndexOf(".")),
+                language: uri.substring(uri.lastIndexOf(".")),
             },
             options: {
                 tabSize: this.customTabSize,
             },
         }; // 生成的处理器
-        const response = await fetch(
-            '/api/file/getFile',
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    path,
-                }),
-            });
-        if (response.ok) {
-            handler.modified.value = await response.text();
-            // const content_type = response.headers.get("content-type");
-            // const mine_type = content_type ? content_type.split(";")[0] : "";
-            // handler.modified.language = mine_type ? mine_type : handler.modified.language;
+
+        const path = uri2path(uri);
+        // this.logger.debug(uri, path);
+        const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
+        const stats = await fs.stat(path);
+        if (stats?.isFile()) {
+            const content = await fs.readFile(path, "utf-8");
+            handler.modified.value = content;
             handler.update = this.createUpdateFunction(path);
         }
         else {
-            throw new Error(response.statusText);
+            throw new Error(`file does not exist: ${path}`);
         }
         return handler;
     }

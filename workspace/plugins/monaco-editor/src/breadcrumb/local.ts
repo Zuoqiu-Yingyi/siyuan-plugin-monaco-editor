@@ -28,36 +28,33 @@ import {
 } from "svelte/store";
 import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
 import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
-import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
+import { uri2path } from "@workspace/utils/misc/url";
 
-export interface IAssetStore extends IBaseStore {
+export interface ILocalStore extends IBaseStore {
     fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
 }
 
-export interface IAssetBreadcrumbOptions extends IBaseBreadcrumbOptions {
-    pathname: string; // 资源路径
-    stores?: IAssetStore; // 响应式数据
+export interface ILocalBreadcrumbOptions extends IBaseBreadcrumbOptions {
+    uri: string; // 资源路径
+    stores?: ILocalStore; // 响应式数据
 }
 
-export class AssetBreadcrumb extends Breadcrumb {
-    public async makeBreadcrumb(options: IAssetBreadcrumbOptions): Promise<IBreadcrumb> {
-        const { pathname } = options;
+export class LocalBreadcrumb extends Breadcrumb {
+    public async makeBreadcrumb(options: ILocalBreadcrumbOptions): Promise<IBreadcrumb> {
+        const { uri } = options;
         const breadcrumb: IBreadcrumb = {
             breadcrumb: true,
             breadcrumbItems: [],
             breadcrumbIcons: [],
         };
 
-        /* 获得相对于工作空间目录的路径 */
-        const path = staticPathname2WorkspacePath(pathname);
-        const paths: string[] = [];
-        paths.push(...globalThis.siyuan.config.system.workspaceDir.replaceAll("\\", "/").split("/"));
+        const paths: string[] = ["file://"];
+        const path = uri2path(uri);
         breadcrumb.breadcrumbItems.push({
             type: "item",
-            icon: "#iconWorkspace",
-            text: this.i18n.button.workspace.text,
+            text: "file://",
             textTitle: paths.join("/"),
-            textEllipsis: true,
+            textEllipsis: false,
         });
         path.split("/").forEach(p => {
             paths.push(p);
