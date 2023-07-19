@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-20
+
+- 优化编辑器另存为选项 | Optimize editor save as option.
+
 ## 2023-07-19
 
 - 在新页签/新窗口中打开编辑器 | Open editor in new tab/new window.
