@@ -42,8 +42,11 @@ export interface IEditorProps extends IEditorFunction, IEditorOptions {
     /* 上下文 */
     plugin: IPlugin; // 插件接口
 
-    /* 编辑器样式 */
+    /* 编辑器加载 */
     embed: boolean; // 是否为嵌入模式 (嵌入在思源页面中)
+    path: string; // 思源工作空间路径 (用于 BrowserWindow 加载资源)
+
+    /* 编辑器样式 */
     diff: boolean; // 是否为差异对比模式
     locale: string; // 界面语言
 }
@@ -57,8 +60,10 @@ export interface IEditorModel {
 
 /* 侧边栏编辑器 */
 export interface IDockEditor {
-    modified: IEditorModel,
     options: IMonacoEditorOptions,
+
+    modified: IEditorModel,
+    modifiedOptions?: IMonacoEditorOptions,
 }
 
 /* 插件接口 */

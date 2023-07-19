@@ -16,22 +16,69 @@
 -->
 
 <script lang="ts">
+    import { onDestroy, type ComponentProps, type ComponentEvents } from "svelte";
+    import { Facade, type IFacadeOptions, type ITabOptions } from "@/facades/facade";
+    import { writable, type Unsubscriber } from "svelte/store";
+
     import Tab from "@workspace/components/siyuan/tab/Tab.svelte";
     import EditorIframe from "./EditorIframe.svelte";
 
-    export let plugin: EditorIframe["plugin"];
-    export let savable: EditorIframe["savable"];
-    export let changable: EditorIframe["changable"];
-    export let modified: EditorIframe["modified"];
-    export let options: EditorIframe["options"];
+    export let plugin: ComponentProps<EditorIframe>["plugin"]; // 插件对象
+    export let options: ComponentProps<EditorIframe>["options"]; // 编辑器参数
+    export let facadeOptions: IFacadeOptions; // 门面参数
 
-    let fullscreen: Tab["fullscreen"] = false; // 是否为全屏模式
-    let breadcrumbItems: Tab["breadcrumbItems"] = []; // 面包屑项
-    let breadcrumbIcons: Tab["breadcrumbIcons"] = []; // 面包屑按钮
+    let savable: ComponentProps<EditorIframe>["savable"];
+    let changable: ComponentProps<EditorIframe>["changable"];
+    let modified: ComponentProps<EditorIframe>["modified"];
+    let modifiedOptions: ComponentProps<EditorIframe>["modifiedOptions"];
+
+    let fullscreen: ComponentProps<Tab>["fullscreen"] = false; // 是否为全屏模式
+
+    let breadcrumb: ComponentProps<Tab>["breadcrumb"] = false; // 是否显示面包屑
+    let breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"] = []; // 面包屑项
+    let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = []; // 面包屑按钮
+
+    let tabOptions: ITabOptions;
+
+    /* 响应式数据 */
+    const stores = {
+        changable: writable(changable),
+        fullscreen: writable(fullscreen),
+    };
+    $: stores.changable.set(changable);
+    $: stores.fullscreen.set(fullscreen);
+    const unsubscribes: Unsubscriber[] = [
+        stores.changable.subscribe(v => (changable = v)), //
+        stores.fullscreen.subscribe(v => (fullscreen = v)), //
+    ];
+    onDestroy(() => {
+        unsubscribes.forEach(unsubscribe => unsubscribe());
+    });
+
+    /* 门店 */
+    const facade = new Facade(plugin);
+    $: facade.makeTabOptions(facadeOptions, stores).then(o => (tabOptions = o));
+    $: {
+        if (tabOptions) {
+            savable = !!tabOptions.handler.update;
+
+            modified = tabOptions.handler.modified;
+            modifiedOptions = tabOptions.handler.options;
+
+            breadcrumb = tabOptions.breadcrumb.breadcrumb;
+            breadcrumbItems = tabOptions.breadcrumb.breadcrumbItems;
+            breadcrumbIcons = tabOptions.breadcrumb.breadcrumbIcons;
+        }
+    }
+
+    function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
+        tabOptions?.handler?.update?.(e.detail.value);
+    }
 </script>
 
 <Tab
     {fullscreen}
+    {breadcrumb}
     {breadcrumbItems}
     {breadcrumbIcons}
 >
@@ -40,11 +87,14 @@
         class="fn__flex fn__flex-1"
     >
         <EditorIframe
+            on:save={update}
+            on:changed={update}
             {plugin}
             {savable}
             {changable}
-            {modified}
             {options}
+            {modified}
+            {modifiedOptions}
         />
     </div>
 </Tab>

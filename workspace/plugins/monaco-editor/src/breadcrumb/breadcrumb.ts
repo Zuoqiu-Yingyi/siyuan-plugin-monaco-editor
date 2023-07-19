@@ -17,21 +17,30 @@
 
 import MonacoEditorPlugin from "@/index";
 
-import type { IEditorOptions } from "@/types/editor";
+import type { ComponentProps } from "svelte";
+import type { Writable } from "svelte/store";
+
+import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
 
 type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
-export interface IHandler extends Partial<IEditorOptions> {
-    update?: (value: string) => Promise<string>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+export interface IBaseStore {
+    [key: string]: Writable<any>;
 }
 
-export interface IBaseHandlerOptions {
+export interface IBaseBreadcrumbOptions {
+    stores?: IBaseStore; // 响应式数据
 }
 
-export abstract class Handler {
+export interface IBreadcrumb {
+    breadcrumb: ComponentProps<Tab>["breadcrumb"]; // 是否显示面包屑
+    breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"]; // 面包屑项
+    breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"]; // 面包屑按钮
+}
+
+export abstract class Breadcrumb {
     public readonly client: Plugin["client"];
     public readonly logger: Plugin["logger"];
-    public readonly lute: Plugin["lute"];
     public readonly i18n: Plugin["i18n"];
 
     constructor(
@@ -39,10 +48,9 @@ export abstract class Handler {
     ) {
         this.client = this.plugin.client;
         this.logger = this.plugin.logger;
-        this.lute = this.plugin.lute;
         this.i18n = this.plugin.i18n;
     }
 
-    /* 生成处理器 */
-    public abstract makeHandler(options: IBaseHandlerOptions): Promise<IHandler>;
+    /* 生成面包屑 */
+    public abstract makeBreadcrumb(options: IBaseBreadcrumbOptions): Promise<IBreadcrumb>;
 }

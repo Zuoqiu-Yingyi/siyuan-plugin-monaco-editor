@@ -108,7 +108,7 @@
 
     $: {
         if (regexp.id.test(id)) {
-            blockHandler.makeHandler(id, inline, language).then(h => (handler = h));
+            blockHandler.makeHandler({ id, inline, language }).then(h => (handler = h));
         }
     }
 
@@ -116,18 +116,12 @@
         if (handler) {
             savable = !!handler.update;
             editor.modified = handler.modified;
-            editor.options = handler.options;
+            editor.modifiedOptions = handler.options;
         }
     }
 
     function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
-        if (handler?.update) {
-            plugin.client.updateBlock({
-                id,
-                dataType: "markdown",
-                data: handler.update(e.detail.value),
-            });
-        }
+        handler.update?.(e.detail.value);
     }
 </script>
 

@@ -18,10 +18,9 @@
 /* 块处理器 */
 import * as sdk from "@siyuan-community/siyuan-sdk";
 
-import { Handler, type IHandler } from "./handler";
+import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 import { heightlight2monaco } from "@/utils/language";
 
-import type { editor as Editor } from "monaco-editor";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
@@ -43,8 +42,14 @@ export enum Inline {
 
 export interface IBlockHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
-    options?: IMonacoEditorOptions; // 编辑器配置
-    update?: (value: string) => string; // 处理编辑器内容的方法 (若未定义则不能更新)
+    options: IMonacoEditorOptions; // 编辑器选项
+    update?: (value: string) => Promise<string>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+}
+
+export interface IBlockHandlerOptions extends IBaseHandlerOptions {
+    id: BlockID; // 块 ID
+    inline: Inline; // 行内元素样式
+    language: Language; // 语言模式
 }
 
 export class BlockHandler extends Handler {
@@ -69,17 +74,32 @@ export class BlockHandler extends Handler {
         return kramdown.substring(0, kramdown.lastIndexOf("\n{:"));
     }
 
+    /* 构造一个更新函数 */
+    protected createUpdateFunction(
+        id: BlockID, // 块 ID
+        wrap?: (value: string) => string, // 内容包装函数
+    ): (value: string) => Promise<string> {
+        return async (value: string) => {
+            if (wrap) {
+                value = wrap(value);
+            }
+            this.plugin.client.updateBlock({
+                id,
+                dataType: "markdown",
+                data: value,
+            });
+            return value;
+        };
+    }
+
     /**
      * 生产一个块处理器
      * @param id: 块 ID
      * @param inline: 行内元素样式
      * @param language: 语言模式
      */
-    public async makeHandler(
-        id: BlockID,
-        inline: Inline,
-        language: Language,
-    ): Promise<IBlockHandler> {
+    public async makeHandler(options: IBlockHandlerOptions): Promise<IBlockHandler> {
+        const { id, inline, language } = options;
         const handler: IBlockHandler = {
             modified: {
                 value: "",
@@ -124,7 +144,7 @@ export class BlockHandler extends Handler {
                         handler.modified.value = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                         handler.modified.language = "html";
                         handler.options.tabSize = this.customTabSize;
-                        handler.update = value => value;
+                        handler.update = this.createUpdateFunction(id);
                         break;
                     }
 
@@ -136,11 +156,11 @@ export class BlockHandler extends Handler {
                             handler.modified.value = result[1];
                             handler.modified.language = "sql";
                             handler.options.tabSize = this.customTabSize;
-                            handler.update = value => `{{${value}}}`;
+                            handler.update = this.createUpdateFunction(id, value => `{{${value}}}`);
                         }
                         else { // 回退为 markdown 编辑
                             handler.modified.value = markdown;
-                            handler.update = value => value;
+                            handler.update = this.createUpdateFunction(id);
                         }
                         break;
                     }
@@ -148,17 +168,20 @@ export class BlockHandler extends Handler {
                     /* 代码块 */
                     case NodeType.NodeCodeBlock: {
                         const markdown = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
-                        const result = /^\s*`{3,}([^\n]*)\n(.*)\n`{3,}\s*$/s.exec(markdown);
-                        if (result && result.length === 3) { // 正确提取出语言标签与内容
+                        const rows = markdown.trim().split("\n");
+                        const begin = rows.shift();
+                        const end = rows.pop();
+                        const result = /^`{3,}(.*)$/.exec(begin);
+                        if (result && result.length === 2) { // 正确提取出语言标签
                             const language = result[1].trim()
-                            handler.modified.value = result[2];
+                            handler.modified.value = rows.join("\n");
                             handler.modified.language = heightlight2monaco(language);
                             handler.options.tabSize = this.customTabSize;
-                            handler.update = value => `\`\`\`${language}\n${value}\n\`\`\``;
+                            handler.update = this.createUpdateFunction(id, value => `${begin}\n${value}\n${end}`);
                         }
                         else { // 回退为 markdown 编辑
                             handler.modified.value = markdown;
-                            handler.update = value => value;
+                            handler.update = this.createUpdateFunction(id);
                         }
                         break;
                     }
@@ -179,7 +202,7 @@ export class BlockHandler extends Handler {
                                 break;
                             }
                         }
-                        handler.update = value => value;
+                        handler.update = this.createUpdateFunction(id);
                         break;
                     }
 
@@ -219,7 +242,7 @@ export class BlockHandler extends Handler {
                                 break;
                             }
                         }
-                        handler.update = value => value;
+                        handler.update = this.createUpdateFunction(id);
                         break;
                     }
                 }
@@ -258,7 +281,7 @@ export class BlockHandler extends Handler {
                         break;
                     }
                 }
-                handler.update = value => value;
+                handler.update = this.createUpdateFunction(id);
                 break;
             }
         }

@@ -18,25 +18,26 @@
 <script lang="ts">
     import { onMount, createEventDispatcher } from "svelte";
 
-    import type MonacoEditorPlugin from "@/index";
     import { EditorBridgeMaster } from "@/bridge/master";
+    import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
+    import type MonacoEditorPlugin from "@/index";
     import type { IEditorEvent, IEditorProps } from "@/types/editor";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
 
-    export let diff: IEditorProps["diff"] = false;
-    export let locale: IEditorProps["locale"] = globalThis.siyuan.config.lang;
+    export let diff: IEditorProps["diff"] = undefined;
+    export let locale: IEditorProps["locale"] = undefined;
 
-    export let savable: IEditorProps["savable"] = false;
-    export let changable: IEditorProps["changable"] = false;
+    export let savable: IEditorProps["savable"] = undefined;
+    export let changable: IEditorProps["changable"] = undefined;
 
-    export let original: IEditorProps["original"] = { value: "" };
-    export let modified: IEditorProps["modified"] = { value: "" };
-    export let options: IEditorProps["options"] = {};
-    export let originalOptions: IEditorProps["originalOptions"] = {};
-    export let modifiedOptions: IEditorProps["modifiedOptions"] = {};
-    export let diffOptions: IEditorProps["diffOptions"] = {};
+    export let original: IEditorProps["original"] = undefined;
+    export let modified: IEditorProps["modified"] = undefined;
+    export let options: IEditorProps["options"] = undefined;
+    export let originalOptions: IEditorProps["originalOptions"] = undefined;
+    export let modifiedOptions: IEditorProps["modifiedOptions"] = undefined;
+    export let diffOptions: IEditorProps["diffOptions"] = undefined;
 
     let iframe: HTMLIFrameElement; // iframe
     var inited = false;
@@ -93,7 +94,7 @@
 
 <iframe
     bind:this={iframe}
-    title={plugin.i18n.dock.title}
+    title={plugin.i18n.displayName}
     class="fn__flex-1 editor"
 />
 

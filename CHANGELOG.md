@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-19
+
+- 在新页签/新窗口中打开编辑器 | Open editor in new tab/new window.
+
 ## 2023-07-18
 
 - 重构侧边栏组件 | Refactor sidebar component.

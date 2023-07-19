@@ -21,28 +21,32 @@
     import type { default as Monaco, editor as Editor } from "monaco-editor";
     import loader from "@monaco-editor/loader";
 
-    import { mapLocale } from "@/utils/locale";
-    import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
-
     import { merge } from "@workspace/utils/misc/merge";
     import { SaveFileAs } from "@workspace/utils/misc/save";
-    import { FLAG_ELECTRON } from "@workspace/utils/env/native-front-end";
+    import { FLAG_ELECTRON, FLAG_IFRAME } from "@workspace/utils/env/native-front-end";
+
+    import { mapLocale } from "@/utils/locale";
+    import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
+
+    import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
 
     export let plugin: IEditorProps["plugin"];
 
-    export let embed: IEditorProps["embed"] = false;
-    export let diff: IEditorProps["diff"] = false;
-    export let locale: IEditorProps["locale"] = "zh-Hans";
+    export let embed: IEditorProps["embed"] = DEFAULT_EDITOR_PROPS.embed;
+    export let path: IEditorProps["path"] = DEFAULT_EDITOR_PROPS.path;
 
-    export let savable: IEditorProps["savable"] = false;
-    export let changable: IEditorProps["changable"] = false;
+    export let diff: IEditorProps["diff"] = DEFAULT_EDITOR_PROPS.diff;
+    export let locale: IEditorProps["locale"] = DEFAULT_EDITOR_PROPS.locale;
 
-    export let original: IEditorProps["original"] = { value: "" };
-    export let modified: IEditorProps["modified"] = { value: "" };
-    export let options: IEditorProps["options"] = {};
-    export let originalOptions: IEditorProps["originalOptions"] = {};
-    export let modifiedOptions: IEditorProps["modifiedOptions"] = {};
-    export let diffOptions: IEditorProps["diffOptions"] = {};
+    export let savable: IEditorProps["savable"] = DEFAULT_EDITOR_PROPS.savable;
+    export let changable: IEditorProps["changable"] = DEFAULT_EDITOR_PROPS.changable;
+
+    export let original: IEditorProps["original"] = DEFAULT_EDITOR_PROPS.original;
+    export let modified: IEditorProps["modified"] = DEFAULT_EDITOR_PROPS.modified;
+    export let options: IEditorProps["options"] = DEFAULT_EDITOR_PROPS.options;
+    export let originalOptions: IEditorProps["originalOptions"] = DEFAULT_EDITOR_PROPS.originalOptions;
+    export let modifiedOptions: IEditorProps["modifiedOptions"] = DEFAULT_EDITOR_PROPS.modifiedOptions;
+    export let diffOptions: IEditorProps["diffOptions"] = DEFAULT_EDITOR_PROPS.diffOptions;
 
     let editorElement: HTMLDivElement; // 编辑器挂载的元素
 
@@ -92,27 +96,35 @@
     })();
 
     function updateOptions(options: IStandaloneEditorOptions) {
-        updateOriginalOptions(options);
-        updateModifiedOptions(options);
+        if (inited) {
+            updateOriginalOptions(options);
+            updateModifiedOptions(options);
+        }
     }
 
     function updateOriginalOptions(options: IStandaloneEditorOptions) {
-        if (diff) {
-            diffEditor?.getOriginalEditor().updateOptions(options);
+        if (inited) {
+            if (diff) {
+                diffEditor?.getOriginalEditor().updateOptions(options);
+            }
         }
     }
 
     function updateModifiedOptions(options: IStandaloneEditorOptions) {
-        if (diff) {
-            diffEditor?.getModifiedEditor().updateOptions(options);
-        } else {
-            editor?.updateOptions(options);
+        if (inited) {
+            if (diff) {
+                diffEditor?.getModifiedEditor().updateOptions(options);
+            } else {
+                editor?.updateOptions(options);
+            }
         }
     }
 
     function updateDiffOptions(diffOptions: Editor.IDiffEditorOptions) {
-        if (diff) {
-            diffEditor?.updateOptions(diffOptions);
+        if (inited) {
+            if (diff) {
+                diffEditor?.updateOptions(diffOptions);
+            }
         }
     }
 
@@ -160,28 +172,12 @@
     }
 
     /* 更新编辑器选项 */
-    $: {
-        if (inited) {
-            updateOptions(options);
-        }
-    }
-    $: {
-        if (inited) {
-            updateOriginalOptions(originalOptions);
-        }
-    }
-    $: {
-        if (inited) {
-            updateModifiedOptions(modifiedOptions);
-        }
-    }
+    $: updateOptions(options);
+    $: updateOriginalOptions(originalOptions);
+    $: updateModifiedOptions(modifiedOptions);
 
     /* 更新差异对比编辑器选项 */
-    $: {
-        if (inited) {
-            updateDiffOptions(diffOptions);
-        }
-    }
+    $: updateDiffOptions(diffOptions);
 
     // monaco editor 资源目录
     const vs = (() => {
@@ -191,23 +187,29 @@
 
             case import.meta.env.PROD: // 生产环境
             default:
-                switch (true) {
-                    case embed: // 嵌入到思源内部
-                        switch (true) {
-                            case FLAG_ELECTRON: {
-                                // Electron 环境
-                                return globalThis.require("path").resolve(globalThis.siyuan.config.system.workspaceDir, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
-                                // return `${globalThis.siyuan.system.workspaceDir}/data/plugins/${plugin.name}/libs/monaco-editor/min/vs`;
-                            }
-                            default: {
-                                // 浏览器环境
-                                const url = new URL(`${globalThis.document.baseURI}plugins/${plugin.name}/libs/monaco-editor/min/vs`);
-                                return url.pathname;
-                            }
+                if (embed) {
+                    // 嵌入到思源内部
+                    switch (true) {
+                        case FLAG_ELECTRON: {
+                            // Electron 环境
+                            return globalThis.require("path").resolve(globalThis.siyuan.config.system.workspaceDir, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
+                            // return `${globalThis.siyuan.system.workspaceDir}/data/plugins/${plugin.name}/libs/monaco-editor/min/vs`;
                         }
-
-                    default: // 通过 iframe 加载
-                        return "./../libs/monaco-editor/min/vs";
+                        default: {
+                            // 浏览器环境
+                            const url = new URL(`${globalThis.document.baseURI}plugins/${plugin.name}/libs/monaco-editor/min/vs`);
+                            return url.pathname;
+                        }
+                    }
+                } else {
+                    // 通过 iframe/BrowserWindow 加载
+                    switch (true) {
+                        case FLAG_ELECTRON: // Electron BrowserWindow 环境
+                            return globalThis.require("path").resolve(path, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
+                        case FLAG_IFRAME: // iframe 环境
+                        default:
+                            return "./../libs/monaco-editor/min/vs";
+                    }
                 }
         }
     })();

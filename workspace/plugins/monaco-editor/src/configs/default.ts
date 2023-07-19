@@ -38,6 +38,13 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
 }
 
 export const DEFAULT_CONFIG: IConfig = {
+    window: {
+        options: {
+            width: 800, // 窗口宽度
+            height: 600, // 窗口高度
+            center: false, // 是否居中
+        },
+    },
     editor: {
         options: {
             // autoClosingBrackets: 'languageDefined', // 是否自动添加后括号(包括中括号)

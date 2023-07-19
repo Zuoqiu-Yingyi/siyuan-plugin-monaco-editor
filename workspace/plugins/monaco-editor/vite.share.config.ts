@@ -33,8 +33,8 @@ export default {
     ],
     resolve: {
         alias: {
-            "~": resolve(__dirname, "./"),
             "@": resolve(__dirname, "./src"),
+            "~": resolve(__dirname, "./"),
         },
     },
     build: {

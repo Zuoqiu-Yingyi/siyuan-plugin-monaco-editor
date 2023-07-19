@@ -1,11 +1,19 @@
 {
+    "button": {
+        "fullscreen": {
+            "ariaLabel": "Fullscreen"
+        },
+        "realTime": {
+            "ariaLabel": "Save changes in real time"
+        }
+    },
     "displayName": "Code Editor",
     "dock": {
-        "kramdown": {
-            "ariaLabel": "Edit with kramdown"
-        },
         "inline": {
             "ariaLabel": "markdown: Edit standard markdown\nkramdown: Inline elements use <span> tags"
+        },
+        "kramdown": {
+            "ariaLabel": "Edit with kramdown"
         },
         "refresh": {
             "ariaLabel": "Save changes in real time"
@@ -23,6 +31,29 @@
             "toggleWordWrap": {
                 "label": "Toggle Word Wrap"
             }
+        }
+    },
+    "menu": {
+        "export": {
+            "accelerator": "Export"
+        },
+        "openByNewWindow": {
+            "label": "Open with New Window"
+        },
+        "openInNewTab": {
+            "label": "Open in New Tab"
+        },
+        "openTabBackground": {
+            "label": "Open in background tab"
+        },
+        "openTabBottom": {
+            "label": "Open Below the Tab"
+        },
+        "openTabRight": {
+            "label": "Open Right the Tab"
+        },
+        "standard": {
+            "accelerator": "Standard"
         }
     }
 }

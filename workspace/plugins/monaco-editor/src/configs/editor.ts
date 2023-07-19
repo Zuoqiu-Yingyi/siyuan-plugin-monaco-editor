@@ -15,16 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { UserConfig } from "vite";
-import { resolve } from "path"
+import type { IEditorProps } from "@/types/editor";
 
-// https://vitejs.dev/config/
-export default {
-    build: {
-        rollupOptions: {
-            input: {
-                editor: resolve(__dirname, "./iframes/editor.html"),
-            },
-        },
-    },
-} as UserConfig;
+export const DEFAULT_EDITOR_PROPS: Omit<IEditorProps, "plugin"> = {
+    embed: false,
+    path: "",
+    diff: false,
+    locale: "zh-Hans",
+    savable: false,
+    changable: false,
+    original: { value: "" },
+    modified: { value: "" },
+    options: {},
+    originalOptions: {},
+    modifiedOptions: {},
+    diffOptions: {},
+} as const;

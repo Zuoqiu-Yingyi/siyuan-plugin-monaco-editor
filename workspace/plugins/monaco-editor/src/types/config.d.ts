@@ -16,8 +16,19 @@
  */
 
 import type { editor as Editor } from "monaco-editor";
+import type { Electron } from "@workspace/types/electron";
 
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
+
+export interface IWindow {
+    options: IWindowOptions;
+}
+
+export interface IWindowOptions extends Electron.BrowserWindowConstructorOptions {
+    width: number, // 窗口宽度
+    height: number, // 窗口高度
+    center: boolean, // 是否居中
+}
 
 export interface IEditor {
     options: IEditorOptions;
@@ -45,5 +56,6 @@ export interface IEditorOptions extends IMonacoEditorOptions {
 }
 
 export interface IConfig {
+    window: IWindow;
     editor: IEditor;
 }

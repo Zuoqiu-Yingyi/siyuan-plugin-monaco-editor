@@ -467,14 +467,14 @@ export default class WebviewPlugin extends siyuan.Plugin {
             case "a":
                 meta.valid = true;
                 meta.enabled = targets.hyperlink.other.enable;
-                meta.href = (element as HTMLAnchorElement).href;
+                meta.href = (element as HTMLAnchorElement).href || "";
                 meta.title = element.title || element.innerText;
                 break;
             case "span":
                 if (/\ba\b/.test(element.dataset.type)) {
                     meta.valid = true;
                     meta.enabled = targets.hyperlink.editor.enable;
-                    meta.href = element.dataset.href;
+                    meta.href = element.dataset.href || "";
                     meta.title = element.dataset.title || element.innerText;
                 }
                 break;
