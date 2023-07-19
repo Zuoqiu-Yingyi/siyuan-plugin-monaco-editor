@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { editor as Editor } from "monaco-editor";
+import type { Uri, editor as Editor } from "monaco-editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import type MonacoEditorPlugin from "@/index";
 
@@ -55,7 +55,6 @@ export interface IEditorProps extends IEditorFunction, IEditorOptions {
 export interface IEditorModel {
     value: string; // 编辑器内容
     language?: string; // 编辑器语言模式
-    uri?: Editor.Uri; // 通过 URI 推断编辑器语言模式
 }
 
 /* 侧边栏编辑器 */

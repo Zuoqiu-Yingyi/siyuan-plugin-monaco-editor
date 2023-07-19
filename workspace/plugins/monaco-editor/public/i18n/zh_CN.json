@@ -5,6 +5,9 @@
         },
         "realTime": {
             "ariaLabel": "实时保存更改"
+        },
+        "workspace": {
+            "text": "工作空间"
         }
     },
     "displayName": "代码编辑器",
@@ -34,6 +37,9 @@
         }
     },
     "menu": {
+        "editAssetFile": {
+            "label": "编辑资源文件"
+        },
         "export": {
             "accelerator": "导出"
         },

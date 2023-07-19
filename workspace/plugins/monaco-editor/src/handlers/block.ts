@@ -83,7 +83,7 @@ export class BlockHandler extends Handler {
             if (wrap) {
                 value = wrap(value);
             }
-            this.plugin.client.updateBlock({
+            await this.plugin.client.updateBlock({
                 id,
                 dataType: "markdown",
                 data: value,

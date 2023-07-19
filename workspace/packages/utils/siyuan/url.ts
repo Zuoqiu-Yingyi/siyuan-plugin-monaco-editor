@@ -88,11 +88,16 @@ export function parseSiyuanURL(url: URL) {
 /**
  * 判断一个超链接是否为思源静态文件服务
  * @param href: 超链接地址
+ * @param workspace: 是否为工作空间下的目录
  */
-export function isStaticPathname(href: string): boolean {
+export function isStaticPathname(
+    href: string,
+    workspace: boolean = true,
+): boolean {
     if (href.startsWith("/")) href = href.substring(1);
     switch (true) {
         case href.startsWith("stage/"): // 安装目录/resources/stage
+            return !workspace;
 
         case href.startsWith("appearance/"): // 工作空间/conf/appearance
         case href.startsWith("export/"): // 工作空间/temp/export
@@ -109,5 +114,32 @@ export function isStaticPathname(href: string): boolean {
 
         default:
             return false;
+    }
+}
+
+/**
+ * 思源静态 web 文件路径转换为相对于工作空间的路径
+ * @param pathname: 思源静态 web 文件路径
+ * @return: 工作空间路径
+ */
+export function staticPathname2WorkspacePath(pathname: string): string {
+    if (pathname.startsWith("/")) pathname = pathname.substring(1);
+    switch (true) {
+        case pathname.startsWith("assets/"): // 工作空间/data/assets
+        case pathname.startsWith("emojies/"): // 工作空间/data/emojies
+        case pathname.startsWith("plugins/"): // 工作空间/data/plugins
+        case pathname.startsWith("plugins/"): // 工作空间/data/plugins
+        case pathname.startsWith("snippets/"): // 工作空间/data/snippets
+        case pathname.startsWith("templates/"): // 工作空间/data/templates
+        case pathname.startsWith("widgets/"): // 工作空间/data/widgets
+            return `data/${pathname}`;
+        case pathname.startsWith("appearance/"): // 工作空间/conf/appearance
+            return `conf/${pathname}`;
+        case pathname.startsWith("export/"): // 工作空间/temp/export
+            return `temp/${pathname}`;
+        case pathname.startsWith("history/"): // 工作空间/history
+            return pathname;
+        default:
+            throw new Error(`'${pathname}' is not a valid file pathname`);
     }
 }

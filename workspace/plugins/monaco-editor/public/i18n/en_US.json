@@ -5,6 +5,9 @@
         },
         "realTime": {
             "ariaLabel": "Save changes in real time"
+        },
+        "workspace": {
+            "text": "Workspace"
         }
     },
     "displayName": "Code Editor",
@@ -34,6 +37,9 @@
         }
     },
     "menu": {
+        "editAssetFile": {
+            "label": "Edit Asset File"
+        },
         "export": {
             "accelerator": "Export"
         },

@@ -3,6 +3,7 @@
 ## 2023-07-19
 
 - 在新页签/新窗口中打开编辑器 | Open editor in new tab/new window.
+- 编辑资源文件 | Edit asset files.
 
 ## 2023-07-18
 
