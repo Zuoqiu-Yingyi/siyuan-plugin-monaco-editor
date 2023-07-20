@@ -2,7 +2,7 @@
     "name": "custom-block",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-block",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "minAppVersion": "2.9.0",
     "backends": [
         "all"
