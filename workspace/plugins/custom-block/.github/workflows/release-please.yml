@@ -12,6 +12,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  PACKAGE_NAME: custom-block
+  PACKAGE_VERSION: 1.0.2
 
 jobs:
   release-please:
@@ -24,7 +27,8 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: release-please-action
+          package-name: ${{ env.PACKAGE_NAME }}
+          release-as: ${{ env.PACKAGE_VERSION }}
 
           ## A GitHub secret token, the action defaults to using the special secrets.GITHUB_TOKEN
           ## REF https://github.com/marketplace/actions/release-please-action#github-credentials

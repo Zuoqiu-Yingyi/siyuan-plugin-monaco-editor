@@ -5,6 +5,7 @@
 - 优化编辑器另存为选项 | Optimize editor save as option.
 - 编辑器中思源字段支持悬浮预览域点击跳转 | SiYuan tokens in the editor support hover preview area click to jump.
 - 修复列表导图视图滚动条异常问题 | Fix the issue of abnormal scroll bar in list mind-map view.
+- 优化 CD 配置 | Optimize CD configuration.
 
 ## 2023-07-19
 
