@@ -264,6 +264,27 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 在浮窗打开块 */
+    public openFloatLayer(options: { id: BlockID }): void {
+        this.addFloatLayer({
+            ids: [options.id],
+            x: 0,
+            y: 0,
+        });
+    }
+
+    /* 在新页签打开块 */
+    public openDocTab(options: { id: BlockID, focus?: number }): siyuan.ITab {
+        return siyuan.openTab({
+            app: this.app,
+            doc: {
+                id: options.id,
+                action: ["cb-get-focus", "cb-get-hl"],
+                zoomIn: options.focus === 1,
+            },
+        });
+    }
+
     /* 编辑器点击事件监听器 */
     protected readonly clickEditorContentEventListener = (e: IClickEditorContentEvent) => {
         // this.logger.debug(e);

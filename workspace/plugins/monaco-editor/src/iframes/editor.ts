@@ -77,6 +77,8 @@ const bridge = new EditorBridgeSlave(
                 /* 监听更改与保存事件 */
                 editor.$on("changed", e => bridge.changed(e.detail));
                 editor.$on("save", e => bridge.save(e.detail));
+                editor.$on("hover", e => bridge.hover(e.detail));
+                editor.$on("open", e => bridge.open(e.detail));
             },
         );
         /* 更改编辑器配置 */

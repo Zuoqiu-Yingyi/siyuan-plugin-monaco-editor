@@ -87,6 +87,12 @@
     bridge.addEventListener("editor-save", e => {
         dispatch("save", e.data.data);
     });
+    bridge.addEventListener("editor-hover-siyuan", e => {
+        dispatch("hover", e.data.data);
+    });
+    bridge.addEventListener("editor-open-siyuan", e => {
+        dispatch("open", e.data.data);
+    });
     onMount(() => {
         bridge.createEditorIframe(iframe);
     });

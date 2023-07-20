@@ -120,8 +120,21 @@
         }
     }
 
+    /* 保存内容 */
     function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
         handler.update?.(e.detail.value);
+    }
+
+    /* 悬浮事件 */
+    function hover(e: ComponentEvents<EditorIframe>["hover"]) {
+        /* 悬浮显示思源块 */
+        plugin.openFloatLayer(e.detail);
+    }
+
+    /* 打开链接事件 */
+    function open(e: ComponentEvents<EditorIframe>["open"]) {
+        /* 在新页签打开思源块 */
+        plugin.openDocTab(e.detail);
     }
 </script>
 
@@ -129,6 +142,8 @@
 <EditorIframe
     on:save={update}
     on:changed={update}
+    on:hover={hover}
+    on:open={open}
     {plugin}
     {savable}
     changable={realTime}

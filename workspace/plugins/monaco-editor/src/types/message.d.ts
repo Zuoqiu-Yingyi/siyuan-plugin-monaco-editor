@@ -74,6 +74,8 @@ export interface IMessageEditorSlaveEventMap {
     "editor-ready": MessageEvent<IMessageEditorReady>;
     "editor-changed": MessageEvent<IMessageEditorChanged>;
     "editor-save": MessageEvent<IMessageEditorSave>;
+    "editor-hover-siyuan": MessageEvent<IMessageEditorHoverSiyuan>;
+    "editor-open-siyuan": MessageEvent<IMessageEditorOpenSiyuan>;
     // [key: string]: MessageEvent<IMessage>;
 }
 
@@ -95,4 +97,16 @@ export interface IMessageEditorChanged extends IMessage {
 export interface IMessageEditorSave extends IMessage {
     channel: "editor-save";
     data: IEditorEvent["save"];
+}
+
+/* 鼠标悬浮事件 */
+export interface IMessageEditorHoverSiyuan extends IMessage {
+    channel: "editor-hover-siyuan";
+    data: IEditorEvent["hover"];
+}
+
+/* 打开链接事件 */
+export interface IMessageEditorOpenSiyuan extends IMessage {
+    channel: "editor-open-siyuan";
+    data: IEditorEvent["open"];
 }

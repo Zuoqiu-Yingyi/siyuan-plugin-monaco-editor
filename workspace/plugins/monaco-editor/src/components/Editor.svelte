@@ -238,7 +238,11 @@
         init.then(instance => {
             monaco = instance;
             // plugin.logger.debug(monaco.languages.getLanguages());
-            languages = new Languages(monaco.languages.getLanguages());
+            languages = new Languages(
+                plugin,
+                monaco,
+                dispatch,
+            );
 
             if (diff) {
                 // 差异对比编辑器

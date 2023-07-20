@@ -3,6 +3,7 @@
 ## 2023-07-20
 
 - 优化编辑器另存为选项 | Optimize editor save as option.
+- 编辑器中思源字段支持悬浮预览域点击跳转 | SiYuan tokens in the editor support hover preview area click to jump.
 
 ## 2023-07-19
 

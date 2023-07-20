@@ -60,7 +60,7 @@ import {
     type ILocalBreadcrumbOptions,
     type ILocalStore,
 } from "@/breadcrumb/local";
-import { NetworkHandler, type INetworkHandlerOptions } from "@/handlers/network";
+import { NetworkHandler, type INetworkHandlerOptions, type INetworkHandler } from "@/handlers/network";
 import { NetworkBreadcrumb, type INetworkBreadcrumbOptions, type INetworkStore } from "@/breadcrumb/network";
 
 /* 处理器类型 */
@@ -86,7 +86,7 @@ export type IStore = IBlockStore
 export type IFacadeHandler = IBlockHandler
     | IAssetHandler
     | ILocalHandler
-    | INetworkStore;
+    | INetworkHandler;
 
 export type IFacadeWindowOptions = Pick<IFacadeOptions, "type" | "handler">;
 
