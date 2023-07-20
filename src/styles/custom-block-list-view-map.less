@@ -40,6 +40,15 @@
         .protyle-content {
 
             [custom-block-list-view=map] {
+
+                &.protyle-wysiwyg,
+                [data-node-id]:not(.li) {
+                    >[data-node-id].list {
+                        /* 文档块样式 */
+                        overflow-x: auto;
+                    }
+                }
+
                 &[data-node-id].list {
                     /* 导图块样式 */
                     overflow-x: auto;
@@ -61,6 +70,7 @@
                 }
 
                 [data-node-id] {
+
                     // 列表块
                     &.list {
                         /* 整个导图列表取消缩进 */
