@@ -77,10 +77,11 @@
                     >[data-node-id] {
                         &:not(.li, .list) {
                             /* 列表项内容 */
+                            min-width: var(--custom-block-list-view-table-min-width);
+                            max-width: var(--custom-block-list-view-table-max-width);
                             margin-right: 0.5em;
                             align-items: center;
                             display: flex;
-                            min-width: var(--custom-block-list-view-table-min-width);
                             text-align: justify;
                             flex-shrink: 0;
                         }
