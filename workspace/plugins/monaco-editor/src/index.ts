@@ -27,12 +27,13 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
-import { getBlockID } from "@workspace/utils/siyuan/dom";
+import { getBlockID, getHistoryCreated, getHistoryPath, getShorthandID, getSnapshotIDs, getSnippetID } from "@workspace/utils/siyuan/dom";
 import { isStaticPathname } from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
+import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 
 /* 组件 */
 import Dock from "./components/Dock.svelte";
@@ -44,7 +45,7 @@ import {
     siyuanConfig2EditorOptions,
 } from "./configs/default";
 import { Inline, Language } from "./handlers/block";
-import { EditorWindow } from "./utils/window";
+import { EditorWindow } from "./editor/window";
 import { HandlerType, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
@@ -166,8 +167,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
-                // globalThis.addEventListener(this.config.view.open.mouse.type, this.openViewEventListener, true);
-                // globalThis.addEventListener(this.config.edit.open.mouse.type, this.openEditEventListener, true);
+                /* 注册触发打开窗口动作的监听器 */
+                globalThis.addEventListener(this.config.operate.view.open.mouse.type, this.openViewEventListener, true);
+                globalThis.addEventListener(this.config.operate.edit.open.mouse.type, this.openEditEventListener, true);
 
                 /* 编辑区点击 */
                 this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
@@ -209,8 +211,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
-        // globalThis.removeEventListener(this.config.view.open.mouse.type, this.openTabEventListener, true);
-        // globalThis.removeEventListener(this.config.edit.open.mouse.type, this.openWindowEventListener, true);
+        globalThis.removeEventListener(this.config.operate.view.open.mouse.type, this.openViewEventListener, true);
+        globalThis.removeEventListener(this.config.operate.edit.open.mouse.type, this.openEditEventListener, true);
 
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
@@ -283,6 +285,137 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 zoomIn: options.focus === 1,
             },
         });
+    }
+
+    /* 处理打开事件 */
+    protected openEventHandler(e: MouseEvent, edit: boolean) {
+        // this.logger.debug(e.composedPath());
+
+        /* 代码片段 */
+        const snippet_id = getSnippetID(e); // 获取代码片段 ID
+        // this.logger.debug(snippet_id);
+        if (snippet_id) {
+            /**
+             * TODO: 使用 API /api/snippet/getSnippet 获取代码片段列表
+             * TODO: 通过 ID 获得对应的代码片段内容并更新
+             * TODO: 使用 API /api/snippet/setSnippet 设置代码片段列表
+             */
+            // TODO: 在新窗口打开代码片段内容编辑器
+        }
+
+        /* 收集箱 */
+        const shorthand_id = getShorthandID(e); // 获取收集箱 ID
+        // this.logger.debug(shorthand_id);
+        if (shorthand_id) {
+            /**
+             * TODO: 使用 API /api/inbox/getShorthand 通过收集箱项 ID 获取收集箱内容
+             *   response.data.shorthandContent: 带 YFM 的 markdown
+             */
+            if (!edit) {
+                // TODO: 在新页签打开收集箱内容编辑器
+            }
+            else {
+                // TODO: 在新窗口打开收集箱内容编辑器
+            }
+        }
+
+        /* 文档历史创建时间 */
+        const history_created = getHistoryCreated(e); // 获取历史文档路径
+        // this.logger.debug(history_created);
+        if (history_created) {
+            /* 通过获取文档树激活的文档项获取对应的文档块 ID */
+            const doc_elemetn = globalThis.document.querySelector(".sy__file .b3-list-item--focus");
+            const doc_id = (doc_elemetn as HTMLElement)?.dataset?.nodeId;
+            if (doc_id) { // 获取到对应的文档 ID
+                /**
+                 * TODO: 使用 API /api/history/getHistoryItems 通过创建时间并查询 ID 获取历史文件路径
+                 * TODO: 使用 API /api/history/getDocHistoryContent 通过历史文件路径查询文档内容
+                 *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
+                 *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
+                 */
+                if (!edit) {
+                    // TODO: 在新窗口对比查看文档历史 (markdown)
+                }
+                else {
+                    // TODO: 在新窗口对比编辑文档历史 (kramdown)
+                }
+            }
+        }
+
+        /* 文档历史 */
+        const history_path = getHistoryPath(e); // 获取历史文档路径
+        // this.logger.debug(history_path);
+        if (history_path) {
+            if (history_path.endsWith(".sy")) {
+                /**
+                 * TODO: 查询对应的文档块 ID 是否存在
+                 * TODO: 使用 API /api/history/getDocHistoryContent 通过历史文件路径查询文档内容
+                 *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
+                 *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
+                 */
+                if (!edit) {
+                    // TODO: 在新窗口查看文档历史 (markdown)
+                }
+                else {
+                    // TODO: 在新窗口编辑文档历史 (kramdown)
+                }
+            }
+        }
+
+        /* 文件快照 */
+        const {
+            id: snapshot_old, // 较早的快照
+            id2: snapshot_new, // 较晚的快照
+            name: snapshot_name, // 快照文件名/文档标题
+        } = getSnapshotIDs(e);
+        // this.logger.debug(snapshot_old, snapshot_new);
+        if (snapshot_old && snapshot_new && snapshot_name) {
+            /**
+             * TODO: 使用 API /api/repo/openRepoSnapshotDoc 通过快照对象 id 获取快照对象对应的内容
+             * response.data.isProtyleDoc = true 时为文件, 渲染原始内容
+             * response.data.isProtyleDoc = false 时为文档, 需要使用 lute 转换
+             */
+            if (!edit) {
+                // TODO: 在新窗口查看文档历史 (markdown)
+            }
+            else {
+                // TODO: 在新窗口查看文档历史 (kramdown)
+            }
+        }
+    }
+
+    /* 打开查看窗口监听器 */
+    protected readonly openViewEventListener = (e: MouseEvent) => {
+        try {
+            // this.logger.debug(e);
+
+            /* 判断功能是否已启用 */
+            if (!this.config.operate.view.open.enable) return;
+
+            /* 判断事件是否为目标事件 */
+            if (!isMatchedMouseEvent(e, this.config.operate.view.open.mouse)) return;
+
+            this.openEventHandler(e, false);
+        } catch (e) {
+            this.logger.warn(e);
+        }
+    }
+
+    /* 打开编辑窗口监听器 */
+    protected readonly openEditEventListener = (e: MouseEvent) => {
+        try {
+            // this.logger.debug(e);
+
+            /* 判断功能是否已启用 */
+            if (!this.config.operate.edit.open.enable) return;
+
+            /* 判断事件是否为目标事件 */
+            if (!isMatchedMouseEvent(e, this.config.operate.edit.open.mouse)) return;
+
+            this.openEventHandler(e, true);
+        } catch (e) {
+            this.logger.warn(e);
+        }
     }
 
     /* 编辑器点击事件监听器 */

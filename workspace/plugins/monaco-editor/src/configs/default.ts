@@ -16,6 +16,7 @@
  */
 
 import type { IConfig, IMonacoEditorOptions } from "@/types/config";
+import { MouseButton } from "@workspace/utils/shortcut";
 // import type { editor as Editor } from "monaco-editor";
 
 /**
@@ -38,6 +39,38 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
 }
 
 export const DEFAULT_CONFIG: IConfig = {
+    operate: {
+        view: {
+            open: {
+                enable: true,
+                mouse: {
+                    type: "mousedown",
+                    button: MouseButton.Middle,
+
+                    /* Alt + 鼠标中键 */
+                    altKey: true,
+                    ctrlKey: false,
+                    metaKey: false,
+                    shiftKey: false,
+                },
+            },
+        },
+        edit: {
+            open: {
+                enable: true,
+                mouse: {
+                    type: "mousedown",
+                    button: MouseButton.Middle,
+
+                    /* Shift + Alt + 鼠标中键 */
+                    altKey: true,
+                    ctrlKey: false,
+                    metaKey: false,
+                    shiftKey: true,
+                },
+            },
+        },
+    },
     window: {
         options: {
             width: 800, // 窗口宽度

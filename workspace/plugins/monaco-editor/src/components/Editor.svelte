@@ -29,7 +29,7 @@
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
     import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
-    import { Languages } from "@/utils/language";
+    import { Languages } from "@/editor/language";
 
     export let plugin: IEditorProps["plugin"];
 

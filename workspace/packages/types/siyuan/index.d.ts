@@ -17,7 +17,12 @@
 
 import siyuan from "siyuan";
 
-export type BlockID = string;
+export type BlockID = string; // 块 ID
+export type SnippetID = string; // 代码片段 ID
+export type SnapshotID = string; // 快照对象 ID
+export type ShorthandID = string; // 收集箱项 ID
+export type HistoryPath = string; // 历史文档路径
+export type HistoryCreated = string; // 文档历史创建时间
 
 export type openTabParameters = Parameters<siyuan.openTab>;
 export type openTabParametersOptions = openTabParameters[0];

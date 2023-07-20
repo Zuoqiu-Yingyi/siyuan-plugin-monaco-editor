@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-21
+
+- 鼠标事件触发编辑器打开 | Mouse event triggers editor open.
+
 ## 2023-07-20
 
 - 优化编辑器另存为选项 | Optimize editor save as option.
