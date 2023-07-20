@@ -34,6 +34,17 @@
             "toggleWordWrap": {
                 "label": "Toggle Word Wrap"
             }
+        },
+        "tooltip": {
+            "siyuanBlockHyperlink": {
+                "label": "SiYuan block hyperlink"
+            },
+            "siyuanBlockID": {
+                "label": "SiYuan block ID"
+            },
+            "siyuanBlockReference": {
+                "label": "SiYuan block reference"
+            }
         }
     },
     "menu": {

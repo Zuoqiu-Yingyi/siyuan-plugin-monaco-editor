@@ -34,6 +34,17 @@
             "toggleWordWrap": {
                 "label": "切換自動換行"
             }
+        },
+        "tooltip": {
+            "siyuanBlockHyperlink": {
+                "label": "思源塊超連結"
+            },
+            "siyuanBlockID": {
+                "label": "思源塊 ID"
+            },
+            "siyuanBlockReference": {
+                "label": "思源塊引用"
+            }
         }
     },
     "menu": {

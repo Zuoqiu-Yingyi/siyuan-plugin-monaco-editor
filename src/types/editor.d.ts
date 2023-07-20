@@ -18,6 +18,7 @@
 import type { Uri, editor as Editor } from "monaco-editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import type MonacoEditorPlugin from "@/index";
+import type { BlockID } from "@workspace/types/siyuan";
 
 export type IStandaloneEditorOptions = Editor.IEditorOptions & Editor.IGlobalEditorOptions;
 
@@ -77,4 +78,9 @@ export interface IEditorEvent {
         event: Editor.IModelContentChangedEvent;
     }; // 内容更改事件
     save: { value: string }; // 保存事件
+    hover: { id: BlockID }; // 鼠标在思源相关字段上方悬浮
+    open: {
+        id: BlockID, // 思源块 ID
+        focus?: number, // 是否聚焦
+    }; // 访问思源相关字段
 }

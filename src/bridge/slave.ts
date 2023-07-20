@@ -30,6 +30,8 @@ import type {
     IMessageEditorReady,
     IMessageEditorChanged,
     IMessageEditorSave,
+    IMessageEditorHoverSiyuan,
+    IMessageEditorOpenSiyuan,
 } from "@/types/message";
 
 export type MasterMessageEvent = IMessageEditorMasterEventMap[keyof IMessageEditorMasterEventMap];
@@ -112,6 +114,30 @@ export class EditorBridgeSlave {
         /* 组装消息 */
         const message: IMessageEditorSave = {
             channel: "editor-save",
+            data,
+        };
+
+        /* 发送消息 */
+        this.port.postMessage(message);
+    }
+
+    /* 编辑器悬浮思源字段 */
+    public hover(data: IMessageEditorHoverSiyuan["data"]) {
+        /* 组装消息 */
+        const message: IMessageEditorHoverSiyuan = {
+            channel: "editor-hover-siyuan",
+            data,
+        };
+
+        /* 发送消息 */
+        this.port.postMessage(message);
+    }
+
+    /* 编辑器打开思源字段 */
+    public open(data: IMessageEditorOpenSiyuan["data"]) {
+        /* 组装消息 */
+        const message: IMessageEditorOpenSiyuan = {
+            channel: "editor-open-siyuan",
             data,
         };
 
