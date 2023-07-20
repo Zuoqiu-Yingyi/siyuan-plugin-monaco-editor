@@ -173,7 +173,7 @@ export const DEFAULT_CONFIG: IConfig = {
             enable: true,
             mode: MenuItemMode.button,
             multi: false,
-            icon: "iconSpreadOdd",
+            icon: "iconOrderedList",
             accelerator: "render: index",
             style: true,
             token: "render-index",
