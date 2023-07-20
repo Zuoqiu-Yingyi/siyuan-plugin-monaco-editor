@@ -17,11 +17,29 @@
 
 import type { editor as Editor } from "monaco-editor";
 import type { Electron } from "@workspace/types/electron";
+import type { IMouseStatus } from "@workspace/utils/shortcut";
 
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
 
+/* 鼠标操作 */
+export interface IMouseOperate {
+    enable: boolean;
+    mouse: IMouseStatus;
+}
+
+/* 支持的操作 */
+export interface IOperates {
+    open: IMouseOperate; // 打开操作
+}
+
+/* 操作 */
+export interface IOperate {
+    view: IOperates; // 查看操作
+    edit: IOperates; // 编辑操作
+}
+
 export interface IWindow {
-    options: IWindowOptions;
+    options: IWindowOptions; // 窗口设置
 }
 
 export interface IWindowOptions extends Electron.BrowserWindowConstructorOptions {
@@ -56,6 +74,7 @@ export interface IEditorOptions extends IMonacoEditorOptions {
 }
 
 export interface IConfig {
+    operate: IOperate;
     window: IWindow;
     editor: IEditor;
 }

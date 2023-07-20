@@ -19,7 +19,7 @@
 import * as sdk from "@siyuan-community/siyuan-sdk";
 
 import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
-import { heightlight2monaco } from "@/utils/language";
+import { heightlight2monaco } from "@/editor/language";
 
 import type { BlockID } from "@workspace/types/siyuan";
 import type { IEditorModel } from "@/types/editor";
