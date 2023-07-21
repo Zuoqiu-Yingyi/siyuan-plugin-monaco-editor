@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-22
+
+- 添加文件资源管理面板 | Add file resource management panel.
+
 ## 2023-07-21
 
 - 鼠标事件触发编辑器打开 | Mouse event triggers editor open.

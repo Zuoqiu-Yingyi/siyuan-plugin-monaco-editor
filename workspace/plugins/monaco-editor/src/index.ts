@@ -21,6 +21,9 @@ import siyuan from "siyuan";
 /* 静态资源 */
 import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw"
 import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw"
+import icon_file_tree from "./assets/symbols/icon-monaco-editor-file-tree.symbol?raw"
+import icon_folder_opend from "./assets/symbols/icon-monaco-editor-folder-opend.symbol?raw"
+import icon_folder_closed from "./assets/symbols/icon-monaco-editor-folder-closed.symbol?raw"
 
 /* SDK */
 import { Client } from "@siyuan-community/siyuan-sdk";
@@ -34,10 +37,12 @@ import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
+import { normalize } from "@workspace/utils/path/normalize";
 
 /* 组件 */
-import Dock from "./components/Dock.svelte";
 import Tab from "./components/Tab.svelte";
+import EditorDock from "./components/EditorDock.svelte";
+import ExplorerDock from "./components/ExplorerDock.svelte";
 
 /* 项目资源 */
 import {
@@ -71,12 +76,18 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected readonly EDITOR_URL: URL;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly tab: ReturnType<siyuan.Plugin["addTab"]>;
-    protected readonly dock: {
+    protected readonly editorDock: {
         // editor: InstanceType<typeof Editor>,
-        object: ReturnType<siyuan.Plugin["addDock"]>,
+        dock: ReturnType<siyuan.Plugin["addDock"]>,
         model?: siyuan.IModel,
-        component?: InstanceType<typeof Dock>,
-    };
+        component?: InstanceType<typeof EditorDock>,
+    }; // 编辑器面板
+    protected readonly explorerDock: {
+        // editor: InstanceType<typeof Editor>,
+        dock: ReturnType<siyuan.Plugin["addDock"]>,
+        model?: siyuan.IModel,
+        component?: InstanceType<typeof ExplorerDock>,
+    }; // 资源管理器面板
 
     constructor(options: any) {
         super(options);
@@ -107,11 +118,11 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 this.component?.$destroy();
             },
         });
-        this.dock = {
-            object: this.addDock({
+        this.editorDock = {
+            dock: this.addDock({
                 config: {
                     position: "BottomRight",
-                    size: { width: 256, height: 256 },
+                    size: { width: 0, height: 256 },
                     icon: "iconCode",
                     title: this.i18n.dock.title,
                     show: true,
@@ -122,12 +133,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     inline: Inline.mark,
                     language: Language.kramdown,
                 } as IDockData,
-                type: "-dock-panel",
+                type: "-dock-editor",
                 init() {
                     // plugin.logger.debug(this);
 
                     (this.element as HTMLElement).classList.add("fn__flex-column");
-                    const dock = new Dock({
+                    const dock = new EditorDock({
                         target: this.element,
                         props: {
                             plugin,
@@ -141,15 +152,50 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             ...(this.data as IDockData),
                         },
                     });
-                    plugin.dock.model = this;
-                    plugin.dock.component = dock;
+                    plugin.editorDock.model = this;
+                    plugin.editorDock.component = dock;
                 },
                 destroy() {
-                    plugin.dock.component?.$destroy();
-                    delete plugin.dock.component;
+                    plugin.editorDock.component?.$destroy();
+                    delete plugin.editorDock.component;
+                    delete plugin.editorDock.model;
                 },
             }),
-        }
+        };
+        this.explorerDock = {
+            dock: this.addDock({
+                config: {
+                    position: "LeftTop",
+                    size: { width: 256, height: 0 },
+                    icon: "icon-monaco-editor-file-tree",
+                    title: this.i18n.explorer.title,
+                    show: true,
+                },
+                data: {
+                    workspace: normalize(globalThis.siyuan.config.system.workspaceDir),
+                },
+                type: "-dock-explorer",
+                init() {
+                    // plugin.logger.debug(this);
+
+                    (this.element as HTMLElement).classList.add("fn__flex-column");
+                    const dock = new ExplorerDock({
+                        target: this.element,
+                        props: {
+                            plugin,
+                            ...this.data,
+                        },
+                    });
+                    plugin.explorerDock.model = this;
+                    plugin.explorerDock.component = dock;
+                },
+                destroy() {
+                    plugin.explorerDock.component?.$destroy();
+                    delete plugin.explorerDock.component;
+                    delete plugin.explorerDock.model;
+                },
+            }),
+        };
     }
 
     onload(): void {
@@ -158,6 +204,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.addIcons([
             icon_plugin, // 插件图标
             icon_slash, // 斜杠图标
+            icon_file_tree, // 文件树
+            icon_folder_opend, // 工作空间
+            icon_folder_closed, // 工作空间
         ].join(""));
 
         this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME)
@@ -260,9 +309,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     /* 更新侧边栏编辑器内容 */
     public updateDockEditor(id: BlockID): void {
-        if (this.dock.model && this.dock.component) {
-            this.dock.model.data.id = id;
-            this.dock.component.$set({ id });
+        if (this.editorDock.model && this.editorDock.component) {
+            this.editorDock.model.data.id = id;
+            this.editorDock.component.$set({ id });
         }
     }
 

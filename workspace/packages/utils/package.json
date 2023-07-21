@@ -9,7 +9,9 @@
         "@types/file-saver": "^2.0.5",
         "deepmerge": "^4.3.1",
         "file-saver": "^2.0.5",
-        "parse-data-url": "^5.0.0"
+        "normalize-path": "^3.0.0",
+        "parse-data-url": "^5.0.0",
+        "path-browserify": "^1.0.1"
     },
     "dependencies": {
         "@workspace/tsconfig": "workspace:^",

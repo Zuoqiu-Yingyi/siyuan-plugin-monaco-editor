@@ -25,6 +25,7 @@
 
     export let icon: IBlockIconProps["icon"] = "#iconHelp";
 
+    export let tag: IBlockIconProps["icon"] = "button";
     export let show: IBlockIconProps["show"] = true;
     export let none: IBlockIconProps["none"] = false;
     export let active: IBlockIconProps["active"] = false;
@@ -35,7 +36,7 @@
     export let tooltipsDirection: IBlockIconProps["tooltipsDirection"] = TooltipsDirection.none;
     export let onClick: IBlockIconProps["onClick"] = () => null;
 
-    let button: HTMLButtonElement;
+    let element: HTMLElement;
 
     /* 外部响应式变量 */
     const props: IBlockIconStores = {
@@ -74,11 +75,16 @@
     });
 </script>
 
-<button
-    bind:this={button}
+<!-- 
+    动态标签名
+    REF: https://svelte.dev/docs/special-elements#svelte-element
+-->
+<svelte:element
+    this={tag}
+    bind:this={element}
     on:click
     on:dblclick
-    on:click={e => onClick(e, button, props)}
+    on:click={e => onClick(e, element, props)}
     data-type={type}
     aria-label={ariaLabel}
     class:fn__none={none}
@@ -89,4 +95,4 @@
     class="block__icon fn__flex-center {tooltipsDirection}"
 >
     <Svg {icon} />
-</button>
+</svelte:element>

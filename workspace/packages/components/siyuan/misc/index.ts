@@ -21,6 +21,7 @@ import type { TooltipsDirection } from "./tooltips";
 /* 状态变量 */
 export interface IBlockIconStatus {
     icon: string; // svg 图标引用 ID
+    tag?: string; // 元素 HTML 标签名称
     none?: boolean; // 是否隐藏 .fn__none (display: none)
     show?: boolean; // 是否显示 .block__icon--show (opacity: 1)
     active?: boolean; // 是否激活 .toolbar__item--active

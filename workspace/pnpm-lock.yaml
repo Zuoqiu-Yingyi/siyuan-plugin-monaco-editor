@@ -124,9 +124,15 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
+      normalize-path:
+        specifier: ^3.0.0
+        version: 3.0.0
       parse-data-url:
         specifier: ^5.0.0
         version: 5.0.0
+      path-browserify:
+        specifier: ^1.0.1
+        version: 1.0.1
 
   plugins/custom-block:
     dependencies:
