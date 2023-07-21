@@ -12,6 +12,9 @@
     },
     "displayName": "代码编辑器",
     "dock": {
+        "collapse": {
+            "ariaLabel": "折叠所有文件夹"
+        },
         "inline": {
             "ariaLabel": "markdown: 编辑标准 markdown\nkramdown: 行内元素使用 <span> 标签"
         },
@@ -45,6 +48,36 @@
             "siyuanBlockReference": {
                 "label": "思源块引用"
             }
+        }
+    },
+    "explorer": {
+        "count": {
+            "ariaLabel": "资源数量"
+        },
+        "file": {
+            "ariaLabel": "文件"
+        },
+        "fold": {
+            "ariaLabel": "折叠"
+        },
+        "folder": {
+            "ariaLabel": "文件夹"
+        },
+        "menu": {
+            "ariaLabel": "菜单"
+        },
+        "refresh": {
+            "ariaLabel": "刷新资源管理器"
+        },
+        "title": "文件资源管理器",
+        "toggle": {
+            "ariaLabel": "折叠/展开"
+        },
+        "unfold": {
+            "ariaLabel": "展开"
+        },
+        "workspace": {
+            "name": "工作空间"
         }
     },
     "menu": {

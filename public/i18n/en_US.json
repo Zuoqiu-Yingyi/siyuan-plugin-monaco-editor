@@ -12,6 +12,9 @@
     },
     "displayName": "Code Editor",
     "dock": {
+        "collapse": {
+            "ariaLabel": "Collapse All Folder"
+        },
         "inline": {
             "ariaLabel": "markdown: Edit standard markdown\nkramdown: Inline elements use <span> tags"
         },
@@ -45,6 +48,36 @@
             "siyuanBlockReference": {
                 "label": "SiYuan block reference"
             }
+        }
+    },
+    "explorer": {
+        "count": {
+            "ariaLabel": "Number of Resources"
+        },
+        "file": {
+            "ariaLabel": "File"
+        },
+        "fold": {
+            "ariaLabel": "Collapse"
+        },
+        "folder": {
+            "ariaLabel": "Folder"
+        },
+        "menu": {
+            "ariaLabel": "Menu"
+        },
+        "refresh": {
+            "ariaLabel": "Refresh Explorer"
+        },
+        "title": "File Explorer",
+        "toggle": {
+            "ariaLabel": "Collapse/Expand"
+        },
+        "unfold": {
+            "ariaLabel": "Expand"
+        },
+        "workspace": {
+            "name": "Workspace"
         }
     },
     "menu": {

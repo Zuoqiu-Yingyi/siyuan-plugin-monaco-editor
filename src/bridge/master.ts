@@ -86,11 +86,20 @@ export class EditorBridgeMaster {
             );
         }
         else {
-            // this.channel.port1.addListener(
-            //     "close",
-            //     e => this.plugin.logger.info("browser window close"),
-            // );
+            this.channel.port1.addListener(
+                "close",
+                _e => {
+                    // this.plugin.logger.info("browser window close");
+                    // this.destroy();
+                },
+            );
         }
+    }
+
+    /* 手动销毁资源 */
+    public destroy() {
+        this.channel.port1.close();
+        this.channel.port2.close();
     }
 
     /**
@@ -245,7 +254,7 @@ export class EditorBridgeMaster {
             /* 包装监听器 (以实现 once 功能) */
             const listenerWrapper: MessageEventListener<K> = e => {
                 // this.plugin.logger.debug(e);
-                if (e.data?.channel === channel) {
+                if (e?.data?.channel === channel) {
                     if (options?.once) {
                         this.removeEventListener(channel, listener);
                     }

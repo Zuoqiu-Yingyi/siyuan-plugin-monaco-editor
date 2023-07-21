@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-    import { onMount, createEventDispatcher } from "svelte";
+    import { createEventDispatcher } from "svelte";
+    import type { Action } from "svelte/action";
 
     import { EditorBridgeMaster } from "@/bridge/master";
-    import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
     import type MonacoEditorPlugin from "@/index";
     import type { IEditorEvent, IEditorProps } from "@/types/editor";
@@ -39,7 +39,6 @@
     export let modifiedOptions: IEditorProps["modifiedOptions"] = undefined;
     export let diffOptions: IEditorProps["diffOptions"] = undefined;
 
-    let iframe: HTMLIFrameElement; // iframe
     var inited = false;
 
     const dispatch = createEventDispatcher<IEditorEvent>();
@@ -93,13 +92,24 @@
     bridge.addEventListener("editor-open-siyuan", e => {
         dispatch("open", e.data.data);
     });
-    onMount(() => {
+
+    /* 挂载编辑器 */
+    const init: Action<HTMLIFrameElement> = function (iframe) {
         bridge.createEditorIframe(iframe);
-    });
+        return {
+            destroy() {
+                bridge.destroy();
+            },
+        };
+    };
 </script>
 
+<!-- 
+    use:init: 挂载后调用 {@link init} 方法
+    REF: https://svelte.dev/docs/svelte-action
+ -->
 <iframe
-    bind:this={iframe}
+    use:init
     title={plugin.i18n.displayName}
     class="fn__flex-1 editor"
 />

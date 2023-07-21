@@ -78,10 +78,18 @@ export class EditorWindow {
         this.bridge.addEventListener("editor-save", e => {
             handler.update?.(e.data.data.value);
         });
+        this.bridge.addEventListener("editor-hover-siyuan", e => {
+            /* 悬浮显示思源块 */
+            this.plugin.openFloatLayer(e.data.data);
+        });
+        this.bridge.addEventListener("editor-open-siyuan", e => {
+            /* 在新页签打开思源块 */
+            this.plugin.openDocTab(e.data.data);
+        });
     }
 
     public close() {
         this._window.close();
-        this.bridge.channel.port1.close();
+        this.bridge.destroy();
     }
 }

@@ -163,7 +163,7 @@ export class EditorBridgeSlave {
         }
         else { // 添加新的监听器
             const listenerWrapper: MessageEventListener<K> = e => {
-                if (e.data.channel === channel) {
+                if (e?.data?.channel === channel) {
                     if (options?.once) {
                         this.removeEventListener(
                             channel,
