@@ -33,6 +33,8 @@ import {
     basename,
     extname,
 } from "@workspace/utils/path/browserify";
+import { isBinaryExt } from "@workspace/utils/file/binary";
+import { fn__code, ft__primary } from "@workspace/utils/siyuan/text/span";
 
 import type MonacoEditorPlugin from "@/index";
 
@@ -70,6 +72,7 @@ export type DefaultNodeProps = Required<Pick<
 /* 文件资源管理器 */
 export class Explorer implements ITree {
     public static ICONS = {
+        filetree: "#icon-monaco-editor-file-tree",
         workspace: "#iconWorkspace",
         folder_opend: "#icon-monaco-editor-folder-opend",
         folder_closed: "#icon-monaco-editor-folder-closed",
@@ -195,8 +198,24 @@ export class Explorer implements ITree {
 
         switch (get(props.type)) {
             case FileTreeNodeType.File: {  // 打开文件
-                const ext = extname(get(props.name)); // 文件扩展名
-                // TODO: 打开文件
+                const filename = get(props.name);
+                const path = get(props.relative);
+                const ext = extname(filename); // 文件扩展名
+                if (isBinaryExt(ext)) {
+                    this.plugin.siyuan.confirm(
+                        fn__code(filename), // 标题
+                        [
+                            this.plugin.i18n.message.binaryError,
+                            ft__primary(this.plugin.i18n.message.openAnyway),
+                        ].join("<br />"), // 文本
+                        async () => {
+                            this.plugin.openWorkspaceFile(path);
+                        }, // 确认按钮回调
+                    );
+                }
+                else {
+                    this.plugin.openWorkspaceFile(path);
+                }
                 break;
             }
             case FileTreeNodeType.Root:

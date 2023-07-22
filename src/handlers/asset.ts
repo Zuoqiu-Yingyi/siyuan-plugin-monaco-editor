@@ -21,7 +21,7 @@ import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
-import { getPathExtension } from "@workspace/utils/misc/url";
+import { extname } from "@workspace/utils/path/browserify";
 
 export interface IAssetHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
@@ -29,8 +29,16 @@ export interface IAssetHandler extends IHandler {
     update?: (value: string) => Promise<Blob>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
-export interface IAssetHandlerOptions extends IBaseHandlerOptions {
-    pathname: string; // 资源路径
+export type IAssetHandlerOptions = IAssetHandlerOptions1 | IAssetHandlerOptions2;
+
+export interface IAssetHandlerOptions1 extends IBaseHandlerOptions {
+    pathname: string; // 资源 URL 路径
+    path?: never;
+}
+
+export interface IAssetHandlerOptions2 extends IBaseHandlerOptions {
+    pathname?: never;
+    path: string; // 相对于工作空间目录的路径
 }
 
 export class AssetHandler extends Handler {
@@ -62,12 +70,11 @@ export class AssetHandler extends Handler {
      * 生产一个块处理器
      */
     public async makeHandler(options: IAssetHandlerOptions): Promise<IAssetHandler> {
-        const { pathname } = options;
-        const path = staticPathname2WorkspacePath(pathname);
+        const path = options.path ?? staticPathname2WorkspacePath(options.pathname);
         const handler: IAssetHandler = {
             modified: {
                 value: "",
-                language: getPathExtension(path),
+                language: extname(path),
             },
             options: {
                 tabSize: this.customTabSize,

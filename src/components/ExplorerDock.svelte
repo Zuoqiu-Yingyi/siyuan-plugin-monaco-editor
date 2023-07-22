@@ -37,7 +37,7 @@
 
     /* 标题栏配置 */
     const bar: IBar = {
-        logo: "#iconCode",
+        logo: Explorer.ICONS.filetree,
         title: plugin.i18n.explorer.title,
         icons: [
             {
