@@ -43,6 +43,7 @@ export interface IItem {
     relative: string; // 相对于工作空间目录的相对路径
     isFile: boolean; // 是否为文件
     isFolder: boolean; // 是否为文件夹
+    isSymlink: boolean; // 是否为符号链接
 }
 
 /* 下级资源列表 */
@@ -61,6 +62,8 @@ export type DefaultNodeProps = Required<Pick<
     | "toggleAriaLabel"
     | "menuIcon"
     | "menuAriaLabel"
+    | "symlinkIcon"
+    | "symlinkAriaLabel"
     | "countAriaLabel"
 >>;
 
@@ -111,6 +114,9 @@ export class Explorer implements ITree {
 
             menuIcon: "#iconMore",
             menuAriaLabel: plugin.i18n.explorer.menu.ariaLabel,
+
+            symlinkIcon: "#iconLink",
+            symlinkAriaLabel: plugin.i18n.explorer.symlink.ariaLabel,
 
             // count: undefined,
             countAriaLabel: plugin.i18n.explorer.count.ariaLabel,
@@ -265,6 +271,7 @@ export class Explorer implements ITree {
                     relative: join(relative, item.name),
                     isFile: false,
                     isFolder: true,
+                    isSymlink: item.isSymlink,
                 });
             }
             else {
@@ -274,6 +281,7 @@ export class Explorer implements ITree {
                     relative: join(relative, item.name),                    // relative: `${relative}/${item.name}`,
                     isFile: true,
                     isFolder: false,
+                    isSymlink: item.isSymlink,
                 });
             }
         });
@@ -298,6 +306,7 @@ export class Explorer implements ITree {
                 directory: resources.directory,
 
                 folded: true,
+                symlink: item.isSymlink,
 
                 title: item.path,
 
@@ -321,6 +330,7 @@ export class Explorer implements ITree {
                 directory: resources.directory,
 
                 title: item.path,
+                symlink: item.isSymlink,
 
                 icon: "#iconFile",
                 iconAriaLabel: this.plugin.i18n.explorer.file.ariaLabel,

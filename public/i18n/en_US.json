@@ -69,6 +69,9 @@
         "refresh": {
             "ariaLabel": "Refresh Explorer"
         },
+        "symlink": {
+            "ariaLabel": "Symbolic Link"
+        },
         "title": "File Explorer",
         "toggle": {
             "ariaLabel": "Collapse/Expand"
