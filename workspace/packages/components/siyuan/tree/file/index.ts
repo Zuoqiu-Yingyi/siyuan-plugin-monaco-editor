@@ -66,6 +66,7 @@ export interface IFileTreeNode {
 
     focus?: boolean; // 是否聚焦
     folded?: boolean; // 是否折叠
+    symlink?: boolean; // 是否为符号链接
     draggable?: boolean; // 是否可拖拽
     hideActions?: boolean; // 是否显隐藏功能按钮
 
@@ -83,6 +84,9 @@ export interface IFileTreeNode {
 
     menuIcon?: string; // 菜单图标
     menuAriaLabel?: string; // 菜单提示文本
+
+    symlinkIcon?: string; // 符号链接图标
+    symlinkAriaLabel?: string; // 符号链接提示文本
 
     count?: number; // 数量标志
     countAriaLabel?: string; // 数量标志提示文本

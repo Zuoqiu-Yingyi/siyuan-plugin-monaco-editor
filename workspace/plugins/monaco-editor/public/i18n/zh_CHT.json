@@ -69,6 +69,9 @@
         "refresh": {
             "ariaLabel": "刷新資源管理器"
         },
+        "symlink": {
+            "ariaLabel": "符號連結"
+        },
         "title": "檔案資源管理器",
         "toggle": {
             "ariaLabel": "摺疊/展開"

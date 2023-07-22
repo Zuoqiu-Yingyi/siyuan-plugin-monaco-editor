@@ -34,6 +34,7 @@
 
     export let focus: IFileTreeNode["focus"] = false;
     export let folded: IFileTreeNode["folded"] = true;
+    export let symlink: IFileTreeNode["symlink"] = false;
     export let draggable: IFileTreeNode["draggable"] = false;
     export let hideActions: IFileTreeNode["hideActions"] = true;
 
@@ -52,6 +53,9 @@
     export let menuIcon: IFileTreeNode["menuIcon"] = "#iconMore";
     export let menuAriaLabel: IFileTreeNode["menuAriaLabel"] = "";
 
+    export let symlinkIcon: IFileTreeNode["symlinkIcon"] = "#iconLink";
+    export let symlinkAriaLabel: IFileTreeNode["symlinkAriaLabel"] = "";
+
     export let count: IFileTreeNode["count"] = NaN;
     export let countAriaLabel: IFileTreeNode["countAriaLabel"] = "";
 
@@ -69,6 +73,7 @@
 
         focus: writable(focus),
         folded: writable(folded),
+        symlink: writable(symlink),
         draggable: writable(draggable),
         hideActions: writable(hideActions),
 
@@ -87,6 +92,9 @@
         menuIcon: writable(menuIcon),
         menuAriaLabel: writable(menuAriaLabel),
 
+        symlinkIcon: writable(symlinkIcon),
+        symlinkAriaLabel: writable(symlinkAriaLabel),
+
         count: writable(count),
         countAriaLabel: writable(countAriaLabel),
     };
@@ -102,6 +110,7 @@
 
     $: props.focus.set(focus);
     $: props.folded.set(folded);
+    $: props.symlink.set(symlink);
     $: props.draggable.set(draggable);
     $: props.hideActions.set(hideActions);
 
@@ -120,6 +129,9 @@
     $: props.menuIcon.set(menuIcon);
     $: props.menuAriaLabel.set(menuAriaLabel);
 
+    $: props.symlinkIcon.set(symlinkIcon);
+    $: props.symlinkAriaLabel.set(symlinkAriaLabel);
+
     $: props.count.set(count);
     $: props.countAriaLabel.set(countAriaLabel);
 
@@ -135,6 +147,7 @@
 
         props.focus.subscribe(v => (focus = v)), //
         props.folded.subscribe(v => (folded = v)), //
+        props.symlink.subscribe(v => (symlink = v)), //
         props.draggable.subscribe(v => (draggable = v)), //
         props.hideActions.subscribe(v => (hideActions = v)), //
 
@@ -152,6 +165,9 @@
 
         props.menuIcon.subscribe(v => (menuIcon = v)), //
         props.menuAriaLabel.subscribe(v => (menuAriaLabel = v)), //
+
+        props.symlinkIcon.subscribe(v => (symlinkIcon = v)), //
+        props.symlinkAriaLabel.subscribe(v => (symlinkAriaLabel = v)), //
 
         props.count.subscribe(v => (count = v)), //
         props.countAriaLabel.subscribe(v => (countAriaLabel = v)), //
@@ -296,6 +312,19 @@
     >
         <Svg icon={menuIcon} />
     </span>
+
+    <!-- 符号链接 -->
+    {#if symlink}
+        <span
+            data-type="symlink"
+            aria-label={symlinkAriaLabel}
+            class:b3-tooltips={!!symlinkAriaLabel}
+            class:b3-tooltips__sw={!!symlinkAriaLabel}
+            class="b3-list-item__action"
+        >
+            <Svg icon={symlinkIcon} />
+        </span>
+    {/if}
 
     <!-- 计数器 -->
     {#if !Number.isNaN(count)}

@@ -3,6 +3,7 @@
 ## 2023-07-22
 
 - 添加文件资源管理面板 | Add file resource management panel.
+- 文件资源管理支持解析符号链接 | File resource management supports parsing symbolic links.
 
 ## 2023-07-21
 
