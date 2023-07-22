@@ -4,6 +4,7 @@
 
 - 文件资源管理器支持打开文件 | File explorer supports opening files.
 - 调整文件资源管理器图标与提示文本 | Adjust the icon and prompt text of the file explorer.
+- 为编辑器添加更改语言模式命令 | Add change model language command to editor.
 
 ## 2023-07-22
 

@@ -130,28 +130,47 @@
         }
     }
 
-    /* 更改编辑器语言类型 */
-    $: {
+    function setModelLanguage(lang: string) {
+        if (inited) {
+            setOriginalModelLanguage(lang);
+            setModifiedModelLanguage(lang);
+        }
+    }
+
+    function setOriginalModelLanguage(lang: string) {
+        if (inited && diffEditor) {
+            monaco?.editor.setModelLanguage(
+                diffEditor.getOriginalEditor().getModel(), //
+                lang, //
+            );
+        }
+    }
+
+    function setModifiedModelLanguage(lang: string) {
         if (inited) {
             if (diff) {
-                if (diffEditor && languages) {
-                    monaco.editor.setModelLanguage(
-                        diffEditor.getOriginalEditor().getModel(), //
-                        languages.map(original?.language ?? ""), //
-                    );
-                    monaco.editor.setModelLanguage(
+                if (diffEditor) {
+                    monaco?.editor.setModelLanguage(
                         diffEditor.getModifiedEditor().getModel(), //
-                        languages.map(modified?.language ?? ""), //
+                        lang, //
                     );
                 }
             } else {
-                if (editor && languages) {
-                    monaco.editor.setModelLanguage(
+                if (editor) {
+                    monaco?.editor.setModelLanguage(
                         editor.getModel(), //
-                        languages.map(modified?.language ?? ""), //
+                        lang, //
                     );
                 }
             }
+        }
+    }
+
+    /* 更改编辑器语言类型 */
+    $: {
+        if (inited) {
+            original && setOriginalModelLanguage(languages.map(original?.language ?? ""));
+            modified && setModifiedModelLanguage(languages.map(modified?.language ?? ""));
         }
     }
 
@@ -238,11 +257,7 @@
         init.then(instance => {
             monaco = instance;
             // plugin.logger.debug(monaco.languages.getLanguages());
-            languages = new Languages(
-                plugin,
-                monaco,
-                dispatch,
-            );
+            languages = new Languages(plugin, monaco, dispatch);
 
             if (diff) {
                 // 差异对比编辑器
@@ -328,6 +343,17 @@
                         filetype: languages.getMimeType(editor.getModel().getLanguageId()),
                     });
                 },
+            });
+
+            /* 语言模式切换命令 */
+            monaco.languages.getLanguages().forEach(lang => {
+                editor.addAction({
+                    id: `set-model-language-${lang.id}`,
+                    label: `${i18n.editor.action.setModelLanguage.label}: ${lang.id}`,
+                    run: () => {
+                        setModelLanguage(lang.id);
+                    },
+                });
             });
 
             inited = true;
