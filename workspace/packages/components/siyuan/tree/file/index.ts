@@ -94,7 +94,7 @@ export interface IFileTreeNode {
 
 /* 响应式状态变量 */
 export type IFileTreeNodeStores = {
-    [P in keyof IFileTreeNode]: Writable<IFileTreeNode[P]>
+    [P in keyof Required<IFileTreeNode>]: Writable<IFileTreeNode[P]>
 }
 
 /* 根节点 */

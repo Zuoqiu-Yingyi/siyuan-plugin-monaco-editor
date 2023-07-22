@@ -3,6 +3,7 @@
 ## 2023-07-23
 
 - 文件资源管理器支持打开文件 | File explorer supports opening files.
+- 调整文件资源管理器图标与提示文本 | Adjust the icon and prompt text of the file explorer.
 
 ## 2023-07-22
 

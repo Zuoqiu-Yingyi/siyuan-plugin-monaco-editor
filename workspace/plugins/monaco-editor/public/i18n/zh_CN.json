@@ -76,6 +76,9 @@
         "toggle": {
             "ariaLabel": "折叠/展开"
         },
+        "tooltips": {
+            "siyuanDoc": "思源文档文件"
+        },
         "unfold": {
             "ariaLabel": "展开"
         },

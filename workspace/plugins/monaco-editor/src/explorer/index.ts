@@ -37,6 +37,9 @@ import { isBinaryExt } from "@workspace/utils/file/binary";
 import { fn__code, ft__primary } from "@workspace/utils/siyuan/text/span";
 
 import type MonacoEditorPlugin from "@/index";
+import { Select } from "./select";
+import { Icon } from "./icon";
+import { Tooltip } from "./tooltip";
 
 /* 资源 */
 export interface IItem {
@@ -71,17 +74,16 @@ export type DefaultNodeProps = Required<Pick<
 
 /* 文件资源管理器 */
 export class Explorer implements ITree {
-    public static ICONS = {
-        filetree: "#icon-monaco-editor-file-tree",
-        workspace: "#iconWorkspace",
-        folder_opend: "#icon-monaco-editor-folder-opend",
-        folder_closed: "#icon-monaco-editor-folder-closed",
-    } as const;
+    /* 树节点集合 */
+    protected readonly tooltip: InstanceType<typeof Tooltip>; // 提示文本管理
 
     /* 树节点集合 */
-    protected readonly set: Set<IFileTreeNodeStores>;
+    protected readonly set = new Set<IFileTreeNodeStores>();
     /* 路径->节点 */
-    protected readonly map: Map<IFileTreeNode["path"], IFileTreeNodeStores>;
+    protected readonly map = new Map<IFileTreeNode["path"], IFileTreeNodeStores>();
+    /* 节点选中状态 */
+    protected readonly select = new Select();
+
     /* 根节点列表 */
     protected roots: IFileTreeRootNode[];
 
@@ -125,8 +127,7 @@ export class Explorer implements ITree {
             countAriaLabel: plugin.i18n.explorer.count.ariaLabel,
         },
     ) {
-        this.map = new Map();
-        this.set = new Set();
+        this.tooltip = new Tooltip(this.plugin);
     }
 
     public path2node(path: string): IFileTreeNodeStores | undefined {
@@ -149,8 +150,8 @@ export class Explorer implements ITree {
 
                 title: this.workspace,
 
-                icon: Explorer.ICONS.workspace,
-                iconAriaLabel: this.plugin.i18n.explorer.workspace.name,
+                icon: Icon.make(FileTreeNodeType.Root, "./"),
+                iconAriaLabel: this.tooltip.make(FileTreeNodeType.Root, "./"),
 
                 text: this.plugin.i18n.explorer.workspace.name,
                 textAriaLabel: "./",
@@ -194,42 +195,44 @@ export class Explorer implements ITree {
     /* 打开事件 */
     public readonly open = (e: ComponentEvents<Node>["open"]) => {
         // plugin.logger.debug(e);
-        const props = e.detail.props;
+        const node = e.detail.props;
+        this.select.one(node);
 
-        switch (get(props.type)) {
+        switch (get(node.type)) {
             case FileTreeNodeType.File: {  // 打开文件
-                const filename = get(props.name);
-                const path = get(props.relative);
-                const ext = extname(filename); // 文件扩展名
+                const path = get(node.relative);
+                const icon = get(node.icon);
+                const ext = extname(path); // 文件扩展名
                 if (isBinaryExt(ext)) {
                     this.plugin.siyuan.confirm(
-                        fn__code(filename), // 标题
+                        fn__code(path), // 标题
                         [
                             this.plugin.i18n.message.binaryError,
+                            "",
                             ft__primary(this.plugin.i18n.message.openAnyway),
                         ].join("<br />"), // 文本
                         async () => {
-                            this.plugin.openWorkspaceFile(path);
+                            this.plugin.openWorkspaceFile(path, icon);
                         }, // 确认按钮回调
                     );
                 }
                 else {
-                    this.plugin.openWorkspaceFile(path);
+                    this.plugin.openWorkspaceFile(path, icon);
                 }
                 break;
             }
             case FileTreeNodeType.Root:
             case FileTreeNodeType.Folder:
             default: // 切换文件夹折叠状态
-                switch (get(props.folded)) {
+                switch (get(node.folded)) {
                     case true:
-                        props.folded.set(false);
-                        props.icon.set(Explorer.ICONS.folder_opend);
+                        node.folded.set(false);
+                        Icon.expand(node);
                         break;
                     case false:
                     default:
-                        props.folded.set(true);
-                        props.icon.set(Explorer.ICONS.folder_closed);
+                        node.folded.set(true);
+                        Icon.collapse(node);
                         break;
                 }
                 break;
@@ -260,6 +263,10 @@ export class Explorer implements ITree {
             }
         }
     }
+
+    /**
+     * 动态生成文件图标
+     */
 
     /**
      * 列出指定目录下的资源
@@ -329,8 +336,8 @@ export class Explorer implements ITree {
 
                 title: item.path,
 
-                icon: Explorer.ICONS.folder_closed,
-                iconAriaLabel: this.plugin.i18n.explorer.folder.ariaLabel,
+                icon: Icon.make(FileTreeNodeType.Folder, item.relative),
+                iconAriaLabel: this.tooltip.make(FileTreeNodeType.Folder, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,
@@ -351,8 +358,8 @@ export class Explorer implements ITree {
                 title: item.path,
                 symlink: item.isSymlink,
 
-                icon: "#iconFile",
-                iconAriaLabel: this.plugin.i18n.explorer.file.ariaLabel,
+                icon: Icon.make(FileTreeNodeType.File, item.relative),
+                iconAriaLabel: this.tooltip.make(FileTreeNodeType.File, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,
@@ -382,9 +389,7 @@ export class Explorer implements ITree {
 
         /* 展开并更新图标 */
         node.folded.set(false);
-        if (get(node.type) === FileTreeNodeType.Folder) {
-            node.icon.set(Explorer.ICONS.folder_opend);
-        }
+        Icon.expand(node);
     }
 
     /**
@@ -399,10 +404,9 @@ export class Explorer implements ITree {
         this.call(
             node,
             node => {
+                /* 折叠节点并更新图标 */
                 node.folded.set(true);
-                if (get(node.type) === FileTreeNodeType.Folder) {
-                    node.icon.set(Explorer.ICONS.folder_closed);
-                }
+                Icon.collapse(node);
             },
             recursive,
         );
