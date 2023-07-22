@@ -16,7 +16,8 @@
  */
 
 /* 块处理器 */
-import { getPathExtension, uri2path } from "@workspace/utils/misc/url";
+import { extname } from "@workspace/utils/path/browserify";
+import { uri2path } from "@workspace/utils/misc/url";
 import {
     Handler,
     type IBaseHandlerOptions,
@@ -64,7 +65,7 @@ export class LocalHandler extends Handler {
         const handler: ILocalHandler = {
             modified: {
                 value: "",
-                language: getPathExtension(path),
+                language: extname(path),
             },
             options: {
                 tabSize: this.customTabSize,

@@ -20,7 +20,7 @@ import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
-import { getPathExtension } from "@workspace/utils/misc/url";
+import { extname } from "@workspace/utils/path/browserify";
 
 export interface INetworkHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
@@ -51,7 +51,7 @@ export class NetworkHandler extends Handler {
         const handler: INetworkHandler = {
             modified: {
                 value: "",
-                language: getPathExtension(url.pathname),
+                language: extname(url.pathname),
             },
             options: {
                 tabSize: this.customTabSize,

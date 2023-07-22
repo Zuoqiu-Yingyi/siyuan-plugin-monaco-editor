@@ -7,11 +7,13 @@
     },
     "devDependencies": {
         "@types/file-saver": "^2.0.5",
+        "binary-extensions": "^2.2.0",
         "deepmerge": "^4.3.1",
         "file-saver": "^2.0.5",
         "normalize-path": "^3.0.0",
         "parse-data-url": "^5.0.0",
-        "path-browserify": "^1.0.1"
+        "path-browserify": "^1.0.1",
+        "text-extensions": "^2.4.0"
     },
     "dependencies": {
         "@workspace/tsconfig": "workspace:^",

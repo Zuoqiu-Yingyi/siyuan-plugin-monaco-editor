@@ -38,6 +38,7 @@ import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { normalize } from "@workspace/utils/path/normalize";
+import { isBinaryPath } from "@workspace/utils/file/binary";
 
 /* 组件 */
 import Tab from "./components/Tab.svelte";
@@ -598,6 +599,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         try {
             switch (true) {
                 case isStaticPathname(href): { // 静态文件资源
+                    if (isBinaryPath(href)) break; // 不打开二进制文件
+
                     submenu.push({
                         icon: "iconFile",
                         label: this.i18n.menu.editAssetFile.label,
@@ -615,6 +618,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 }
                 case href.startsWith("file://"): { // 本地文件
                     if (FLAG_ELECTRON) { // 仅 Electron 环境可访问本地文件
+                        if (isBinaryPath(href)) break; // 不打开二进制文件
+
                         submenu.push({
                             icon: "iconFile",
                             label: this.i18n.menu.editLocalFile.label,
@@ -642,6 +647,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             ? `https:${href}`
                             : href
                     );
+                    if (isBinaryPath(url.pathname)) break; // 不打开二进制文件
+
                     submenu.push({
                         icon: "iconLanguage",
                         label: this.i18n.menu.viewNetworkFile.label,
@@ -777,5 +784,35 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             },
         });
         return submenu;
+    }
+
+    /* 打开工作空间目录下的文件 */
+    public openWorkspaceFile(path: string, options: {
+        position?: "right" | "bottom",
+        keepCursor?: boolean // 是否跳转到新 tab 上
+        removeCurrentTab?: boolean // 在当前页签打开时需移除原有页签
+    } = {}
+    ): void {
+        this.siyuan.openTab({
+            app: this.app,
+            custom: {
+                icon: "iconCode",
+                title: path,
+                fn: this.tab,
+                data: {
+                    options: this.config.editor.options,
+                    facadeOptions: {
+                        type: HandlerType.asset,
+                        handler: {
+                            path,
+                        },
+                        breadcrumb: {
+                            path,
+                        },
+                    },
+                },
+            },
+            ...options,
+        });
     }
 }

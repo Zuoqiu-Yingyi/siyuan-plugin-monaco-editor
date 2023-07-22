@@ -167,6 +167,9 @@ export class Languages {
                 }
             }
         });
+
+        /* 添加额外的文件扩展名映射 */
+        this._map_extension_id.set(".sy", "json");
     }
 
     /* 鼠标悬浮在思源链接 */

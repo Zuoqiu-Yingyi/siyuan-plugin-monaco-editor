@@ -15,13 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 将 file:// 转换为绝对路径 */
-export function uri2path(uri: string): string {
-    const url = new URL(uri);
-    if (/^\/\w:\//.test(url.pathname)) { // windows 路径
-        return url.pathname.substring(1);
-    }
-    else {
-        return url.pathname;
-    }
+import { extname } from "./../path/browserify";
+import textExtensions from "text-extensions";
+
+const extensions = new Set(textExtensions);
+
+export function isTextExt(ext: string): boolean {
+    ext = ext.startsWith(".") ? ext.substring(1) : ext;
+    return extensions.has(ext.toLowerCase());
+}
+
+// REF: https://github.com/sindresorhus/is-text-path/blob/main/index.js
+export function isTextPath(path: string): boolean {
+    return isTextExt(extname(path));
 }

@@ -114,5 +114,9 @@
         "viewNetworkFile": {
             "label": "查看网络文件"
         }
+    },
+    "message": {
+        "binaryError": "此文件是二进制文件或使用了不受支持的文本编码，所以无法在文本编辑器中显示。",
+        "openAnyway": "仍然打开？"
     }
 }

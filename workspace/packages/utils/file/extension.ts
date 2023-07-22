@@ -15,13 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 将 file:// 转换为绝对路径 */
-export function uri2path(uri: string): string {
-    const url = new URL(uri);
-    if (/^\/\w:\//.test(url.pathname)) { // windows 路径
-        return url.pathname.substring(1);
-    }
-    else {
-        return url.pathname;
-    }
+import { extname } from "./../path/browserify";
+
+export function getExtension(filename: string): string {
+    const ext = extname(filename).toLowerCase();
+    return ext.startsWith(".") ? ext.substring(1) : ext;
 }

@@ -114,5 +114,9 @@
         "viewNetworkFile": {
             "label": "查看網路文檔"
         }
+    },
+    "message": {
+        "binaryError": "檔案未顯示在文字編輯器中，因為檔案是二進位檔案或使用了不支援的文字編碼。",
+        "openAnyway": "繼續開啟？"
     }
 }

@@ -34,14 +34,24 @@ export interface IAssetStore extends IBaseStore {
     fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
 }
 
-export interface IAssetBreadcrumbOptions extends IBaseBreadcrumbOptions {
-    pathname: string; // 资源路径
+export type IAssetBreadcrumbOptions = IAssetBreadcrumbOptions1 | IAssetBreadcrumbOptions2;
+
+export interface IAssetBreadcrumbBaseOptions extends IBaseBreadcrumbOptions {
     stores?: IAssetStore; // 响应式数据
+}
+
+export interface IAssetBreadcrumbOptions1 extends IAssetBreadcrumbBaseOptions {
+    pathname: string; // 资源 URL 路径
+    path?: never;
+}
+
+export interface IAssetBreadcrumbOptions2 extends IAssetBreadcrumbBaseOptions {
+    pathname?: never;
+    path: string; // 相对于工作空间目录的路径
 }
 
 export class AssetBreadcrumb extends Breadcrumb {
     public async makeBreadcrumb(options: IAssetBreadcrumbOptions): Promise<IBreadcrumb> {
-        const { pathname } = options;
         const breadcrumb: IBreadcrumb = {
             breadcrumb: true,
             breadcrumbItems: [],
@@ -49,7 +59,7 @@ export class AssetBreadcrumb extends Breadcrumb {
         };
 
         /* 获得相对于工作空间目录的路径 */
-        const path = staticPathname2WorkspacePath(pathname);
+        const path = options.path ?? staticPathname2WorkspacePath(options.pathname);
         const paths: string[] = [];
         paths.push(...globalThis.siyuan.config.system.workspaceDir.replaceAll("\\", "/").split("/"));
         breadcrumb.breadcrumbItems.push({
