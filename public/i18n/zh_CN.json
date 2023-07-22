@@ -34,6 +34,9 @@
             "saveAs": {
                 "label": "另存为"
             },
+            "setModelLanguage": {
+                "label": "设置编辑器语言模式"
+            },
             "toggleWordWrap": {
                 "label": "切换自动换行"
             }

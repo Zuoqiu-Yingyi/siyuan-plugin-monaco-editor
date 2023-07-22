@@ -34,6 +34,9 @@
             "saveAs": {
                 "label": "Save As"
             },
+            "setModelLanguage": {
+                "label": "Set Editor Model Language"
+            },
             "toggleWordWrap": {
                 "label": "Toggle Word Wrap"
             }
