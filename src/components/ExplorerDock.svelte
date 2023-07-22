@@ -27,6 +27,7 @@
     import type MonacoEditorPlugin from "@/index";
     import { Explorer } from "@/explorer";
     import type { ITree } from '@workspace/components/siyuan/tree/file';
+    import { Icon } from '@/explorer/icon';
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let workspace: string; // 工作空间目录
@@ -37,7 +38,7 @@
 
     /* 标题栏配置 */
     const bar: IBar = {
-        logo: Explorer.ICONS.filetree,
+        logo: Icon.ICONS.filetree,
         title: plugin.i18n.explorer.title,
         icons: [
             {

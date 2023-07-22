@@ -76,6 +76,9 @@
         "toggle": {
             "ariaLabel": "Collapse/Expand"
         },
+        "tooltips": {
+            "siyuanDoc": "SiYuan Document File"
+        },
         "unfold": {
             "ariaLabel": "Expand"
         },

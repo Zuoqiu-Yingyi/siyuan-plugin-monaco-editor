@@ -786,17 +786,26 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         return submenu;
     }
 
-    /* 打开工作空间目录下的文件 */
-    public openWorkspaceFile(path: string, options: {
-        position?: "right" | "bottom",
-        keepCursor?: boolean // 是否跳转到新 tab 上
-        removeCurrentTab?: boolean // 在当前页签打开时需移除原有页签
-    } = {}
+    /**
+     * 打开工作空间目录下的文件
+     * @param path: 相对于工作空间目录的文件路径
+     * @param icon: 页签图标
+     * @param options: 页签选项
+     */
+    public openWorkspaceFile(
+        path: string,
+        icon: string = "iconCode",
+        options: {
+            position?: "right" | "bottom",
+            keepCursor?: boolean // 是否跳转到新 tab 上
+            removeCurrentTab?: boolean // 在当前页签打开时需移除原有页签
+        } = {},
     ): void {
+        icon = icon.startsWith("#") ? icon.substring(1) : icon; // 删除 # 前缀
         this.siyuan.openTab({
             app: this.app,
             custom: {
-                icon: "iconCode",
+                icon,
                 title: path,
                 fn: this.tab,
                 data: {
