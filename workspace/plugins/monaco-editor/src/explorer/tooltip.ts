@@ -23,18 +23,49 @@ import { Icon } from "./icon";
 /* 提示信息管理 */
 export class Tooltip {
     protected readonly i18n: MonacoEditorPlugin["i18n"];
+    protected readonly map: Map<string, string>; // 路径 -> 提示文本 映射表
+
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
     ) {
         this.i18n = this.plugin.i18n;
+        this.map = new Map(this.i18n.explorer.tooltips.paths as [string, string][]);
     }
 
     /* 根据节点信息生成提示信息 */
     public make(type: FileTreeNodeType, path: string): string {
+        /* 若映射表中存在对应的提示信息, 则直接使用 */
+        const tooltip = this.map.get(path);
+        if (tooltip) return tooltip;
+
         switch (type) {
             case FileTreeNodeType.Root:
                 return this.i18n.explorer.workspace.name;
             case FileTreeNodeType.Folder:
+                $default: switch (true) {
+                    case path.startsWith("data/"): // 数据目录
+                        switch (true) {
+                            case /^data\/\d{14}-[0-9a-z]{7}$/.test(path): // 笔记本目录
+                                return this.i18n.explorer.tooltips.siyuanNotebook;
+                            case /^data\/\d{14}-[0-9a-z]{7}\//.test(path): // 笔记本目录下的目录
+                                switch (true) {
+                                    case /\/\d{14}-[0-9a-z]{7}$/.test(path): // 思源文档目录
+                                        return this.i18n.explorer.tooltips.siyuanDocDir;
+                                    case path.endsWith(".siyuan"): // 笔记本元数据目录
+                                        return this.i18n.explorer.tooltips.siyuanNotebookMetadataDir;
+                                    case path.endsWith(".siyuan/conf.json"): // 笔记本配置文件
+                                        return this.i18n.explorer.tooltips.siyuanNotebookConfig;
+                                    case path.endsWith(".siyuan/sort.json"): // 文档自定义排序序号
+                                        return this.i18n.explorer.tooltips.siyuanDocCustomSort;
+                                    default:
+                                        break $default;
+                                }
+                            default:
+                                break $default;
+                        }
+                    default:
+                        break $default;
+                }
                 return this.i18n.explorer.folder.ariaLabel;
             case FileTreeNodeType.File: {
                 const info = parse(path); // 节点路径信息

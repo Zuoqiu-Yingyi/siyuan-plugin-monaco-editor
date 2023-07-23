@@ -247,7 +247,8 @@
         style:padding-left="calc(4px + {indent} * {depth})"
         aria-label={toggleAriaLabel}
         class:b3-tooltips={!!toggleAriaLabel}
-        class:b3-tooltips__se={!!toggleAriaLabel}
+        class:b3-tooltips__se={!!toggleAriaLabel && type === FileTreeNodeType.Root}
+        class:b3-tooltips__ne={!!toggleAriaLabel && type !== FileTreeNodeType.Root}
         class:fn__hidden={type === FileTreeNodeType.File}
         class="b3-list-item__toggle b3-list-item__toggle--hl"
     >
@@ -261,7 +262,8 @@
     <span
         aria-label={iconAriaLabel}
         class:b3-tooltips={!!iconAriaLabel}
-        class:b3-tooltips__se={!!iconAriaLabel}
+        class:b3-tooltips__se={!!iconAriaLabel && type === FileTreeNodeType.Root}
+        class:b3-tooltips__ne={!!iconAriaLabel && type !== FileTreeNodeType.Root}
         class="b3-list-item__icon"
     >
         {#if icon.startsWith("#")}
@@ -295,7 +297,8 @@
     <span
         aria-label={textAriaLabel}
         class:ariaLabel={!!textAriaLabel}
-        class:b3-tooltips__se={!!textAriaLabel}
+        class:b3-tooltips__se={!!textAriaLabel && type === FileTreeNodeType.Root}
+        class:b3-tooltips__ne={!!textAriaLabel && type !== FileTreeNodeType.Root}
         class="b3-list-item__text"
     >
         {text}
@@ -307,7 +310,8 @@
         data-type="more"
         aria-label={menuAriaLabel}
         class:b3-tooltips={!!menuAriaLabel}
-        class:b3-tooltips__sw={!!menuAriaLabel}
+        class:b3-tooltips__sw={!!menuAriaLabel && type === FileTreeNodeType.Root}
+        class:b3-tooltips__nw={!!menuAriaLabel && type !== FileTreeNodeType.Root}
         class="b3-list-item__action"
     >
         <Svg icon={menuIcon} />
@@ -319,7 +323,8 @@
             data-type="symlink"
             aria-label={symlinkAriaLabel}
             class:b3-tooltips={!!symlinkAriaLabel}
-            class:b3-tooltips__sw={!!symlinkAriaLabel}
+            class:b3-tooltips__sw={!!symlinkAriaLabel && type === FileTreeNodeType.Root}
+            class:b3-tooltips__nw={!!symlinkAriaLabel && type !== FileTreeNodeType.Root}
             class="b3-list-item__action"
         >
             <Svg icon={symlinkIcon} />
@@ -331,7 +336,8 @@
         <span
             aria-label={countAriaLabel}
             class:b3-tooltips={!!countAriaLabel}
-            class:b3-tooltips__sw={!!countAriaLabel}
+            class:b3-tooltips__sw={!!countAriaLabel && type === FileTreeNodeType.Root}
+            class:b3-tooltips__nw={!!countAriaLabel && type !== FileTreeNodeType.Root}
             class="counter"
         >
             {count}

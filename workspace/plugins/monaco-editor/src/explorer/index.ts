@@ -74,7 +74,8 @@ export type DefaultNodeProps = Required<Pick<
 
 /* 文件资源管理器 */
 export class Explorer implements ITree {
-    /* 树节点集合 */
+    /* 管理工具 */
+    protected readonly icon: InstanceType<typeof Icon>; // 图标管理
     protected readonly tooltip: InstanceType<typeof Tooltip>; // 提示文本管理
 
     /* 树节点集合 */
@@ -127,6 +128,7 @@ export class Explorer implements ITree {
             countAriaLabel: plugin.i18n.explorer.count.ariaLabel,
         },
     ) {
+        this.icon = new Icon(this.plugin);
         this.tooltip = new Tooltip(this.plugin);
     }
 
@@ -150,7 +152,7 @@ export class Explorer implements ITree {
 
                 title: this.workspace,
 
-                icon: Icon.make(FileTreeNodeType.Root, "./"),
+                icon: this.icon.make(FileTreeNodeType.Root, "./"),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.Root, "./"),
 
                 text: this.plugin.i18n.explorer.workspace.name,
@@ -227,12 +229,12 @@ export class Explorer implements ITree {
                 switch (get(node.folded)) {
                     case true:
                         node.folded.set(false);
-                        Icon.expand(node);
+                        this.icon.expand(node);
                         break;
                     case false:
                     default:
                         node.folded.set(true);
-                        Icon.collapse(node);
+                        this.icon.collapse(node);
                         break;
                 }
                 break;
@@ -336,7 +338,7 @@ export class Explorer implements ITree {
 
                 title: item.path,
 
-                icon: Icon.make(FileTreeNodeType.Folder, item.relative),
+                icon: this.icon.make(FileTreeNodeType.Folder, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.Folder, item.relative),
 
                 text: item.name,
@@ -358,7 +360,7 @@ export class Explorer implements ITree {
                 title: item.path,
                 symlink: item.isSymlink,
 
-                icon: Icon.make(FileTreeNodeType.File, item.relative),
+                icon: this.icon.make(FileTreeNodeType.File, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.File, item.relative),
 
                 text: item.name,
@@ -389,7 +391,7 @@ export class Explorer implements ITree {
 
         /* 展开并更新图标 */
         node.folded.set(false);
-        Icon.expand(node);
+        this.icon.expand(node);
     }
 
     /**
@@ -406,7 +408,7 @@ export class Explorer implements ITree {
             node => {
                 /* 折叠节点并更新图标 */
                 node.folded.set(true);
-                Icon.collapse(node);
+                this.icon.collapse(node);
             },
             recursive,
         );

@@ -80,7 +80,198 @@
             "ariaLabel": "Collapse/Expand"
         },
         "tooltips": {
-            "siyuanDoc": "SiYuan Document File"
+            "paths": [
+                [
+                    "conf",
+                    "Configuration directory"
+                ],
+                [
+                    "conf/appearance",
+                    "Appearance directory"
+                ],
+                [
+                    "conf/appearance/boot",
+                    "Boot window directory"
+                ],
+                [
+                    "conf/appearance/emojis",
+                    "Emojis directory"
+                ],
+                [
+                    "conf/appearance/icons",
+                    "Interface icons directory"
+                ],
+                [
+                    "conf/appearance/langs",
+                    "Localization directory"
+                ],
+                [
+                    "conf/appearance/themes",
+                    "Themes directory"
+                ],
+                [
+                    "conf/conf.json",
+                    "Configuration file"
+                ],
+                [
+                    "conf/windowState.json",
+                    "Window state file"
+                ],
+                [
+                    "data",
+                    "Data directory"
+                ],
+                [
+                    "data/.siyuan",
+                    "Metadata directory"
+                ],
+                [
+                    "data/.siyuan/filesys_status_check",
+                    "File system status check temporary file directory"
+                ],
+                [
+                    "data/.siyuan/conf.json",
+                    "Data directory state file"
+                ],
+                [
+                    "data/.siyuan/syncignore",
+                    "Data snapshot ignore configuration file"
+                ],
+                [
+                    "data/assets",
+                    "Resources file directory"
+                ],
+                [
+                    "data/assets/ocr-texts.json",
+                    "Image OCR results"
+                ],
+                [
+                    "data/emojis",
+                    "Custom emojis file directory"
+                ],
+                [
+                    "data/plugins",
+                    "Plugins directory"
+                ],
+                [
+                    "data/public",
+                    "Public file directory"
+                ],
+                [
+                    "data/snippets",
+                    "Code snippets directory"
+                ],
+                [
+                    "data/snippets/conf.json",
+                    "Code snippets list"
+                ],
+                [
+                    "data/storage",
+                    "Data storage directory"
+                ],
+                [
+                    "data/storage/av",
+                    "Attribute view directory"
+                ],
+                [
+                    "data/storage/petal",
+                    "Plugin data directory"
+                ],
+                [
+                    "data/storage/petal/petals.json",
+                    "Plugin status directory"
+                ],
+                [
+                    "data/storage/riff",
+                    "Flashcard data directory"
+                ],
+                [
+                    "data/storage/criteria.json",
+                    "Search configuration"
+                ],
+                [
+                    "data/storage/local.json",
+                    "Local interface configuration"
+                ],
+                [
+                    "data/storage/recent-doc.json",
+                    "Recently opened documents"
+                ],
+                [
+                    "data/templates",
+                    "Template directory"
+                ],
+                [
+                    "data/widgets",
+                    "Widgets directory"
+                ],
+                [
+                    "history",
+                    "History data directory"
+                ],
+                [
+                    "repo",
+                    "Data snapshot directory"
+                ],
+                [
+                    "temp",
+                    "Temporary file directory"
+                ],
+                [
+                    "temp/blocktree",
+                    "Content block structure index directory"
+                ],
+                [
+                    "temp/os",
+                    "System information directory"
+                ],
+                [
+                    "temp/pandoc",
+                    "Pandoc directory"
+                ],
+                [
+                    "temp/pandoc/bin",
+                    "Pandoc executable file directory"
+                ],
+                [
+                    "temp/history.db",
+                    "Historical document index database file"
+                ],
+                [
+                    "temp/history.db-shm",
+                    "Historical document index database shared memory file"
+                ],
+                [
+                    "temp/history.db-wal",
+                    "Historical document index database write-ahead log file"
+                ],
+                [
+                    "temp/siyuan.db",
+                    "Content block index database file"
+                ],
+                [
+                    "temp/siyuan.db-shm",
+                    "Content block index database shared memory file"
+                ],
+                [
+                    "temp/siyuan.db-wal",
+                    "Content block index database write-ahead log file"
+                ],
+                [
+                    "temp/siyuan.log",
+                    "Kernel log file"
+                ],
+                [
+                    ".lock",
+                    "Workspace occupied flag"
+                ]
+            ],
+            "siyuanDoc": "Document file",
+            "siyuanDocCustomSort": "Document customized sort file",
+            "siyuanDocDir": "Document directory",
+            "siyuanNotebook": "Notebook directory",
+            "siyuanNotebookConfig": "Notebook configuration file",
+            "siyuanNotebookMetadataDir": "Notebook metadata directory"
         },
         "unfold": {
             "ariaLabel": "Expand"
