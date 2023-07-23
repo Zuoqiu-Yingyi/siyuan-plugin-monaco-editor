@@ -20,7 +20,7 @@ import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
 import { parse } from "@workspace/utils/path/browserify";
 
 /* 提示信息管理 */
-export class Tooltip {
+export class ExplorerTooltip {
     protected readonly i18n: MonacoEditorPlugin["i18n"];
     protected readonly map: Map<string, string>; // 路径 -> 提示文本 映射表
 

@@ -703,13 +703,17 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
      * @param title: 页签标题
      * @param options: 编辑器初始配置
      */
-    protected buildOpenSubmenu(
+    public buildOpenSubmenu(
         facadeOptions: IFacadeOptions,
         // icon: string = "icon-monaco-editor",
         icon: string = "iconCode",
         title: string = this.i18n.displayName,
         options: IEditorOptions = this.config.editor.options,
     ): siyuan.IMenuItemOption[] {
+        icon = icon.startsWith("#")
+            ? icon.substring(1)
+            : icon; // 删除 # 前缀
+
         const submenu: siyuan.IMenuItemOption[] = [];
         const custom = {
             icon,
@@ -807,6 +811,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
      */
     public openWorkspaceFile(
         path: string,
+        title: string,
         icon: string = "iconCode",
         options: {
             position?: "right" | "bottom",
@@ -814,12 +819,15 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             removeCurrentTab?: boolean // 在当前页签打开时需移除原有页签
         } = {},
     ): void {
-        icon = icon.startsWith("#") ? icon.substring(1) : icon; // 删除 # 前缀
+        icon = icon.startsWith("#")
+            ? icon.substring(1)
+            : icon; // 删除 # 前缀
+
         this.siyuan.openTab({
             app: this.app,
             custom: {
                 icon,
-                title: path,
+                title,
                 fn: this.tab,
                 data: {
                     options: this.config.editor.options,

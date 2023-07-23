@@ -106,7 +106,7 @@ export function isStaticPathname(
         case href.startsWith("assets/"): // 工作空间/data/assets
         case href.startsWith("emojies/"): // 工作空间/data/emojies
         case href.startsWith("plugins/"): // 工作空间/data/plugins
-        case href.startsWith("plugins/"): // 工作空间/data/plugins
+        case href.startsWith("public/"): // 工作空间/data/public
         case href.startsWith("snippets/"): // 工作空间/data/snippets
         case href.startsWith("templates/"): // 工作空间/data/templates
         case href.startsWith("widgets/"): // 工作空间/data/widgets
@@ -118,7 +118,32 @@ export function isStaticPathname(
 }
 
 /**
- * 思源静态 web 文件路径转换为相对于工作空间的路径
+ * 判断一个相对于工作空间目录的路径是否为思源静态文件服务
+ * @param href: 超链接地址
+ * @param workspace: 是否为工作空间下的目录
+ */
+export function isStaticWebFileServicePath(path: string): boolean {
+    switch (true) {
+        case path.startsWith("conf/appearance/"):
+        case path.startsWith("temp/export/"):
+        case path.startsWith("history/"):
+
+        case path.startsWith("data/assets/"):
+        case path.startsWith("data/emojies/"):
+        case path.startsWith("data/plugins/"):
+        case path.startsWith("data/public/"):
+        case path.startsWith("data/snippets/"):
+        case path.startsWith("data/templates/"):
+        case path.startsWith("data/widgets/"):
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+/**
+ * 思源静态 web 文件路径 👉 相对于工作空间的路径
  * @param pathname: 思源静态 web 文件路径
  * @return: 工作空间路径
  */
@@ -128,7 +153,7 @@ export function staticPathname2WorkspacePath(pathname: string): string {
         case pathname.startsWith("assets/"): // 工作空间/data/assets
         case pathname.startsWith("emojies/"): // 工作空间/data/emojies
         case pathname.startsWith("plugins/"): // 工作空间/data/plugins
-        case pathname.startsWith("plugins/"): // 工作空间/data/plugins
+        case pathname.startsWith("public/"): // 工作空间/data/public
         case pathname.startsWith("snippets/"): // 工作空间/data/snippets
         case pathname.startsWith("templates/"): // 工作空间/data/templates
         case pathname.startsWith("widgets/"): // 工作空间/data/widgets
@@ -141,5 +166,32 @@ export function staticPathname2WorkspacePath(pathname: string): string {
             return pathname;
         default:
             throw new Error(`'${pathname}' is not a valid file pathname`);
+    }
+}
+
+
+/**
+ * 相对于工作空间目录的路径 👉 思源静态 web 文件路径
+ * @param pathname: 思源静态 web 文件路径
+ * @return: 工作空间路径
+ */
+export function workspacePath2StaticPathname(path: string): string {
+    switch (true) {
+        case path.startsWith("data/assets/"):
+        case path.startsWith("data/emojies/"):
+        case path.startsWith("data/plugins/"):
+        case path.startsWith("data/public/"):
+        case path.startsWith("data/snippets/"):
+        case path.startsWith("data/templates/"):
+        case path.startsWith("data/widgets/"):
+            return path.replace(/^data\//, "");
+        case path.startsWith("conf/appearance/"):
+            return path.replace(/^conf\//, "");
+        case path.startsWith("temp/export/"):
+            return path.replace(/^temp\//, "");
+        case path.startsWith("history/"):
+            return path;
+        default:
+            throw new Error(`'${path}' is not a valid workspace path`);
     }
 }

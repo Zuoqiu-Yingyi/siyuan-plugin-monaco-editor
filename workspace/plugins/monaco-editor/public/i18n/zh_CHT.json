@@ -281,6 +281,27 @@
         }
     },
     "menu": {
+        "copy": {
+            "label": "複製"
+        },
+        "copyFullPath": {
+            "label": "複製完整路徑"
+        },
+        "copyMarkdownHyperlink": {
+            "label": "複製 Markdown 超連結"
+        },
+        "copyName": {
+            "label": "複製名稱"
+        },
+        "copyReferencePath": {
+            "label": "複製引用路徑"
+        },
+        "copyRelativePath": {
+            "label": "複製相對路徑"
+        },
+        "copyURL": {
+            "label": "複製 URL"
+        },
         "editAssetFile": {
             "label": "編輯資料文檔"
         },
@@ -289,6 +310,9 @@
         },
         "export": {
             "accelerator": "匯出"
+        },
+        "open": {
+            "label": "打開"
         },
         "openByNewWindow": {
             "label": "使用新窗口打開"
@@ -304,6 +328,12 @@
         },
         "openTabRight": {
             "label": "在分頁右側打開"
+        },
+        "openWithDefaultProgram": {
+            "label": "使用預設程式打開"
+        },
+        "revealInExplorer": {
+            "label": "在檔案總管中顯示"
         },
         "standard": {
             "accelerator": "標準"

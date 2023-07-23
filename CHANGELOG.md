@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-24
+
+- 添加打开与复制菜单项 | Add open and copy menu items.
+
 ## 2023-07-23
 
 - 文件资源管理器支持打开文件 | File explorer supports opening files.
