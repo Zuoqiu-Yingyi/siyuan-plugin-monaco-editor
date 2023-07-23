@@ -239,7 +239,7 @@
     data-directory={directory}
     class:b3-list-item--focus={focus}
     class:b3-list-item--hide-action={hideActions}
-    class="b3-list-item"
+    class="node b3-list-item"
 >
     <!-- 折叠/展开按钮 -->
     <span
@@ -250,7 +250,7 @@
         class:b3-tooltips__se={!!toggleAriaLabel && type === FileTreeNodeType.Root}
         class:b3-tooltips__ne={!!toggleAriaLabel && type !== FileTreeNodeType.Root}
         class:fn__hidden={type === FileTreeNodeType.File}
-        class="b3-list-item__toggle b3-list-item__toggle--hl"
+        class="toggle b3-list-item__toggle b3-list-item__toggle--hl"
     >
         <SvgArrow
             open={!folded}
@@ -264,7 +264,7 @@
         class:b3-tooltips={!!iconAriaLabel}
         class:b3-tooltips__se={!!iconAriaLabel && type === FileTreeNodeType.Root}
         class:b3-tooltips__ne={!!iconAriaLabel && type !== FileTreeNodeType.Root}
-        class="b3-list-item__icon"
+        class="icon b3-list-item__icon"
     >
         {#if icon.startsWith("#")}
             <!-- svg 图标 -->
@@ -299,7 +299,7 @@
         class:ariaLabel={!!textAriaLabel}
         class:b3-tooltips__se={!!textAriaLabel && type === FileTreeNodeType.Root}
         class:b3-tooltips__ne={!!textAriaLabel && type !== FileTreeNodeType.Root}
-        class="b3-list-item__text"
+        class="text b3-list-item__text"
     >
         {text}
     </span>
@@ -312,7 +312,7 @@
         class:b3-tooltips={!!menuAriaLabel}
         class:b3-tooltips__sw={!!menuAriaLabel && type === FileTreeNodeType.Root}
         class:b3-tooltips__nw={!!menuAriaLabel && type !== FileTreeNodeType.Root}
-        class="b3-list-item__action"
+        class="menu b3-list-item__action"
     >
         <Svg icon={menuIcon} />
     </span>
@@ -325,7 +325,7 @@
             class:b3-tooltips={!!symlinkAriaLabel}
             class:b3-tooltips__sw={!!symlinkAriaLabel && type === FileTreeNodeType.Root}
             class:b3-tooltips__nw={!!symlinkAriaLabel && type !== FileTreeNodeType.Root}
-            class="b3-list-item__action"
+            class="symblink b3-list-item__action"
         >
             <Svg icon={symlinkIcon} />
         </span>
@@ -348,7 +348,7 @@
 <!-- 下级节点 -->
 {#if children}
     <ul
-        class="children"
+        class="node-list"
         class:fn__none={folded}
         style:--monaco-editor-explorer-indent-left="calc(12px + {indent} * {depth})"
     >
@@ -366,7 +366,31 @@
 {/if}
 
 <style lang="less">
-    .children {
+    .highlight() {
+        // 辅助线高亮
+        &::before {
+            // background-color: var(--b3-theme-surface-light);
+            background-color: var(--b3-theme-primary-lighter);
+            // background-color: var(--b3-theme-primary-lightest);
+        }
+    }
+    .node {
+        margin: 0; // 辅助线对齐
+
+        &.b3-list-item--focus {
+            // 焦点所在节点
+            &[data-type="navigation-root"],
+            &[data-type="navigation-folder"] {
+                // 焦点在文件夹节点
+                + .node-list {
+                    // 高亮下级目录
+                    .highlight();
+                }
+            }
+        }
+    }
+
+    .node-list {
         position: relative;
 
         &::before {
@@ -379,11 +403,9 @@
             z-index: 1;
         }
 
-        // &:hover {
-        //     &::before {
-        //         // background-color: var(--b3-theme-surface-light);
-        //         background-color: var(--b3-theme-primary-light);
-        //     }
-        // }
+        &:has(> .node.b3-list-item--focus[data-type="navigation-file"]) {
+            // 焦点在下级文件节点
+            .highlight(); // 高亮本机目录
+        }
     }
 </style>
