@@ -7,6 +7,7 @@
 - 为编辑器添加更改语言模式命令 | Add change model language command to editor.
 - 添加工作区目录与文件的提示文本 | Add prompt text for workspace directories and files.
 - 添加 material 图标集 | Add material icon set.
+- 修复拖动页签分栏时编辑器无法重新加载问题 | Fix the issue that the editor cannot be reloaded when dragging the tab to split the screen.
 
 ## 2023-07-22
 

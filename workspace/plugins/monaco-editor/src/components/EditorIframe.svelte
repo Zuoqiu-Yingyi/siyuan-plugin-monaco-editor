@@ -57,6 +57,7 @@
     $: if (inited) bridge.set({ diffOptions });
 
     bridge.addEventListener("editor-ready", e => {
+        plugin.logger.debug("editor-ready");
         if (e.data.data.status) {
             bridge.init({
                 name: plugin.name,

@@ -75,7 +75,7 @@ export class EditorBridgeMaster {
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
-        public readonly channel: MessageChannel | Electron.MessageChannelMain, // 消息通道
+        public channel: MessageChannel | Electron.MessageChannelMain, // 消息通道
         public readonly url: URL = new URL(`${globalThis.document.baseURI}plugins/${plugin.name}/iframes/editor.html`), // 编辑器 URL
     ) {
         /* 错误消息/关闭消息 */
@@ -195,19 +195,60 @@ export class EditorBridgeMaster {
         iframe.src = this.url.href;
         iframe.addEventListener("load", _e => {
             // this.plugin.logger.debug(_e);
-            this.channel.port1.start(); // 开始接受消息
 
-            /**
-             * 向 iframe 发送消息以建立消息通道
-             * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/index.html
-             */
-            iframe.contentWindow.postMessage(
-                undefined,
-                "*",
-                [this.channel.port2 as MessagePort],
-            );
+            try {
+                this.channel.port1.start(); // 开始接受消息
+
+                /**
+                 * 向 iframe 发送消息以建立消息通道
+                 * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/index.html
+                 */
+                iframe.contentWindow.postMessage(
+                    undefined,
+                    "*",
+                    [this.channel.port2 as MessagePort],
+                );
+            } catch (error) {
+                /**
+                 * Uncaught DOMException: Failed to execute 'postMessage' on 'Window': Port at index 0 is already neutered.
+                 * 拖动页签分屏时出现
+                 * 需要重建建立一个 channel
+                 */
+                this.destroy();
+                this.rebuildChannel();
+                this.channel.port1.start();
+                iframe.contentWindow.postMessage(
+                    undefined,
+                    "*",
+                    [this.channel.port2 as MessagePort],
+                );
+            }
+
         });
         return iframe;
+    }
+
+    /* 重建消息通道 */
+    public rebuildChannel() {
+        if (this.channel instanceof MessageChannel) {
+            this.channel = new MessageChannel();
+            for (const listener of this._listeners.values()) {
+                this.channel.port1.addEventListener(
+                    constants.MESSAGE_EVENT_NAME,
+                    listener as MessageEventListener,
+                );
+            }
+        }
+        else {
+            const { MessageChannelMain } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
+            this.channel = new MessageChannelMain();
+            for (const listener of this._listeners.values()) {
+                this.channel.port1.addListener(
+                    constants.MESSAGE_EVENT_NAME,
+                    listener as ElectronMessageEventListener,
+                );
+            }
+        }
     }
 
     /* 初始化 */
