@@ -244,23 +244,25 @@ export class Explorer implements ITree {
     /* 折叠文件夹 */
     public readonly fold = (e: ComponentEvents<Node>["fold"]) => {
         // plugin.logger.debug(e);
-        const props = e.detail.props;
+        const node = e.detail.props;
+        this.select.one(node);
 
-        this.collapseNode(props);
+        this.collapseNode(node);
     }
 
     /* 展开文件夹 */
     public readonly unfold = async (e: ComponentEvents<Node>["unfold"]) => {
         // plugin.logger.debug(e);
-        const props = e.detail.props;
+        const node = e.detail.props;
+        this.select.one(node);
 
-        switch (get(props.type)) {
+        switch (get(node.type)) {
             case FileTreeNodeType.File: // 文件无需加载下级内容
                 break;
             case FileTreeNodeType.Root:
             case FileTreeNodeType.Folder:
             default: {
-                this.expandNode(props);
+                this.expandNode(node);
                 break;
             }
         }
