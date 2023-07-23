@@ -281,6 +281,27 @@
         }
     },
     "menu": {
+        "copy": {
+            "label": "复制"
+        },
+        "copyFullPath": {
+            "label": "复制完整路径"
+        },
+        "copyMarkdownHyperlink": {
+            "label": "复制 Markdown 超链接"
+        },
+        "copyName": {
+            "label": "复制名称"
+        },
+        "copyReferencePath": {
+            "label": "复制引用路径"
+        },
+        "copyRelativePath": {
+            "label": "复制相对路径"
+        },
+        "copyURL": {
+            "label": "复制 URL"
+        },
         "editAssetFile": {
             "label": "编辑资源文件"
         },
@@ -289,6 +310,9 @@
         },
         "export": {
             "accelerator": "导出"
+        },
+        "open": {
+            "label": "打开"
         },
         "openByNewWindow": {
             "label": "使用新窗口打开"
@@ -304,6 +328,12 @@
         },
         "openTabRight": {
             "label": "在页签右侧打开"
+        },
+        "openWithDefaultProgram": {
+            "label": "使用默认程序打开"
+        },
+        "revealInExplorer": {
+            "label": "在文件资源管理器中显示"
         },
         "standard": {
             "accelerator": "标准"

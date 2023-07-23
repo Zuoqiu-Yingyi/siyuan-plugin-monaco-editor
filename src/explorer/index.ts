@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import type siyuan from "siyuan";
+
 import type { ComponentEvents } from "svelte";
 import { get } from "svelte/store";
 
@@ -38,8 +40,9 @@ import { fn__code, ft__primary } from "@workspace/utils/siyuan/text/span";
 
 import type MonacoEditorPlugin from "@/index";
 import { Select } from "./select";
-import { Icon } from "./icon";
-import { Tooltip } from "./tooltip";
+import { ExplorerIcon } from "./icon";
+import { ExplorerTooltip } from "./tooltip";
+import { ExplorerContextMenu } from "./menu";
 
 /* 资源 */
 export interface IItem {
@@ -75,8 +78,9 @@ export type DefaultNodeProps = Required<Pick<
 /* 文件资源管理器 */
 export class Explorer implements ITree {
     /* 管理工具 */
-    protected readonly icon: InstanceType<typeof Icon>; // 图标管理
-    protected readonly tooltip: InstanceType<typeof Tooltip>; // 提示文本管理
+    protected readonly icon: InstanceType<typeof ExplorerIcon>; // 图标管理
+    protected readonly tooltip: InstanceType<typeof ExplorerTooltip>; // 提示文本管理
+    protected readonly contextMenu: InstanceType<typeof ExplorerContextMenu>; // 提示文本管理
 
     /* 树节点集合 */
     protected readonly set = new Set<IFileTreeNodeStores>();
@@ -128,10 +132,12 @@ export class Explorer implements ITree {
             countAriaLabel: plugin.i18n.explorer.count.ariaLabel,
         },
     ) {
-        this.icon = new Icon(this.plugin);
-        this.tooltip = new Tooltip(this.plugin);
+        this.icon = new ExplorerIcon(this.plugin);
+        this.tooltip = new ExplorerTooltip(this.plugin);
+        this.contextMenu = new ExplorerContextMenu(this.plugin);
     }
 
+    /* 根据完整路径查找节点 */
     public path2node(path: string): IFileTreeNodeStores | undefined {
         return this.map.get(path);
     }
@@ -194,7 +200,20 @@ export class Explorer implements ITree {
         );
     }
 
-    /* 打开事件 */
+    /* 菜单事件 */
+    public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
+        const node = e.detail.props;
+        const menu = this.contextMenu.makeMenu(node);
+
+        const event = e.detail.e;
+        menu.open({
+            x: event.clientX,
+            y: event.clientY,
+            isLeft: false,
+        });
+    }
+
+    /* 文件打开事件 */
     public readonly open = (e: ComponentEvents<Node>["open"]) => {
         // plugin.logger.debug(e);
         const node = e.detail.props;
@@ -204,6 +223,7 @@ export class Explorer implements ITree {
             case FileTreeNodeType.File: {  // 打开文件
                 const path = get(node.relative);
                 const icon = get(node.icon);
+                const text = get(node.text);
                 const ext = extname(path); // 文件扩展名
                 if (isBinaryExt(ext)) {
                     this.plugin.siyuan.confirm(
@@ -214,29 +234,19 @@ export class Explorer implements ITree {
                             ft__primary(this.plugin.i18n.message.openAnyway),
                         ].join("<br />"), // 文本
                         async () => {
-                            this.plugin.openWorkspaceFile(path, icon);
+                            this.plugin.openWorkspaceFile(path, text, icon);
                         }, // 确认按钮回调
                     );
                 }
                 else {
-                    this.plugin.openWorkspaceFile(path, icon);
+                    this.plugin.openWorkspaceFile(path, text, icon);
                 }
                 break;
             }
             case FileTreeNodeType.Root:
             case FileTreeNodeType.Folder:
-            default: // 切换文件夹折叠状态
-                switch (get(node.folded)) {
-                    case true:
-                        node.folded.set(false);
-                        this.icon.expand(node);
-                        break;
-                    case false:
-                    default:
-                        node.folded.set(true);
-                        this.icon.collapse(node);
-                        break;
-                }
+            default:
+                this.plugin.logger.warn(`Unexpected node ${get(node.path)} dispatch open event`);
                 break;
         }
     }

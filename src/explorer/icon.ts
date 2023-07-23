@@ -22,6 +22,8 @@ import { get } from "svelte/store";
 import { FLAG_LIGHT } from "@workspace/utils/env/native-front-end";
 import type { ParsedPath } from "path";
 
+import language_icon from "@/assets/entries/language-icon.json";
+
 import file_icon from "@/assets/entries/file-icon.json";
 import file_extension_icon from "@/assets/entries/file-extension-icon.json";
 import folder_icon from "@/assets/entries/folder-icon.json";
@@ -35,7 +37,7 @@ import folder_expanded_icon_light from "@/assets/entries/light/folder-expanded-i
 export type IEntries = [string, string][];
 
 /* 图标管理 */
-export class Icon {
+export class ExplorerIcon {
     public static ICONS = {
         file: "#iconFile",
         filetree: "#icon-monaco-editor-file-tree",
@@ -55,9 +57,22 @@ export class Icon {
         } as const,
     } as const;
 
+    public static makeDefaultNodeIcon(type: FileTreeNodeType): string {
+        switch (type) {
+            case FileTreeNodeType.Root:
+                return "iconWorkspace";
+            case FileTreeNodeType.Folder:
+                return "iconFolder";
+            case FileTreeNodeType.File:
+                return "iconFile";
+        }
+    }
+
     protected readonly i18n: MonacoEditorPlugin["i18n"];
     protected readonly map: Map<string, string>; // 路径 -> 图标 ID 映射表
     protected readonly material = {
+        languageIds: new Map(language_icon as IEntries),
+
         fileNames: new Map(file_icon as IEntries),
         fileExtensions: new Map(file_extension_icon as IEntries),
         folderNames: new Map(folder_icon as IEntries),
@@ -74,6 +89,19 @@ export class Icon {
     ) {
         this.i18n = this.plugin.i18n;
         this.map = new Map();
+
+        const javascript = this.material.languageIds.get("javascript");
+        this.material.fileExtensions.set(".js", javascript);
+        this.material.fileExtensions.set(".cjs", javascript);
+        this.material.fileExtensions.set(".mjs", javascript);
+
+        const typescript = this.material.languageIds.get("typescript");
+        this.material.fileExtensions.set(".ts", typescript);
+        this.material.fileExtensions.set(".cts", typescript);
+        this.material.fileExtensions.set(".mts", typescript);
+
+        const html = this.material.languageIds.get("html");
+        this.material.fileExtensions.set(".html", html);
     }
 
     /* 展开节点 */
@@ -97,7 +125,7 @@ export class Icon {
         const icon = this.map.get(path);
         if (icon) return icon;
 
-        const info = parse(path); // 节点路径信息
+        const info = parse(path.toLowerCase()); // 节点路径信息
 
         switch (type) {
             case FileTreeNodeType.Root: // 根目录节点
@@ -105,19 +133,19 @@ export class Icon {
             case FileTreeNodeType.Folder:
                 return this.makeFolderNodeIcon(info, expanded, light);
             case FileTreeNodeType.File: {
-                return this.makeFileodeIcon(info, light);
+                return this.makeFileNodeIcon(info, light);
             }
         }
     }
 
-    makeRootNodeIcon(
+    public makeRootNodeIcon(
         expanded: boolean = false,
         light: boolean = FLAG_LIGHT,
     ): string {
-        return expanded ? Icon.ICONS.material.rootFolderExpanded : Icon.ICONS.material.rootFolder;
+        return expanded ? ExplorerIcon.ICONS.material.rootFolderExpanded : ExplorerIcon.ICONS.material.rootFolder;
     }
 
-    makeFolderNodeIcon(
+    public makeFolderNodeIcon(
         info: ParsedPath,
         expanded: boolean = false,
         light: boolean = FLAG_LIGHT,
@@ -133,21 +161,37 @@ export class Icon {
                 : this.material.folderNames // 文件夹名称->图标
             ).get(info.base) // 文件夹名称->图标
             ?? (expanded
-                ? Icon.ICONS.material.folderExpanded // 默认文件夹展开图标
-                : Icon.ICONS.material.folder // 默认文件夹图标
+                ? ExplorerIcon.ICONS.material.folderExpanded // 默认文件夹展开图标
+                : ExplorerIcon.ICONS.material.folder // 默认文件夹图标
             );
     }
 
-    makeFileodeIcon(
+    public makeFileNodeIcon(
         info: ParsedPath,
         light: boolean = FLAG_LIGHT,
     ): string {
+        const exts = info.base.split(".");
+
         return (light ? (
             this.material.fileNamesLight.get(info.base) // 文件名称->浅色图标
-            ?? this.material.fileExtensionsLight.get(info.ext) // 文件扩展名->浅色图标
+            ?? this.getIconByExts(exts, light) // 文件扩展名->浅色图标
         ) : undefined)
             ?? this.material.fileNames.get(info.base) // 文件名称->图标
-            ?? this.material.fileExtensions.get(info.ext) // 文件扩展名->图标
-            ?? Icon.ICONS.material.file; // 默认文件图标
+            ?? this.getIconByExts(exts, light) // 文件扩展名->图标
+            ?? ExplorerIcon.ICONS.material.file; // 默认文件图标
+    }
+
+    protected getIconByExts(
+        exts: string[],
+        light: boolean = FLAG_LIGHT,
+    ) {
+        for (let i = 1; i <= exts.length - 1; ++i) {
+            const ext = `.${exts.slice(i).join(".")}`;
+            const icon = light
+                ? this.material.fileExtensionsLight.get(ext)
+                : this.material.fileExtensions.get(ext);
+            if (icon) return icon;
+        }
+        return undefined;
     }
 }

@@ -29,6 +29,9 @@ const C = {
     /* material 图标生成的 *.symbol 文件路径 */
     MATERIAL_FILE_PATH_SYMBOL: path.resolve(root, "./src/assets/symbols/icon-monaco-editor-material-icons.symbol"),
 
+    /* material 图标名称->图标 映射文件路径 */
+    MATERIAL_FILE_PATH_ENTRIES_LANGUAGE: path.resolve(root, "./src/assets/entries/language-icon.json"),
+
     /* material 文件夹名称->图标 映射文件路径 */
     MATERIAL_FILE_PATH_ENTRIES_FOLDER: path.resolve(root, "./src/assets/entries/folder-icon.json"),
     MATERIAL_FILE_PATH_ENTRIES_FOLDER_LIGHT: path.resolve(root, "./src/assets/entries/light/folder-icon.json"),
@@ -63,6 +66,7 @@ async function buildMaterialIcons() {
     const materialIcons: typeof import("material-icon-theme/dist/material-icons.json") = JSON.parse(await asyncFs.readFile(C.MATERIAL_ICONS_MANIFEST, "utf-8"));
     const {
         iconDefinitions, // 图标定义
+        languageIds, // 语言 ID
         folderNames, // 目录名
         folderNamesExpanded, // 展开的目录
         fileNames, // 文件名
@@ -72,6 +76,8 @@ async function buildMaterialIcons() {
 
     /* 构建 文件/目录名称->图标ID 的映射 */
     await Promise.all([
+        buildIconsMapEntries(languageIds, C.MATERIAL_FILE_PATH_ENTRIES_LANGUAGE, C.ID_PREFIX_MATERIAL),
+
         buildIconsMapEntries(folderNames, C.MATERIAL_FILE_PATH_ENTRIES_FOLDER, C.ID_PREFIX_MATERIAL),
         buildIconsMapEntries(folderNamesExpanded, C.MATERIAL_FILE_PATH_ENTRIES_FOLDER_EXPANDED, C.ID_PREFIX_MATERIAL),
         buildIconsMapEntries(fileNames, C.MATERIAL_FILE_PATH_ENTRIES_FILE, C.ID_PREFIX_MATERIAL),
@@ -108,11 +114,14 @@ async function buildIconsMapEntries(
 ): Promise<IEntry[]> {
     const entries: IEntry[] = [];
     Object.entries(icons).forEach(([name, icon]) => {
+        const id = `#${prefix}-${icon}`;
         if (ext) {
-            name = `.${name}`;
+            entries.push([`.${name}`, id]);
+            // entries.push([`.${icon}`, id]);
         }
-        icon = `#${prefix}-${icon}`;
-        entries.push([name, icon]);
+        else {
+            entries.push([name, id]);
+        }
     });
     await asyncFs.writeFile(path, JSON.stringify(entries, null, 4));
     return entries;

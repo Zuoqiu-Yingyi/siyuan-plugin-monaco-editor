@@ -281,6 +281,27 @@
         }
     },
     "menu": {
+        "copy": {
+            "label": "Copy"
+        },
+        "copyFullPath": {
+            "label": "Copy Absolute Path"
+        },
+        "copyMarkdownHyperlink": {
+            "label": "Copy Markdown Hyperlink"
+        },
+        "copyName": {
+            "label": "Copy Name"
+        },
+        "copyReferencePath": {
+            "label": "Copy Reference Path"
+        },
+        "copyRelativePath": {
+            "label": "Copy Relative Path"
+        },
+        "copyURL": {
+            "label": "Copy URL"
+        },
         "editAssetFile": {
             "label": "Edit Asset File"
         },
@@ -289,6 +310,9 @@
         },
         "export": {
             "accelerator": "Export"
+        },
+        "open": {
+            "label": "Open"
         },
         "openByNewWindow": {
             "label": "Open with New Window"
@@ -304,6 +328,12 @@
         },
         "openTabRight": {
             "label": "Open Right the Tab"
+        },
+        "openWithDefaultProgram": {
+            "label": "Open with Default Program"
+        },
+        "revealInExplorer": {
+            "label": "Reveal In Explorer"
         },
         "standard": {
             "accelerator": "Standard"
