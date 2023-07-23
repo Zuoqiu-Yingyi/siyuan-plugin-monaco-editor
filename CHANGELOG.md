@@ -6,6 +6,7 @@
 - 调整文件资源管理器图标与提示文本 | Adjust the icon and prompt text of the file explorer.
 - 为编辑器添加更改语言模式命令 | Add change model language command to editor.
 - 添加工作区目录与文件的提示文本 | Add prompt text for workspace directories and files.
+- 添加 material 图标集 | Add material icon set.
 
 ## 2023-07-22
 

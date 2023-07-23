@@ -19,6 +19,9 @@ export const FLAG_ELECTRON = isElectron();
 export const FLAG_IFRAME = isIframe();
 export const FLAG_POPUP = isPopup();
 
+export const FLAG_LIGHT = isLight();
+export const FLAG_DARK = isDark();
+
 export function hasNodeRequire(): boolean {
     return !!globalThis.require;
 }
@@ -37,4 +40,14 @@ export function isIframe(): boolean {
 
 export function isPopup(): boolean {
     return !globalThis.opener;
+}
+
+export function isLight(): boolean {
+    return (globalThis as any).siyuan?.config?.appearance?.mode === 0
+        ?? window.matchMedia('(prefers-color-scheme: light)').matches;
+}
+
+export function isDark(): boolean {
+    return (globalThis as any).siyuan?.config?.appearance?.mode === 1
+        ?? window.matchMedia('(prefers-color-scheme: dark)').matches;
 }

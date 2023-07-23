@@ -6,6 +6,7 @@
         "moduleResolution": "bundler",
     },
     "include": [
+        "scripts/**/*.ts",
         "vite.config.ts",
         "vite.*.config.ts",
     ],

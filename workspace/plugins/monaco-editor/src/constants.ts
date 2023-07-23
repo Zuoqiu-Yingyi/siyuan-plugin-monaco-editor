@@ -18,4 +18,6 @@
 export default {
     INIT_CHANNEL_NAME: "monaco-editor-init", // 初始化通道名称
     MESSAGE_EVENT_NAME: "message", // 消息事件名称
+    ID_PREFIX_MATERIAL: "#icon-monaco-editor-material", // 图标 symbol 的 ID 前缀
+    ID_PREFIX_MATERIAL_LIGHT: "#icon-monaco-editor-material-light", // 明亮主题图标 symbol 的 ID 前缀
 } as const;

@@ -18,7 +18,6 @@
 import type MonacoEditorPlugin from "@/index";
 import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
 import { parse } from "@workspace/utils/path/browserify";
-import { Icon } from "./icon";
 
 /* 提示信息管理 */
 export class Tooltip {

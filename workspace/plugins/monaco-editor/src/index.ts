@@ -19,11 +19,12 @@
 import siyuan from "siyuan";
 
 /* 静态资源 */
-import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw"
-import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw"
-import icon_file_tree from "./assets/symbols/icon-monaco-editor-file-tree.symbol?raw"
-import icon_folder_opend from "./assets/symbols/icon-monaco-editor-folder-opend.symbol?raw"
-import icon_folder_closed from "./assets/symbols/icon-monaco-editor-folder-closed.symbol?raw"
+import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw";
+import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw";
+import icon_file_tree from "./assets/symbols/icon-monaco-editor-file-tree.symbol?raw";
+import icon_folder_opend from "./assets/symbols/icon-monaco-editor-folder-opend.symbol?raw";
+import icon_folder_closed from "./assets/symbols/icon-monaco-editor-folder-closed.symbol?raw";
+import icon_material_icons from "./assets/symbols/icon-monaco-editor-material-icons.symbol?raw";
 
 /* SDK */
 import { Client } from "@siyuan-community/siyuan-sdk";
@@ -41,7 +42,7 @@ import { normalize } from "@workspace/utils/path/normalize";
 import { isBinaryPath } from "@workspace/utils/file/binary";
 
 /* 组件 */
-import Tab from "./components/Tab.svelte";
+import Tab from "./components/EditorTab.svelte";
 import EditorDock from "./components/EditorDock.svelte";
 import ExplorerDock from "./components/ExplorerDock.svelte";
 
@@ -103,7 +104,17 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const plugin = this;
         this.tab = this.addTab({
             type: "-editor-tab",
+            beforeDestroy() {
+                // plugin.logger.debug("tab-beforeDestroy");
+            },
+            resize() {
+                // plugin.logger.debug("tab-resize");
+            },
+            update() {
+                // plugin.logger.debug("tab-update");
+            },
             init() {
+                // plugin.logger.debug("tab-init");
                 // plugin.logger.debug(this);
                 const tab = this;
                 this.component = new Tab({
@@ -116,6 +127,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 });
             },
             destroy() {
+                // plugin.logger.debug("tab-destroy");
                 this.component?.$destroy();
             },
         });
@@ -208,6 +220,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             icon_file_tree, // 文件树
             icon_folder_opend, // 工作空间
             icon_folder_closed, // 工作空间
+            icon_material_icons, // 工作空间
         ].join(""));
 
         this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME)

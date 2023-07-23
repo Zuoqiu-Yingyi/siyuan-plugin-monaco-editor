@@ -347,7 +347,11 @@
 
 <!-- 下级节点 -->
 {#if children}
-    <ul class:fn__none={folded}>
+    <ul
+        class="children"
+        class:fn__none={folded}
+        style:--monaco-editor-explorer-indent-left="calc(12px + {indent} * {depth})"
+    >
         {#each children as node, i (node.path)}
             <svelte:self
                 on:open
@@ -360,3 +364,26 @@
         {/each}
     </ul>
 {/if}
+
+<style lang="less">
+    .children {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: var(--monaco-editor-explorer-indent-left);
+            width: 2px;
+            height: 100%;
+            background-color: var(--b3-border-color);
+            z-index: 1;
+        }
+
+        // &:hover {
+        //     &::before {
+        //         // background-color: var(--b3-theme-surface-light);
+        //         background-color: var(--b3-theme-primary-light);
+        //     }
+        // }
+    }
+</style>
