@@ -134,7 +134,7 @@ export class Explorer implements ITree {
     ) {
         this.icon = new ExplorerIcon(this.plugin);
         this.tooltip = new ExplorerTooltip(this.plugin);
-        this.contextMenu = new ExplorerContextMenu(this.plugin);
+        this.contextMenu = new ExplorerContextMenu(this.plugin, this);
     }
 
     /* 根据完整路径查找节点 */
@@ -202,79 +202,99 @@ export class Explorer implements ITree {
 
     /* 菜单事件 */
     public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
-        const node = e.detail.props;
-        const menu = this.contextMenu.makeMenu(node);
+        try {
+            const node = e.detail.props;
+            const menu = this.contextMenu.makeMenu(node);
 
-        const event = e.detail.e;
-        menu.open({
-            x: event.clientX,
-            y: event.clientY,
-            isLeft: false,
-        });
+            const event = e.detail.e;
+            menu.open({
+                x: event.clientX,
+                y: event.clientY,
+                isLeft: false,
+            });
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
     }
 
     /* 文件打开事件 */
     public readonly open = (e: ComponentEvents<Node>["open"]) => {
         // plugin.logger.debug(e);
-        const node = e.detail.props;
-        this.select.one(node);
+        try {
+            const node = e.detail.props;
+            this.select.one(node);
 
-        switch (get(node.type)) {
-            case FileTreeNodeType.File: {  // 打开文件
-                const path = get(node.relative);
-                const icon = get(node.icon);
-                const text = get(node.text);
-                const ext = extname(path); // 文件扩展名
-                if (isBinaryExt(ext)) {
-                    this.plugin.siyuan.confirm(
-                        fn__code(path), // 标题
-                        [
-                            this.plugin.i18n.message.binaryError,
-                            "",
-                            ft__primary(this.plugin.i18n.message.openAnyway),
-                        ].join("<br />"), // 文本
-                        async () => {
-                            this.plugin.openWorkspaceFile(path, text, icon);
-                        }, // 确认按钮回调
-                    );
+            switch (get(node.type)) {
+                case FileTreeNodeType.File: {  // 打开文件
+                    const path = get(node.relative);
+                    const icon = get(node.icon);
+                    const text = get(node.text);
+                    const ext = extname(path); // 文件扩展名
+                    if (isBinaryExt(ext)) {
+                        this.plugin.siyuan.confirm(
+                            fn__code(path), // 标题
+                            [
+                                this.plugin.i18n.message.binaryError,
+                                "",
+                                ft__primary(this.plugin.i18n.message.openAnyway),
+                            ].join("<br />"), // 文本
+                            async () => {
+                                this.plugin.openWorkspaceFile(path, text, icon);
+                            }, // 确认按钮回调
+                        );
+                    }
+                    else {
+                        this.plugin.openWorkspaceFile(path, text, icon);
+                    }
+                    break;
                 }
-                else {
-                    this.plugin.openWorkspaceFile(path, text, icon);
-                }
-                break;
+                case FileTreeNodeType.Root:
+                case FileTreeNodeType.Folder:
+                default:
+                    this.plugin.logger.warn(`Unexpected node ${get(node.path)} dispatch open event`);
+                    break;
             }
-            case FileTreeNodeType.Root:
-            case FileTreeNodeType.Folder:
-            default:
-                this.plugin.logger.warn(`Unexpected node ${get(node.path)} dispatch open event`);
-                break;
+        }
+        catch (error) {
+            this.plugin.catch(error);
         }
     }
 
     /* 折叠文件夹 */
     public readonly fold = (e: ComponentEvents<Node>["fold"]) => {
         // plugin.logger.debug(e);
-        const node = e.detail.props;
-        this.select.one(node);
+        try {
+            const node = e.detail.props;
+            this.select.one(node);
 
-        this.collapseNode(node);
+            this.collapseNode(node);
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
     }
 
     /* 展开文件夹 */
     public readonly unfold = async (e: ComponentEvents<Node>["unfold"]) => {
         // plugin.logger.debug(e);
-        const node = e.detail.props;
-        this.select.one(node);
+        try {
+            const node = e.detail.props;
+            this.select.one(node);
 
-        switch (get(node.type)) {
-            case FileTreeNodeType.File: // 文件无需加载下级内容
-                break;
-            case FileTreeNodeType.Root:
-            case FileTreeNodeType.Folder:
-            default: {
-                this.expandNode(node);
-                break;
+            switch (get(node.type)) {
+                case FileTreeNodeType.File: // 文件无需加载下级内容
+                    break;
+                case FileTreeNodeType.Root:
+                case FileTreeNodeType.Folder:
+                default: {
+                    this.expandNode(node);
+                    break;
+                }
             }
+        }
+        catch (error) {
+            this.plugin.catch(error);
         }
     }
 
@@ -383,13 +403,34 @@ export class Explorer implements ITree {
         return nodes;
     }
 
-    /* 更新节点状态与下级节点 */
-    protected async updateNode(node: IFileTreeNodeStores) {
-        const resources = await this.ls(get(node.relative));
-        const children = this.resources2nodes(resources);
+    /**
+     * 更新节点状态
+     * @param node - 节点
+     * @param recursive - 递归遍历更新节点状态
+     */
+    public async updateNode(
+        node: IFileTreeNodeStores,
+        recursive: boolean = false,
+    ): Promise<void> {
+        if (get(node.type) === FileTreeNodeType.File) return;
 
-        node.count.set(resources.count); // 设置资源数量
-        node.children.set(children); // 设置下级资源节点
+        if (recursive) {
+            this.call(
+                node,
+                async node => {
+                    if (get(node.children) === undefined) return; // 忽略未加载的节点
+                    this.updateNode(node);
+                },
+                true,
+            );
+        }
+        else {
+            const resources = await this.ls(get(node.relative));
+            const children = this.resources2nodes(resources);
+
+            node.count.set(resources.count); // 设置资源数量
+            node.children.set(children); // 设置下级资源节点
+        }
     }
 
     /* 展开节点 */
@@ -437,12 +478,21 @@ export class Explorer implements ITree {
         callback: (node: IFileTreeNodeStores) => void,
         recursive: boolean,
     ): void {
-        callback(node);
         if (recursive) {
-            get(node.children)
-                ?.map(node => this.map.get(node.path))
-                .filter(node => !!node)
-                .forEach(callback);
+            const nodes = [node];
+            while (nodes.length) {
+                const node = nodes.shift();
+                if (node) {
+                    callback(node);
+                    const children = get(node.children)
+                        ?.map(node => this.map.get(node.path))
+                        .filter(node => !!node);
+                    if (children) nodes.push(...children);
+                }
+            }
+        }
+        else {
+            callback(node);
         }
     }
 }

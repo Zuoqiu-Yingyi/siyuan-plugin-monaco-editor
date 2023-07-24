@@ -311,8 +311,8 @@
         "export": {
             "accelerator": "匯出"
         },
-        "open": {
-            "label": "打開"
+        "openFile": {
+            "label": "打開文檔"
         },
         "openByNewWindow": {
             "label": "使用新窗口打開"
@@ -331,6 +331,15 @@
         },
         "openWithDefaultProgram": {
             "label": "使用預設程式打開"
+        },
+        "refresh": {
+            "label": "重新整理"
+        },
+        "refreshDirectory": {
+            "label": "重新整理當前目錄"
+        },
+        "refreshDirectoryDeeply": {
+            "label": "深度重新整理當前目錄"
         },
         "revealInExplorer": {
             "label": "在檔案總管中顯示"

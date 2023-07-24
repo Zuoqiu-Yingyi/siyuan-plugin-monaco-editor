@@ -311,8 +311,8 @@
         "export": {
             "accelerator": "导出"
         },
-        "open": {
-            "label": "打开"
+        "openFile": {
+            "label": "打开文件"
         },
         "openByNewWindow": {
             "label": "使用新窗口打开"
@@ -331,6 +331,15 @@
         },
         "openWithDefaultProgram": {
             "label": "使用默认程序打开"
+        },
+        "refresh": {
+            "label": "刷新"
+        },
+        "refreshDirectory": {
+            "label": "刷新当前目录"
+        },
+        "refreshDirectoryDeeply": {
+            "label": "深度刷新当前目录"
         },
         "revealInExplorer": {
             "label": "在文件资源管理器中显示"
