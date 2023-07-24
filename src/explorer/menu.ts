@@ -25,10 +25,11 @@ import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
 import type { Explorer } from ".";
-import { extname } from "@workspace/utils/path/browserify";
+import { extname, join } from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
+    ft__primary,
 } from "@workspace/utils/siyuan/text/span";
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
@@ -171,7 +172,7 @@ export class ExplorerContextMenu {
         const children = get(node.children);
 
         const ext = extname(path); // 文件扩展名
-        const names: Set<string> = children // 下级资源名称列表
+        const sub_names: Set<string> = children // 下级资源名称列表
             ? new Set(children.map(node => node.name))
             : null;
         const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
@@ -193,9 +194,9 @@ export class ExplorerContextMenu {
                         icon: "iconFile",
                         label: this.i18n.menu.newFile.label,
                         click: () => {
-                            this.createNew(
+                            this.create(
                                 node,
-                                names,
+                                sub_names,
                                 relative,
                                 false,
                             );
@@ -212,9 +213,9 @@ export class ExplorerContextMenu {
                         icon: "iconFolder",
                         label: this.i18n.menu.newFolder.label,
                         click: () => {
-                            this.createNew(
+                            this.create(
                                 node,
-                                names,
+                                sub_names,
                                 relative,
                                 true,
                             );
@@ -522,7 +523,31 @@ export class ExplorerContextMenu {
 
         // TODO: 上传
 
-        // TODO: 重命名
+        /* 重命名 */
+        items.push({
+            type: MenuItemType.Action,
+            options: {
+                icon: "iconEdit",
+                label: this.i18n.menu.rename.label,
+                click: () => {
+                    const parent = this.explorer.path2node(get(node.directory));
+                    const siblings = get(parent.children);
+                    const siblings_names: Set<string> = siblings // 同级资源名称列表
+                        ? new Set(siblings.map(node => node.name))
+                        : null;
+                    this.rename(
+                        parent,
+                        siblings_names,
+                        name,
+                        get(parent.relative),
+                        get(node.type) === FileTreeNodeType.Folder,
+                    );
+                },
+            },
+            root: false,
+            folder: true,
+            file: true,
+        });
 
         // TODO: 删除
 
@@ -536,7 +561,7 @@ export class ExplorerContextMenu {
      * @param relative: 当前目录相对路径
      * @param isDir: 是否为创建文件夹
      */
-    public createNew(
+    public create(
         node: IFileTreeNodeStores,
         names: Set<string> | null,
         relative: string,
@@ -570,7 +595,7 @@ export class ExplorerContextMenu {
                     );
                 default: // 文件名有效
                     return i10n.tips.normal
-                        .replaceAll("${1}", filename)
+                        .replaceAll("${1}", filename);
             }
         };
         prompt(
@@ -596,10 +621,95 @@ export class ExplorerContextMenu {
                     if (valid) {
                         await this.plugin.client.putFile({
                             isDir,
-                            path: `${relative}/${value}`,
+                            path: join(relative, value),
                             file: "",
                         });
                         this.explorer.updateNode(node);
+                        return true;
+                    }
+                    else return false;
+                },
+            },
+        );
+    }
+
+    /**
+     * 文件/文件夹重命名弹出框
+     * @param parentNode: 当前节点的上级节点
+     * @param siblingsNames: 当前节点同级节点名称
+     * @param oldname: 原名称
+     * @param parentRelative: 当前节点的上级节点的相对路径
+     * @param isDir: 是否为文件夹重命名
+     */
+    public rename(
+        parentNode: IFileTreeNodeStores,
+        siblingsNames: Set<string> | null,
+        oldname: string,
+        parentRelative: string,
+        isDir: boolean,
+    ): void {
+        const foldername = fn__code(parentRelative);
+        const i10n = isDir
+            ? this.i18n.menu.renameFolder
+            : this.i18n.menu.renameFile;
+
+        /* 文件/文件名检查函数 */
+        const check = async (value, _dialog, _component) => {
+            const newname = fn__code(value);
+            switch (true) {
+                case value === "": // 文件夹名不能为空
+                    return ft__error(i10n.tips.empty);
+                case !isValidName(value): // 无效的文件名
+                    return ft__error(i10n.tips.invalid
+                        .replaceAll("${1}", newname)
+                    );
+                case value === oldname: // 新名称与原名称一致
+                    return ft__primary(i10n.tips.same);
+                case !siblingsNames: // 下级目录集合不存在, 更新集合
+                    {
+                        siblingsNames = new Set();
+                        const response = await this.plugin.client.readDir({ path: parentRelative });
+                        response.data.forEach(item => siblingsNames.add(item.name));
+                    }
+                case siblingsNames.has(value): // 存在同名文件
+                    return ft__error(i10n.tips.exist
+                        .replaceAll("${1}", foldername)
+                        .replaceAll("${2}", newname)
+                    );
+                default: // 文件名有效
+                    return i10n.tips.normal
+                        .replaceAll("${1}", fn__code(oldname))
+                        .replaceAll("${2}", newname);
+            }
+        };
+        prompt(
+            this.plugin.siyuan.Dialog,
+            {
+                title: i10n.label,
+                text: i10n.text.replaceAll("${1}", foldername),
+                value: oldname,
+                placeholder: i10n.placeholder,
+                tips: i10n.tips.pleaseEnter,
+                width: "32em",
+                input: check,
+                change: check,
+                confirm: async (value) => {
+                    let valid = false; // 文件名是否有效
+                    switch (true) {
+                        case value === "": // 文件夹名为空
+                        case !isValidName(value): // 无效的文件名
+                        case value === oldname: // 新名称与原名称一致
+                        case !siblingsNames || siblingsNames.has(value): // 存在同名文件
+                            valid = false;
+                        default: // 文件名有效
+                            valid = true;
+                    }
+                    if (valid) {
+                        await this.plugin.client.renameFile({
+                            path: join(parentRelative, oldname),
+                            newPath: join(parentRelative, value),
+                        });
+                        this.explorer.updateNode(parentNode);
                         return true;
                     }
                     else return false;

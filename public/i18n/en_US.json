@@ -363,10 +363,39 @@
             "label": "Refresh"
         },
         "refreshDirectory": {
-            "label": "Refresh Current Directory"
+            "label": "Refresh the Directory"
         },
         "refreshDirectoryDeeply": {
-            "label": "Refresh Current Directory Deeply"
+            "label": "Refresh the Directory Deeply"
+        },
+        "rename": {
+            "label": "Rename"
+        },
+        "renameFile": {
+            "label": "Rename File",
+            "placeholder": "File name",
+            "text": "Rename file ${1}",
+            "tips": {
+                "empty": "The file name cannot be empty",
+                "exist": "${2} already exists under folder ${1}, please enter a different name",
+                "invalid": "Name ${1} is an invalid file name, please enter a different name",
+                "normal": "Rename file ${1} to ${2}?",
+                "pleaseEnter": "Please enter a new file name",
+                "same": "The file name has not changed"
+            }
+        },
+        "renameFolder": {
+            "label": "Rename Folder",
+            "placeholder": "Folder name",
+            "text": "Create a new folder in the folder ${1}",
+            "tips": {
+                "empty": "The folder name cannot be empty",
+                "exist": "${2} already exists under folder ${1}, please enter a different name",
+                "invalid": "Name ${1} is an invalid folder name, please enter a different name",
+                "normal": "Rename folder ${1} to ${2}?",
+                "pleaseEnter": "Please enter a new folder name",
+                "same": "The folder name has not changed"
+            }
         },
         "revealInExplorer": {
             "label": "Reveal In Explorer"
