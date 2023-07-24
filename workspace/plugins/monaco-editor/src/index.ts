@@ -302,6 +302,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         // });
     }
 
+    /* 捕获错误 */
+    public catch(error: any): void {
+        this.logger.error(error);
+        this.client.pushErrMsg(error);
+    }
+
     /* 重置插件配置 */
     public async resetConfig(): Promise<void> {
         return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);

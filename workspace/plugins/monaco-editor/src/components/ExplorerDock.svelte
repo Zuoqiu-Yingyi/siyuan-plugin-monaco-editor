@@ -17,7 +17,7 @@
 
 <!-- 文件资源管理器面板 -->
 <script lang="ts">
-    import { setContext } from 'svelte';
+    import { setContext } from "svelte";
     import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
     import FileTree from "@workspace/components/siyuan/tree/file/FileTree.svelte";
 
@@ -26,8 +26,8 @@
     import type { IBar } from "@workspace/components/siyuan/dock/index";
     import type MonacoEditorPlugin from "@/index";
     import { Explorer } from "@/explorer";
-    import type { ITree } from '@workspace/components/siyuan/tree/file';
-    import { ExplorerIcon } from '@/explorer/icon';
+    import type { ITree } from "@workspace/components/siyuan/tree/file";
+    import { ExplorerIcon } from "@/explorer/icon";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let workspace: string; // 工作空间目录
@@ -47,7 +47,16 @@
                 type: "refresh",
                 ariaLabel: plugin.i18n.explorer.refresh.ariaLabel,
                 tooltipsDirection: TooltipsDirection.sw,
-                onClick: (_e, _element, _props) => {},
+                onClick: (_e, _element, _props) => {
+                    try {
+                        roots.forEach(root => {
+                            const node = explorer.path2node(root.path);
+                            if (node) explorer.updateNode(node, true);
+                        });
+                    } catch (error) {
+                        plugin.catch(error);
+                    }
+                },
             },
             {
                 // 折叠
@@ -56,10 +65,14 @@
                 ariaLabel: plugin.i18n.dock.collapse.ariaLabel,
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick: (_e, _element, _props) => {
-                    roots.forEach(root => {
-                        const node = explorer.path2node(root.path);
-                        if (node) explorer.collapseNode(node, true);
-                    });
+                    try {
+                        roots.forEach(root => {
+                            const node = explorer.path2node(root.path);
+                            if (node) explorer.collapseNode(node, true);
+                        });
+                    } catch (error) {
+                        plugin.catch(error);
+                    }
                 },
             },
             {

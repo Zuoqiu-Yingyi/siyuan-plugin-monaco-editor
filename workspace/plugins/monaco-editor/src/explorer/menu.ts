@@ -24,6 +24,9 @@ import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
+import type { Explorer } from ".";
+import { extname } from "@workspace/utils/path/browserify";
+import { isBinaryExt } from "@workspace/utils/file/binary";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -128,7 +131,8 @@ export class ExplorerContextMenu {
     protected readonly i18n: MonacoEditorPlugin["i18n"];
 
     constructor(
-        public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
+        protected readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
+        protected readonly explorer: InstanceType<typeof Explorer>, // 插件对象
     ) {
         this.i18n = this.plugin.i18n;
     }
@@ -160,18 +164,69 @@ export class ExplorerContextMenu {
         const path = get(node.path);
         const relative = get(node.relative);
 
+        const ext = extname(path);
+        const accessible = isStaticWebFileServicePath(relative);
+
         const items: IMenuItem[] = [];
 
-        // TODO: 刷新
+        /* 刷新 */
+        items.push({
+            type: MenuItemType.Submenu,
+            options: {
+                icon: "iconRefresh",
+                label: this.i18n.menu.refresh.label,
+            },
+            submenu: [
+                /* 刷新目录 */
+                {
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconRefresh",
+                        label: this.i18n.menu.refreshDirectory.label,
+                        click: () => {
+                            this.explorer.updateNode(node);
+                        },
+                    },
+                    root: true,
+                    folder: true,
+                    file: false,
+                },
+                /* 深度刷新目录 */
+                {
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconRefresh",
+                        label: this.i18n.menu.refreshDirectoryDeeply.label,
+                        click: () => {
+                            this.explorer.updateNode(node, true);
+                        },
+                    },
+                    root: true,
+                    folder: true,
+                    file: false,
+                },
+            ],
+            root: true,
+            folder: true,
+            file: false,
+        });
+
         // TODO: 新建文件
         // TODO: 新建文件夹
+
+        items.push({
+            type: MenuItemType.Separator,
+            root: true,
+            folder: true,
+            file: false,
+        });
 
         /* 打开文件 */
         items.push({
             type: MenuItemType.Action,
             options: {
                 icon: "iconCode",
-                label: this.i18n.menu.open.label,
+                label: this.i18n.menu.openFile.label,
                 submenu: this.plugin.buildOpenSubmenu(
                     {
                         type: HandlerType.asset,
@@ -192,7 +247,6 @@ export class ExplorerContextMenu {
         });
 
         if (FLAG_ELECTRON) {
-
             /**
              * 使用默认程序打开
              * REF: https://www.electronjs.org/zh/docs/latest/api/shell#shellopenpathpath
@@ -314,7 +368,7 @@ export class ExplorerContextMenu {
                         file: true,
                     },
                 ];
-                if (isStaticWebFileServicePath(relative)) {
+                if (accessible) {
                     const pathname = workspacePath2StaticPathname(relative);
                     const url = new URL(`${globalThis.document.baseURI}${pathname}`);
                     const link1 = `[${name}](<${pathname}>)`;

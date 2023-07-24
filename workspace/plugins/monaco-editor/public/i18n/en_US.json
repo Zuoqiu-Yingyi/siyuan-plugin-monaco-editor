@@ -311,8 +311,8 @@
         "export": {
             "accelerator": "Export"
         },
-        "open": {
-            "label": "Open"
+        "openFile": {
+            "label": "Open File"
         },
         "openByNewWindow": {
             "label": "Open with New Window"
@@ -331,6 +331,15 @@
         },
         "openWithDefaultProgram": {
             "label": "Open with Default Program"
+        },
+        "refresh": {
+            "label": "Refresh"
+        },
+        "refreshDirectory": {
+            "label": "Refresh Current Directory"
+        },
+        "refreshDirectoryDeeply": {
+            "label": "Refresh Current Directory Deeply"
         },
         "revealInExplorer": {
             "label": "Reveal In Explorer"

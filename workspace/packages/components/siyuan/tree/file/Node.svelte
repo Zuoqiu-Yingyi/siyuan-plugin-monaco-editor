@@ -366,26 +366,23 @@
 {/if}
 
 <style lang="less">
-    .highlight() {
+    .highlight(@color: var(--b3-theme-primary-lighter)) {
         // 辅助线高亮
         &::before {
             // background-color: var(--b3-theme-surface-light);
-            background-color: var(--b3-theme-primary-lighter);
+            background-color: @color;
             // background-color: var(--b3-theme-primary-lightest);
         }
     }
     .node {
         margin: 0; // 辅助线对齐
 
+        // 焦点所在节点
         &.b3-list-item--focus {
-            // 焦点所在节点
-            &[data-type="navigation-root"],
-            &[data-type="navigation-folder"] {
-                // 焦点在文件夹节点
-                + .node-list {
-                    // 高亮下级目录
-                    .highlight();
-                }
+            // 有下级目录
+            + .node-list {
+                // 高亮下级目录
+                .highlight();
             }
         }
     }
@@ -403,9 +400,9 @@
             z-index: 1;
         }
 
-        &:has(> .node.b3-list-item--focus[data-type="navigation-file"]) {
-            // 焦点在下级文件节点
-            .highlight(); // 高亮本机目录
+        // 焦点在下级节点
+        &:has(> .node.b3-list-item--focus) {
+            .highlight(); // 高亮本级目录
         }
     }
 </style>
