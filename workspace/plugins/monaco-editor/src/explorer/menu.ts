@@ -539,6 +539,7 @@ export class ExplorerContextMenu {
                         parent,
                         siblings_names,
                         name,
+                        relative,
                         get(parent.relative),
                         get(node.type) === FileTreeNodeType.Folder,
                     );
@@ -549,14 +550,44 @@ export class ExplorerContextMenu {
             file: true,
         });
 
-        // TODO: 删除
+        items.push({
+            type: MenuItemType.Separator,
+            root: false,
+            folder: true,
+            file: true,
+        });
+
+        /* 删除 */
+        items.push({
+            type: MenuItemType.Action,
+            options: {
+                icon: "iconTrashcan",
+                label: this.i18n.menu.delete.label,
+                click: () => {
+                    const parent = this.explorer.path2node(get(node.directory));
+                    const siblings = get(parent.children);
+                    const siblings_names: Set<string> = siblings // 同级资源名称列表
+                        ? new Set(siblings.map(node => node.name))
+                        : null;
+                    this.delete(
+                        parent,
+                        path,
+                        relative,
+                        get(node.type) === FileTreeNodeType.Folder,
+                    );
+                },
+            },
+            root: false,
+            folder: true,
+            file: true,
+        });
 
         return items;
     }
 
     /**
      * 新建文件/文件夹弹出框
-     * @param node: 当前目录节点
+     * @param node: 当前节点节点
      * @param names: 当前目录下资源名称集合
      * @param relative: 当前目录相对路径
      * @param isDir: 是否为创建文件夹
@@ -638,6 +669,7 @@ export class ExplorerContextMenu {
      * @param parentNode: 当前节点的上级节点
      * @param siblingsNames: 当前节点同级节点名称
      * @param oldname: 原名称
+     * @param relative: 当前节点的相对路径
      * @param parentRelative: 当前节点的上级节点的相对路径
      * @param isDir: 是否为文件夹重命名
      */
@@ -645,6 +677,7 @@ export class ExplorerContextMenu {
         parentNode: IFileTreeNodeStores,
         siblingsNames: Set<string> | null,
         oldname: string,
+        relative: string,
         parentRelative: string,
         isDir: boolean,
     ): void {
@@ -686,7 +719,7 @@ export class ExplorerContextMenu {
             this.plugin.siyuan.Dialog,
             {
                 title: i10n.label,
-                text: i10n.text.replaceAll("${1}", foldername),
+                text: i10n.text.replaceAll("${1}", fn__code(relative)),
                 value: oldname,
                 placeholder: i10n.placeholder,
                 tips: i10n.tips.pleaseEnter,
@@ -716,5 +749,40 @@ export class ExplorerContextMenu {
                 },
             },
         );
+    }
+
+
+    /**
+     * 删除文件/文件夹弹出框
+     * @param parent: 上级节点
+     * @param path: 当前节点完整路径
+     * @param relative: 当前节点相对路径
+     * @param isDir: 当前节点是否为目录
+     * @param doubleCheck: 是否进行二次确认
+     */
+    public delete(
+        parent: IFileTreeNodeStores,
+        path: string,
+        relative: string,
+        isDir: boolean,
+        doubleCheck: boolean = false,
+    ): void {
+        if (doubleCheck) { // 二次确认 (手动输入完整路径名)
+        }
+        else { // 点击确认按钮直接删除
+            const i10n = isDir
+                ? this.i18n.menu.deleteFolder
+                : this.i18n.menu.deleteFile;
+            this.plugin.siyuan.confirm(
+                i10n.label,
+                i10n.text
+                    .replaceAll("${1}", fn__code(relative))
+                    .replaceAll("${2}", fn__code(path)),
+                async () => {
+                    await this.plugin.client.removeFile({ path: relative });
+                    this.explorer.updateNode(parent);
+                },
+            )
+        }
     }
 }
