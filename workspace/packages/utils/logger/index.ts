@@ -26,7 +26,17 @@ export class Logger {
         public collapsed: boolean = true, // 是否折叠日志组
     ) { }
 
-    protected stdout(func: (message?: any, ...optionalParams: any[]) => void, ...args: any[]): void {
+    /**
+     * 输出
+     * @param func: 所使用的输出函数
+     * @param multiple: 是否进行多次输出
+     * @param args: 输出函数的参数
+     */
+    protected stdout(
+        func: (message?: any, ...optionalParams: any[]) => void,
+        multiple: boolean,
+        ...args: any[]
+    ): void {
         const label = `[\x1b[4m${this.label}\x1b[0m] - <\x1b[1m${func.name.toUpperCase()}\x1b[0m>`; // 日志组标签
         if (this.collapsed) {
             globalThis.console.groupCollapsed(label); // 启用折叠日志组
@@ -34,36 +44,71 @@ export class Logger {
         else {
             globalThis.console.group(label); // 启用不折叠日志组
         }
-        func(...args); // 输出日志
+
+        if (multiple) {
+            args.forEach(arg => func(...arg)); // 输出多条日志
+        }
+        else {
+            func(...args); // 输出日志
+        }
+
         globalThis.console.trace(); // 输出调用堆栈
         globalThis.console.groupEnd(); // 结束日志组
     }
 
     dir(...args: any[]) {
-        this.stdout(globalThis.console.dir, ...args);
+        this.stdout(globalThis.console.dir, false, ...args);
+    }
+
+    dirs(...args: any[]) {
+        this.stdout(globalThis.console.dir, true, ...args);
     }
 
     table(...args: any[]) {
-        this.stdout(globalThis.console.table, ...args);
+        this.stdout(globalThis.console.table, false, ...args);
+    }
+
+    tables(...args: any[]) {
+        this.stdout(globalThis.console.table, true, ...args);
+    }
+
+    debugs(...args: any[]) {
+        this.stdout(globalThis.console.debug, false, ...args);
     }
 
     debug(...args: any[]) {
-        this.stdout(globalThis.console.debug, ...args);
+        this.stdout(globalThis.console.debug, true, ...args);
+    }
+
+    infos(...args: any[]) {
+        this.stdout(globalThis.console.info, false, ...args);
     }
 
     info(...args: any[]) {
-        this.stdout(globalThis.console.info, ...args);
+        this.stdout(globalThis.console.info, true, ...args);
+    }
+
+    logs(...args: any[]) {
+        this.stdout(globalThis.console.log, false, ...args);
     }
 
     log(...args: any[]) {
-        this.stdout(globalThis.console.log, ...args);
+        this.stdout(globalThis.console.log, true, ...args);
     }
 
     warn(...args: any[]) {
-        this.stdout(globalThis.console.warn, ...args);
+        this.stdout(globalThis.console.warn, false, ...args);
+    }
+
+    warns(...args: any[]) {
+        this.stdout(globalThis.console.warn, true, ...args);
     }
 
     error(...args: any[]) {
-        this.stdout(globalThis.console.error, ...args);
+        this.stdout(globalThis.console.error, false, ...args);
+    }
+
+    errors(...args: any[]) {
+        this.stdout(globalThis.console.error, true, ...args);
     }
 }

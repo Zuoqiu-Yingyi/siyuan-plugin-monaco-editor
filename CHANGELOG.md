@@ -5,6 +5,7 @@
 - 添加打开与复制菜单项 | Add open and copy menu items.
 - 添加刷新菜单项 | Add refresh menu item.
 - 添加新建文件/文件夹菜单项 | Add new file/folder menu item.
+- 添加文件/文件夹重命名菜单栏 | Add file/folder rename menu item.
 
 ## 2023-07-23
 

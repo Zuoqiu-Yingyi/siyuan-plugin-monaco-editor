@@ -363,10 +363,39 @@
             "label": "刷新"
         },
         "refreshDirectory": {
-            "label": "刷新当前目录"
+            "label": "刷新该目录"
         },
         "refreshDirectoryDeeply": {
-            "label": "深度刷新当前目录"
+            "label": "深度刷新该目录"
+        },
+        "rename": {
+            "label": "重命名"
+        },
+        "renameFile": {
+            "label": "重命名文件",
+            "placeholder": "新文件名",
+            "text": "重命名文件 ${1}",
+            "tips": {
+                "empty": "文件名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件名，请输入其他名称",
+                "normal": "重命名文件 ${1} 为 ${2} ？",
+                "pleaseEnter": "请输入新文件名",
+                "same": "文件名未更改"
+            }
+        },
+        "renameFolder": {
+            "label": "重命名文件夹",
+            "placeholder": "新文件夹名",
+            "text": "重命名文件夹 ${1}",
+            "tips": {
+                "empty": "文件夹名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件夹名，请输入其他名称",
+                "normal": "重命名文件夹 ${1} 为 ${2} ？",
+                "pleaseEnter": "请输入新文件夹名",
+                "same": "文件夹名未更改"
+            }
         },
         "revealInExplorer": {
             "label": "在文件资源管理器中显示"
