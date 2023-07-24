@@ -311,11 +311,38 @@
         "export": {
             "accelerator": "导出"
         },
-        "openFile": {
-            "label": "打开文件"
+        "new": {
+            "label": "新建"
+        },
+        "newFile": {
+            "label": "新建文件",
+            "placeholder": "文件名",
+            "text": "在文件夹 ${1} 下新建一个文件",
+            "tips": {
+                "empty": "文件名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件名，请输入其他名称",
+                "normal": "新建文件 ${1} ？",
+                "pleaseEnter": "请输入文件名"
+            }
+        },
+        "newFolder": {
+            "label": "新建文件夹",
+            "placeholder": "文件夹名",
+            "text": "在文件夹 ${1} 下新建一个文件夹",
+            "tips": {
+                "empty": "文件夹名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称。",
+                "invalid": "名称 ${1} 为无效文件夹名，请输入其他名称。",
+                "normal": "新建文件夹 ${1} ？",
+                "pleaseEnter": "请输入文件夹名"
+            }
         },
         "openByNewWindow": {
             "label": "使用新窗口打开"
+        },
+        "openFile": {
+            "label": "打开文件"
         },
         "openInNewTab": {
             "label": "在新页签中打开"

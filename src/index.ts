@@ -45,6 +45,7 @@ import { isBinaryPath } from "@workspace/utils/file/binary";
 import Tab from "./components/EditorTab.svelte";
 import EditorDock from "./components/EditorDock.svelte";
 import ExplorerDock from "./components/ExplorerDock.svelte";
+import Prompt from "@workspace/components/siyuan/dialog/Prompt.svelte";
 
 /* 项目资源 */
 import {
@@ -851,4 +852,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             ...options,
         });
     }
+
+
 }
