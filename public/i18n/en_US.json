@@ -281,6 +281,17 @@
         }
     },
     "menu": {
+        "delete": {
+            "label": "Delete"
+        },
+        "deleteFile": {
+            "label": "Delete File",
+            "text": "Make sure you want to delete the file ${1} ?<br/>The complete path of the file is ${2}"
+        },
+        "deleteFolder": {
+            "label": "Delete Folder",
+            "text": "Make sure you want to delete the folder ${1} ？<br/>The complete path of the folder is ${2}"
+        },
         "copy": {
             "label": "Copy"
         },
