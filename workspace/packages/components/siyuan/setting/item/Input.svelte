@@ -21,6 +21,7 @@
     import { createEventDispatcher } from "svelte";
 
     import { ItemType, type ILimits, type IOptions } from "./item";
+    import type { IInputEvent } from "./../event";
 
     export let type: ItemType; // Setting Type
     export let settingKey: string;
@@ -34,7 +35,7 @@
     export let limits: ILimits = { min: 0, max: 100, step: 1 }; // Use it if type is number/slider
     export let height: number = 0; // Use it if type is textarea
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<IInputEvent>();
 
     function clicked(event: MouseEvent) {
         dispatch("clicked", { event });
@@ -132,7 +133,7 @@
         class="b3-text-field"
         class:fn__block={block}
         class:fn__size200={!block && normal}
-        style:height={(height > 0) ? `${height}px` : undefined}
+        style:height={height > 0 ? `${height}px` : undefined}
         {placeholder}
         bind:value={settingValue}
         on:change={changed}

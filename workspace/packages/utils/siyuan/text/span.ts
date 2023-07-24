@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export function span(text: string, className: string): string {
-    return `<span class="${className}">${text}</span>`;
+export function span(text: string, className: string, tag: string = "span"): string {
+    return `<${tag} class="${className}">${text}</${tag}>`;
 }
 
 export function fn__code(text: string): string {
-    return span(text, "fn__code");
+    return span(text, "fn__code", "code");
 }
 
 export function ft__breakword(text: string): string {

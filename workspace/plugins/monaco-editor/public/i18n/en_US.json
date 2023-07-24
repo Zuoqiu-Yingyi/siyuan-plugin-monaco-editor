@@ -311,11 +311,38 @@
         "export": {
             "accelerator": "Export"
         },
-        "openFile": {
-            "label": "Open File"
+        "new": {
+            "label": "New"
+        },
+        "newFile": {
+            "label": "New File",
+            "placeholder": "File name",
+            "text": "Create a new file in the folder ${1}",
+            "tips": {
+                "empty": "The file name cannot be empty",
+                "exist": "${2} already exists under folder ${1}, please enter a different name",
+                "invalid": "Name ${1} is an invalid file name, please enter a different name",
+                "normal": "Create a new file ${1} ?",
+                "pleaseEnter": "Please enter a file name"
+            }
+        },
+        "newFolder": {
+            "label": "New Folder",
+            "placeholder": "Folder name",
+            "text": "Create a new folder in the folder ${1}",
+            "tips": {
+                "empty": "The folder name cannot be empty",
+                "exist": "${2} already exists under folder ${1}, please enter a different name",
+                "invalid": "Name ${1} is an invalid folder name, please enter a different name",
+                "normal": "Create a new folder ${1} ?",
+                "pleaseEnter": "Please enter a folder name"
+            }
         },
         "openByNewWindow": {
             "label": "Open with New Window"
+        },
+        "openFile": {
+            "label": "Open File"
         },
         "openInNewTab": {
             "label": "Open in New Tab"

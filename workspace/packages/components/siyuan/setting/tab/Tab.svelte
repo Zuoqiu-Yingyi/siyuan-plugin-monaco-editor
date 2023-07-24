@@ -19,12 +19,13 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import type { TabKey } from "./../tab";
+    import type { ITabEvent } from "./../event";
 
     export let key: TabKey; // 该页签的唯一标识
     export let name: string = ""; // 该页签的名称
     export let focus: boolean = false; // 该页签是否聚焦
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<ITabEvent>();
 
     function changed() {
         if (!focus) {

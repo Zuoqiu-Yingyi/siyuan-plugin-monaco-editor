@@ -26,7 +26,12 @@ import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@works
 import { ExplorerIcon } from "./icon";
 import type { Explorer } from ".";
 import { extname } from "@workspace/utils/path/browserify";
-import { isBinaryExt } from "@workspace/utils/file/binary";
+import {
+    fn__code,
+    ft__error,
+} from "@workspace/utils/siyuan/text/span";
+import { prompt } from "@workspace/components/siyuan/dialog/prompt";
+import { isValidName } from "@workspace/utils/file/filename";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -163,11 +168,74 @@ export class ExplorerContextMenu {
         const name = get(node.name);
         const path = get(node.path);
         const relative = get(node.relative);
+        const children = get(node.children);
 
-        const ext = extname(path);
-        const accessible = isStaticWebFileServicePath(relative);
+        const ext = extname(path); // 文件扩展名
+        const names: Set<string> = children // 下级资源名称列表
+            ? new Set(children.map(node => node.name))
+            : null;
+        const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
 
         const items: IMenuItem[] = [];
+
+        /* 新建 */
+        items.push({
+            type: MenuItemType.Submenu,
+            options: {
+                icon: "iconAdd",
+                label: this.i18n.menu.new.label,
+            },
+            submenu: [
+                /* 新建文件 */
+                {
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconFile",
+                        label: this.i18n.menu.newFile.label,
+                        click: () => {
+                            this.createNew(
+                                node,
+                                names,
+                                relative,
+                                false,
+                            );
+                        },
+                    },
+                    root: true,
+                    folder: true,
+                    file: false,
+                },
+                /* 新建文件夹 */
+                {
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconFolder",
+                        label: this.i18n.menu.newFolder.label,
+                        click: () => {
+                            this.createNew(
+                                node,
+                                names,
+                                relative,
+                                true,
+                            );
+                        },
+                    },
+                    root: true,
+                    folder: true,
+                    file: false,
+                },
+            ],
+            root: true,
+            folder: true,
+            file: false,
+        });
+
+        items.push({
+            type: MenuItemType.Separator,
+            root: true,
+            folder: true,
+            file: false,
+        });
 
         /* 刷新 */
         items.push({
@@ -210,9 +278,6 @@ export class ExplorerContextMenu {
             folder: true,
             file: false,
         });
-
-        // TODO: 新建文件
-        // TODO: 新建文件夹
 
         items.push({
             type: MenuItemType.Separator,
@@ -462,5 +527,84 @@ export class ExplorerContextMenu {
         // TODO: 删除
 
         return items;
+    }
+
+    /**
+     * 新建文件/文件夹弹出框
+     * @param node: 当前目录节点
+     * @param names: 当前目录下资源名称集合
+     * @param relative: 当前目录相对路径
+     * @param isDir: 是否为创建文件夹
+     */
+    public createNew(
+        node: IFileTreeNodeStores,
+        names: Set<string> | null,
+        relative: string,
+        isDir: boolean,
+    ): void {
+        const foldername = fn__code(relative);
+        const i10n = isDir
+            ? this.i18n.menu.newFolder
+            : this.i18n.menu.newFile;
+
+        /* 文件/文件名检查函数 */
+        const check = async (value, _dialog, _component) => {
+            const filename = fn__code(value);
+            switch (true) {
+                case value === "": // 文件夹名不能为空
+                    return ft__error(i10n.tips.empty);
+                case !isValidName(value): // 无效的文件名
+                    return ft__error(i10n.tips.invalid
+                        .replaceAll("${1}", filename)
+                    );
+                case !names: // 下级目录集合不存在, 更新集合
+                    {
+                        names = new Set();
+                        const response = await this.plugin.client.readDir({ path: relative });
+                        response.data.forEach(item => names.add(item.name));
+                    }
+                case names.has(value): // 存在同名文件
+                    return ft__error(i10n.tips.exist
+                        .replaceAll("${1}", foldername)
+                        .replaceAll("${2}", filename)
+                    );
+                default: // 文件名有效
+                    return i10n.tips.normal
+                        .replaceAll("${1}", filename)
+            }
+        };
+        prompt(
+            this.plugin.siyuan.Dialog,
+            {
+                title: i10n.label,
+                text: i10n.text.replaceAll("${1}", foldername),
+                placeholder: i10n.placeholder,
+                tips: i10n.tips.pleaseEnter,
+                width: "32em",
+                input: check,
+                change: check,
+                confirm: async (value) => {
+                    let valid = false; // 文件名是否有效
+                    switch (true) {
+                        case value === "": // 文件夹名为空
+                        case !isValidName(value): // 无效的文件名
+                        case !names || names.has(value): // 存在同名文件
+                            valid = false;
+                        default: // 文件名有效
+                            valid = true;
+                    }
+                    if (valid) {
+                        await this.plugin.client.putFile({
+                            isDir,
+                            path: `${relative}/${value}`,
+                            file: "",
+                        });
+                        this.explorer.updateNode(node);
+                        return true;
+                    }
+                    else return false;
+                },
+            },
+        );
     }
 }

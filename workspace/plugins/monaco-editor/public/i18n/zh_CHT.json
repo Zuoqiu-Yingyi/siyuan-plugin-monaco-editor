@@ -311,11 +311,38 @@
         "export": {
             "accelerator": "匯出"
         },
-        "openFile": {
-            "label": "打開文檔"
+        "new": {
+            "label": "新增"
+        },
+        "newFile": {
+            "label": "新建檔案",
+            "placeholder": "檔名",
+            "text": "在資料夾 ${1} 下新建一個檔案",
+            "tips": {
+                "empty": "檔名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱",
+                "info": "新建檔案 ${1} ？",
+                "invalid": "名稱 ${1} 為無效檔名，請輸入其他名稱",
+                "pleaseEnter": "請輸入檔名"
+            }
+        },
+        "newFolder": {
+            "label": "新建資料夾",
+            "placeholder": "資料夾名",
+            "text": "在資料夾 ${1} 下新建一個資料夾",
+            "tips": {
+                "empty": "資料夾名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱。",
+                "info": "新建資料夾 ${1} ？",
+                "invalid": "名稱 ${1} 為無效資料夾名，請輸入其他名稱。",
+                "pleaseEnter": "請輸入資料夾名"
+            }
         },
         "openByNewWindow": {
             "label": "使用新窗口打開"
+        },
+        "openFile": {
+            "label": "打開文檔"
         },
         "openInNewTab": {
             "label": "在新分頁中打開"

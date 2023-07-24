@@ -21,6 +21,7 @@
     import { createEventDispatcher } from "svelte";
     import Svg from "./../../misc/Svg.svelte";
     import type { ITab, TabKey } from "./../tab";
+    import type { IPanelsEvent } from "./../event";
 
     export let panels: ITab[]; // 面板标签列表
     export let focus: TabKey; // 当前选中的面板的 key
@@ -29,7 +30,7 @@
     export let searchPlaceholder = ""; // 搜索提示内容
     export let searchValue = ""; // 搜索框内容
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<IPanelsEvent>();
 
     function searchChanged() {
         dispatch("search-changed", { value: searchValue });

@@ -26,8 +26,9 @@
     import Svg from "./../../misc/Svg.svelte";
 
     import { ItemType } from "./../item/item";
-
+    
     import { type IMouseStatus, MouseButton, MouseEvent } from "@workspace/utils/shortcut";
+    import type { IShortcutEvent } from "./../event";
 
     export let title: string; // 标题
     export let shortcut: IMouseStatus; // 快捷键
@@ -75,7 +76,7 @@
         { key: MouseEvent.mouseout, text: MouseEvent.mouseout },
     ];
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<IShortcutEvent>();
     function changed(e: ComponentEvents<Input>["changed"]) {
         if (shortcut.hasOwnProperty(e.detail.key)) {
             shortcut[e.detail.key] = e.detail.value;

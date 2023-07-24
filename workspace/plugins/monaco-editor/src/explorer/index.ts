@@ -204,6 +204,8 @@ export class Explorer implements ITree {
     public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
         try {
             const node = e.detail.props;
+            this.select.one(node);
+
             const menu = this.contextMenu.makeMenu(node);
 
             const event = e.detail.e;
@@ -227,25 +229,30 @@ export class Explorer implements ITree {
 
             switch (get(node.type)) {
                 case FileTreeNodeType.File: {  // 打开文件
-                    const path = get(node.relative);
+                    const name = get(node.name);
+                    const relative = get(node.relative);
                     const icon = get(node.icon);
                     const text = get(node.text);
-                    const ext = extname(path); // 文件扩展名
+
+                    const ext = extname(name); // 文件扩展名
+
                     if (isBinaryExt(ext)) {
                         this.plugin.siyuan.confirm(
-                            fn__code(path), // 标题
+                            fn__code(name), // 标题
                             [
+                                fn__code(relative),
+                                "",
                                 this.plugin.i18n.message.binaryError,
                                 "",
                                 ft__primary(this.plugin.i18n.message.openAnyway),
                             ].join("<br />"), // 文本
                             async () => {
-                                this.plugin.openWorkspaceFile(path, text, icon);
+                                this.plugin.openWorkspaceFile(relative, text, icon);
                             }, // 确认按钮回调
                         );
                     }
                     else {
-                        this.plugin.openWorkspaceFile(path, text, icon);
+                        this.plugin.openWorkspaceFile(relative, text, icon);
                     }
                     break;
                 }
@@ -429,6 +436,13 @@ export class Explorer implements ITree {
             const children = this.resources2nodes(resources);
 
             node.count.set(resources.count); // 设置资源数量
+            node.countAriaLabel.set(
+                `${this.plugin.i18n.explorer.folder.ariaLabel
+                }: ${resources.folders.length
+                }  ${this.plugin.i18n.explorer.file.ariaLabel
+                }: ${resources.files.length
+                }`
+            ); // 设置资源数量提示标签
             node.children.set(children); // 设置下级资源节点
         }
     }
@@ -494,5 +508,12 @@ export class Explorer implements ITree {
         else {
             callback(node);
         }
+    }
+
+    /**
+     * 新建文件/文件夹
+     */
+    public new(): void {
+
     }
 }
