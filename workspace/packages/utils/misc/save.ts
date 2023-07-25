@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
+import streamSaver from "streamsaver";
 
 export function SaveFileAs(options: {
     data: BlobPart,

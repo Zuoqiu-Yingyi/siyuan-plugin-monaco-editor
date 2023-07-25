@@ -225,22 +225,17 @@ export class Explorer implements ITree {
 
     /* 菜单事件 */
     public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
-        try {
-            const node = e.detail.props;
-            this.select.one(node);
+        const node = e.detail.props;
+        this.select.one(node);
 
-            const menu = this.contextMenu.makeMenu(node);
+        const menu = this.contextMenu.makeMenu(node);
 
-            const event = e.detail.e;
-            menu.open({
-                x: event.clientX,
-                y: event.clientY,
-                isLeft: false,
-            });
-        }
-        catch (error) {
-            this.plugin.catch(error);
-        }
+        const event = e.detail.e;
+        menu.open({
+            x: event.clientX,
+            y: event.clientY,
+            isLeft: false,
+        });
     }
 
     /* 文件打开事件 */

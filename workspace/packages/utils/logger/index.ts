@@ -72,27 +72,27 @@ export class Logger {
         this.stdout(globalThis.console.table, true, ...args);
     }
 
-    debugs(...args: any[]) {
+    debug(...args: any[]) {
         this.stdout(globalThis.console.debug, false, ...args);
     }
 
-    debug(...args: any[]) {
+    debugs(...args: any[]) {
         this.stdout(globalThis.console.debug, true, ...args);
     }
 
-    infos(...args: any[]) {
+    info(...args: any[]) {
         this.stdout(globalThis.console.info, false, ...args);
     }
 
-    info(...args: any[]) {
+    infos(...args: any[]) {
         this.stdout(globalThis.console.info, true, ...args);
     }
 
-    logs(...args: any[]) {
+    log(...args: any[]) {
         this.stdout(globalThis.console.log, false, ...args);
     }
 
-    log(...args: any[]) {
+    logs(...args: any[]) {
         this.stdout(globalThis.console.log, true, ...args);
     }
 

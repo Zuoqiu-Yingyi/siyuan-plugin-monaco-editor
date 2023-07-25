@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-25
+
+- 添加文件预览菜单项 | Add file preview menu item.
+
 ## 2023-07-24
 
 - 添加打开与复制菜单项 | Add open and copy menu items.

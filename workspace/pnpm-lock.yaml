@@ -118,6 +118,9 @@ importers:
       '@types/file-saver':
         specifier: ^2.0.5
         version: 2.0.5
+      '@types/streamsaver':
+        specifier: ^2.0.1
+        version: 2.0.1
       binary-extensions:
         specifier: ^2.2.0
         version: 2.2.0
@@ -139,6 +142,9 @@ importers:
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
+      streamsaver:
+        specifier: ^2.0.6
+        version: 2.0.6
       text-extensions:
         specifier: ^2.4.0
         version: 2.4.0
@@ -1976,6 +1982,10 @@ packages:
 
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
+    dev: true
+
+  /@types/streamsaver@2.0.1:
+    resolution: {integrity: sha512-I49NtT8w6syBI3Zg3ixCyygTHoTVMY0z2TMRcTgccdIsVd2MwlKk7ITLHLsJtgchUHcOd7QEARG9h0ifcA6l2Q==}
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.45.0)(typescript@5.1.6):
@@ -4273,6 +4283,10 @@ packages:
 
   /std-env@3.3.3:
     resolution: {integrity: sha512-Rz6yejtVyWnVjC1RFvNmYL10kgjC49EOghxWn0RFqlCHGFpQx+Xe7yW3I4ceK1SGrWIGMjD5Kbue8W/udkbMJg==}
+    dev: true
+
+  /streamsaver@2.0.6:
+    resolution: {integrity: sha512-LK4e7TfCV8HzuM0PKXuVUfKyCB1FtT9L0EGxsFk5Up8njj0bXK8pJM9+Wq2Nya7/jslmCQwRK39LFm55h7NBTw==}
     dev: true
 
   /strip-ansi@6.0.1:
