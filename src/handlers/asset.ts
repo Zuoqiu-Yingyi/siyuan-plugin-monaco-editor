@@ -31,14 +31,20 @@ export interface IAssetHandler extends IHandler {
 
 export type IAssetHandlerOptions = IAssetHandlerOptions1 | IAssetHandlerOptions2;
 
-export interface IAssetHandlerOptions1 extends IBaseHandlerOptions {
-    pathname: string; // 资源 URL 路径
+export interface IAssetBaseHandlerOptions extends IBaseHandlerOptions {
+    updatable: boolean; // 是否可更新
+    pathname?: string; // 资源 URL 路径
+    path?: string; // 相对于工作空间目录的路径
+}
+
+export interface IAssetHandlerOptions1 extends IAssetBaseHandlerOptions {
+    pathname: string;
     path?: never;
 }
 
-export interface IAssetHandlerOptions2 extends IBaseHandlerOptions {
+export interface IAssetHandlerOptions2 extends IAssetBaseHandlerOptions {
+    path: string;
     pathname?: never;
-    path: string; // 相对于工作空间目录的路径
 }
 
 export class AssetHandler extends Handler {
@@ -93,7 +99,9 @@ export class AssetHandler extends Handler {
             // const content_type = response.headers.get("content-type");
             // const mine_type = content_type ? content_type.split(";")[0] : "";
             // handler.modified.language = mine_type ? mine_type : handler.modified.language;
-            handler.update = this.createUpdateFunction(path);
+            if (options.updatable) {
+                handler.update = this.createUpdateFunction(path);
+            }
         }
         else {
             throw new Error(response.statusText);

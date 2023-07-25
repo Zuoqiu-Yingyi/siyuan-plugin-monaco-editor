@@ -24,7 +24,7 @@ import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
-import type { Explorer } from ".";
+import { Explorer, ProtectedResourceType } from ".";
 import { extname, join } from "@workspace/utils/path/browserify";
 import {
     fn__code,
@@ -33,6 +33,7 @@ import {
 } from "@workspace/utils/siyuan/text/span";
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
+import { ResourceOption, isResourceOperable } from "@/utils/permission";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -171,6 +172,8 @@ export class ExplorerContextMenu {
         const relative = get(node.relative);
         const children = get(node.children);
 
+        const protected_type = Explorer.isProtected(relative); // 受保护类型
+        const protect = protected_type !== ProtectedResourceType.None; // 是否为被保护的资源
         const ext = extname(path); // 文件扩展名
         const sub_names: Set<string> = children // 下级资源名称列表
             ? new Set(children.map(node => node.name))
@@ -287,65 +290,94 @@ export class ExplorerContextMenu {
             file: false,
         });
 
-        /* 打开文件 */
+        /* 打开 */
         items.push({
-            type: MenuItemType.Action,
+            type: MenuItemType.Submenu,
             options: {
-                icon: "iconCode",
-                label: this.i18n.menu.openFile.label,
-                submenu: this.plugin.buildOpenSubmenu(
-                    {
-                        type: HandlerType.asset,
-                        handler: {
-                            path: get(node.relative),
-                        },
-                        breadcrumb: {
-                            path: get(node.relative),
-                        },
-                    },
-                    get(node.icon),
-                    get(node.text),
-                ),
+                icon: "iconOpenWindow",
+                label: this.i18n.menu.open.label,
             },
-            root: false,
-            folder: false,
+            submenu: (() => {
+                /* 是否可更改 */
+                const updatable = isResourceOperable(
+                    this.plugin.config.dock.explorer.safe,
+                    protect,
+                    this.plugin.config.dock.explorer.permission.protected,
+                    ResourceOption.edit,
+                );
+
+                const submenu: IMenuItem[] = [
+                    /* 在编辑器中打开 */
+                    {
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconCode",
+                            label: this.i18n.menu.openFile.label,
+                            submenu: this.plugin.buildOpenSubmenu(
+                                {
+                                    type: HandlerType.asset,
+                                    handler: {
+                                        path: get(node.relative),
+                                        updatable,
+                                    },
+                                    breadcrumb: {
+                                        path: get(node.relative),
+                                    },
+                                },
+                                get(node.icon),
+                                get(node.text),
+                            ),
+                        },
+                        root: false,
+                        folder: false,
+                        file: true,
+                    },
+                ];
+
+                // TODO: 使用思源内置的资源页签打开
+
+                if (FLAG_ELECTRON) {
+                    /**
+                     * 使用默认程序打开
+                     * REF: https://www.electronjs.org/zh/docs/latest/api/shell#shellopenpathpath
+                     */
+                    submenu.push({
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconOpenWindow",
+                            label: this.i18n.menu.openWithDefaultProgram.label,
+                            click: () => {
+                                if (type === FileTreeNodeType.File) {
+                                    globalThis
+                                        .require("electron")
+                                        .shell
+                                        .openPath(path);
+                                }
+                                else {
+                                    globalThis
+                                        .require("electron")
+                                        .shell
+                                        .showItemInFolder(
+                                            globalThis
+                                                .require("path")
+                                                .normalize(path)
+                                        );
+                                }
+                            },
+                        },
+                        root: true,
+                        folder: true,
+                        file: true,
+                    });
+                    return submenu;
+                }
+            })(),
+            root: true,
+            folder: true,
             file: true,
         });
 
         if (FLAG_ELECTRON) {
-            /**
-             * 使用默认程序打开
-             * REF: https://www.electronjs.org/zh/docs/latest/api/shell#shellopenpathpath
-             */
-            items.push({
-                type: MenuItemType.Action,
-                options: {
-                    icon: "iconOpenWindow",
-                    label: this.i18n.menu.openWithDefaultProgram.label,
-                    click: () => {
-                        if (type === FileTreeNodeType.File) {
-                            globalThis
-                                .require("electron")
-                                .shell
-                                .openPath(path);
-                        }
-                        else {
-                            globalThis
-                                .require("electron")
-                                .shell
-                                .showItemInFolder(
-                                    globalThis
-                                        .require("path")
-                                        .normalize(path)
-                                );
-                        }
-                    },
-                },
-                root: true,
-                folder: true,
-                file: true,
-            });
-
             /**
              * 在文件资源管理器中显示
              * REF: https://www.electronjs.org/zh/docs/latest/api/shell#shellshowiteminfolderfullpath
@@ -529,7 +561,24 @@ export class ExplorerContextMenu {
             options: {
                 icon: "iconEdit",
                 label: this.i18n.menu.rename.label,
-                click: () => {
+                disabled: !isResourceOperable(
+                    this.plugin.config.dock.explorer.safe,
+                    protect,
+                    this.plugin.config.dock.explorer.permission.protected,
+                    ResourceOption.rename,
+                ),
+                click: async () => {
+                    /* 受保护的资源需要二次确认 */
+                    if (protect) { // 受保护的资源
+                        const confirm = await this.confirm(
+                            path,
+                            relative,
+                        );
+                        if (!confirm) { // 不再继续操作
+                            return;
+                        }
+                    }
+
                     const parent = this.explorer.path2node(get(node.directory));
                     const siblings = get(parent.children);
                     const siblings_names: Set<string> = siblings // 同级资源名称列表
@@ -563,12 +612,25 @@ export class ExplorerContextMenu {
             options: {
                 icon: "iconTrashcan",
                 label: this.i18n.menu.delete.label,
-                click: () => {
+                disabled: !isResourceOperable(
+                    this.plugin.config.dock.explorer.safe,
+                    protect,
+                    this.plugin.config.dock.explorer.permission.protected,
+                    ResourceOption.delete,
+                ),
+                click: async () => {
+                    /* 受保护的资源需要二次确认 */
+                    if (protect) { // 受保护的资源
+                        const confirm = await this.confirm(
+                            path,
+                            relative,
+                        );
+                        if (!confirm) { // 不再继续操作
+                            return;
+                        }
+                    }
+
                     const parent = this.explorer.path2node(get(node.directory));
-                    const siblings = get(parent.children);
-                    const siblings_names: Set<string> = siblings // 同级资源名称列表
-                        ? new Set(siblings.map(node => node.name))
-                        : null;
                     this.delete(
                         parent,
                         path,
@@ -583,6 +645,59 @@ export class ExplorerContextMenu {
         });
 
         return items;
+    }
+
+    /**
+     * 二次确认
+     * @param path - 资源完整路径
+     * @param relative - 资源相对路径
+     * @returns 是否确认
+     */
+    public confirm(
+        path: string,
+        relative: string,
+    ): Promise<boolean> {
+        return new Promise(resolve => {
+            const relative_code = fn__code(relative);
+            /* 资源完整路径确认检查函数 */
+            const check = async (value, _dialog, _component) => {
+                if (value === path) {
+                    return ft__error(this.i18n.menu.confirm.tips.warn
+                        .replaceAll("${1}", relative_code));
+                }
+                else {
+                    return this.i18n.menu.confirm.tips.pleaseEnter;
+                }
+            };
+            prompt(
+                this.plugin.siyuan.Dialog,
+                {
+                    selectable: false,
+                    title: this.i18n.menu.confirm.title,
+                    text: this.i18n.menu.confirm.text
+                        .replaceAll("${1}", relative_code)
+                        .replaceAll("${2}", fn__code(path)),
+                    placeholder: this.i18n.menu.confirm.placeholder,
+                    tips: this.i18n.menu.confirm.tips.pleaseEnter,
+                    width: "32em",
+                    input: check,
+                    change: check,
+                    confirm: async (value) => {
+                        if (value === path) {
+                            resolve(true);
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    },
+                    cancel: () => {
+                        resolve(false);
+                        return true;
+                    },
+                },
+            );
+        });
     }
 
     /**
@@ -646,8 +761,10 @@ export class ExplorerContextMenu {
                         case !isValidName(value): // 无效的文件名
                         case !names || names.has(value): // 存在同名文件
                             valid = false;
+                            break;
                         default: // 文件名有效
                             valid = true;
+                            break;
                     }
                     if (valid) {
                         await this.plugin.client.putFile({
@@ -722,7 +839,7 @@ export class ExplorerContextMenu {
                 text: i10n.text.replaceAll("${1}", fn__code(relative)),
                 value: oldname,
                 placeholder: i10n.placeholder,
-                tips: i10n.tips.pleaseEnter,
+                tips: ft__primary(i10n.tips.pleaseEnter),
                 width: "32em",
                 input: check,
                 change: check,
@@ -734,8 +851,10 @@ export class ExplorerContextMenu {
                         case value === oldname: // 新名称与原名称一致
                         case !siblingsNames || siblingsNames.has(value): // 存在同名文件
                             valid = false;
+                            break;
                         default: // 文件名有效
                             valid = true;
+                            break;
                     }
                     if (valid) {
                         await this.plugin.client.renameFile({
@@ -765,24 +884,20 @@ export class ExplorerContextMenu {
         path: string,
         relative: string,
         isDir: boolean,
-        doubleCheck: boolean = false,
     ): void {
-        if (doubleCheck) { // 二次确认 (手动输入完整路径名)
-        }
-        else { // 点击确认按钮直接删除
-            const i10n = isDir
-                ? this.i18n.menu.deleteFolder
-                : this.i18n.menu.deleteFile;
-            this.plugin.siyuan.confirm(
-                i10n.label,
-                i10n.text
-                    .replaceAll("${1}", fn__code(relative))
-                    .replaceAll("${2}", fn__code(path)),
-                async () => {
-                    await this.plugin.client.removeFile({ path: relative });
-                    this.explorer.updateNode(parent);
-                },
-            )
-        }
+
+        const i10n = isDir
+            ? this.i18n.menu.deleteFolder
+            : this.i18n.menu.deleteFile;
+        this.plugin.siyuan.confirm(
+            i10n.label,
+            i10n.text
+                .replaceAll("${1}", fn__code(relative))
+                .replaceAll("${2}", fn__code(path)),
+            async () => {
+                await this.plugin.client.removeFile({ path: relative });
+                this.explorer.updateNode(parent);
+            },
+        );
     }
 }

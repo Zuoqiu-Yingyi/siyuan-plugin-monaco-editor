@@ -281,16 +281,14 @@
         }
     },
     "menu": {
-        "delete": {
-            "label": "刪除"
-        },
-        "deleteFile": {
-            "label": "刪除檔案",
-            "text": "確定要刪除檔案 ${1} ？<br/>該檔案的完整路徑為 ${2}"
-        },
-        "deleteFolder": {
-            "label": "刪除資料夾",
-            "text": "確定要刪除資料夾 ${1} ？<br/>該資料夾的完整路徑為 ${2}"
+        "confirm": {
+            "placeholder": "資源完整路徑",
+            "text": "警告：您正在操作受保護的資源 ${1} ！<br/>您之後的活動可能導致資料丟失或損壞！<br/><br/>若繼續操作，請在下方文字框中輸入該資源的完整路徑 ${2}",
+            "tips": {
+                "pleaseEnter": "請輸入資源的完整路徑",
+                "warn": "您確定要繼續操作資源 ${1} ？"
+            },
+            "title": "⚠️ 高風險操作確認"
         },
         "copy": {
             "label": "複製"
@@ -312,6 +310,17 @@
         },
         "copyURL": {
             "label": "複製 URL"
+        },
+        "delete": {
+            "label": "刪除"
+        },
+        "deleteFile": {
+            "label": "刪除檔案",
+            "text": "確定要刪除檔案 ${1} ？<br/>該檔案的完整路徑為 ${2}"
+        },
+        "deleteFolder": {
+            "label": "刪除資料夾",
+            "text": "確定要刪除資料夾 ${1} ？<br/>該資料夾的完整路徑為 ${2}"
         },
         "editAssetFile": {
             "label": "編輯資料文檔"
@@ -349,26 +358,32 @@
                 "pleaseEnter": "請輸入資料夾名"
             }
         },
+        "open": {
+            "label": "開啟"
+        },
         "openByNewWindow": {
-            "label": "使用新窗口打開"
+            "label": "使用新窗口開啟"
         },
         "openFile": {
-            "label": "打開文檔"
+            "label": "開啟文檔"
+        },
+        "openFileInEditor": {
+            "label": "在文字編輯器中開啟"
         },
         "openInNewTab": {
-            "label": "在新分頁中打開"
+            "label": "在新分頁中開啟"
         },
         "openTabBackground": {
-            "label": "在後台分頁中打開"
+            "label": "在後台分頁中開啟"
         },
         "openTabBottom": {
-            "label": "在分頁下側打開"
+            "label": "在分頁下側開啟"
         },
         "openTabRight": {
-            "label": "在分頁右側打開"
+            "label": "在分頁右側開啟"
         },
         "openWithDefaultProgram": {
-            "label": "使用預設程式打開"
+            "label": "使用預設程式開啟"
         },
         "refresh": {
             "label": "重新整理"
