@@ -281,6 +281,9 @@
         }
     },
     "menu": {
+        "add": {
+            "label": "添加"
+        },
         "confirm": {
             "placeholder": "The full path to the resource",
             "text": "Warning: You are operating on a protected resource ${1} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource ${2} in the text box below",
@@ -428,6 +431,19 @@
         },
         "revealInExplorer": {
             "label": "Reveal In Explorer"
+        },
+        "saveAs": {
+            "label": "Save As"
+        },
+        "saveFileAs": {
+            "label": "Save File As",
+            "message": "File ${1} has saved to ${2}, does you reveal it in explorer?",
+            "title": "File ${1} save as"
+        },
+        "saveFolderAs": {
+            "label": "Save Folder As",
+            "message": "Folder ${1} has saved to ${2}, does you reveal it in explorer?",
+            "title": "Folder ${1} save as"
         },
         "standard": {
             "accelerator": "Standard"

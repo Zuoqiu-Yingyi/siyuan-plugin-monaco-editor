@@ -281,6 +281,17 @@
         }
     },
     "menu": {
+        "add": {
+            "label": "添加"
+        },
+        "addFile": {
+            "label": "添加文件",
+            "title": "添加文件至 ${1}"
+        },
+        "addFolder": {
+            "label": "添加文件夹",
+            "title": "添加文件夹至 ${1}"
+        },
         "confirm": {
             "placeholder": "资源完整路径",
             "text": "警告：您正在操作受保护的资源 ${1} ！<br/>您之后的活动可能导致数据丢失或损坏！<br/><br/>若继续操作，请在下方文本框中输入该资源的完整路径 ${2}",
@@ -428,6 +439,19 @@
         },
         "revealInExplorer": {
             "label": "在文件资源管理器中显示"
+        },
+        "saveAs": {
+            "label": "另存为"
+        },
+        "saveFileAs": {
+            "label": "文件另存为",
+            "message": "文件 ${1} 已另存至 ${2}，是否在文件资源管理器中查看？",
+            "title": "文件 ${1} 另存为"
+        },
+        "saveFolderAs": {
+            "label": "文件夹另存为",
+            "message": "文件夹 ${1} 已另存至 ${2}，是否在文件资源管理器中查看？",
+            "title": "文件夹 ${1} 另存为"
         },
         "standard": {
             "accelerator": "标准"
