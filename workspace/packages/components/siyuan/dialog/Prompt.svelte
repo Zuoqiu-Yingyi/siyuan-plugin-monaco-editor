@@ -23,6 +23,7 @@
     export let value: string = ""; // 输入框默认内容
     export let placeholder: string = ""; // 输入框空白提示内容
     export let tips: string = ""; // 输入框提示内容
+    export let selectable: boolean = true; // 是否可选择
     export let autofocus: boolean = true; // 是否自动聚焦
 
     export let cancelButtonText: string = globalThis.siyuan?.languages?.cancel ?? "Cancel"; // 取消按钮文本
@@ -47,7 +48,10 @@
     }
 </script>
 
-<div class="b3-dialog__content">
+<div
+    style:user-select={selectable ? "auto" : "none"}
+    class="b3-dialog__content"
+>
     <!-- 提示文本 -->
     <slot name="text">
         <div class="ft__breakword">

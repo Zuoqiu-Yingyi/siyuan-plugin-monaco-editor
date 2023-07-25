@@ -281,16 +281,14 @@
         }
     },
     "menu": {
-        "delete": {
-            "label": "删除"
-        },
-        "deleteFile": {
-            "label": "删除文件",
-            "text": "确定要删除文件 ${1} ？<br/>该文件的完整路径为 ${2}"
-        },
-        "deleteFolder": {
-            "label": "删除文件夹",
-            "text": "确定要删除文件夹 ${1} ？<br/>该文件夹的完整路径为 ${2}"
+        "confirm": {
+            "placeholder": "资源完整路径",
+            "text": "警告：您正在操作受保护的资源 ${1} ！<br/>您之后的活动可能导致数据丢失或损坏！<br/><br/>若继续操作，请在下方文本框中输入该资源的完整路径 ${2}",
+            "tips": {
+                "pleaseEnter": "请输入资源的完整路径",
+                "warn": "您确定要继续操作资源 ${1} ？"
+            },
+            "title": "⚠️ 高风险操作确认"
         },
         "copy": {
             "label": "复制"
@@ -312,6 +310,17 @@
         },
         "copyURL": {
             "label": "复制 URL"
+        },
+        "delete": {
+            "label": "删除"
+        },
+        "deleteFile": {
+            "label": "删除文件",
+            "text": "确定要删除文件 ${1} ？<br/>该文件的完整路径为 ${2}"
+        },
+        "deleteFolder": {
+            "label": "删除文件夹",
+            "text": "确定要删除文件夹 ${1} ？<br/>该文件夹的完整路径为 ${2}"
         },
         "editAssetFile": {
             "label": "编辑资源文件"
@@ -349,11 +358,17 @@
                 "pleaseEnter": "请输入文件夹名"
             }
         },
+        "open": {
+            "label": "打开"
+        },
         "openByNewWindow": {
             "label": "使用新窗口打开"
         },
         "openFile": {
             "label": "打开文件"
+        },
+        "openFileInEditor": {
+            "label": "在文本编辑器中打开"
         },
         "openInNewTab": {
             "label": "在新页签中打开"

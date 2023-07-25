@@ -43,6 +43,7 @@ import { Select } from "./select";
 import { ExplorerIcon } from "./icon";
 import { ExplorerTooltip } from "./tooltip";
 import { ExplorerContextMenu } from "./menu";
+import { ResourceOption, isResourceOperable } from "@/utils/permission";
 
 /* 资源 */
 export interface IItem {
@@ -75,8 +76,30 @@ export type DefaultNodeProps = Required<Pick<
     | "countAriaLabel"
 >>;
 
+/* 重要资源类型 */
+export enum ProtectedResourceType {
+    None, // 不重要
+    Data, // 数据
+    Repo, // 快照仓库
+    Lock, // 工作区锁标志
+}
+
 /* 文件资源管理器 */
 export class Explorer implements ITree {
+    public static isProtected(relative: string): ProtectedResourceType {
+        switch (true) {
+            case relative === "data":
+                return ProtectedResourceType.Data;
+            case relative === "repo":
+            case relative.startsWith("repo/"):
+                return ProtectedResourceType.Repo;
+            case relative === ".lock":
+                return ProtectedResourceType.Lock;
+            default:
+                return ProtectedResourceType.None;
+        }
+    }
+
     /* 管理工具 */
     protected readonly icon: InstanceType<typeof ExplorerIcon>; // 图标管理
     protected readonly tooltip: InstanceType<typeof ExplorerTooltip>; // 提示文本管理
@@ -236,6 +259,14 @@ export class Explorer implements ITree {
 
                     const ext = extname(name); // 文件扩展名
 
+                    /* 是否可更改 */
+                    const updatable = isResourceOperable(
+                        this.plugin.config.dock.explorer.safe,
+                        Explorer.isProtected(relative) !== ProtectedResourceType.None,
+                        this.plugin.config.dock.explorer.permission.protected,
+                        ResourceOption.edit,
+                    );
+
                     if (isBinaryExt(ext)) {
                         this.plugin.siyuan.confirm(
                             fn__code(name), // 标题
@@ -246,13 +277,13 @@ export class Explorer implements ITree {
                                 "",
                                 ft__primary(this.plugin.i18n.message.openAnyway),
                             ].join("<br />"), // 文本
-                            async () => {
-                                this.plugin.openWorkspaceFile(relative, text, icon);
+                            () => {
+                                this.plugin.openWorkspaceFile(relative, text, icon, false);
                             }, // 确认按钮回调
                         );
                     }
                     else {
-                        this.plugin.openWorkspaceFile(relative, text, icon);
+                        this.plugin.openWorkspaceFile(relative, text, icon, updatable);
                     }
                     break;
                 }
@@ -508,12 +539,5 @@ export class Explorer implements ITree {
         else {
             callback(node);
         }
-    }
-
-    /**
-     * 新建文件/文件夹
-     */
-    public new(): void {
-
     }
 }

@@ -281,16 +281,14 @@
         }
     },
     "menu": {
-        "delete": {
-            "label": "Delete"
-        },
-        "deleteFile": {
-            "label": "Delete File",
-            "text": "Make sure you want to delete the file ${1} ?<br/>The complete path of the file is ${2}"
-        },
-        "deleteFolder": {
-            "label": "Delete Folder",
-            "text": "Make sure you want to delete the folder ${1} ？<br/>The complete path of the folder is ${2}"
+        "confirm": {
+            "placeholder": "The full path to the resource",
+            "text": "Warning: You are operating on a protected resource ${1} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource ${2} in the text box below",
+            "tips": {
+                "pleaseEnter": "Please enter the complete path of the resource",
+                "warn": "Are you sure you want to continue operating the resource ${1}?"
+            },
+            "title": "⚠️ High-risk operation confirmation"
         },
         "copy": {
             "label": "Copy"
@@ -312,6 +310,17 @@
         },
         "copyURL": {
             "label": "Copy URL"
+        },
+        "delete": {
+            "label": "Delete"
+        },
+        "deleteFile": {
+            "label": "Delete File",
+            "text": "Make sure you want to delete the file ${1} ?<br/>The complete path of the file is ${2}"
+        },
+        "deleteFolder": {
+            "label": "Delete Folder",
+            "text": "Make sure you want to delete the folder ${1} ？<br/>The complete path of the folder is ${2}"
         },
         "editAssetFile": {
             "label": "Edit Asset File"
@@ -349,11 +358,17 @@
                 "pleaseEnter": "Please enter a folder name"
             }
         },
+        "open": {
+            "label": "Open"
+        },
         "openByNewWindow": {
             "label": "Open with New Window"
         },
         "openFile": {
             "label": "Open File"
+        },
+        "openFileInEditor": {
+            "label": "Open File in Text Editor"
         },
         "openInNewTab": {
             "label": "Open in New Tab"

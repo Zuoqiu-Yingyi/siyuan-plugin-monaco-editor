@@ -32,6 +32,7 @@ export interface IPromptOptions {
     tips?: string; // 提示文本
     width?: string; // 宽度
     height?: string; // 高度
+    selectable?: boolean; // 是否可选择
     input?: PromptCallback<string>; // 返回更新的提示文本
     change?: PromptCallback<string>; // 返回更新的提示文本
     confirm?: PromptCallback<boolean>; // 返回是否关闭
@@ -63,6 +64,7 @@ export function prompt(Dialog: typeof siyuan.Dialog, options: IPromptOptions): I
             value: options.value,
             placeholder: options.placeholder,
             tips: options.tips,
+            selectable: options.selectable,
         },
     });
 

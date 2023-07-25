@@ -79,13 +79,13 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected readonly EDITOR_URL: URL;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly tab: ReturnType<siyuan.Plugin["addTab"]>;
-    protected readonly editorDock: {
+    protected editorDock: {
         // editor: InstanceType<typeof Editor>,
         dock: ReturnType<siyuan.Plugin["addDock"]>,
         model?: siyuan.IModel,
         component?: InstanceType<typeof EditorDock>,
     }; // 编辑器面板
-    protected readonly explorerDock: {
+    protected explorerDock: {
         // editor: InstanceType<typeof Editor>,
         dock: ReturnType<siyuan.Plugin["addDock"]>,
         model?: siyuan.IModel,
@@ -132,84 +132,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 this.component?.$destroy();
             },
         });
-        this.editorDock = {
-            dock: this.addDock({
-                config: {
-                    position: "BottomRight",
-                    size: { width: 0, height: 256 },
-                    icon: "iconCode",
-                    title: this.i18n.dock.title,
-                    show: true,
-                },
-                data: {
-                    id: "",
-                    realTime: false,
-                    inline: Inline.mark,
-                    language: Language.kramdown,
-                } as IDockData,
-                type: "-dock-editor",
-                init() {
-                    // plugin.logger.debug(this);
-
-                    (this.element as HTMLElement).classList.add("fn__flex-column");
-                    const dock = new EditorDock({
-                        target: this.element,
-                        props: {
-                            plugin,
-                            editor: {
-                                modified: {
-                                    value: "",
-                                    language: "markdown",
-                                },
-                                options: plugin.config.editor.options,
-                            },
-                            ...(this.data as IDockData),
-                        },
-                    });
-                    plugin.editorDock.model = this;
-                    plugin.editorDock.component = dock;
-                },
-                destroy() {
-                    plugin.editorDock.component?.$destroy();
-                    delete plugin.editorDock.component;
-                    delete plugin.editorDock.model;
-                },
-            }),
-        };
-        this.explorerDock = {
-            dock: this.addDock({
-                config: {
-                    position: "LeftTop",
-                    size: { width: 256, height: 0 },
-                    icon: "icon-monaco-editor-file-tree",
-                    title: this.i18n.explorer.title,
-                    show: true,
-                },
-                data: {
-                    workspace: normalize(globalThis.siyuan.config.system.workspaceDir),
-                },
-                type: "-dock-explorer",
-                init() {
-                    // plugin.logger.debug(this);
-
-                    (this.element as HTMLElement).classList.add("fn__flex-column");
-                    const dock = new ExplorerDock({
-                        target: this.element,
-                        props: {
-                            plugin,
-                            ...this.data,
-                        },
-                    });
-                    plugin.explorerDock.model = this;
-                    plugin.explorerDock.component = dock;
-                },
-                destroy() {
-                    plugin.explorerDock.component?.$destroy();
-                    delete plugin.explorerDock.component;
-                    delete plugin.explorerDock.model;
-                },
-            }),
-        };
     }
 
     onload(): void {
@@ -231,6 +153,91 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
+                const plugin = this;
+                /* 添加侧边面板 */
+                if (this.config.dock.editor.enable) {
+                    this.editorDock = {
+                        dock: this.addDock({
+                            config: {
+                                position: "BottomRight",
+                                size: { width: 0, height: 256 },
+                                icon: "iconCode",
+                                title: this.i18n.dock.title,
+                                show: true,
+                            },
+                            data: {
+                                id: "",
+                                realTime: false,
+                                inline: Inline.mark,
+                                language: Language.kramdown,
+                            } as IDockData,
+                            type: "-dock-editor",
+                            init() {
+                                // plugin.logger.debug(this);
+
+                                (this.element as HTMLElement).classList.add("fn__flex-column");
+                                const dock = new EditorDock({
+                                    target: this.element,
+                                    props: {
+                                        plugin,
+                                        editor: {
+                                            modified: {
+                                                value: "",
+                                                language: "markdown",
+                                            },
+                                            options: plugin.config.editor.options,
+                                        },
+                                        ...(this.data as IDockData),
+                                    },
+                                });
+                                plugin.editorDock.model = this;
+                                plugin.editorDock.component = dock;
+                            },
+                            destroy() {
+                                plugin.editorDock.component?.$destroy();
+                                delete plugin.editorDock.component;
+                                delete plugin.editorDock.model;
+                            },
+                        }),
+                    };
+                }
+                if (this.config.dock.explorer) {
+                    this.explorerDock = {
+                        dock: this.addDock({
+                            config: {
+                                position: "LeftTop",
+                                size: { width: 256, height: 0 },
+                                icon: "icon-monaco-editor-file-tree",
+                                title: this.i18n.explorer.title,
+                                show: true,
+                            },
+                            data: {
+                                workspace: normalize(globalThis.siyuan.config.system.workspaceDir),
+                            },
+                            type: "-dock-explorer",
+                            init() {
+                                // plugin.logger.debug(this);
+
+                                (this.element as HTMLElement).classList.add("fn__flex-column");
+                                const dock = new ExplorerDock({
+                                    target: this.element,
+                                    props: {
+                                        plugin,
+                                        ...this.data,
+                                    },
+                                });
+                                plugin.explorerDock.model = this;
+                                plugin.explorerDock.component = dock;
+                            },
+                            destroy() {
+                                plugin.explorerDock.component?.$destroy();
+                                delete plugin.explorerDock.component;
+                                delete plugin.explorerDock.model;
+                            },
+                        }),
+                    };
+                }
+
                 /* 注册触发打开窗口动作的监听器 */
                 globalThis.addEventListener(this.config.operate.view.open.mouse.type, this.openViewEventListener, true);
                 globalThis.addEventListener(this.config.operate.edit.open.mouse.type, this.openEditEventListener, true);
@@ -628,6 +635,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             type: HandlerType.asset,
                             handler: {
                                 pathname: href,
+                                updatable: true,
                             },
                             breadcrumb: {
                                 pathname: href,
@@ -708,6 +716,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
      * @param facadeOptions: 门面参数
      * @param icon: 页签图标
      * @param title: 页签标题
+     * @param disabled: 是否禁用
      * @param options: 编辑器初始配置
      */
     public buildOpenSubmenu(
@@ -715,6 +724,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         // icon: string = "icon-monaco-editor",
         icon: string = "iconCode",
         title: string = this.i18n.displayName,
+        disabled: boolean = false,
         options: IEditorOptions = this.config.editor.options,
     ): siyuan.IMenuItemOption[] {
         icon = icon.startsWith("#")
@@ -736,6 +746,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         submenu.push({
             icon: "iconAdd",
             label: this.i18n.menu.openInNewTab.label,
+            disabled,
             click: () => {
                 siyuan.openTab({
                     app: this.app,
@@ -750,6 +761,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         submenu.push({
             icon: "iconMin",
             label: this.i18n.menu.openTabBackground.label,
+            disabled,
             click: () => {
                 siyuan.openTab({
                     app: this.app,
@@ -764,6 +776,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         submenu.push({
             icon: "iconLayoutRight",
             label: this.i18n.menu.openTabRight.label,
+            disabled,
             click: () => {
                 siyuan.openTab({
                     app: this.app,
@@ -778,6 +791,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         /* 在页签下方打开 */
         submenu.push({
             icon: "iconLayoutBottom",
+            disabled,
             label: this.i18n.menu.openTabBottom.label,
             click: () => {
                 siyuan.openTab({
@@ -794,6 +808,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         submenu.push({
             icon: "iconOpenWindow",
             label: this.i18n.menu.openByNewWindow.label,
+            disabled,
             click: async element => {
                 const { x, y } = getElementScreenPosition(element);
 
@@ -814,12 +829,15 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
      * 打开工作空间目录下的文件
      * @param path: 相对于工作空间目录的文件路径
      * @param icon: 页签图标
+     * @param title: 页签标题
+     * @param updatable: 是否可更改
      * @param options: 页签选项
      */
     public openWorkspaceFile(
         path: string,
         title: string,
         icon: string = "iconCode",
+        updatable: boolean = true,
         options: {
             position?: "right" | "bottom",
             keepCursor?: boolean // 是否跳转到新 tab 上
@@ -842,6 +860,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         type: HandlerType.asset,
                         handler: {
                             path,
+                            updatable,
                         },
                         breadcrumb: {
                             path,
@@ -852,6 +871,4 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             ...options,
         });
     }
-
-
 }

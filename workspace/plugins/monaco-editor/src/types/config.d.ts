@@ -18,6 +18,7 @@
 import type { editor as Editor } from "monaco-editor";
 import type { Electron } from "@workspace/types/electron";
 import type { IMouseStatus } from "@workspace/utils/shortcut";
+import type { IResourceOptionPermission } from "@/utils/permission";
 
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
 
@@ -73,8 +74,33 @@ export interface IEditorOptions extends IMonacoEditorOptions {
     wordWrap: IMonacoEditorOptions["wordWrap"], // 是否自动换行 "on" | "off" | "wordWrapColumn" | "bounded"
 }
 
+
+/* 资源权限 */
+export interface IPermission {
+    protected: IResourceOptionPermission; // 受保护的目录/文件权限
+}
+
+/* 文件资源管理器面板设置项 */
+export interface IExplorerDock {
+    enable: boolean; // 是否开启文件资源管理器
+    safe: boolean; // 是否开启安全模式 (受保护模式)
+    permission: IPermission; // 权限
+}
+
+/* 编辑器面板设置项 */
+export interface IEditorDock {
+    enable: boolean; // 是否开启文件资源管理器
+}
+
+/* 侧边面板 */
+export interface IDock {
+    explorer: IExplorerDock;
+    editor: IEditorDock;
+}
+
 export interface IConfig {
     operate: IOperate;
     window: IWindow;
     editor: IEditor;
+    dock: IDock;
 }

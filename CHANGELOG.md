@@ -49,6 +49,7 @@
 - 优化 BlockIcon 组件 | Optimize BlockIcon component.
 - 差异编辑器支持单独配置 | Diff editor supports separate configuration.
 - 超链接添加 `在新页签中打开` 菜单项 | Hyperlinks add `Open in new tab` menu item.
+- 在操作受保护的资源时进行二次确认 | Double confirmation when operating protected resources.
 
 ## 2023-07-17
 

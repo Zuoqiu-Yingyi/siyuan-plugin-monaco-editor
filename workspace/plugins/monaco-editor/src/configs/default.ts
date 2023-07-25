@@ -101,4 +101,29 @@ export const DEFAULT_CONFIG: IConfig = {
             wordWrap: 'off', // 是否自动换行 "on" | "off" | "wordWrapColumn" | "bounded"
         },
     },
+    dock: {
+        editor: {
+            enable: true,
+        },
+        explorer: {
+            enable: true,
+            safe: true,
+            permission: {
+                protected: {
+                    enable: true,
+
+                    read: true,
+                    write: true,
+
+                    new: true,
+                    view: false,
+                    edit: false,
+                    move: false,
+                    copy: true,
+                    rename: false,
+                    delete: false,
+                },
+            },
+        },
+    },
 };
