@@ -370,6 +370,9 @@
         "openFileInEditor": {
             "label": "在文本编辑器中打开"
         },
+        "openFileInPreviewer": {
+            "label": "在文件预览器中打开"
+        },
         "openInNewTab": {
             "label": "在新页签中打开"
         },

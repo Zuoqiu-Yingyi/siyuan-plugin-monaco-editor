@@ -370,6 +370,9 @@
         "openFileInEditor": {
             "label": "Open File in Text Editor"
         },
+        "openFileInPreviewer": {
+            "label": "Open File in File Previewer"
+        },
         "openInNewTab": {
             "label": "Open in New Tab"
         },

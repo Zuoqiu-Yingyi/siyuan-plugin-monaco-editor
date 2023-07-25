@@ -168,7 +168,9 @@ export class ExplorerContextMenu {
     public makeMenuItems(node: IFileTreeNodeStores): IMenuItem[] {
         const type = get(node.type);
         const name = get(node.name);
+        const icon = get(node.icon);
         const path = get(node.path);
+        const text = get(node.text);
         const relative = get(node.relative);
         const children = get(node.children);
 
@@ -312,7 +314,7 @@ export class ExplorerContextMenu {
                         type: MenuItemType.Action,
                         options: {
                             icon: "iconCode",
-                            label: this.i18n.menu.openFile.label,
+                            label: this.i18n.menu.openFileInEditor.label,
                             submenu: this.plugin.buildOpenSubmenu(
                                 {
                                     type: HandlerType.asset,
@@ -324,8 +326,8 @@ export class ExplorerContextMenu {
                                         path: get(node.relative),
                                     },
                                 },
-                                get(node.icon),
-                                get(node.text),
+                                icon,
+                                text,
                             ),
                         },
                         root: false,
@@ -334,7 +336,28 @@ export class ExplorerContextMenu {
                     },
                 ];
 
-                // TODO: 使用思源内置的资源页签打开
+                /**
+                 * 在资源页签中打开
+                 * siyuan.openTab(asset) 无法正常打开除图片以外的文件
+                 */
+                if (accessible) {
+                    const pathname = workspacePath2StaticPathname(relative);
+                    submenu.push({
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconPreview",
+                            label: this.i18n.menu.openFileInPreviewer.label,
+                            submenu: this.plugin.buildOpenPreviewSubmenu(
+                                pathname,
+                                icon,
+                                name,
+                            ),
+                        },
+                        root: false,
+                        folder: false,
+                        file: true,
+                    });
+                }
 
                 if (FLAG_ELECTRON) {
                     /**
@@ -369,8 +392,9 @@ export class ExplorerContextMenu {
                         folder: true,
                         file: true,
                     });
-                    return submenu;
                 }
+
+                return submenu;
             })(),
             root: true,
             folder: true,
