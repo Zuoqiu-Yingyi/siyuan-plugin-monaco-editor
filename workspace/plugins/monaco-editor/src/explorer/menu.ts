@@ -20,12 +20,12 @@ import type MonacoEditorPlugin from "@/index";
 import { FileTreeNodeType, type IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
 import { get } from "svelte/store";
 import { HandlerType } from "@/facades/facade";
-import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
+import { FLAG_BROWSER, FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
 import { Explorer, ProtectedResourceType } from ".";
-import { extname, join } from "@workspace/utils/path/browserify";
+import { extname, join, parse } from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
@@ -34,6 +34,13 @@ import {
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
 import { ResourceOption, isResourceOperable } from "@/utils/permission";
+import {
+    openPath,
+    showItemInFolder,
+} from "@workspace/utils/electron/shell";
+import { showOpenDialog, showSaveDialog } from "@workspace/utils/electron/dialog";
+import { cp } from "@workspace/utils/node/fs/promises";
+import { normalize } from "@workspace/utils/path/normalize";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -181,6 +188,10 @@ export class ExplorerContextMenu {
             ? new Set(children.map(node => node.name))
             : null;
         const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
+
+        const root = type === FileTreeNodeType.Root; // 是否为根目录
+        const file = type === FileTreeNodeType.File; // 是否为文件
+        const folder = type === FileTreeNodeType.Folder; // 是否为文件夹
 
         const items: IMenuItem[] = [];
 
@@ -371,20 +382,10 @@ export class ExplorerContextMenu {
                             label: this.i18n.menu.openWithDefaultProgram.label,
                             click: () => {
                                 if (type === FileTreeNodeType.File) {
-                                    globalThis
-                                        .require("electron")
-                                        .shell
-                                        .openPath(path);
+                                    openPath(path);
                                 }
                                 else {
-                                    globalThis
-                                        .require("electron")
-                                        .shell
-                                        .showItemInFolder(
-                                            globalThis
-                                                .require("path")
-                                                .normalize(path)
-                                        );
+                                    showItemInFolder(path);
                                 }
                             },
                         },
@@ -412,14 +413,7 @@ export class ExplorerContextMenu {
                     icon: "iconFolder",
                     label: this.i18n.menu.revealInExplorer.label,
                     click: () => {
-                        globalThis
-                            .require("electron")
-                            .shell
-                            .showItemInFolder(
-                                globalThis
-                                    .require("path")
-                                    .normalize(path)
-                            );
+                        showItemInFolder(path);
                     },
                 },
                 root: true,
@@ -573,11 +567,165 @@ export class ExplorerContextMenu {
             file: true,
         });
 
-        // TODO: 另存为
+        if (FLAG_ELECTRON) {
+            /**
+             * 添加文件/文件夹
+             * REF: https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowopendialogbrowserwindow-options
+            */
+            items.push({
+                type: MenuItemType.Submenu,
+                options: {
+                    icon: "iconUpload",
+                    label: this.i18n.menu.add.label,
+                },
+                submenu: [
+                    /* 添加文件 */
+                    {
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconFile",
+                            label: this.i18n.menu.addFile.label,
+                            click: async () => {
+                                const result = await showOpenDialog({
+                                    title: i10n_save_as.title.replaceAll("${1}", relative),
+                                    buttonLabel: this.i18n.menu.add.label,
+                                    properties: [
+                                        "openFile",
+                                        "multiSelections",
+                                        "showHiddenFiles",
+                                        "createDirectory",
+                                        "treatPackageAsDirectory",
+                                    ],
+                                });
+                                if (!result.canceled && result.filePaths) {
+                                    // this.plugin.logger.debugs(path, result.filePaths);
+                                    for (const filePath of result.filePaths) {
+                                        const info = parse(normalize(filePath));
+                                        // this.plugin.logger.debugs(info);
+                                        await cp(
+                                            filePath,
+                                            join(path, info.base),
+                                        );
+                                    }
+                                    await this.explorer.updateNode(node);
+                                }
+                            },
+                        },
+                        root: true,
+                        folder: true,
+                        file: false,
+                    },
+                    /* 添加文件夹 */
+                    {
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconFolder",
+                            label: this.i18n.menu.addFolder.label,
+                            click: async () => {
+                                const result = await showOpenDialog({
+                                    title: i10n_save_as.title.replaceAll("${1}", relative),
+                                    buttonLabel: this.i18n.menu.add.label,
+                                    properties: [
+                                        "openDirectory",
+                                        "multiSelections",
+                                        "showHiddenFiles",
+                                        "createDirectory",
+                                        "treatPackageAsDirectory",
+                                    ],
+                                });
+                                if (!result.canceled && result.filePaths) {
+                                    // this.plugin.logger.debug(result.filePaths);
+                                    for (const filePath of result.filePaths) {
+                                        const info = parse(normalize(filePath));
+                                        // this.plugin.logger.debugs(info);
+                                        await cp(
+                                            filePath,
+                                            join(path, info.base),
+                                            {
+                                                recursive: true,
+                                            },
+                                        );
+                                    }
+                                    await this.explorer.updateNode(node);
+                                }
+                            },
+                        },
+                        root: true,
+                        folder: true,
+                        file: false,
+                    },
+                ],
+                root: true,
+                folder: true,
+                file: false,
+            });
 
-        // TODO: 下载
+            /**
+             * 文件/文件夹另存为
+             * REF: https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowsavedialogbrowserwindow-options
+             */
+            const i10n_save_as = file
+                ? this.i18n.menu.saveFileAs
+                : this.i18n.menu.saveFolderAs;
+            items.push({
+                type: MenuItemType.Action,
+                options: {
+                    icon: "iconDownload",
+                    label: this.i18n.menu.saveAs.label,
+                    click: async () => {
+                        const asyncFs = globalThis.require("fs/promises") as typeof import("fs/promises");
+                        const result = await showSaveDialog({
+                            title: i10n_save_as.title.replaceAll("${1}", relative),
+                            defaultPath: name,
+                            properties: [
+                                "showHiddenFiles",
+                                "createDirectory",
+                                "treatPackageAsDirectory",
+                                "showOverwriteConfirmation",
+                            ],
+                        });
+                        if (!result.canceled && result.filePath) {
+                            // this.plugin.logger.debugs(path, result.filePath);
+                            await asyncFs.cp(
+                                path,
+                                result.filePath,
+                                {
+                                    recursive: true, // 递归复制
+                                },
+                            );
+                            this.plugin.siyuan.confirm(
+                                i10n_save_as.label,
+                                i10n_save_as.message
+                                    .replaceAll("${1}", fn__code(relative))
+                                    .replaceAll("${2}", fn__code(result.filePath)),
+                                () => {
+                                    showItemInFolder(result.filePath);
+                                },
+                            )
+                        }
+                    },
+                },
+                root: false,
+                folder: true,
+                file: true,
+            });
+        }
+        else if (FLAG_BROWSER) {
+            /**
+             * TODO: 上传文件/文件夹
+             * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLInputElement/webkitdirectory
+             * REF: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitEntries
+             */
+            // TODO: 下载文件 (StreamSaver.js)
+            // TODO: 下载目录 (打包为 zip)
+        }
 
-        // TODO: 上传
+        items.push({
+            type: MenuItemType.Separator,
+            root: true,
+            folder: true,
+            file: true,
+        });
 
         /* 重命名 */
         items.push({

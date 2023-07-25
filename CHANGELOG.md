@@ -3,6 +3,7 @@
 ## 2023-07-25
 
 - 添加文件预览菜单项 | Add file preview menu item.
+- 新增添加/另存为菜单项 | Add add/save as menu item.
 
 ## 2023-07-24
 

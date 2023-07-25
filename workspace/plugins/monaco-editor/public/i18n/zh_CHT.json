@@ -429,6 +429,19 @@
         "revealInExplorer": {
             "label": "在檔案總管中顯示"
         },
+        "saveAs": {
+            "label": "另存為"
+        },
+        "saveFileAs": {
+            "label": "檔案另存為",
+            "message": "檔案 ${1} 已另存至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "檔案 ${1} 另存為"
+        },
+        "saveFolderAs": {
+            "label": "資料夾另存為",
+            "message": "資料夾 ${1} 已另存至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "資料夾 ${1} 另存為"
+        },
         "standard": {
             "accelerator": "標準"
         },
