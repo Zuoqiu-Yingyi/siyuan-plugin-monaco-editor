@@ -3,6 +3,7 @@
 ## 2023-07-26
 
 - 添加代码片段编辑菜单 | Add code snippet edit menu.
+- 添加收集箱编辑菜单 | Add inbox edit menu.
 
 ## 2023-07-25
 

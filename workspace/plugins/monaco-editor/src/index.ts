@@ -22,6 +22,7 @@ import siyuan from "siyuan";
 import "./styles/plugin.less";
 
 import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw";
+import icon_time from "./assets/symbols/icon-monaco-editor-time.symbol?raw";
 import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw";
 import icon_file_tree from "./assets/symbols/icon-monaco-editor-file-tree.symbol?raw";
 import icon_folder_opend from "./assets/symbols/icon-monaco-editor-folder-opend.symbol?raw";
@@ -37,7 +38,6 @@ import { getBlockID, getHistoryCreated, getHistoryPath, getShorthandID, getSnaps
 import { isStaticPathname } from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
-import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { normalize } from "@workspace/utils/path/normalize";
@@ -162,11 +162,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         /* 注册图标 */
         this.addIcons([
             icon_plugin, // 插件图标
+            icon_time, // 时间图标
             icon_slash, // 斜杠图标
             icon_file_tree, // 文件树
-            icon_folder_opend, // 工作空间
-            icon_folder_closed, // 工作空间
-            icon_material_icons, // 工作空间
+            icon_folder_opend, // 文件夹(打开)
+            icon_folder_closed, // 文件夹(关闭)
+            icon_material_icons, // material 文件主题图标
         ].join(""));
 
         this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME)
@@ -393,7 +394,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
         /* 代码片段 */
         const snippet_id = getSnippetID(e); // 获取代码片段 ID
-        this.logger.debug(snippet_id);
+        // this.logger.debug(snippet_id);
         if (snippet_id) {
             menu.addItem({
                 icon: "iconCode",
@@ -421,12 +422,26 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const shorthand_id = getShorthandID(e); // 获取收集箱 ID
         // this.logger.debug(shorthand_id);
         if (shorthand_id) {
-            /**
-             * TODO: 使用 API /api/inbox/getShorthand 通过收集箱项 ID 获取收集箱内容
-             *   response.data.shorthandContent: 带 YFM 的 markdown
-             */
-            // TODO: 在新页签打开收集箱内容编辑器
-            // TODO: 在新窗口打开收集箱内容编辑器
+            menu.addItem({
+                icon: "iconCode",
+                label: this.i18n.displayName,
+                submenu: this.buildOpenSubmenu(
+                    {
+                        type: HandlerType.inbox,
+                        handler: {
+                            id: shorthand_id,
+                        },
+                        breadcrumb: {
+                            id: shorthand_id,
+                        },
+                    },
+                ),
+            });
+            menu.open({
+                x: globalThis.siyuan.coordinates.clientX,
+                y: globalThis.siyuan.coordinates.clientY,
+            });
+            return;
         }
 
         /* 文档历史创建时间 */
@@ -816,14 +831,14 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             icon: "iconOpenWindow",
             label: this.i18n.menu.openByNewWindow.label,
             disabled,
-            click: async element => {
-                const { x, y } = getElementScreenPosition(element);
+            click: async () => {
+                const { screenX: x, screenY: y } = globalThis.siyuan.coordinates;
 
                 const editor = new EditorWindow(this);
                 await editor.init(custom.data);
                 editor.open({
-                    x: Math.round(x),
-                    y: Math.round(y),
+                    x,
+                    y,
                     title,
                     ...this.config.window.options,
                 });

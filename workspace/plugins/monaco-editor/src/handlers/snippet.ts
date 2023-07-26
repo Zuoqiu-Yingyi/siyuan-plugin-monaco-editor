@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 块处理器 */
+/* 代码片段处理器 */
 import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 
 import type { IEditorModel } from "@/types/editor";

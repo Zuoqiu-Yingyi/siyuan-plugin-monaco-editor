@@ -64,6 +64,8 @@ import { NetworkHandler, type INetworkHandlerOptions, type INetworkHandler } fro
 import { NetworkBreadcrumb, type INetworkBreadcrumbOptions, type INetworkStore } from "@/breadcrumb/network";
 import { SnippetHandler, type ISnippetHandlerOptions } from "@/handlers/snippet";
 import { SnippetBreadcrumb, type ISnippetBreadcrumbOptions } from "@/breadcrumb/snippet";
+import { InboxHandler, type IInboxHandlerOptions } from "@/handlers/inbox";
+import { InboxBreadcrumb, type IInboxBreadcrumbOptions } from "@/breadcrumb/inbox";
 
 /* 处理器类型 */
 export enum HandlerType {
@@ -79,6 +81,7 @@ export enum HandlerType {
 
 export type IFacadeOptions = IFacadeAssetOptions
     | IFacadeBlockOptions
+    | IFacadeInboxOptions
     | IFacadeLocalOptions
     | IFacadeNetworkOptions
     | IFacadeSnippetOptions;
@@ -110,6 +113,12 @@ export interface IFacadeBlockOptions extends IFacadeBaseOptions {
     type: HandlerType.block,
     handler: IBlockHandlerOptions,
     breadcrumb: IBlockBreadcrumbOptions,
+}
+
+export interface IFacadeInboxOptions extends IFacadeBaseOptions {
+    type: HandlerType.inbox,
+    handler: IInboxHandlerOptions,
+    breadcrumb: IInboxBreadcrumbOptions,
 }
 
 export interface IFacadeLocalOptions extends IFacadeBaseOptions {
@@ -146,6 +155,9 @@ export class Facade {
     protected blockHandler: InstanceType<typeof BlockHandler>;
     protected blockBreadcrumb: InstanceType<typeof BlockBreadcrumb>;
 
+    protected inboxHandler: InstanceType<typeof InboxHandler>;
+    protected inboxBreadcrumb: InstanceType<typeof InboxBreadcrumb>;
+
     protected localHandler: InstanceType<typeof LocalHandler>;
     protected localBreadcrumb: InstanceType<typeof LocalBreadcrumb>;
 
@@ -173,6 +185,12 @@ export class Facade {
                     this.blockHandler = new BlockHandler(this.plugin);
                 }
                 return this.blockHandler as InstanceType<typeof BlockHandler>;
+            }
+            case HandlerType.inbox: {
+                if (!(this.inboxHandler instanceof InboxHandler)) {
+                    this.inboxHandler = new InboxHandler(this.plugin);
+                }
+                return this.inboxHandler as InstanceType<typeof InboxHandler>;
             }
             case HandlerType.local: {
                 if (!(this.localHandler instanceof LocalHandler)) {
@@ -211,6 +229,12 @@ export class Facade {
                     this.blockBreadcrumb = new BlockBreadcrumb(this.plugin);
                 }
                 return this.blockBreadcrumb as InstanceType<typeof BlockBreadcrumb>;
+            }
+            case HandlerType.inbox: {
+                if (!(this.inboxBreadcrumb instanceof InboxBreadcrumb)) {
+                    this.inboxBreadcrumb = new InboxBreadcrumb(this.plugin);
+                }
+                return this.inboxBreadcrumb as InstanceType<typeof InboxBreadcrumb>;
             }
             case HandlerType.local: {
                 if (!(this.localBreadcrumb instanceof LocalBreadcrumb)) {

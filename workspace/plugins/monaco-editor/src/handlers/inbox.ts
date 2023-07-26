@@ -15,24 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 网络文件处理器 */
+/* 收集箱处理器 */
 import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 
 import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
-import { extname } from "@workspace/utils/path/browserify";
 
-export interface INetworkHandler extends IHandler {
+export interface IInboxHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
     options: IMonacoEditorOptions; // 编辑器选项
-    update?: (value: string) => Promise<Blob>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
+    update?: (value: string) => ReturnType<typeof this.client.getInbox>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
-export interface INetworkHandlerOptions extends IBaseHandlerOptions {
-    uri: string; // 资源路径
+export interface IInboxHandlerOptions extends IBaseHandlerOptions {
+    id: string; // 收集箱 ID
 }
 
-export class NetworkHandler extends Handler {
+export class InboxHandler extends Handler {
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
@@ -45,37 +44,23 @@ export class NetworkHandler extends Handler {
     /**
      * 生产一个块处理器
      */
-    public async makeHandler(options: INetworkHandlerOptions): Promise<INetworkHandler> {
-        const { uri } = options;
-        const url = new URL(uri);
-        const handler: INetworkHandler = {
+    public async makeHandler(options: IInboxHandlerOptions): Promise<IInboxHandler> {
+        /* 获取该收集箱项 */
+        const response = await this.client.getShorthand({
+            id: options.id,
+        });
+
+        /* 生成的处理器 */
+        const handler: IInboxHandler = {
             modified: {
-                value: "",
-                language: extname(url.pathname),
+                value: response.data.shorthandContent,
+                language: "markdown",
             },
             options: {
                 tabSize: this.customTabSize,
             },
-        }; // 生成的处理器
+        };
 
-        // this.client.forwardProxy 无法访问部分资源
-        const response = await fetch(
-            uri,
-            {
-                method: "GET",
-            },
-        );
-        if (response.ok) {
-            handler.modified.value = await response.text();
-            if (!handler.modified.language.startsWith(".")) {
-                const content_type = response.headers.get("content-type");
-                const mine_type = content_type ? content_type.split(";")[0] : "";
-                handler.modified.language = mine_type ? mine_type : handler.modified.language;
-            }
-        }
-        else {
-            throw new Error(response.statusText);
-        }
         return handler;
     }
 }
