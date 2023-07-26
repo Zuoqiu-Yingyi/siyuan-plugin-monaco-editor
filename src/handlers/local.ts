@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 块处理器 */
+/* 本地文件处理器 */
 import { extname } from "@workspace/utils/path/browserify";
 import { uri2path } from "@workspace/utils/misc/url";
 import {
