@@ -33,12 +33,6 @@ export interface IOperates {
     open: IMouseOperate; // 打开操作
 }
 
-/* 操作 */
-export interface IOperate {
-    view: IOperates; // 查看操作
-    edit: IOperates; // 编辑操作
-}
-
 export interface IWindow {
     options: IWindowOptions; // 窗口设置
 }
@@ -99,7 +93,7 @@ export interface IDock {
 }
 
 export interface IConfig {
-    operate: IOperate;
+    operates: IOperates;
     window: IWindow;
     editor: IEditor;
     dock: IDock;

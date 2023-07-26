@@ -13,12 +13,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-
-    margin: 0;
-    border: 0;
-    padding: 0;
+/* 上下文菜单 */
+#commonMenu.b3-menu {
+    &[data-name=plugin-monaco-editor-custom-menu] {
+        // 自定义的菜单在所有层级上方显示
+        z-index: 1024;
+    }
 }

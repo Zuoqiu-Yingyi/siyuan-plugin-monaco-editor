@@ -19,6 +19,8 @@
 import siyuan from "siyuan";
 
 /* 静态资源 */
+import "./styles/plugin.less";
+
 import icon_plugin from "./assets/symbols/icon-monaco-editor.symbol?raw";
 import icon_slash from "./assets/symbols/icon-monaco-editor-slash.symbol?raw";
 import icon_file_tree from "./assets/symbols/icon-monaco-editor-file-tree.symbol?raw";
@@ -46,7 +48,6 @@ import EditorTab from "./components/EditorTab.svelte";
 import PreviewTab from "./components/PreviewTab.svelte";
 import EditorDock from "./components/EditorDock.svelte";
 import ExplorerDock from "./components/ExplorerDock.svelte";
-import Prompt from "@workspace/components/siyuan/dialog/Prompt.svelte";
 
 /* 项目资源 */
 import {
@@ -69,6 +70,7 @@ import type { IDockData } from "./types/dock";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
+    static readonly CUSTOM_MENU_NAME = "plugin-monaco-editor-custom-menu";
 
     declare public readonly i18n: I18N;
     public readonly siyuan = siyuan;
@@ -260,8 +262,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 }
 
                 /* 注册触发打开窗口动作的监听器 */
-                globalThis.addEventListener(this.config.operate.view.open.mouse.type, this.openViewEventListener, true);
-                globalThis.addEventListener(this.config.operate.edit.open.mouse.type, this.openEditEventListener, true);
+                globalThis.addEventListener(this.config.operates.open.mouse.type, this.contextmenuEventListener, true);
 
                 /* 编辑区点击 */
                 this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
@@ -303,8 +304,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
-        globalThis.removeEventListener(this.config.operate.view.open.mouse.type, this.openViewEventListener, true);
-        globalThis.removeEventListener(this.config.operate.edit.open.mouse.type, this.openEditEventListener, true);
+        globalThis.removeEventListener(this.config.operates.open.mouse.type, this.contextmenuEventListener, true);
 
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
@@ -368,8 +368,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     public openFloatLayer(options: { id: BlockID }): void {
         this.addFloatLayer({
             ids: [options.id],
-            x: 0,
-            y: 0,
+            x: globalThis.siyuan.coordinates.clientX,
+            y: globalThis.siyuan.coordinates.clientY,
         });
     }
 
@@ -386,19 +386,35 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 处理打开事件 */
-    protected openEventHandler(e: MouseEvent, edit: boolean) {
-        // this.logger.debug(e.composedPath());
+    protected openEventHandler(e: MouseEvent) {
+        // this.logger.debug(e);
+
+        const menu = new siyuan.Menu(MonacoEditorPlugin.CUSTOM_MENU_NAME);
 
         /* 代码片段 */
         const snippet_id = getSnippetID(e); // 获取代码片段 ID
-        // this.logger.debug(snippet_id);
+        this.logger.debug(snippet_id);
         if (snippet_id) {
-            /**
-             * TODO: 使用 API /api/snippet/getSnippet 获取代码片段列表
-             * TODO: 通过 ID 获得对应的代码片段内容并更新
-             * TODO: 使用 API /api/snippet/setSnippet 设置代码片段列表
-             */
-            // TODO: 在新窗口打开代码片段内容编辑器
+            menu.addItem({
+                icon: "iconCode",
+                label: this.i18n.displayName,
+                submenu: this.buildOpenSubmenu(
+                    {
+                        type: HandlerType.snippet,
+                        handler: {
+                            id: snippet_id,
+                        },
+                        breadcrumb: {
+                            id: snippet_id,
+                        },
+                    },
+                ),
+            });
+            menu.open({
+                x: globalThis.siyuan.coordinates.clientX,
+                y: globalThis.siyuan.coordinates.clientY,
+            });
+            return;
         }
 
         /* 收集箱 */
@@ -409,12 +425,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
              * TODO: 使用 API /api/inbox/getShorthand 通过收集箱项 ID 获取收集箱内容
              *   response.data.shorthandContent: 带 YFM 的 markdown
              */
-            if (!edit) {
-                // TODO: 在新页签打开收集箱内容编辑器
-            }
-            else {
-                // TODO: 在新窗口打开收集箱内容编辑器
-            }
+            // TODO: 在新页签打开收集箱内容编辑器
+            // TODO: 在新窗口打开收集箱内容编辑器
         }
 
         /* 文档历史创建时间 */
@@ -431,12 +443,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                  *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
                  *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
                  */
-                if (!edit) {
-                    // TODO: 在新窗口对比查看文档历史 (markdown)
-                }
-                else {
-                    // TODO: 在新窗口对比编辑文档历史 (kramdown)
-                }
+                // TODO: 在新窗口对比查看文档历史 (markdown)
+                // TODO: 在新窗口对比编辑文档历史 (kramdown)
             }
         }
 
@@ -451,12 +459,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                  *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
                  *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
                  */
-                if (!edit) {
-                    // TODO: 在新窗口查看文档历史 (markdown)
-                }
-                else {
-                    // TODO: 在新窗口编辑文档历史 (kramdown)
-                }
+                // TODO: 在新窗口查看文档历史 (markdown)
+                // TODO: 在新窗口编辑文档历史 (kramdown)
             }
         }
 
@@ -473,44 +477,24 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
              * response.data.isProtyleDoc = true 时为文件, 渲染原始内容
              * response.data.isProtyleDoc = false 时为文档, 需要使用 lute 转换
              */
-            if (!edit) {
-                // TODO: 在新窗口查看文档历史 (markdown)
-            }
-            else {
-                // TODO: 在新窗口查看文档历史 (kramdown)
-            }
+            // TODO: 在新窗口查看文档历史 (markdown)
+            // TODO: 在新窗口查看文档历史 (kramdown)
         }
     }
 
-    /* 打开查看窗口监听器 */
-    protected readonly openViewEventListener = (e: MouseEvent) => {
+    /* 上下文菜单事件 */
+    protected readonly contextmenuEventListener = (e: MouseEvent) => {
         try {
             // this.logger.debug(e);
 
             /* 判断功能是否已启用 */
-            if (!this.config.operate.view.open.enable) return;
+            if (!this.config.operates.open.enable) return;
 
             /* 判断事件是否为目标事件 */
-            if (!isMatchedMouseEvent(e, this.config.operate.view.open.mouse)) return;
+            if (isMatchedMouseEvent(e, this.config.operates.open.mouse)) {
+                this.openEventHandler(e);
+            };
 
-            this.openEventHandler(e, false);
-        } catch (e) {
-            this.logger.warn(e);
-        }
-    }
-
-    /* 打开编辑窗口监听器 */
-    protected readonly openEditEventListener = (e: MouseEvent) => {
-        try {
-            // this.logger.debug(e);
-
-            /* 判断功能是否已启用 */
-            if (!this.config.operate.edit.open.enable) return;
-
-            /* 判断事件是否为目标事件 */
-            if (!isMatchedMouseEvent(e, this.config.operate.edit.open.mouse)) return;
-
-            this.openEventHandler(e, true);
         } catch (e) {
             this.logger.warn(e);
         }
@@ -824,6 +808,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 });
             },
         });
+
+        submenu.push({ type: "separator" });
 
         /* 在新窗口打开 */
         submenu.push({
