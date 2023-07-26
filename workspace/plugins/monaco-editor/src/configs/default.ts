@@ -39,35 +39,18 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
 }
 
 export const DEFAULT_CONFIG: IConfig = {
-    operate: {
-        view: {
-            open: {
-                enable: true,
-                mouse: {
-                    type: "mousedown",
-                    button: MouseButton.Middle,
+    operates: {
+        open: {
+            enable: true,
+            mouse: {
+                /* 右键菜单 */
+                type: "contextmenu",
+                button: MouseButton.Right,
 
-                    /* Alt + 鼠标中键 */
-                    altKey: true,
-                    ctrlKey: false,
-                    metaKey: false,
-                    shiftKey: false,
-                },
-            },
-        },
-        edit: {
-            open: {
-                enable: true,
-                mouse: {
-                    type: "mousedown",
-                    button: MouseButton.Middle,
-
-                    /* Shift + Alt + 鼠标中键 */
-                    altKey: true,
-                    ctrlKey: false,
-                    metaKey: false,
-                    shiftKey: true,
-                },
+                altKey: false,
+                ctrlKey: false,
+                metaKey: false,
+                shiftKey: false,
             },
         },
     },

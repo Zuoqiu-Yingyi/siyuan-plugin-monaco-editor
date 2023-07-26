@@ -31,6 +31,8 @@ export enum MouseEvent {
     click = "click",
     dblclick = "dblclick",
 
+    contextmenu = "contextmenu",
+
     mousedown = "mousedown",
     mouseup = "mouseup",
 

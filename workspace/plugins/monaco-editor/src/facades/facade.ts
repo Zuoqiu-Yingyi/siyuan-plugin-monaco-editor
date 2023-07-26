@@ -62,6 +62,8 @@ import {
 } from "@/breadcrumb/local";
 import { NetworkHandler, type INetworkHandlerOptions, type INetworkHandler } from "@/handlers/network";
 import { NetworkBreadcrumb, type INetworkBreadcrumbOptions, type INetworkStore } from "@/breadcrumb/network";
+import { SnippetHandler, type ISnippetHandlerOptions } from "@/handlers/snippet";
+import { SnippetBreadcrumb, type ISnippetBreadcrumbOptions } from "@/breadcrumb/snippet";
 
 /* 处理器类型 */
 export enum HandlerType {
@@ -75,10 +77,11 @@ export enum HandlerType {
     snapshot, // 快照
 }
 
-export type IFacadeOptions = IFacadeBlockOptions
-    | IFacadeAssetOptions
+export type IFacadeOptions = IFacadeAssetOptions
+    | IFacadeBlockOptions
     | IFacadeLocalOptions
-    | IFacadeNetworkOptions;
+    | IFacadeNetworkOptions
+    | IFacadeSnippetOptions;
 export type IStore = IBlockStore
     | IAssetStore
     | ILocalStore
@@ -97,16 +100,16 @@ export interface IFacadeBaseOptions {
     breadcrumb: IBaseBreadcrumbOptions,
 }
 
-export interface IFacadeBlockOptions extends IFacadeBaseOptions {
-    type: HandlerType.block,
-    handler: IBlockHandlerOptions,
-    breadcrumb: IBlockBreadcrumbOptions,
-}
-
 export interface IFacadeAssetOptions extends IFacadeBaseOptions {
     type: HandlerType.asset,
     handler: IAssetHandlerOptions,
     breadcrumb: IAssetBreadcrumbOptions,
+}
+
+export interface IFacadeBlockOptions extends IFacadeBaseOptions {
+    type: HandlerType.block,
+    handler: IBlockHandlerOptions,
+    breadcrumb: IBlockBreadcrumbOptions,
 }
 
 export interface IFacadeLocalOptions extends IFacadeBaseOptions {
@@ -121,6 +124,12 @@ export interface IFacadeNetworkOptions extends IFacadeBaseOptions {
     breadcrumb: INetworkBreadcrumbOptions,
 }
 
+export interface IFacadeSnippetOptions extends IFacadeBaseOptions {
+    type: HandlerType.snippet,
+    handler: ISnippetHandlerOptions,
+    breadcrumb: ISnippetBreadcrumbOptions,
+}
+
 export interface ITabOptions {
     handler: IFacadeHandler;
     breadcrumb: IBreadcrumb;
@@ -131,11 +140,11 @@ export interface IWindowOptions {
 }
 
 export class Facade {
-    protected blockHandler: InstanceType<typeof BlockHandler>;
-    protected blockBreadcrumb: InstanceType<typeof BlockBreadcrumb>;
-
     protected assetHandler: InstanceType<typeof AssetHandler>;
     protected assetBreadcrumb: InstanceType<typeof AssetBreadcrumb>;
+
+    protected blockHandler: InstanceType<typeof BlockHandler>;
+    protected blockBreadcrumb: InstanceType<typeof BlockBreadcrumb>;
 
     protected localHandler: InstanceType<typeof LocalHandler>;
     protected localBreadcrumb: InstanceType<typeof LocalBreadcrumb>;
@@ -143,24 +152,27 @@ export class Facade {
     protected networkHandler: InstanceType<typeof NetworkHandler>;
     protected networkBreadcrumb: InstanceType<typeof NetworkBreadcrumb>;
 
+    protected snippetHandler: InstanceType<typeof SnippetHandler>;
+    protected snippetBreadcrumb: InstanceType<typeof SnippetBreadcrumb>;
+
     constructor(
         protected readonly plugin: InstanceType<typeof MonacoEditorPlugin>,
     ) { }
 
-    /* 派遣面包屑制造者 */
+    /* 派遣处理器制造者 */
     protected dispatchHandlerMaker(type: HandlerType): Handler {
         switch (type) {
-            case HandlerType.block: {
-                if (!(this.blockHandler instanceof BlockHandler)) {
-                    this.blockHandler = new BlockHandler(this.plugin);
-                }
-                return this.blockHandler as InstanceType<typeof BlockHandler>;
-            }
             case HandlerType.asset: {
                 if (!(this.assetHandler instanceof AssetHandler)) {
                     this.assetHandler = new AssetHandler(this.plugin);
                 }
                 return this.assetHandler as InstanceType<typeof AssetHandler>;
+            }
+            case HandlerType.block: {
+                if (!(this.blockHandler instanceof BlockHandler)) {
+                    this.blockHandler = new BlockHandler(this.plugin);
+                }
+                return this.blockHandler as InstanceType<typeof BlockHandler>;
             }
             case HandlerType.local: {
                 if (!(this.localHandler instanceof LocalHandler)) {
@@ -174,6 +186,12 @@ export class Facade {
                 }
                 return this.networkHandler as InstanceType<typeof NetworkHandler>;
             }
+            case HandlerType.snippet: {
+                if (!(this.snippetHandler instanceof SnippetHandler)) {
+                    this.snippetHandler = new SnippetHandler(this.plugin);
+                }
+                return this.snippetHandler as InstanceType<typeof SnippetHandler>;
+            }
             default:
                 throw new Error(type.toString());
         }
@@ -182,17 +200,17 @@ export class Facade {
     /* 派遣处理器制造者 */
     protected dispatchBreadcrumbMaker(type: HandlerType): Breadcrumb {
         switch (type) {
-            case HandlerType.block: {
-                if (!(this.blockBreadcrumb instanceof BlockBreadcrumb)) {
-                    this.blockBreadcrumb = new BlockBreadcrumb(this.plugin);
-                }
-                return this.blockBreadcrumb as InstanceType<typeof BlockBreadcrumb>;
-            }
             case HandlerType.asset: {
                 if (!(this.assetBreadcrumb instanceof AssetBreadcrumb)) {
                     this.assetBreadcrumb = new AssetBreadcrumb(this.plugin);
                 }
                 return this.assetBreadcrumb as InstanceType<typeof AssetBreadcrumb>;
+            }
+            case HandlerType.block: {
+                if (!(this.blockBreadcrumb instanceof BlockBreadcrumb)) {
+                    this.blockBreadcrumb = new BlockBreadcrumb(this.plugin);
+                }
+                return this.blockBreadcrumb as InstanceType<typeof BlockBreadcrumb>;
             }
             case HandlerType.local: {
                 if (!(this.localBreadcrumb instanceof LocalBreadcrumb)) {
@@ -205,6 +223,12 @@ export class Facade {
                     this.networkBreadcrumb = new NetworkBreadcrumb(this.plugin);
                 }
                 return this.networkBreadcrumb as InstanceType<typeof NetworkBreadcrumb>;
+            }
+            case HandlerType.snippet: {
+                if (!(this.snippetBreadcrumb instanceof SnippetBreadcrumb)) {
+                    this.snippetBreadcrumb = new SnippetBreadcrumb(this.plugin);
+                }
+                return this.snippetBreadcrumb as InstanceType<typeof SnippetBreadcrumb>;
             }
             default:
                 throw new Error(type.toString());

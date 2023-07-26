@@ -77,6 +77,7 @@ export class AssetHandler extends Handler {
      */
     public async makeHandler(options: IAssetHandlerOptions): Promise<IAssetHandler> {
         const path = options.path ?? staticPathname2WorkspacePath(options.pathname);
+
         const handler: IAssetHandler = {
             modified: {
                 value: "",
@@ -85,27 +86,17 @@ export class AssetHandler extends Handler {
             options: {
                 tabSize: this.customTabSize,
             },
-        }; // 生成的处理器
-        const response = await fetch(
-            '/api/file/getFile',
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    path,
-                }),
-            });
-        if (response.ok) {
-            handler.modified.value = await response.text();
-            // const content_type = response.headers.get("content-type");
-            // const mine_type = content_type ? content_type.split(";")[0] : "";
-            // handler.modified.language = mine_type ? mine_type : handler.modified.language;
-            if (options.updatable) {
-                handler.update = this.createUpdateFunction(path);
-            }
+        };
+
+        const response = await this.client.getFile(
+            { path },
+            "text",
+        );
+        handler.modified.value = response as string;
+        if (options.updatable) {
+            handler.update = this.createUpdateFunction(path);
         }
-        else {
-            throw new Error(response.statusText);
-        }
+
         return handler;
     }
 }

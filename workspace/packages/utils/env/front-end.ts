@@ -17,6 +17,8 @@
 
 import siyuan from "siyuan";
 
+export const baseURL = globalThis.document.baseURI;
+
 export const FLAG_ELECTRON = isElectron();
 export const FLAG_IFRAME = isIframe();
 export const FLAG_DESKTOP = isDesktop();
