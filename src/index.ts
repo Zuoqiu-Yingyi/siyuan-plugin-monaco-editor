@@ -393,133 +393,208 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const menu = new siyuan.Menu(MonacoEditorPlugin.CUSTOM_MENU_NAME);
 
         /* 代码片段 */
-        const snippet_id = getSnippetID(e); // 获取代码片段 ID
-        // this.logger.debug(snippet_id);
-        if (snippet_id) {
-            menu.addItem({
-                icon: "iconCode",
-                label: this.i18n.displayName,
-                submenu: this.buildOpenSubmenu(
-                    {
-                        type: HandlerType.snippet,
-                        handler: {
-                            id: snippet_id,
-                        },
-                        breadcrumb: {
-                            id: snippet_id,
-                        },
-                    },
-                ),
-            });
-            menu.open({
-                x: globalThis.siyuan.coordinates.clientX,
-                y: globalThis.siyuan.coordinates.clientY,
-            });
-            return;
-        }
-
-        /* 收集箱 */
-        const shorthand_id = getShorthandID(e); // 获取收集箱 ID
-        // this.logger.debug(shorthand_id);
-        if (shorthand_id) {
-            menu.addItem({
-                icon: "iconCode",
-                label: this.i18n.displayName,
-                submenu: this.buildOpenSubmenu(
-                    {
-                        type: HandlerType.inbox,
-                        handler: {
-                            id: shorthand_id,
-                        },
-                        breadcrumb: {
-                            id: shorthand_id,
-                        },
-                    },
-                ),
-            });
-            menu.open({
-                x: globalThis.siyuan.coordinates.clientX,
-                y: globalThis.siyuan.coordinates.clientY,
-            });
-            return;
-        }
-
-        /* 文档历史创建时间 */
-        const history_created = getHistoryCreated(e); // 获取历史文档路径
-        // this.logger.debug(history_created);
-        if (history_created) {
-            /* 通过获取文档树激活的文档项获取对应的文档块 ID */
-            const doc_elemetn = globalThis.document.querySelector(".sy__file .b3-list-item--focus");
-            const doc_id = (doc_elemetn as HTMLElement)?.dataset?.nodeId;
-            if (doc_id) { // 获取到对应的文档 ID
-                const submenu_options: IFacadeOptions = {
-                    type: HandlerType.history,
-                    handler: {
-                        kramdown: false,
-                        id: doc_id,
-                        created: history_created,
-                    },
-                    breadcrumb: {
-                        id: doc_id,
-                    },
-                };
-
+        if (this.config.operates.menu.snippet) {
+            const snippet_id = getSnippetID(e); // 获取代码片段 ID
+            // this.logger.debug(snippet_id);
+            if (snippet_id) {
                 menu.addItem({
                     icon: "iconCode",
                     label: this.i18n.displayName,
-                    submenu: [
-                        /* 添加查看 markdown 菜单项 */
+                    submenu: this.buildOpenSubmenu(
                         {
-                            icon: "iconPreview",
-                            label: this.i18n.menu.diffView.label,
-                            accelerator: "Markdown",
-                            submenu: this.buildOpenSubmenu(merge(
-                                submenu_options,
-                                {
-                                    handler: {
-                                        kramdown: false,
-                                    },
-                                } as unknown,
-                            )),
+                            type: HandlerType.snippet,
+                            handler: {
+                                id: snippet_id,
+                            },
+                            breadcrumb: {
+                                id: snippet_id,
+                            },
                         },
-                        /* 添加编辑 kramdown 菜单项 */
-                        {
-                            icon: "iconEdit",
-                            label: this.i18n.menu.diffEdit.label,
-                            accelerator: "kramdown",
-                            submenu: this.buildOpenSubmenu(merge(
-                                submenu_options,
-                                {
-                                    handler: {
-                                        kramdown: true,
-                                    },
-                                } as unknown,
-                            )),
-                        },
-                    ],
+                    ),
                 });
-
                 menu.open({
                     x: globalThis.siyuan.coordinates.clientX,
                     y: globalThis.siyuan.coordinates.clientY,
                 });
                 return;
+            }
+        }
+
+        /* 收集箱速记 */
+        if (this.config.operates.menu.shorthand) {
+            const shorthand_id = getShorthandID(e); // 获取收集箱 ID
+            // this.logger.debug(shorthand_id);
+            if (shorthand_id) {
+                menu.addItem({
+                    icon: "iconCode",
+                    label: this.i18n.displayName,
+                    submenu: this.buildOpenSubmenu(
+                        {
+                            type: HandlerType.inbox,
+                            handler: {
+                                id: shorthand_id,
+                            },
+                            breadcrumb: {
+                                id: shorthand_id,
+                            },
+                        },
+                    ),
+                });
+                menu.open({
+                    x: globalThis.siyuan.coordinates.clientX,
+                    y: globalThis.siyuan.coordinates.clientY,
+                });
+                return;
+            }
+        }
+
+        /* 文件历史 */
+        if (this.config.operates.menu.history1) {
+            const history_path = getHistoryPath(e); // 获取历史文档路径
+            // this.logger.debug(history_path);
+            if (history_path) {
+                if (history_path.endsWith(".sy")) {
+                    const submenu_options: IFacadeOptions = {
+                        type: HandlerType.history,
+                        handler: {
+                            kramdown: false,
+                            path: history_path,
+                        },
+                        breadcrumb: {
+                            path: history_path,
+                        },
+                    };
+
+                    menu.addItem({
+                        icon: "iconCode",
+                        label: this.i18n.displayName,
+                        submenu: [
+                            /* 添加查看 markdown 菜单项 */
+                            {
+                                icon: "iconPreview",
+                                label: this.i18n.menu.diffView.label,
+                                accelerator: "Markdown",
+                                submenu: this.buildOpenSubmenu(merge(
+                                    submenu_options,
+                                    {
+                                        handler: {
+                                            kramdown: false,
+                                        },
+                                    } as unknown,
+                                )),
+                            },
+                            /* 添加编辑 kramdown 菜单项 */
+                            {
+                                icon: "iconEdit",
+                                label: this.i18n.menu.diffEdit.label,
+                                accelerator: "kramdown",
+                                submenu: this.buildOpenSubmenu(merge(
+                                    submenu_options,
+                                    {
+                                        handler: {
+                                            kramdown: true,
+                                        },
+                                    } as unknown,
+                                )),
+                            },
+                        ],
+                    });
+
+                    menu.open({
+                        x: globalThis.siyuan.coordinates.clientX,
+                        y: globalThis.siyuan.coordinates.clientY,
+                    });
+                    return;
+                }
             }
         }
 
         /* 文档历史 */
-        const history_path = getHistoryPath(e); // 获取历史文档路径
-        // this.logger.debug(history_path);
-        if (history_path) {
-            if (history_path.endsWith(".sy")) {
+        if (this.config.operates.menu.history2) {
+            /* 文档历史创建时间 */
+            const history_created = getHistoryCreated(e); // 获取历史文档路径
+            // this.logger.debug(history_created);
+            if (history_created) {
+                /* 通过获取文档树激活的文档项获取对应的文档块 ID */
+                const doc_elemetn = globalThis.document.querySelector(".sy__file .b3-list-item--focus");
+                const doc_id = (doc_elemetn as HTMLElement)?.dataset?.nodeId;
+                if (doc_id) { // 获取到对应的文档 ID
+                    const submenu_options: IFacadeOptions = {
+                        type: HandlerType.history,
+                        handler: {
+                            kramdown: false,
+                            id: doc_id,
+                            created: history_created,
+                        },
+                        breadcrumb: {
+                            id: doc_id,
+                        },
+                    };
+
+                    menu.addItem({
+                        icon: "iconCode",
+                        label: this.i18n.displayName,
+                        submenu: [
+                            /* 添加查看 markdown 菜单项 */
+                            {
+                                icon: "iconPreview",
+                                label: this.i18n.menu.diffView.label,
+                                accelerator: "Markdown",
+                                submenu: this.buildOpenSubmenu(merge(
+                                    submenu_options,
+                                    {
+                                        handler: {
+                                            kramdown: false,
+                                        },
+                                    } as unknown,
+                                )),
+                            },
+                            /* 添加编辑 kramdown 菜单项 */
+                            {
+                                icon: "iconEdit",
+                                label: this.i18n.menu.diffEdit.label,
+                                accelerator: "kramdown",
+                                submenu: this.buildOpenSubmenu(merge(
+                                    submenu_options,
+                                    {
+                                        handler: {
+                                            kramdown: true,
+                                        },
+                                    } as unknown,
+                                )),
+                            },
+                        ],
+                    });
+
+                    menu.open({
+                        x: globalThis.siyuan.coordinates.clientX,
+                        y: globalThis.siyuan.coordinates.clientY,
+                    });
+                    return;
+                }
+            }
+        }
+
+        /* 文件快照 */
+        if (this.config.operates.menu.snapshot) {
+            const {
+                id: snapshot_old, // 较早的快照
+                id2: snapshot_new, // 较晚的快照
+                name: snapshot_name, // 快照文件名/文档标题
+            } = getSnapshotIDs(e);
+            // this.logger.debug(snapshot_old, snapshot_new);
+            if (snapshot_old && snapshot_new && snapshot_name) {
                 const submenu_options: IFacadeOptions = {
-                    type: HandlerType.history,
+                    type: HandlerType.snapshot,
                     handler: {
                         kramdown: false,
-                        path: history_path,
+                        old: snapshot_old,
+                        new: snapshot_new,
                     },
                     breadcrumb: {
-                        path: history_path,
+                        old: snapshot_old,
+                        new: snapshot_new,
+                        name: snapshot_name,
                     },
                 };
 
@@ -543,8 +618,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         },
                         /* 添加编辑 kramdown 菜单项 */
                         {
-                            icon: "iconEdit",
-                            label: this.i18n.menu.diffEdit.label,
+                            icon: "iconPreview",
+                            label: this.i18n.menu.diffView.label,
                             accelerator: "kramdown",
                             submenu: this.buildOpenSubmenu(merge(
                                 submenu_options,
@@ -564,70 +639,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 });
                 return;
             }
-        }
-
-        /* 文件快照 */
-        const {
-            id: snapshot_old, // 较早的快照
-            id2: snapshot_new, // 较晚的快照
-            name: snapshot_name, // 快照文件名/文档标题
-        } = getSnapshotIDs(e);
-        // this.logger.debug(snapshot_old, snapshot_new);
-        if (snapshot_old && snapshot_new && snapshot_name) {
-            const submenu_options: IFacadeOptions = {
-                type: HandlerType.snapshot,
-                handler: {
-                    kramdown: false,
-                    old: snapshot_old,
-                    new: snapshot_new,
-                },
-                breadcrumb: {
-                    old: snapshot_old,
-                    new: snapshot_new,
-                    name: snapshot_name,
-                },
-            };
-
-            menu.addItem({
-                icon: "iconCode",
-                label: this.i18n.displayName,
-                submenu: [
-                    /* 添加查看 markdown 菜单项 */
-                    {
-                        icon: "iconPreview",
-                        label: this.i18n.menu.diffView.label,
-                        accelerator: "Markdown",
-                        submenu: this.buildOpenSubmenu(merge(
-                            submenu_options,
-                            {
-                                handler: {
-                                    kramdown: false,
-                                },
-                            } as unknown,
-                        )),
-                    },
-                    /* 添加编辑 kramdown 菜单项 */
-                    {
-                        icon: "iconPreview",
-                        label: this.i18n.menu.diffView.label,
-                        accelerator: "kramdown",
-                        submenu: this.buildOpenSubmenu(merge(
-                            submenu_options,
-                            {
-                                handler: {
-                                    kramdown: true,
-                                },
-                            } as unknown,
-                        )),
-                    },
-                ],
-            });
-
-            menu.open({
-                x: globalThis.siyuan.coordinates.clientX,
-                y: globalThis.siyuan.coordinates.clientY,
-            });
-            return;
         }
     }
 
