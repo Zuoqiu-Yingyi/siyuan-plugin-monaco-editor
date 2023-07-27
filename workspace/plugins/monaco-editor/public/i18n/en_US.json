@@ -10,7 +10,7 @@
             "text": "Workspace"
         }
     },
-    "displayName": "Code Editor",
+    "displayName": "Integrated Edit Environment",
     "dock": {
         "collapse": {
             "ariaLabel": "Collapse All Folder"
@@ -281,9 +281,6 @@
         }
     },
     "menu": {
-        "add": {
-            "label": "添加"
-        },
         "confirm": {
             "placeholder": "The full path to the resource",
             "text": "Warning: You are operating on a protected resource ${1} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource ${2} in the text box below",
@@ -325,6 +322,12 @@
             "label": "Delete Folder",
             "text": "Make sure you want to delete the folder ${1} ？<br/>The complete path of the folder is ${2}"
         },
+        "diffEdit": {
+            "label": "Compare and Edit"
+        },
+        "diffView": {
+            "label": "Compare and View"
+        },
         "editAssetFile": {
             "label": "Edit Asset File"
         },
@@ -332,7 +335,29 @@
             "label": "Edit Local File"
         },
         "export": {
-            "accelerator": "Export"
+            "accelerator": "Export",
+            "label": "Export"
+        },
+        "exportFile": {
+            "label": "Export File",
+            "message": "File ${1} has exported to ${2}, does you reveal it in explorer?",
+            "title": "Export file ${1}"
+        },
+        "exportFolder": {
+            "label": "Export Folder",
+            "message": "Folder ${1} has exported to ${2}, does you reveal it in explorer?",
+            "title": "Export folder ${1}"
+        },
+        "import": {
+            "label": "Import"
+        },
+        "importFile": {
+            "label": "Import Files",
+            "title": "Import files to ${1}"
+        },
+        "importFolder": {
+            "label": "Import Folders",
+            "title": "Import folders to ${1}"
         },
         "new": {
             "label": "New"
@@ -431,19 +456,6 @@
         },
         "revealInExplorer": {
             "label": "Reveal In Explorer"
-        },
-        "saveAs": {
-            "label": "Save As"
-        },
-        "saveFileAs": {
-            "label": "Save File As",
-            "message": "File ${1} has saved to ${2}, does you reveal it in explorer?",
-            "title": "File ${1} save as"
-        },
-        "saveFolderAs": {
-            "label": "Save Folder As",
-            "message": "Folder ${1} has saved to ${2}, does you reveal it in explorer?",
-            "title": "Folder ${1} save as"
         },
         "standard": {
             "accelerator": "Standard"

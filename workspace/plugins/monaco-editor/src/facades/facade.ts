@@ -66,6 +66,8 @@ import { SnippetHandler, type ISnippetHandlerOptions } from "@/handlers/snippet"
 import { SnippetBreadcrumb, type ISnippetBreadcrumbOptions } from "@/breadcrumb/snippet";
 import { InboxHandler, type IInboxHandlerOptions } from "@/handlers/inbox";
 import { InboxBreadcrumb, type IInboxBreadcrumbOptions } from "@/breadcrumb/inbox";
+import { HistoryHandler, type IHistoryHandlerOptions } from "@/handlers/history";
+import { HistoryBreadcrumb, type IHistoryBreadcrumbOptions } from "@/breadcrumb/history";
 
 /* 处理器类型 */
 export enum HandlerType {
@@ -81,6 +83,7 @@ export enum HandlerType {
 
 export type IFacadeOptions = IFacadeAssetOptions
     | IFacadeBlockOptions
+    | IFacadeHistoryOptions
     | IFacadeInboxOptions
     | IFacadeLocalOptions
     | IFacadeNetworkOptions
@@ -113,6 +116,12 @@ export interface IFacadeBlockOptions extends IFacadeBaseOptions {
     type: HandlerType.block,
     handler: IBlockHandlerOptions,
     breadcrumb: IBlockBreadcrumbOptions,
+}
+
+export interface IFacadeHistoryOptions extends IFacadeBaseOptions {
+    type: HandlerType.history,
+    handler: IHistoryHandlerOptions,
+    breadcrumb: IHistoryBreadcrumbOptions,
 }
 
 export interface IFacadeInboxOptions extends IFacadeBaseOptions {
@@ -155,6 +164,9 @@ export class Facade {
     protected blockHandler: InstanceType<typeof BlockHandler>;
     protected blockBreadcrumb: InstanceType<typeof BlockBreadcrumb>;
 
+    protected historyHandler: InstanceType<typeof HistoryHandler>;
+    protected historyBreadcrumb: InstanceType<typeof HistoryBreadcrumb>;
+
     protected inboxHandler: InstanceType<typeof InboxHandler>;
     protected inboxBreadcrumb: InstanceType<typeof InboxBreadcrumb>;
 
@@ -185,6 +197,12 @@ export class Facade {
                     this.blockHandler = new BlockHandler(this.plugin);
                 }
                 return this.blockHandler as InstanceType<typeof BlockHandler>;
+            }
+            case HandlerType.history: {
+                if (!(this.historyHandler instanceof HistoryHandler)) {
+                    this.historyHandler = new HistoryHandler(this.plugin);
+                }
+                return this.historyHandler as InstanceType<typeof HistoryHandler>;
             }
             case HandlerType.inbox: {
                 if (!(this.inboxHandler instanceof InboxHandler)) {
@@ -229,6 +247,12 @@ export class Facade {
                     this.blockBreadcrumb = new BlockBreadcrumb(this.plugin);
                 }
                 return this.blockBreadcrumb as InstanceType<typeof BlockBreadcrumb>;
+            }
+            case HandlerType.history: {
+                if (!(this.historyBreadcrumb instanceof HistoryBreadcrumb)) {
+                    this.historyBreadcrumb = new HistoryBreadcrumb(this.plugin);
+                }
+                return this.historyBreadcrumb as InstanceType<typeof HistoryBreadcrumb>;
             }
             case HandlerType.inbox: {
                 if (!(this.inboxBreadcrumb instanceof InboxBreadcrumb)) {

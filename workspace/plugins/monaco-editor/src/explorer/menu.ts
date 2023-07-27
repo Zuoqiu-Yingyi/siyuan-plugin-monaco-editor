@@ -576,7 +576,7 @@ export class ExplorerContextMenu {
                 type: MenuItemType.Submenu,
                 options: {
                     icon: "iconUpload",
-                    label: this.i18n.menu.add.label,
+                    label: this.i18n.menu.import.label,
                 },
                 submenu: [
                     /* 添加文件 */
@@ -584,11 +584,11 @@ export class ExplorerContextMenu {
                         type: MenuItemType.Action,
                         options: {
                             icon: "iconFile",
-                            label: this.i18n.menu.addFile.label,
+                            label: this.i18n.menu.importFile.label,
                             click: async () => {
                                 const result = await showOpenDialog({
                                     title: i10n_save_as.title.replaceAll("${1}", relative),
-                                    buttonLabel: this.i18n.menu.add.label,
+                                    buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openFile",
                                         "multiSelections",
@@ -620,11 +620,11 @@ export class ExplorerContextMenu {
                         type: MenuItemType.Action,
                         options: {
                             icon: "iconFolder",
-                            label: this.i18n.menu.addFolder.label,
+                            label: this.i18n.menu.importFolder.label,
                             click: async () => {
                                 const result = await showOpenDialog({
                                     title: i10n_save_as.title.replaceAll("${1}", relative),
-                                    buttonLabel: this.i18n.menu.add.label,
+                                    buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openDirectory",
                                         "multiSelections",
@@ -665,13 +665,13 @@ export class ExplorerContextMenu {
              * REF: https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowsavedialogbrowserwindow-options
              */
             const i10n_save_as = file
-                ? this.i18n.menu.saveFileAs
-                : this.i18n.menu.saveFolderAs;
+                ? this.i18n.menu.exportFile
+                : this.i18n.menu.exportFolder;
             items.push({
                 type: MenuItemType.Action,
                 options: {
                     icon: "iconDownload",
-                    label: this.i18n.menu.saveAs.label,
+                    label: this.i18n.menu.export.label,
                     click: async () => {
                         const asyncFs = globalThis.require("fs/promises") as typeof import("fs/promises");
                         const result = await showSaveDialog({
