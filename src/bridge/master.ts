@@ -18,6 +18,7 @@ import constants from "@/constants";
 
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { merge } from "@workspace/utils/misc/merge";
+import { isDarkTheme } from "@workspace/utils/siyuan/theme";
 
 import type { Electron } from "@workspace/types/electron";
 
@@ -144,7 +145,7 @@ export class EditorBridgeMaster {
                      */
                     browser.webContents.mainFrame.postMessage(
                         constants.INIT_CHANNEL_NAME,
-                        undefined,
+                        isDarkTheme(),
                         [this.channel.port2 as Electron.MessagePortMain],
                     );
                 });
@@ -177,7 +178,7 @@ export class EditorBridgeMaster {
                  * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage
                  */
                 popup?.postMessage(
-                    undefined,
+                    isDarkTheme(),
                     "*",
                     [this.channel.port2 as MessagePort],
                 );
@@ -204,7 +205,7 @@ export class EditorBridgeMaster {
                  * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/index.html
                  */
                 iframe.contentWindow.postMessage(
-                    undefined,
+                    isDarkTheme(),
                     "*",
                     [this.channel.port2 as MessagePort],
                 );
@@ -218,7 +219,7 @@ export class EditorBridgeMaster {
                 this.rebuildChannel();
                 this.channel.port1.start();
                 iframe.contentWindow.postMessage(
-                    undefined,
+                    isDarkTheme(),
                     "*",
                     [this.channel.port2 as MessagePort],
                 );

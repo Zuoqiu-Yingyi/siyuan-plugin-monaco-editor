@@ -100,8 +100,14 @@ export class BlockBreadcrumb extends Breadcrumb {
         };
 
         /* 获取块信息 */
-        const response_getBlockInfo = await this.client.getBlockInfo({ id });
-        const response_getBlockBreadcrumb = await this.client.getBlockBreadcrumb({ id });
+        const [
+            response_getBlockInfo,
+            response_getBlockBreadcrumb,
+        ] = await Promise.all([
+            this.client.getBlockInfo({ id }),
+            this.client.getBlockBreadcrumb({ id }),
+        ]);
+
         response_getBlockBreadcrumb.data.forEach(item => {
             switch (item.type) {
                 case NodeType.NodeDocument: {
@@ -193,7 +199,7 @@ export class BlockBreadcrumb extends Breadcrumb {
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick(_e, _element, props) {
                     const fullscreen = get(props.active);
-                    options.stores.fullscreen.set(!fullscreen);
+                    stores.fullscreen.set(!fullscreen);
                     props.active.set(!fullscreen);
                 },
             });

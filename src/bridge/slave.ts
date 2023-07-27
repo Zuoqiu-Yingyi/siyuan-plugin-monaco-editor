@@ -76,9 +76,18 @@ export class EditorBridgeSlave {
     }
 
     /* 初始化事件 */
-    protected readonly initEventListener = (e: MessageEvent | Electron.IpcRendererEvent) => {
+    protected readonly initEventListener = (e: MessageEvent | Electron.IpcRendererEvent, dark?: boolean) => {
         // console.debug(e);
         // this.port.postMessage("editor-message");
+
+        /* 设置回退的主题颜色 */
+        if (e instanceof MessageEvent) {
+            dark = e.data;
+        }
+        globalThis.document.documentElement.style.setProperty(
+            "--vscode-editor-background",
+            dark ? "#1f1f1f" : "#ffffff",
+        );
 
         this.port = e.ports[0];
         this.port.start(); // 开始接受消息

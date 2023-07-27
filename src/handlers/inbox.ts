@@ -24,7 +24,6 @@ import type { IMonacoEditorOptions } from "@/types/config";
 export interface IInboxHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
     options: IMonacoEditorOptions; // 编辑器选项
-    update?: (value: string) => ReturnType<typeof this.client.getInbox>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
 }
 
 export interface IInboxHandlerOptions extends IBaseHandlerOptions {

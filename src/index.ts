@@ -452,14 +452,58 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             const doc_elemetn = globalThis.document.querySelector(".sy__file .b3-list-item--focus");
             const doc_id = (doc_elemetn as HTMLElement)?.dataset?.nodeId;
             if (doc_id) { // 获取到对应的文档 ID
-                /**
-                 * TODO: 使用 API /api/history/getHistoryItems 通过创建时间并查询 ID 获取历史文件路径
-                 * TODO: 使用 API /api/history/getDocHistoryContent 通过历史文件路径查询文档内容
-                 *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
-                 *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
-                 */
-                // TODO: 在新窗口对比查看文档历史 (markdown)
-                // TODO: 在新窗口对比编辑文档历史 (kramdown)
+                const submenu_options: IFacadeOptions = {
+                    type: HandlerType.history,
+                    handler: {
+                        kramdown: false,
+                        id: doc_id,
+                        created: history_created,
+                    },
+                    breadcrumb: {
+                        id: doc_id,
+                    },
+                };
+
+                menu.addItem({
+                    icon: "iconCode",
+                    label: this.i18n.displayName,
+                    submenu: [
+                        /* 添加查看 markdown 菜单项 */
+                        {
+                            icon: "iconPreview",
+                            label: this.i18n.menu.diffView.label,
+                            accelerator: "Markdown",
+                            submenu: this.buildOpenSubmenu(merge(
+                                submenu_options,
+                                {
+                                    handler: {
+                                        kramdown: false,
+                                    },
+                                } as unknown,
+                            )),
+                        },
+                        /* 添加编辑 kramdown 菜单项 */
+                        {
+                            icon: "iconEdit",
+                            label: this.i18n.menu.diffEdit.label,
+                            accelerator: "kramdown",
+                            submenu: this.buildOpenSubmenu(merge(
+                                submenu_options,
+                                {
+                                    handler: {
+                                        kramdown: true,
+                                    },
+                                } as unknown,
+                            )),
+                        },
+                    ],
+                });
+
+                menu.open({
+                    x: globalThis.siyuan.coordinates.clientX,
+                    y: globalThis.siyuan.coordinates.clientY,
+                });
+                return;
             }
         }
 
@@ -468,14 +512,57 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         // this.logger.debug(history_path);
         if (history_path) {
             if (history_path.endsWith(".sy")) {
-                /**
-                 * TODO: 查询对应的文档块 ID 是否存在
-                 * TODO: 使用 API /api/history/getDocHistoryContent 通过历史文件路径查询文档内容
-                 *   response.data.isLargeDoc = false 时 response.data.content 为 DOM, 需要使用 lute 转换
-                 *   response.data.isLargeDoc = true 时 response.data.content 为 markdown
-                 */
-                // TODO: 在新窗口查看文档历史 (markdown)
-                // TODO: 在新窗口编辑文档历史 (kramdown)
+                const submenu_options: IFacadeOptions = {
+                    type: HandlerType.history,
+                    handler: {
+                        kramdown: false,
+                        path: history_path,
+                    },
+                    breadcrumb: {
+                        path: history_path,
+                    },
+                };
+
+                menu.addItem({
+                    icon: "iconCode",
+                    label: this.i18n.displayName,
+                    submenu: [
+                        /* 添加查看 markdown 菜单项 */
+                        {
+                            icon: "iconPreview",
+                            label: this.i18n.menu.diffView.label,
+                            accelerator: "Markdown",
+                            submenu: this.buildOpenSubmenu(merge(
+                                submenu_options,
+                                {
+                                    handler: {
+                                        kramdown: false,
+                                    },
+                                } as unknown,
+                            )),
+                        },
+                        /* 添加编辑 kramdown 菜单项 */
+                        {
+                            icon: "iconEdit",
+                            label: this.i18n.menu.diffEdit.label,
+                            accelerator: "kramdown",
+                            submenu: this.buildOpenSubmenu(merge(
+                                submenu_options,
+                                {
+                                    handler: {
+                                        kramdown: true,
+                                    },
+                                } as unknown,
+                            )),
+                        },
+                    ],
+                });
+
+                menu.open({
+                    x: globalThis.siyuan.coordinates.clientX,
+                    y: globalThis.siyuan.coordinates.clientY,
+                });
+                return;
             }
         }
 

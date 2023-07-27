@@ -26,9 +26,13 @@
     export let plugin: ComponentProps<EditorIframe>["plugin"]; // 插件对象
     export let options: ComponentProps<EditorIframe>["options"]; // 编辑器参数
     export let facadeOptions: IFacadeOptions; // 门面参数
-
+    
+    let diff: ComponentProps<EditorIframe>["diff"];
     let savable: ComponentProps<EditorIframe>["savable"];
     let changable: ComponentProps<EditorIframe>["changable"];
+
+    let original: ComponentProps<EditorIframe>["original"];
+    let originalOptions: ComponentProps<EditorIframe>["originalOptions"];
     let modified: ComponentProps<EditorIframe>["modified"];
     let modifiedOptions: ComponentProps<EditorIframe>["modifiedOptions"];
 
@@ -39,6 +43,7 @@
     let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = []; // 面包屑按钮
 
     let tabOptions: ITabOptions;
+    let inited: boolean = false;
 
     /* 响应式数据 */
     const stores = {
@@ -60,7 +65,11 @@
     $: facade.makeTabOptions(facadeOptions, stores).then(o => (tabOptions = o));
     $: {
         if (tabOptions) {
+            diff = !!tabOptions.handler.original;
             savable = !!tabOptions.handler.update;
+
+            original = tabOptions.handler.original;
+            originalOptions = tabOptions.handler.options;
 
             modified = tabOptions.handler.modified;
             modifiedOptions = tabOptions.handler.options;
@@ -70,6 +79,7 @@
             breadcrumbIcons = tabOptions.breadcrumb.breadcrumbIcons;
         }
     }
+    $: inited = (diff !== undefined);
 
     /* 保存内容 */
     function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
@@ -99,17 +109,22 @@
         slot="content"
         class="fn__flex fn__flex-1"
     >
-        <EditorIframe
-            on:save={update}
-            on:changed={update}
-            on:hover={hover}
-            on:open={open}
-            {plugin}
-            {savable}
-            {changable}
-            {options}
-            {modified}
-            {modifiedOptions}
-        />
+        {#if inited}
+            <EditorIframe
+                on:save={update}
+                on:changed={update}
+                on:hover={hover}
+                on:open={open}
+                {plugin}
+                {diff}
+                {savable}
+                {changable}
+                {options}
+                {original}
+                {modified}
+                {originalOptions}
+                {modifiedOptions}
+            />
+        {/if}
     </div>
 </Tab>

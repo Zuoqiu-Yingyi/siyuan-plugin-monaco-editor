@@ -10,7 +10,7 @@
             "text": "工作空間"
         }
     },
-    "displayName": "程式碼編輯器",
+    "displayName": "集成編輯環境",
     "dock": {
         "collapse": {
             "ariaLabel": "摺疊所有文件夾"
@@ -322,6 +322,12 @@
             "label": "刪除資料夾",
             "text": "確定要刪除資料夾 ${1} ？<br/>該資料夾的完整路徑為 ${2}"
         },
+        "diffEdit": {
+            "label": "對比編輯"
+        },
+        "diffView": {
+            "label": "對比查看"
+        },
         "editAssetFile": {
             "label": "編輯資料文檔"
         },
@@ -329,7 +335,29 @@
             "label": "編輯本地文檔"
         },
         "export": {
-            "accelerator": "匯出"
+            "accelerator": "導出",
+            "label": "導出"
+        },
+        "exportFile": {
+            "label": "導出檔案",
+            "message": "檔案 ${1} 已導出至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "導出檔案 ${1}"
+        },
+        "exportFolder": {
+            "label": "導出資料夾",
+            "message": "資料夾 ${1} 已導出至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "導出資料夾 ${1}"
+        },
+        "import": {
+            "label": "導入"
+        },
+        "importFile": {
+            "label": "導入文件",
+            "title": "導入文件至 ${1}"
+        },
+        "importFolder": {
+            "label": "導入文件夾",
+            "title": "導入文件夾至 ${1}"
         },
         "new": {
             "label": "新增"
@@ -428,19 +456,6 @@
         },
         "revealInExplorer": {
             "label": "在檔案總管中顯示"
-        },
-        "saveAs": {
-            "label": "另存為"
-        },
-        "saveFileAs": {
-            "label": "檔案另存為",
-            "message": "檔案 ${1} 已另存至 ${2}，是否在檔案資源管理器中查看？",
-            "title": "檔案 ${1} 另存為"
-        },
-        "saveFolderAs": {
-            "label": "資料夾另存為",
-            "message": "資料夾 ${1} 已另存至 ${2}，是否在檔案資源管理器中查看？",
-            "title": "資料夾 ${1} 另存為"
         },
         "standard": {
             "accelerator": "標準"

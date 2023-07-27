@@ -10,7 +10,7 @@
             "text": "工作空间"
         }
     },
-    "displayName": "代码编辑器",
+    "displayName": "集成编辑环境",
     "dock": {
         "collapse": {
             "ariaLabel": "折叠所有文件夹"
@@ -281,17 +281,6 @@
         }
     },
     "menu": {
-        "add": {
-            "label": "添加"
-        },
-        "addFile": {
-            "label": "添加文件",
-            "title": "添加文件至 ${1}"
-        },
-        "addFolder": {
-            "label": "添加文件夹",
-            "title": "添加文件夹至 ${1}"
-        },
         "confirm": {
             "placeholder": "资源完整路径",
             "text": "警告：您正在操作受保护的资源 ${1} ！<br/>您之后的活动可能导致数据丢失或损坏！<br/><br/>若继续操作，请在下方文本框中输入该资源的完整路径 ${2}",
@@ -333,6 +322,12 @@
             "label": "删除文件夹",
             "text": "确定要删除文件夹 ${1} ？<br/>该文件夹的完整路径为 ${2}"
         },
+        "diffEdit": {
+            "label": "对比编辑"
+        },
+        "diffView": {
+            "label": "对比查看"
+        },
         "editAssetFile": {
             "label": "编辑资源文件"
         },
@@ -340,7 +335,29 @@
             "label": "编辑本地文件"
         },
         "export": {
-            "accelerator": "导出"
+            "accelerator": "导出",
+            "label": "导出"
+        },
+        "exportFile": {
+            "label": "导出文件",
+            "message": "文件 ${1} 已导出至 ${2}，是否在文件资源管理器中查看？",
+            "title": "导出文件 ${1}"
+        },
+        "exportFolder": {
+            "label": "导出文件夹",
+            "message": "文件夹 ${1} 已导出至 ${2}，是否在文件资源管理器中查看？",
+            "title": "导出文件夹 ${1}"
+        },
+        "import": {
+            "label": "导入"
+        },
+        "importFile": {
+            "label": "导入文件",
+            "title": "导入文件至 ${1}"
+        },
+        "importFolder": {
+            "label": "导入文件夹",
+            "title": "导入文件夹至 ${1}"
         },
         "new": {
             "label": "新建"
@@ -439,19 +456,6 @@
         },
         "revealInExplorer": {
             "label": "在文件资源管理器中显示"
-        },
-        "saveAs": {
-            "label": "另存为"
-        },
-        "saveFileAs": {
-            "label": "文件另存为",
-            "message": "文件 ${1} 已另存至 ${2}，是否在文件资源管理器中查看？",
-            "title": "文件 ${1} 另存为"
-        },
-        "saveFolderAs": {
-            "label": "文件夹另存为",
-            "message": "文件夹 ${1} 已另存至 ${2}，是否在文件资源管理器中查看？",
-            "title": "文件夹 ${1} 另存为"
         },
         "standard": {
             "accelerator": "标准"
