@@ -92,7 +92,7 @@ export interface IBlockBreadcrumbOptions extends IBaseBreadcrumbOptions {
 
 export class BlockBreadcrumb extends Breadcrumb {
     public async makeBreadcrumb(options: IBlockBreadcrumbOptions): Promise<IBreadcrumb> {
-        const { id, stores } = options;
+        const { id } = options;
         const breadcrumb: IBreadcrumb = {
             breadcrumb: true,
             breadcrumbItems: [],
@@ -199,7 +199,7 @@ export class BlockBreadcrumb extends Breadcrumb {
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick(_e, _element, props) {
                     const fullscreen = get(props.active);
-                    stores.fullscreen.set(!fullscreen);
+                    options.stores.fullscreen.set(!fullscreen);
                     props.active.set(!fullscreen);
                 },
             });

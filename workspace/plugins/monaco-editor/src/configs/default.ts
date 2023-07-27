@@ -40,18 +40,25 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
 
 export const DEFAULT_CONFIG: IConfig = {
     operates: {
-        open: {
-            enable: true,
-            mouse: {
-                /* 右键菜单 */
-                type: "contextmenu",
-                button: MouseButton.Right,
+        menu: {
+            snippet: true,
+            shorthand: true,
+            history1: true,
+            history2: true,
+            snapshot: true,
+            open: {
+                enable: true,
+                mouse: {
+                    /* 右键菜单 */
+                    type: "contextmenu",
+                    button: MouseButton.Right,
 
-                altKey: false,
-                ctrlKey: false,
-                metaKey: false,
-                shiftKey: false,
-            },
+                    altKey: false,
+                    ctrlKey: false,
+                    metaKey: false,
+                    shiftKey: false,
+                },
+            }
         },
     },
     window: {

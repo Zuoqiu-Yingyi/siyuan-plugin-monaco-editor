@@ -68,6 +68,8 @@ import { InboxHandler, type IInboxHandlerOptions } from "@/handlers/inbox";
 import { InboxBreadcrumb, type IInboxBreadcrumbOptions } from "@/breadcrumb/inbox";
 import { HistoryHandler, type IHistoryHandlerOptions } from "@/handlers/history";
 import { HistoryBreadcrumb, type IHistoryBreadcrumbOptions } from "@/breadcrumb/history";
+import { SnapshotHandler, type ISnapshotHandlerOptions } from "@/handlers/snapshot";
+import { SnapshotBreadcrumb, type ISnapshotBreadcrumbOptions } from "@/breadcrumb/snapshot";
 
 /* 处理器类型 */
 export enum HandlerType {
@@ -87,6 +89,7 @@ export type IFacadeOptions = IFacadeAssetOptions
     | IFacadeInboxOptions
     | IFacadeLocalOptions
     | IFacadeNetworkOptions
+    | IFacadeSnapshotOptions
     | IFacadeSnippetOptions;
 export type IStore = IBlockStore
     | IAssetStore
@@ -142,6 +145,12 @@ export interface IFacadeNetworkOptions extends IFacadeBaseOptions {
     breadcrumb: INetworkBreadcrumbOptions,
 }
 
+export interface IFacadeSnapshotOptions extends IFacadeBaseOptions {
+    type: HandlerType.snapshot,
+    handler: ISnapshotHandlerOptions,
+    breadcrumb: ISnapshotBreadcrumbOptions,
+}
+
 export interface IFacadeSnippetOptions extends IFacadeBaseOptions {
     type: HandlerType.snippet,
     handler: ISnippetHandlerOptions,
@@ -175,6 +184,9 @@ export class Facade {
 
     protected networkHandler: InstanceType<typeof NetworkHandler>;
     protected networkBreadcrumb: InstanceType<typeof NetworkBreadcrumb>;
+
+    protected snapshotHandler: InstanceType<typeof SnapshotHandler>;
+    protected snapshotBreadcrumb: InstanceType<typeof SnapshotBreadcrumb>;
 
     protected snippetHandler: InstanceType<typeof SnippetHandler>;
     protected snippetBreadcrumb: InstanceType<typeof SnippetBreadcrumb>;
@@ -222,14 +234,18 @@ export class Facade {
                 }
                 return this.networkHandler as InstanceType<typeof NetworkHandler>;
             }
+            case HandlerType.snapshot: {
+                if (!(this.snapshotHandler instanceof SnapshotHandler)) {
+                    this.snapshotHandler = new SnapshotHandler(this.plugin);
+                }
+                return this.snapshotHandler as InstanceType<typeof SnapshotHandler>;
+            }
             case HandlerType.snippet: {
                 if (!(this.snippetHandler instanceof SnippetHandler)) {
                     this.snippetHandler = new SnippetHandler(this.plugin);
                 }
                 return this.snippetHandler as InstanceType<typeof SnippetHandler>;
             }
-            default:
-                throw new Error(type.toString());
         }
     }
 
@@ -272,14 +288,18 @@ export class Facade {
                 }
                 return this.networkBreadcrumb as InstanceType<typeof NetworkBreadcrumb>;
             }
+            case HandlerType.snapshot: {
+                if (!(this.snapshotBreadcrumb instanceof SnapshotBreadcrumb)) {
+                    this.snapshotBreadcrumb = new SnapshotBreadcrumb(this.plugin);
+                }
+                return this.snapshotBreadcrumb as InstanceType<typeof SnapshotBreadcrumb>;
+            }
             case HandlerType.snippet: {
                 if (!(this.snippetBreadcrumb instanceof SnippetBreadcrumb)) {
                     this.snippetBreadcrumb = new SnippetBreadcrumb(this.plugin);
                 }
                 return this.snippetBreadcrumb as InstanceType<typeof SnippetBreadcrumb>;
             }
-            default:
-                throw new Error(type.toString());
         }
     }
 

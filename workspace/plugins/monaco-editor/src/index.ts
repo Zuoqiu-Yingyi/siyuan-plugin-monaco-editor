@@ -263,7 +263,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 }
 
                 /* 注册触发打开窗口动作的监听器 */
-                globalThis.addEventListener(this.config.operates.open.mouse.type, this.contextmenuEventListener, true);
+                globalThis.addEventListener(this.config.operates.menu.open.mouse.type, this.contextmenuEventListener, true);
 
                 /* 编辑区点击 */
                 this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
@@ -305,7 +305,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
-        globalThis.removeEventListener(this.config.operates.open.mouse.type, this.contextmenuEventListener, true);
+        globalThis.removeEventListener(this.config.operates.menu.open.mouse.type, this.contextmenuEventListener, true);
 
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
@@ -574,13 +574,60 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         } = getSnapshotIDs(e);
         // this.logger.debug(snapshot_old, snapshot_new);
         if (snapshot_old && snapshot_new && snapshot_name) {
-            /**
-             * TODO: 使用 API /api/repo/openRepoSnapshotDoc 通过快照对象 id 获取快照对象对应的内容
-             * response.data.isProtyleDoc = true 时为文件, 渲染原始内容
-             * response.data.isProtyleDoc = false 时为文档, 需要使用 lute 转换
-             */
-            // TODO: 在新窗口查看文档历史 (markdown)
-            // TODO: 在新窗口查看文档历史 (kramdown)
+            const submenu_options: IFacadeOptions = {
+                type: HandlerType.snapshot,
+                handler: {
+                    kramdown: false,
+                    old: snapshot_old,
+                    new: snapshot_new,
+                },
+                breadcrumb: {
+                    old: snapshot_old,
+                    new: snapshot_new,
+                    name: snapshot_name,
+                },
+            };
+
+            menu.addItem({
+                icon: "iconCode",
+                label: this.i18n.displayName,
+                submenu: [
+                    /* 添加查看 markdown 菜单项 */
+                    {
+                        icon: "iconPreview",
+                        label: this.i18n.menu.diffView.label,
+                        accelerator: "Markdown",
+                        submenu: this.buildOpenSubmenu(merge(
+                            submenu_options,
+                            {
+                                handler: {
+                                    kramdown: false,
+                                },
+                            } as unknown,
+                        )),
+                    },
+                    /* 添加编辑 kramdown 菜单项 */
+                    {
+                        icon: "iconPreview",
+                        label: this.i18n.menu.diffView.label,
+                        accelerator: "kramdown",
+                        submenu: this.buildOpenSubmenu(merge(
+                            submenu_options,
+                            {
+                                handler: {
+                                    kramdown: true,
+                                },
+                            } as unknown,
+                        )),
+                    },
+                ],
+            });
+
+            menu.open({
+                x: globalThis.siyuan.coordinates.clientX,
+                y: globalThis.siyuan.coordinates.clientY,
+            });
+            return;
         }
     }
 
@@ -590,10 +637,10 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             // this.logger.debug(e);
 
             /* 判断功能是否已启用 */
-            if (!this.config.operates.open.enable) return;
+            if (!this.config.operates.menu.open.enable) return;
 
             /* 判断事件是否为目标事件 */
-            if (isMatchedMouseEvent(e, this.config.operates.open.mouse)) {
+            if (isMatchedMouseEvent(e, this.config.operates.menu.open.mouse)) {
                 this.openEventHandler(e);
             };
 

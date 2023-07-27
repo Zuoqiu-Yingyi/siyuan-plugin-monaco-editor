@@ -3,6 +3,7 @@
 ## 2023-07-28
 
 - 添加文件历史差异对比菜单 | Add file history diff menu.
+- 添加快照文件差异对比菜单 | Add snapshot file diff menu.
 
 ## 2023-07-26
 
