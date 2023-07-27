@@ -23,14 +23,25 @@ import type { IResourceOptionPermission } from "@/utils/permission";
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
 
 /* 鼠标操作 */
-export interface IMouseOperate {
+export interface IMouseOperation {
     enable: boolean;
     mouse: IMouseStatus;
 }
 
+/* 上下文菜单配置 */
+export interface IMenu {
+    snippet: boolean; // 代码片段
+    shorthand: boolean; // 收集箱速记
+    history1: boolean; // 文件历史 (历史面板)
+    history2: boolean; // 文档历史 (文档历史)
+    snapshot: boolean; // 快照
+
+    open: IMouseOperation; // 菜单打开操作
+}
+
 /* 支持的操作 */
 export interface IOperates {
-    open: IMouseOperate; // 打开操作
+    menu: IMenu; // 上下文菜单
 }
 
 export interface IWindow {

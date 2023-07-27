@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 收集箱处理器 */
+/* 历史项处理器 */
 import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
 
 import type { IEditorModel } from "@/types/editor";
