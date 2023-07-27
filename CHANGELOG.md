@@ -4,6 +4,7 @@
 
 - 添加文件历史差异对比菜单 | Add file history diff menu.
 - 添加快照文件差异对比菜单 | Add snapshot file diff menu.
+- 支持使用设置项控制上下文菜单 | Support using setting items to control context menus.
 
 ## 2023-07-26
 
