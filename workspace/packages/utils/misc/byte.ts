@@ -15,15 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 列表项 */
-export interface IListItem {
-    text: string, // 内容
-    icon?: string, // 图标 (Unicode 字符 / svg ID)
-    src?: string, // 图标 (图片 URL)
-    meta?: string, // 元信息
-    style?: string, // 样式
-
-    fold?: boolean, // 是否折叠
-    children?: IListItem[], // 下级列表
-    indent?: string, // 下级列表缩进
+/* 格式化文件大小 */
+export function formatFileSize(size: number): string {
+    const units = ["&ensp;B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    let unitIndex = 0;
+    while (size >= 1024) {
+        size /= 1024;
+        unitIndex++;
+    }
+    return `${unitIndex > 0 ? size.toFixed(3) : size}&ensp;${units[unitIndex]}`;
 }

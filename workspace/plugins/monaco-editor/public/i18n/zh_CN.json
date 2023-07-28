@@ -328,6 +328,9 @@
         "diffView": {
             "label": "对比查看"
         },
+        "download": {
+            "label": "下载"
+        },
         "editAssetFile": {
             "label": "编辑资源文件"
         },
@@ -459,6 +462,21 @@
         },
         "standard": {
             "accelerator": "标准"
+        },
+        "upload": {
+            "label": "上传",
+            "tips": {
+                "confirm": "确认",
+                "reUpload": "重试",
+                "startUpload": "上传",
+                "statusInfo": "已上传文件数: ${1}/${2} &emsp; 已上传文件大小: ${3}/${4} 字节"
+            }
+        },
+        "uploadFile": {
+            "label": "上传文件"
+        },
+        "uploadFolder": {
+            "label": "上传文件夹"
         },
         "viewNetworkFile": {
             "label": "查看网络文件"

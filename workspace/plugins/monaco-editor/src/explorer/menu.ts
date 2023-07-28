@@ -17,6 +17,8 @@
 
 import type siyuan from "siyuan";
 import type MonacoEditorPlugin from "@/index";
+import Item from "@workspace/components/siyuan/menu/Item.svelte"
+import UploadDialog from "@/components/UploadDialog.svelte"
 import { FileTreeNodeType, type IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
 import { get } from "svelte/store";
 import { HandlerType } from "@/facades/facade";
@@ -41,6 +43,7 @@ import {
 import { showOpenDialog, showSaveDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
+import { FileTree } from "@/explorer/filetree";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -716,6 +719,78 @@ export class ExplorerContextMenu {
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLInputElement/webkitdirectory
              * REF: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitEntries
              */
+            items.push({
+                type: MenuItemType.Submenu,
+                options: {
+                    icon: "iconUpload",
+                    label: this.i18n.menu.upload.label,
+                },
+                submenu: [
+                    {
+                        type: MenuItemType.Action,
+                        options: {
+                            element: globalThis.document.createElement("div"), // 避免生成其他内容
+                            bind: element => {
+                                /* 挂载一个 svelte 菜单项组件 */
+                                const item = new Item({
+                                    target: element,
+                                    props: {
+                                        file: true,
+                                        icon: "#iconFile",
+                                        label: this.i18n.menu.uploadFile.label,
+                                        multiple: true,
+                                        webkitdirectory: false,
+                                    },
+                                });
+
+                                item.$on("selected", async e => {
+                                    // this.plugin.logger.debug(e);
+                                    const finished = await this.upload(relative, e.detail.files);
+                                    if (finished) {
+                                        this.explorer.updateNode(node);
+                                    }
+                                });
+                            }
+                        },
+                        root: true,
+                        folder: true,
+                        file: false,
+                    },
+                    {
+                        type: MenuItemType.Action,
+                        options: {
+                            element: globalThis.document.createElement("div"), // 避免生成其他内容
+                            bind: element => {
+                                /* 挂载一个 svelte 菜单项组件 */
+                                const item = new Item({
+                                    target: element,
+                                    props: {
+                                        file: true,
+                                        icon: "#iconFolder",
+                                        label: this.i18n.menu.uploadFolder.label,
+                                        multiple: true,
+                                        webkitdirectory: true,
+                                    },
+                                });
+
+                                item.$on("selected", async e => {
+                                    // this.plugin.logger.debug(e);
+                                    const finished = await this.upload(relative, e.detail.files);
+                                    if (finished) {
+                                        this.explorer.updateNode(node);
+                                    }
+                                });
+                            }
+                        },
+                        root: true,
+                        folder: true,
+                        file: false,
+                    },
+                ],
+                root: true,
+                folder: true,
+                file: false,
+            });
             // TODO: 下载文件 (StreamSaver.js)
             // TODO: 下载目录 (打包为 zip)
         }
@@ -829,7 +904,7 @@ export class ExplorerContextMenu {
         path: string,
         relative: string,
     ): Promise<boolean> {
-        return new Promise(resolve => {
+        return new Promise<boolean>(resolve => {
             const relative_code = fn__code(relative);
             /* 资源完整路径确认检查函数 */
             const check = async (value, _dialog, _component) => {
@@ -869,6 +944,39 @@ export class ExplorerContextMenu {
                     },
                 },
             );
+        });
+    }
+
+    /**
+     * 上传二次确认+进度显示
+     * @param path - 上传目录路径
+     * @param files - 文件列表
+     */
+    public upload(
+        path: string,
+        files: FileList,
+    ): Promise<boolean> {
+        return new Promise<boolean>(resolve => {
+            const DIALOG_ID = "plugin-monaco-editor-upload-dialog";
+            const dialog = new this.plugin.siyuan.Dialog({
+                title: this.i18n.menu.upload.label,
+                content: `<div id="${DIALOG_ID}" class="fn__flex-column" />`,
+                width: "50vw",
+                height: "75vh",
+            })
+            const component = new UploadDialog({
+                target: dialog.element.querySelector(`#${DIALOG_ID}`),
+                props: {
+                    plugin: this.plugin,
+                    path,
+                    files,
+                },
+            });
+            component.$on("cancel", e => {
+                component.$destroy();
+                dialog.destroy();
+                resolve(e.detail.finished);
+            });
         });
     }
 

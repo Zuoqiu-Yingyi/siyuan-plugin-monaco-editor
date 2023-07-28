@@ -15,15 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 列表项 */
-export interface IListItem {
-    text: string, // 内容
-    icon?: string, // 图标 (Unicode 字符 / svg ID)
-    src?: string, // 图标 (图片 URL)
-    meta?: string, // 元信息
-    style?: string, // 样式
-
-    fold?: boolean, // 是否折叠
-    children?: IListItem[], // 下级列表
-    indent?: string, // 下级列表缩进
+export interface IMenuItemEvent {
+    changed: { // 文本输入框内容更改
+        value: string; // 文本输入框的值
+        event: Event; // 文本输入框更改事件
+    };
+    selected: { // 文件选择器选择文件
+        files: FileList; // 文件选择的列表
+        event: Event; // 文件选择事件
+    }
 }

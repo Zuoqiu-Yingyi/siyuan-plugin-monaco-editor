@@ -15,15 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 列表项 */
-export interface IListItem {
-    text: string, // 内容
-    icon?: string, // 图标 (Unicode 字符 / svg ID)
-    src?: string, // 图标 (图片 URL)
-    meta?: string, // 元信息
-    style?: string, // 样式
-
-    fold?: boolean, // 是否折叠
-    children?: IListItem[], // 下级列表
-    indent?: string, // 下级列表缩进
+export interface IUpdateDialogEvent {
+    cancel: {
+        finished: boolean; // 是否上传完成
+        event: MouseEvent;
+    }; // 取消事件
 }

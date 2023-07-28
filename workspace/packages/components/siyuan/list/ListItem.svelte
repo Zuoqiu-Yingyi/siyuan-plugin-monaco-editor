@@ -22,32 +22,35 @@
     import Svg from "./../misc/Svg.svelte";
     import SvgArrow from "./../misc/SvgArrow.svelte";
 
-    export let text: string; // 文本
+    export let text: IListItem["text"]; // 文本
 
-    export let meta: string = ""; // 元信息
-    export let style: string = ""; // 文本样式
-    export let icon: string = ""; // 图标
-    export let src: string = ""; // 图片
+    export let icon: IListItem["icon"] = ""; // 图标
+    export let src: IListItem["src"] = ""; // 图片
+    export let meta: IListItem["meta"] = ""; // 元信息
+    export let style: IListItem["style"] = ""; // 文本样式
 
-    export let children: IListItem[] = []; // 下级列表
-    export let fold: boolean = true; // 是否折叠下级列表
+    export let fold: IListItem["fold"] = true; // 是否折叠下级列表
+    export let children: IListItem["children"] = []; // 下级列表
+    export let indent: IListItem["indent"] = ""; // 下级列表
 
-    function onClickToggle() {
+    function onToggle() {
         fold = !fold;
     }
 </script>
 
-<li class="b3-list-item">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<li
+    on:click={onToggle}
+    class="b3-list-item"
+>
     <!-- 下级列表折叠按钮 -->
-    {#if children.length > 0}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <span
-            on:click={onClickToggle}
-            class="b3-list-item__toggle"
-        >
-            <SvgArrow open={!fold} />
-        </span>
-    {/if}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span
+        class:hidden={children.length === 0}
+        class="b3-list-item__toggle"
+    >
+        <SvgArrow open={!fold} />
+    </span>
 
     <!-- 图标 -->
     {#if icon.startsWith("#")}
@@ -70,12 +73,12 @@
         class="b3-list-item__text"
         {style}
     >
-        {text}
+        {@html text}
     </span>
 
     <!-- 元信息 -->
     {#if meta}
-        <span class="b3-list-item__meta">{meta}</span>
+        <span class="b3-list-item__meta">{@html meta}</span>
     {/if}
 </li>
 
@@ -86,6 +89,7 @@
         className={null}
         fn__none={fold}
         flex_1={false}
+        {indent}
     />
 {/if}
 
@@ -95,6 +99,10 @@
 
         .b3-list-item__toggle {
             cursor: pointer;
+
+            &.hidden {
+                visibility: hidden;
+            }
         }
     }
 </style>

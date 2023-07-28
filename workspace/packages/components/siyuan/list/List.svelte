@@ -25,12 +25,14 @@
     export let fn__none: boolean = false;
     export let flex_1: boolean = true;
     export let width: number = 0;
+    export let indent: string = "";
 </script>
 
 <ul
     class={className}
     class:fn__none={fn__none}
     class:fn__flex-1={flex_1}
+    style:margin-left={indent}
     style:width={width > 0 ? `${width}px` : undefined}
 >
     {#each items as item, i (i)}

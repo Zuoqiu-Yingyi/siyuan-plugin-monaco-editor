@@ -328,6 +328,9 @@
         "diffView": {
             "label": "對比查看"
         },
+        "download": {
+            "label": "下載"
+        },
         "editAssetFile": {
             "label": "編輯資料文檔"
         },
@@ -459,6 +462,21 @@
         },
         "standard": {
             "accelerator": "標準"
+        },
+        "upload": {
+            "label": "上傳",
+            "tips": {
+                "confirm": "確認",
+                "reUpload": "重試",
+                "startUpload": "上傳",
+                "statusInfo": "已上傳檔案數: ${1}/${2} &emsp; 已上傳檔案大小: ${3}/${4} 字節"
+            }
+        },
+        "uploadFile": {
+            "label": "上傳檔案"
+        },
+        "uploadFolder": {
+            "label": "上傳資料夾"
         },
         "viewNetworkFile": {
             "label": "查看網路文檔"

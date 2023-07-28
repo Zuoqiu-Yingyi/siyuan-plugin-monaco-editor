@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-07-29
+
+- 添加文件/文件夹上传菜单 | Add file/folder upload menu.
+
 ## 2023-07-28
 
 - 添加文件历史差异对比菜单 | Add file history diff menu.

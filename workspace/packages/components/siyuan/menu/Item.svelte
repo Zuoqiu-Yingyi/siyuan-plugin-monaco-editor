@@ -16,19 +16,47 @@
 -->
 
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
+    import type { IMenuItemEvent } from ".";
 
     export let icon: string = ""; // 图标
     export let label: string = ""; // 菜单项文本/input 提示
+    export let disabled: boolean = false; // 是否禁用
+
     export let input: boolean = false; // 是否为输入框
-    export let disabled : boolean = false; // 是否禁用
     export let value: string = ""; // 输入框内容
     export let accelerator: string = ""; // 捷径提示
 
-    const dispatch = createEventDispatcher();
+    export let file: boolean = false; // 是否为文件上传
+    // REF: https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input/file#multiple
+    export let multiple: boolean = true; // 是否支持多文件/文件夹上传
+    // REF: https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input/file#webkitdirectory
+    export let webkitdirectory: boolean = true; // 是否支持文件夹上传
+
+    let files: FileList | null = null; // 上传的文件列表
+    let element: HTMLInputElement;
+
+    /* 动态设置 webkitdirectory */
+    function setWebkitdirectory(enable): void {
+        if (element) {
+            element.webkitdirectory = enable;
+        }
+    }
+
+    $: setWebkitdirectory(webkitdirectory);
+
+    onMount(() => {
+        setWebkitdirectory(webkitdirectory);
+    });
+
+    const dispatch = createEventDispatcher<IMenuItemEvent>();
 
     function changed(event: Event) {
         dispatch("changed", { value, event });
+    }
+
+    function selected(event: Event) {
+        dispatch("selected", { files, event });
     }
 </script>
 
@@ -46,21 +74,38 @@
 {/if}
 
 <!-- 菜单项标签 -->
-<span class="b3-menu__label">
-    {#if !input}
+<span
+    style:position={file ? "relative" : "initial"}
+    class="b3-menu__label"
+>
+    {#if !input || file}
         <!-- 文本 -->
         {label}
     {:else}
-        <!-- 输入框 -->
+        <!-- 文本输入框 -->
         <div class="fn__hr--small" />
         <input
-            placeholder={label}
+            bind:this={element}
+            bind:value
             {disabled}
-            bind:value={value}
+            placeholder={label}
             on:change={changed}
             class="b3-text-field fn__size200"
         />
         <div class="fn__hr--small" />
+    {/if}
+
+    {#if file}
+        <!-- 文件上传输入框 -->
+        <input
+            type="file"
+            bind:this={element}
+            bind:files
+            {disabled}
+            {multiple}
+            on:change={selected}
+            class="file-input"
+        />
     {/if}
 </span>
 
@@ -70,3 +115,17 @@
         {accelerator}
     </span>
 {/if}
+
+<style lang="less">
+    /* 文件选择框覆盖在菜单项文本上方 */
+    .file-input {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        overflow: hidden;
+        cursor: pointer;
+    }
+</style>
