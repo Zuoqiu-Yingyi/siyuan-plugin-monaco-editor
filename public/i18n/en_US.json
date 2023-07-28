@@ -328,6 +328,9 @@
         "diffView": {
             "label": "Compare and View"
         },
+        "download": {
+            "label": "Download"
+        },
         "editAssetFile": {
             "label": "Edit Asset File"
         },
@@ -339,12 +342,12 @@
             "label": "Export"
         },
         "exportFile": {
-            "label": "Export File",
+            "label": "File Export",
             "message": "File ${1} has exported to ${2}, does you reveal it in explorer?",
             "title": "Export file ${1}"
         },
         "exportFolder": {
-            "label": "Export Folder",
+            "label": "Folder Export",
             "message": "Folder ${1} has exported to ${2}, does you reveal it in explorer?",
             "title": "Export folder ${1}"
         },
@@ -352,11 +355,11 @@
             "label": "Import"
         },
         "importFile": {
-            "label": "Import Files",
+            "label": "Files Import",
             "title": "Import files to ${1}"
         },
         "importFolder": {
-            "label": "Import Folders",
+            "label": "Folders Import",
             "title": "Import folders to ${1}"
         },
         "new": {
@@ -459,6 +462,21 @@
         },
         "standard": {
             "accelerator": "Standard"
+        },
+        "upload": {
+            "label": "Upload",
+            "tips": {
+                "confirm": "Confirm",
+                "startUpload": "Upload",
+                "reUpload": "Retry",
+                "statusInfo": "Number of files uploaded: ${1}/${2} &emsp; Size of files uploaded: ${3}/${4} Byte""fileList": "文件列表"
+            }
+        },
+        "uploadFile": {
+            "label": "Files Upload"
+        },
+        "uploadFolder": {
+            "label": "Folders Upload"
         },
         "viewNetworkFile": {
             "label": "View Network File"
