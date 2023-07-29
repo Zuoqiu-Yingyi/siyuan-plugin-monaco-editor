@@ -30,6 +30,11 @@ export default {
                     dest: "./libs/monaco-editor",
                     rename: "min",
                 },
+                {
+                    src: "./node_modules/streamsaver/sw.js",
+                    dest: "./libs/streamsaver",
+                    rename: "sw.js",
+                },
             ],
         }),
     ],

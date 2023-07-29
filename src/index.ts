@@ -17,6 +17,7 @@
 
 /* 插件入口 */
 import siyuan from "siyuan";
+import streamsaver from "streamsaver";
 
 /* 静态资源 */
 import "./styles/plugin.less";
@@ -74,6 +75,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     declare public readonly i18n: I18N;
     public readonly siyuan = siyuan;
+    public readonly streamsaver = streamsaver;
     public readonly logger: InstanceType<typeof Logger>;
     public readonly client: InstanceType<typeof Client>;
     public readonly lute: ReturnType<typeof siyuan.Lute["New"]>;
@@ -99,6 +101,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     constructor(options: any) {
         super(options);
 
+        this.streamsaver.mitm = `plugins/${this.name}/libs/streamsaver/mitm.html?version=2.0.0`;
         this.logger = new Logger(this.name);
         this.client = new Client();
         this.lute = globalThis.Lute.New();
