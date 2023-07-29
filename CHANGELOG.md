@@ -3,6 +3,7 @@
 ## 2023-07-29
 
 - 添加文件/文件夹上传菜单 | Add file/folder upload menu.
+- 添加文件/文件夹下载菜单 | Add file/folder download menu.
 
 ## 2023-07-28
 

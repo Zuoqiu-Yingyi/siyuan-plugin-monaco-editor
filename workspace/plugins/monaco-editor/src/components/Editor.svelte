@@ -22,7 +22,7 @@
     import loader from "@monaco-editor/loader";
 
     import { merge } from "@workspace/utils/misc/merge";
-    import { SaveFileAs } from "@workspace/utils/misc/save";
+    import { saveFileAs } from "@workspace/utils/misc/save";
     import { FLAG_ELECTRON, FLAG_IFRAME } from "@workspace/utils/env/native-front-end";
 
     import { mapLocale } from "@/utils/locale";
@@ -338,7 +338,7 @@
                 contextMenuGroupId: "3_file",
                 contextMenuOrder: 2,
                 run: () => {
-                    SaveFileAs({
+                    saveFileAs({
                         data: editor.getValue(),
                         filetype: languages.getMimeType(editor.getModel().getLanguageId()),
                     });

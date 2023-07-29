@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@siyuan-community/siyuan-sdk':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.3
+        version: 0.1.3
       '@workspace/eslint-config-custom':
         specifier: workspace:*
         version: link:tools/eslint-config-custom
@@ -142,9 +142,6 @@ importers:
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
-      streamsaver:
-        specifier: ^2.0.6
-        version: 2.0.6
       text-extensions:
         specifier: ^2.4.0
         version: 2.4.0
@@ -299,6 +296,9 @@ importers:
       '@types/node':
         specifier: ^20.4.4
         version: 20.4.4
+      '@types/streamsaver':
+        specifier: ^2.0.1
+        version: 2.0.1
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -311,6 +311,9 @@ importers:
       monaco-editor:
         specifier: ^0.40.0
         version: 0.40.0
+      streamsaver:
+        specifier: ^2.0.6
+        version: 2.0.6
       svelte:
         specifier: ^3.59.2
         version: 3.59.2
@@ -1673,8 +1676,8 @@ packages:
       react-is: 18.2.0
     dev: true
 
-  /@siyuan-community/siyuan-sdk@0.1.1:
-    resolution: {integrity: sha512-zfmD97FOjR+auGdFRC7aIOtB3NDLO8SZ7kv3sJntzqyPisFE4VDR60f5UZzq5M4tbHg2rzQJayHrJhELUEsQyg==}
+  /@siyuan-community/siyuan-sdk@0.1.3:
+    resolution: {integrity: sha512-GKwsZA3b2UaQH4P6vPw/bmu+htKtjuB5QnG2dX+pu45KcRWK8p43KHrozObddnWTSew2iJktGxNDGQsjSk/R1g==}
     dependencies:
       axios: 1.4.0
     transitivePeerDependencies:

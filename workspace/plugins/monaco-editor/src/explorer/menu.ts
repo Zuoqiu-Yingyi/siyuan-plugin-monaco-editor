@@ -27,7 +27,7 @@ import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
 import { Explorer, ProtectedResourceType } from ".";
-import { extname, join, parse } from "@workspace/utils/path/browserify";
+import { basename, extname, join, parse } from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
@@ -43,7 +43,6 @@ import {
 import { showOpenDialog, showSaveDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
-import { FileTree } from "@/explorer/filetree";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -715,7 +714,6 @@ export class ExplorerContextMenu {
         }
         else if (FLAG_BROWSER) {
             /**
-             * TODO: 上传文件/文件夹
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLInputElement/webkitdirectory
              * REF: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitEntries
              */
@@ -793,6 +791,42 @@ export class ExplorerContextMenu {
             });
             // TODO: 下载文件 (StreamSaver.js)
             // TODO: 下载目录 (打包为 zip)
+            items.push({
+                type: MenuItemType.Action,
+                options: {
+                    icon: "iconDownload",
+                    label: this.i18n.menu.download.label,
+                    click: async () => {
+                        let path = relative;
+                        /* 文件夹需要首先打包为压缩文件 */
+                        if (type === FileTreeNodeType.Folder) {
+                            const response = await this.plugin.client.exportResources({
+                                paths: [
+                                    path,
+                                ],
+                                name,
+                            });
+                            path = response.data.path;
+                        }
+
+                        /* 下载文件流 */
+                        const response = await this.plugin.client.getFileStream({ path });
+                        if (response) {
+                            this.plugin.logger.debugs(basename(path), response);
+                            const write_stream = this.plugin.streamsaver.createWriteStream(basename(path));
+                            await response.pipeTo(write_stream);
+                        }
+
+                        /* 下载完压缩文件后删除 */
+                        if (type === FileTreeNodeType.Folder) {
+                            await this.plugin.client.removeFile({ path });
+                        }
+                    },
+                },
+                root: false,
+                folder: true,
+                file: true,
+            });
         }
 
         items.push({

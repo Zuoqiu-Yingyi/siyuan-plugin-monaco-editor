@@ -15,7 +15,6 @@
         "normalize-path": "^3.0.0",
         "parse-data-url": "^5.0.0",
         "path-browserify": "^1.0.1",
-        "streamsaver": "^2.0.6",
         "text-extensions": "^2.4.0",
         "valid-filename": "^4.0.0"
     },

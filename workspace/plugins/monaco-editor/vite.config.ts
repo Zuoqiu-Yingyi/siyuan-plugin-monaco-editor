@@ -22,6 +22,14 @@ import viteIframesConfig from "./vite.iframes.config";
 
 import deepmerge from "deepmerge";
 
+/**
+ * 依赖更新时进行处理
+ * monaco-editor: 移除 node_modules/monaco-editor/min/vs/*.js 中的 //# sourceMappingURL
+ * streamsaver: public/libs/streamsaver/mitm.html
+ *   - `const swReg = swRegs.find(sw => sw.scope.endsWith("/libs/streamsaver/"))`
+ *   - 避免与 service-worker.js 冲突
+ */
+
 // REF: https://cn.vitejs.dev/config/#conditional-config
 export default defineConfig(async env => {
     var config: UserConfig;

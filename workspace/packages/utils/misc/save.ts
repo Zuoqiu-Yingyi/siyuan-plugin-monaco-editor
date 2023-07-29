@@ -16,9 +16,8 @@
  */
 
 import { saveAs } from "file-saver";
-import streamSaver from "streamsaver";
 
-export function SaveFileAs(options: {
+export function saveFileAs(options: {
     data: BlobPart,
     filename?: string,
     filetype?: string,
