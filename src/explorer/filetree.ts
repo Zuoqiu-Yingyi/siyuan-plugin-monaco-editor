@@ -20,6 +20,8 @@ import type MonacoEditorPlugin from "@/index";
 import { ExplorerIcon } from "./icon";
 import { parse } from "@workspace/utils/path/browserify";
 import { formatFileSize } from "@workspace/utils/misc/byte";
+import { trimPrefix } from "@workspace/utils/misc/string";
+import { normalize } from "@workspace/utils/path/normalize";
 
 export enum NodeType {
     File,
@@ -27,6 +29,11 @@ export enum NodeType {
 }
 
 export type INode = IFileNode | IFolderNode;
+
+/* ReturnType<DataTransferItem.getAsFile> */
+export interface IFile extends File {
+    path?: string; // 文件完整路径
+}
 
 export interface IBaseNode {
     type: NodeType; // 节点类型
@@ -64,36 +71,82 @@ export class FileTree {
                 }
             }
             else { // 类型一致, 比较指定层级
+                const name1 = node1.paths[depth].toLocaleLowerCase();
+                const name2 = node2.paths[depth].toLocaleLowerCase();
                 switch (true) {
-                    case node1.paths[depth] > node2.paths[depth]: // 路径大的在后
+                    case name1 > name2: // 名称大的在后
                         return 1;
-                    case node1.paths[depth] < node2.paths[depth]: // 路径小的在前
+                    case name1 < name2: // 名称小的在前
                         return -1;
-                    case node1.paths[depth] === node2.paths[depth]: // 路径一致, 不变
+                    case name1 === name2: // 名称一致, 不变
                         return 0;
                 }
             }
         }
     }
 
+    public static async readEntries(reader: FileSystemDirectoryReader): Promise<FileSystemEntry[]> {
+        return new Promise((resolve, reject) => {
+            reader.readEntries(resolve, reject);
+        });
+    }
+
+    public static async file(entry: FileSystemFileEntry): Promise<File> {
+        return new Promise((resolve, reject) => {
+            entry.file(resolve, reject);
+        });
+    }
+
+    /* flat FileSystemEntry  */
+    public static async flat(entry: FileSystemEntry): Promise<File[]> {
+        const files: File[] = [];
+        switch (true) {
+            case entry.isFile: {
+                const file_entry = entry as FileSystemFileEntry;
+                const file = await FileTree.file(file_entry);
+                files.push(file);
+                return files;
+            }
+            case entry.isDirectory: {
+                const directory = entry as FileSystemDirectoryEntry;
+                const entries = await FileTree.readEntries(directory.createReader())
+                files.push(...(await Promise.all(entries.map(entry => FileTree.flat(entry)))).flat());
+            }
+            default:
+                return files;
+        }
+    }
+
     public readonly icon: InstanceType<typeof ExplorerIcon>; // 图标管理
     public readonly map: Map<string, INode>; // 节点路径 -> 节点
-    public readonly files: File[]; // 文件列表
+    public readonly files: IFile[]; // 文件列表
     public readonly nodes: IFileNode[]; // 文件节点列表
     public readonly root: IFolderNode; // 根节点
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
         public readonly fileList: FileList | File[], // 文件列表
+        public readonly prefix: string = "/", // 路径前缀
     ) {
         this.icon = new ExplorerIcon(this.plugin);
         this.files = Array.from(fileList);
-        this.nodes = this.files.map(file => ({
-            type: NodeType.File,
-            path: file.webkitRelativePath,
-            paths: file.webkitRelativePath.split("/"),
-            file,
-        }));
+        this.nodes = this.files.map((file: IFile) => {
+
+            const path = (() => {
+                if (file.webkitRelativePath) return file.webkitRelativePath; // <input>
+                else if (file.path) return normalize(trimPrefix(
+                    file.path,
+                    this.prefix,
+                )); // DataTransferItem.getAsFile() | FileSystemFileEntry.file()
+                else return file.name;
+            })();
+            return {
+                type: NodeType.File,
+                path,
+                paths: path.split("/"),
+                file,
+            };
+        });
         this.map = new Map(this.nodes.map(node => [
             node.path,
             node,
