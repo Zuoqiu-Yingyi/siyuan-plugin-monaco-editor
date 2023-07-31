@@ -724,6 +724,7 @@ export class ExplorerContextMenu {
                     label: this.i18n.menu.upload.label,
                 },
                 submenu: [
+                    /* 上传文件 */
                     {
                         type: MenuItemType.Action,
                         options: {
@@ -754,6 +755,7 @@ export class ExplorerContextMenu {
                         folder: true,
                         file: false,
                     },
+                    /* 上传文件夹 */
                     {
                         type: MenuItemType.Action,
                         options: {
@@ -789,38 +791,15 @@ export class ExplorerContextMenu {
                 folder: true,
                 file: false,
             });
-            // TODO: 下载文件 (StreamSaver.js)
-            // TODO: 下载目录 (打包为 zip)
+
+            /* 下载文件/文件夹 */
             items.push({
                 type: MenuItemType.Action,
                 options: {
                     icon: "iconDownload",
                     label: this.i18n.menu.download.label,
                     click: async () => {
-                        let path = relative;
-                        /* 文件夹需要首先打包为压缩文件 */
-                        if (type === FileTreeNodeType.Folder) {
-                            const response = await this.plugin.client.exportResources({
-                                paths: [
-                                    path,
-                                ],
-                                name,
-                            });
-                            path = response.data.path;
-                        }
-
-                        /* 下载文件流 */
-                        const response = await this.plugin.client.getFile({ path }, "stream");
-                        if (response) {
-                            // this.plugin.logger.debugs(basename(path), response);
-                            const write_stream = this.plugin.streamsaver.createWriteStream(basename(path));
-                            await response.pipeTo(write_stream);
-                        }
-
-                        /* 下载完压缩文件后删除 */
-                        if (type === FileTreeNodeType.Folder) {
-                            await this.plugin.client.removeFile({ path });
-                        }
+                        await this.download(relative, name, type);
                     },
                 },
                 root: false,
@@ -1015,6 +994,42 @@ export class ExplorerContextMenu {
                 resolve(e.detail.finished);
             });
         });
+    }
+
+    /**
+     * 下载文件/文件夹
+     * @param path - 所需下载的文件/文件夹相对于工作空间目录的路径
+     * @param name - 所需下载的文件/文件夹名称
+     * @param type - 下载内容类型
+     */
+    public async download(
+        path: string,
+        name: string,
+        type: FileTreeNodeType,
+    ): Promise<void> {
+        /* 文件夹需要首先打包为压缩文件 */
+        if (type === FileTreeNodeType.Folder) {
+            const response = await this.plugin.client.exportResources({
+                paths: [
+                    path,
+                ],
+                name,
+            });
+            path = response.data.path;
+        }
+
+        /* 下载文件流 */
+        const response = await this.plugin.client.getFile({ path }, "stream");
+        if (response) {
+            // this.plugin.logger.debugs(basename(path), response);
+            const write_stream = this.plugin.streamsaver.createWriteStream(basename(path));
+            await response.pipeTo(write_stream);
+        }
+
+        /* 下载完压缩文件后删除 */
+        if (type === FileTreeNodeType.Folder) {
+            await this.plugin.client.removeFile({ path });
+        }
     }
 
     /**

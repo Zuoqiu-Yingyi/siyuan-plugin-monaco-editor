@@ -17,7 +17,7 @@
 
 <!-- 文件资源管理器面板 -->
 <script lang="ts">
-    import { setContext } from "svelte";
+    import { setContext, createEventDispatcher } from "svelte";
     import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
     import FileTree from "@workspace/components/siyuan/tree/file/FileTree.svelte";
 
@@ -25,13 +25,14 @@
 
     import type { IBar } from "@workspace/components/siyuan/dock/index";
     import type MonacoEditorPlugin from "@/index";
-    import { Explorer } from "@/explorer";
+    import { Explorer, type IExplorerEvent } from "@/explorer";
     import type { ITree } from "@workspace/components/siyuan/tree/file";
     import { ExplorerIcon } from "@/explorer/icon";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let workspace: string; // 工作空间目录
 
+    const dispatcher = createEventDispatcher<IExplorerEvent>();
     const explorer = new Explorer(plugin, workspace);
     let roots = explorer.createRootNodes();
     setContext<ITree>("tree", explorer);
@@ -84,8 +85,24 @@
             },
         ],
     };
+
+    /* 拖拽入窗口 */
+    function onDragEnterWindow(e: DragEvent): void {
+        explorer.dragEnterWindow(e);
+        dispatcher("dragEnterWindow", { e });
+    }
+    
+    /* 拖拽出窗口 */
+    function onDragLeaveWindow(e: DragEvent): void {
+        explorer.dragLeaveWindow(e);
+        dispatcher("dragLeaveWindow", { e });
+    }
 </script>
 
+<svelte:window
+    on:dragenter|stopPropagation|capture={onDragEnterWindow}
+    on:dragleave|stopPropagation|capture={onDragLeaveWindow}
+/>
 <Bar {...bar} />
 <FileTree
     on:menu={explorer.menu}
