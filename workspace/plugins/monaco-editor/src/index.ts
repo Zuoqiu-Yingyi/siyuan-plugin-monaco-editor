@@ -341,6 +341,16 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.client.pushErrMsg(error);
     }
 
+    /* 确认框 */
+    public async confirm(title: string, text: string): Promise<boolean> {
+        return new Promise((resolve, reject) => siyuan.confirm(
+            title,
+            text,
+            () => resolve(true),
+            () => resolve(false),
+        ));
+    }
+
     /* 重置插件配置 */
     public async resetConfig(): Promise<void> {
         return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);

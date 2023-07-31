@@ -91,7 +91,7 @@
         explorer.dragEnterWindow(e);
         dispatcher("dragEnterWindow", { e });
     }
-    
+
     /* 拖拽出窗口 */
     function onDragLeaveWindow(e: DragEvent): void {
         explorer.dragLeaveWindow(e);
@@ -100,9 +100,10 @@
 </script>
 
 <svelte:window
-    on:dragenter|stopPropagation|capture={onDragEnterWindow}
-    on:dragleave|stopPropagation|capture={onDragLeaveWindow}
+    on:dragenter|stopPropagation|preventDefault|capture|self={onDragEnterWindow}
+    on:dragleave|stopPropagation|preventDefault|capture|self={onDragLeaveWindow}
 />
+
 <Bar {...bar} />
 <FileTree
     on:menu={explorer.menu}

@@ -5,6 +5,7 @@
 - 添加拖拽上传文件/文件夹功能 | Add drag and drop upload file/folder function.
 - 添加静态资源文件拖拽至编辑器时生成超链接的功能 | Add the function of generating hyperlinks when dragging static resource files to the editor.
 - 添加拖拽资源至窗口外时的下载功能 | Add download function when dragging resources out of the window.
+- 添加拖拽资源移动其位置的功能 | Add the function of dragging resources to move their positions.
 
 ## 2023-07-29
 

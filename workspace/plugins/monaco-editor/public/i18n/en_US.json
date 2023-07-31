@@ -362,6 +362,10 @@
             "label": "Folders Import",
             "title": "Import folders to ${1}"
         },
+        "move": {
+            "text": "Move ${1}<br/>from ${2}<br/>to&ensp;&ensp; ${3}?",
+            "title": "Move ${1}"
+        },
         "new": {
             "label": "New"
         },
@@ -467,9 +471,9 @@
             "label": "Upload",
             "tips": {
                 "confirm": "Confirm",
-                "startUpload": "Upload",
                 "reUpload": "Retry",
-                "statusInfo": "Number of files uploaded: ${1}/${2} &emsp; Size of files uploaded: ${3}/${4} Byte""fileList": "文件列表"
+                "startUpload": "Upload",
+                "statusInfo": "Number of files uploaded: ${1}/${2} &emsp; Size of files uploaded: ${3}/${4} Byte"
             }
         },
         "uploadFile": {

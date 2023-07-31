@@ -395,7 +395,14 @@ export class Explorer implements ITree {
                         dataTransfer.setData("text/uri-list", pathname);
                         dataTransfer.setData("text/markdown", `[${name}](<${pathname}>)`);
                         dataTransfer.setData("text/html", `<a href="${globalThis.encodeURI(pathname)}">${name}</a>`);
+
                     }
+                    /* 设置相关数据, 用于移动节点 */
+                    dataTransfer.setData("text/type", get(node.type));
+                    dataTransfer.setData("text/name", get(node.name));
+                    dataTransfer.setData("text/path", get(node.path));
+                    dataTransfer.setData("text/relative", get(node.relative));
+                    dataTransfer.setData("text/directory", get(node.directory));
                     break;
                 }
                 case FileTreeNodeType.Root: // 根目录无法拖拽
@@ -410,7 +417,7 @@ export class Explorer implements ITree {
 
     /* 拖拽结束 */
     public readonly dragend = async (e: ComponentEvents<Node>["dragend"]) => {
-        this.plugin.logger.debug(e);
+        // this.plugin.logger.debug(e);
         try {
             const node = e.detail.props;
 
@@ -418,12 +425,13 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.Folder:
                 case FileTreeNodeType.File:
                     node.dragging.set(false);
-                    if (FLAG_BROWSER) { // 在浏览器中启用拖拽至窗口外部时下载
+                    if (FLAG_BROWSER && this.outer) { // 在浏览器中启用拖拽至窗口外部时下载
+                        this.outer = false;
+
                         const type = get(node.type);
                         const name = get(node.name);
                         const relative = get(node.relative);
                         await this.contextMenu.download(relative, name, type);
-                        this.outer = false;
                     }
                     break;
                 case FileTreeNodeType.Root: // 根目录无法拖拽下载
@@ -507,18 +515,20 @@ export class Explorer implements ITree {
     public readonly drop = async (e: ComponentEvents<Node>["drop"]) => {
         // this.plugin.logger.debug(e);
         try {
+            const node = e.detail.props;
+            const directory = get(node.type) === FileTreeNodeType.File
+                ? this.map.get(get(node.directory))
+                : node; // 放置的目录
+            directory.dragover.set(false); // 取消拖拽悬浮效果
+
             /**
              * 拖拽上传文件夹
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_Access_API
              * REF: https://juejin.cn/post/6844904029349216269
              */
-            const node = e.detail.props;
             const items = Array.from(e.detail.e.dataTransfer.items);
             const file_items = items.filter(item => item.kind === "file");
-            const directory = get(node.type) === FileTreeNodeType.File
-                ? this.map.get(get(node.directory))
-                : node; // 放置的目录
             if (file_items.length > 0 && directory) { // 存在拖拽的文件/文件夹
                 const path = get(directory.relative); // 待上传到的目录的路径
 
@@ -532,8 +542,63 @@ export class Explorer implements ITree {
                 this.plugin.logger.debug(prefix, files);
                 await this.contextMenu.upload(path, files, prefix); // 显示文件列表并上传
 
-                directory.dragover.set(false); // 取消拖拽悬浮效果
-                this.updateNode(directory); // 刷新目录
+                await this.updateNode(directory); // 刷新目录
+                return;
+            }
+
+            /* 拖拽移动资源 */
+            const path = get(directory.path);
+            const relative = get(directory.relative);
+            const protected_type = Explorer.isProtected(relative); // 受保护类型
+            const protect = protected_type !== ProtectedResourceType.None; // 是否为被保护的资源
+            if (isResourceOperable(
+                this.plugin.config.dock.explorer.safe,
+                protect,
+                this.plugin.config.dock.explorer.permission.protected,
+                ResourceOption.move,
+            )) { // 允许操作
+                const dataTransfer = e.detail.e.dataTransfer; // 拖拽数据传输对象
+                const source_name = dataTransfer.getData("text/name"); // 源名称
+                const source_path = dataTransfer.getData("text/path"); // 源路径
+                const source_relative = dataTransfer.getData("text/relative"); // 源相对路径
+                const source_directory = dataTransfer.getData("text/directory"); // 源目录路径
+
+                if (!(source_name && source_path && source_relative)) return; // 无效的拖拽数据
+
+                /* 目录不允许移动到其本身或下级目录中 */
+                if (path.startsWith(source_path) || path === source_directory) return;
+
+                if (protect) { // 受保护的资源
+                    const confirm = await this.contextMenu.confirm(
+                        path,
+                        relative,
+                    );
+                    if (!confirm) return; // 不允许继续操作
+                }
+
+                /* 二次确认 */
+                const destination_path = join(path, source_name); // 目标路径
+                const destination_relative = join(relative, source_name); // 目标路径
+                const confirm = await this.plugin.confirm(
+                    this.plugin.i18n.menu.move.title
+                        .replaceAll("${1}", fn__code(source_name)),
+                    this.plugin.i18n.menu.move.text
+                        .replaceAll("${1}", fn__code(source_relative))
+                        .replaceAll("${2}", fn__code(source_path))
+                        .replaceAll("${3}", fn__code(destination_path)),
+                );
+                if (!confirm) return;
+
+                /* 移动资源 */
+                await this.plugin.client.renameFile({
+                    path: source_relative,
+                    newPath: destination_relative,
+                });
+
+                /* 刷新原目录与目标目录 */
+                await this.updateNode(directory);
+                await this.updateNode(this.map.get(source_directory));
+                return;
             }
         }
         catch (error) {
@@ -646,12 +711,14 @@ export class Explorer implements ITree {
      * 更新节点状态
      * @param node - 节点
      * @param recursive - 递归遍历更新节点状态
+     * @return - 是否成功更新节点
      */
     public async updateNode(
-        node: IFileTreeNodeStores,
+        node?: IFileTreeNodeStores,
         recursive: boolean = false,
-    ): Promise<void> {
-        if (get(node.type) === FileTreeNodeType.File) return;
+    ): Promise<boolean> {
+        if (!node) return false;
+        if (get(node.type) === FileTreeNodeType.File) return false;
 
         if (recursive) {
             this.call(
@@ -677,6 +744,7 @@ export class Explorer implements ITree {
             ); // 设置资源数量提示标签
             node.children.set(children); // 设置下级资源节点
         }
+        return true;
     }
 
     /* 展开节点 */
