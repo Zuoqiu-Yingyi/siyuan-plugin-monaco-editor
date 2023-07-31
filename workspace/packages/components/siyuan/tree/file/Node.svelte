@@ -35,8 +35,13 @@
     export let focus: IFileTreeNode["focus"] = false;
     export let folded: IFileTreeNode["folded"] = true;
     export let symlink: IFileTreeNode["symlink"] = false;
+    export let dragging: IFileTreeNode["dragging"] = false;
     export let draggable: IFileTreeNode["draggable"] = false;
     export let hideActions: IFileTreeNode["hideActions"] = true;
+
+    export let dragoverTop: IFileTreeNode["dragoverTop"] = false;
+    export let dragover: IFileTreeNode["dragover"] = false;
+    export let dragoverBottom: IFileTreeNode["dragoverBottom"] = false;
 
     export let title: IFileTreeNode["title"] = "";
     export let children: IFileTreeNode["children"] = undefined;
@@ -59,6 +64,9 @@
     export let count: IFileTreeNode["count"] = NaN;
     export let countAriaLabel: IFileTreeNode["countAriaLabel"] = "";
 
+    let li: HTMLLIElement; // 当前节点元素
+    let ul: HTMLUListElement; // 下级节点列表元素
+
     const dispatcher = createEventDispatcher<IFileTreeEvent>();
 
     const props: IFileTreeNodeStores = {
@@ -74,8 +82,13 @@
         focus: writable(focus),
         folded: writable(folded),
         symlink: writable(symlink),
+        dragging: writable(dragging),
         draggable: writable(draggable),
         hideActions: writable(hideActions),
+
+        dragoverTop: writable(dragoverTop),
+        dragover: writable(dragover),
+        dragoverBottom: writable(dragoverBottom),
 
         title: writable(title),
         children: writable(children),
@@ -111,8 +124,13 @@
     $: props.focus.set(focus);
     $: props.folded.set(folded);
     $: props.symlink.set(symlink);
+    $: props.dragging.set(dragging);
     $: props.draggable.set(draggable);
     $: props.hideActions.set(hideActions);
+
+    $: props.dragoverTop.set(dragoverTop);
+    $: props.dragover.set(dragover);
+    $: props.dragoverBottom.set(dragoverBottom);
 
     $: props.title.set(title);
     $: props.children.set(children);
@@ -148,8 +166,13 @@
         props.focus.subscribe(v => (focus = v)), //
         props.folded.subscribe(v => (folded = v)), //
         props.symlink.subscribe(v => (symlink = v)), //
+        props.dragging.subscribe(v => (dragging = v)), //
         props.draggable.subscribe(v => (draggable = v)), //
         props.hideActions.subscribe(v => (hideActions = v)), //
+
+        props.dragoverTop.subscribe(v => (dragoverTop = v)), //
+        props.dragover.subscribe(v => (dragover = v)), //
+        props.dragoverBottom.subscribe(v => (dragoverBottom = v)), //
 
         props.title.subscribe(v => (title = v)), //
         props.children.subscribe(v => (children = v)), //
@@ -187,6 +210,8 @@
             case FileTreeNodeType.File: // 文件节点派发打开事件
                 dispatcher("open", {
                     e,
+                    li,
+                    ul,
                     props,
                     dispatcher,
                 });
@@ -204,12 +229,16 @@
         if (folded) {
             dispatcher("unfold", {
                 e,
+                li,
+                ul,
                 props,
                 dispatcher,
             });
         } else {
             dispatcher("fold", {
                 e,
+                li,
+                ul,
                 props,
                 dispatcher,
             });
@@ -220,6 +249,74 @@
     function menu(e: MouseEvent) {
         dispatcher("menu", {
             e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽开始 */
+    function ondragstart(e: DragEvent): void {
+        dispatcher("dragstart", {
+            e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽结束 */
+    function ondragend(e: DragEvent): void {
+        dispatcher("dragend", {
+            e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽进入 */
+    function ondragenter(e: DragEvent): void {
+        dispatcher("dragenter", {
+            e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽悬停 */
+    function ondragover(e: DragEvent): void {
+        dispatcher("dragover", {
+            e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽离开 */
+    function ondragleave(e: DragEvent): void {
+        dispatcher("dragleave", {
+            e,
+            li,
+            ul,
+            props,
+            dispatcher,
+        });
+    }
+
+    /* 拖拽离放置 */
+    function ondrop(e: DragEvent): void {
+        dispatcher("drop", {
+            e,
+            li,
+            ul,
             props,
             dispatcher,
         });
@@ -228,6 +325,13 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <li
+    bind:this={li}
+    on:dragstart|stopPropagation|preventDefault={ondragstart}
+    on:dragend|stopPropagation|preventDefault={ondragend}
+    on:dragenter|stopPropagation|preventDefault={ondragenter}
+    on:dragover|stopPropagation|preventDefault={ondragover}
+    on:dragleave|stopPropagation|preventDefault={ondragleave}
+    on:drop|stopPropagation|preventDefault={ondrop}
     on:click|stopPropagation|preventDefault={open}
     on:contextmenu|stopPropagation|preventDefault={menu}
     {draggable}
@@ -237,6 +341,10 @@
     data-path={path}
     data-depth={depth}
     data-directory={directory}
+    class:dragging
+    class:dragover
+    class:dragover__top={dragoverTop}
+    class:dragover__bottom={dragoverBottom}
     class:b3-list-item--focus={focus}
     class:b3-list-item--hide-action={hideActions}
     class="node b3-list-item"
@@ -348,8 +456,11 @@
 <!-- 下级节点 -->
 {#if children}
     <ul
-        class="node-list"
+        bind:this={ul}
+        class:dragging
+        class:dragover
         class:fn__none={folded}
+        class="node-list"
         style:--monaco-editor-explorer-indent-left="calc(12px + {indent} * {depth})"
     >
         {#each children as node, i (node.path)}
@@ -358,6 +469,12 @@
                 on:fold
                 on:menu
                 on:unfold
+                on:dragstart
+                on:dragend
+                on:dragenter
+                on:dragover
+                on:dragleave
+                on:drop
                 depth={depth + 1}
                 {...node}
             />
@@ -366,6 +483,10 @@
 {/if}
 
 <style lang="less">
+    .dragging {
+        // 拖拽中
+        opacity: 0.25;
+    }
     .highlight(@color: var(--b3-theme-primary-lighter)) {
         // 辅助线高亮
         &::before {

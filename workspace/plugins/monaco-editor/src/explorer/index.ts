@@ -44,6 +44,8 @@ import { ExplorerIcon } from "./icon";
 import { ExplorerTooltip } from "./tooltip";
 import { ExplorerContextMenu } from "./menu";
 import { ResourceOption, isResourceOperable } from "@/utils/permission";
+import { FileTree, type IFile } from "./filetree";
+import { trimSuffix } from "@workspace/utils/misc/string";
 
 /* 资源 */
 export interface IItem {
@@ -67,6 +69,7 @@ export type DefaultNodeProps = Required<Pick<
     IFileTreeNode,
     "root"
     | "indent"
+    | "draggable"
     | "toggleIcon"
     | "toggleAriaLabel"
     | "menuIcon"
@@ -130,8 +133,13 @@ export class Explorer implements ITree {
 
             // focus: undefined,
             // folded: undefined,
-            // draggable: undefined,
+            // dragging: undefined,
+            draggable: true,
             // hideActions: undefined,
+
+            // dragoverTop: undefined,
+            // dragover: undefined,
+            // dragoverBottom: undefined,
 
             // title: undefined,
             // children: undefined,
@@ -178,6 +186,7 @@ export class Explorer implements ITree {
                 directory: dirname(this.workspace),
 
                 folded: true,
+                draggable: false,
 
                 title: this.workspace,
 
@@ -225,17 +234,22 @@ export class Explorer implements ITree {
 
     /* 菜单事件 */
     public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
-        const node = e.detail.props;
-        this.select.one(node);
+        try {
+            const node = e.detail.props;
+            this.select.one(node);
 
-        const menu = this.contextMenu.makeMenu(node);
+            const menu = this.contextMenu.makeMenu(node);
 
-        const event = e.detail.e;
-        menu.open({
-            x: event.clientX,
-            y: event.clientY,
-            isLeft: false,
-        });
+            const event = e.detail.e;
+            menu.open({
+                x: event.clientX,
+                y: event.clientY,
+                isLeft: false,
+            });
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
     }
 
     /* 文件打开事件 */
@@ -331,9 +345,154 @@ export class Explorer implements ITree {
         }
     }
 
-    /**
-     * 动态生成文件图标
-     */
+    /* 拖拽开始 */
+    public readonly dragstart = async (e: ComponentEvents<Node>["dragstart"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            const node = e.detail.props;
+            // this.select.one(node);
+
+            switch (get(node.type)) {
+                case FileTreeNodeType.Folder:
+                case FileTreeNodeType.File:
+                    node.dragging.set(true);
+                    break;
+                case FileTreeNodeType.Root: // 根目录无法拖拽
+                default:
+                    break;
+            }
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
+
+    /* 拖拽结束 */
+    public readonly dragend = async (e: ComponentEvents<Node>["dragend"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            const node = e.detail.props;
+
+            switch (get(node.type)) {
+                case FileTreeNodeType.Folder:
+                case FileTreeNodeType.File:
+                    node.dragging.set(false);
+                    break;
+                case FileTreeNodeType.Root: // 根目录无法拖拽
+                default:
+                    break;
+            }
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
+
+    /* 拖拽进入 */
+    public readonly dragenter = async (e: ComponentEvents<Node>["dragenter"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            const node = e.detail.props;
+
+            switch (get(node.type)) {
+                case FileTreeNodeType.Root:
+                case FileTreeNodeType.Folder:
+                    node.dragover.set(true);
+                    break;
+                case FileTreeNodeType.File: // 文件所在目录
+                    const parent = this.path2node(get(node.directory));
+                    if (parent) {
+                        /**
+                         * 本文件的进入事件会在同目录下其他文件的离开事件前派遣
+                         * 同目录下其他文件的离开事件会覆盖本文件进入事件的效果
+                         */
+                        setTimeout(() => {
+                            parent.dragover.set(true);
+                        });
+                    }
+                default:
+                    break;
+            }
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
+
+    /* 拖拽悬浮 */
+    public readonly dragover = async (e: ComponentEvents<Node>["dragover"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            const node = e.detail.props;
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
+
+    /* 拖拽离开 */
+    public readonly dragleave = async (e: ComponentEvents<Node>["dragleave"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            const node = e.detail.props;
+
+            switch (get(node.type)) {
+                case FileTreeNodeType.Root:
+                case FileTreeNodeType.Folder:
+                    node.dragover.set(false);
+                    break;
+                case FileTreeNodeType.File: // 文件所在目录
+                    const parent = this.path2node(get(node.directory));
+                    if (parent) {
+                        parent.dragover.set(false);
+                    }
+                default:
+                    break;
+            }
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
+
+
+    /* 拖拽放置 */
+    public readonly drop = async (e: ComponentEvents<Node>["drop"]) => {
+        // this.plugin.logger.debug(e);
+        try {
+            /**
+             * 拖拽上传文件夹
+             * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+             * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_Access_API
+             * REF: https://juejin.cn/post/6844904029349216269
+             */
+            const node = e.detail.props;
+            const items = Array.from(e.detail.e.dataTransfer.items);
+            const file_items = items.filter(item => item.kind === "file");
+            const directory = get(node.type) === FileTreeNodeType.File
+                ? this.map.get(get(node.directory))
+                : node; // 放置的目录
+            if (file_items.length > 0 && directory) { // 存在拖拽的文件/文件夹
+                const path = get(directory.relative); // 待上传到的目录的路径
+
+                // REF: https://developer.mozilla.org/zh-CN/docs/Web/API/DataTransferItem/getAsFile
+                const file = file_items[0].getAsFile() as IFile; // 其中一个文件/文件夹
+                const prefix = trimSuffix(file.path, file.name); // 获取文件/文件夹的路径前缀
+
+                // REF: https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
+                const entries = file_items.map(item => item.webkitGetAsEntry()); // 将文件/文件夹列表转换为资源列表
+                const files = (await Promise.all(entries.map(FileTree.flat))).flat(); // 将资源列表转换为文件列表
+                this.plugin.logger.debug(prefix, files);
+                await this.contextMenu.upload(path, files, prefix); // 显示文件列表并上传
+
+                directory.dragover.set(false); // 取消拖拽悬浮效果
+                this.updateNode(directory); // 刷新目录
+            }
+        }
+        catch (error) {
+            this.plugin.catch(error);
+        }
+    }
 
     /**
      * 列出指定目录下的资源

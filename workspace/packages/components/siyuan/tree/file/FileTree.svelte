@@ -22,13 +22,19 @@
     export let roots: IFileTreeRootNode[] = [];
 </script>
 
-<div class="fn__flex-1">
+<div class="fn__flex-1 file-tree">
     {#each roots as root, i (root.path)}
         <Root
             on:open
             on:menu
             on:fold
             on:unfold
+            on:dragstart
+            on:dragend
+            on:dragenter
+            on:dragover
+            on:dragleave
+            on:drop
             {root}
         />
     {/each}

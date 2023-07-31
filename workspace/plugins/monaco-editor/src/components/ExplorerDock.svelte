@@ -92,5 +92,11 @@
     on:open={explorer.open}
     on:fold={explorer.fold}
     on:unfold={explorer.unfold}
+    on:dragstart={explorer.dragstart}
+    on:dragend={explorer.dragend}
+    on:dragenter={explorer.dragenter}
+    on:dragover={explorer.dragover}
+    on:dragleave={explorer.dragleave}
+    on:drop={explorer.drop}
     {roots}
 />

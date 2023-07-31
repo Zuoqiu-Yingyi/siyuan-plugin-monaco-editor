@@ -810,9 +810,9 @@ export class ExplorerContextMenu {
                         }
 
                         /* 下载文件流 */
-                        const response = await this.plugin.client.getFileStream({ path });
+                        const response = await this.plugin.client.getFile({ path }, "stream");
                         if (response) {
-                            this.plugin.logger.debugs(basename(path), response);
+                            // this.plugin.logger.debugs(basename(path), response);
                             const write_stream = this.plugin.streamsaver.createWriteStream(basename(path));
                             await response.pipeTo(write_stream);
                         }
@@ -985,10 +985,12 @@ export class ExplorerContextMenu {
      * 上传二次确认+进度显示
      * @param path - 上传目录路径
      * @param files - 文件列表
+     * @param prefix - 需要移除的路径字符串前缀
      */
     public upload(
         path: string,
-        files: FileList,
+        files: FileList | File[],
+        prefix: string = "/",
     ): Promise<boolean> {
         return new Promise<boolean>(resolve => {
             const DIALOG_ID = "plugin-monaco-editor-upload-dialog";
@@ -1004,6 +1006,7 @@ export class ExplorerContextMenu {
                     plugin: this.plugin,
                     path,
                     files,
+                    prefix,
                 },
             });
             component.$on("cancel", e => {

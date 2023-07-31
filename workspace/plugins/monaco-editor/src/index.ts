@@ -103,7 +103,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
         this.streamsaver.mitm = `plugins/${this.name}/libs/streamsaver/mitm.html?version=2.0.0`;
         this.logger = new Logger(this.name);
-        this.client = new Client();
+        this.client = new Client(undefined, "fetch");
         this.lute = globalThis.Lute.New();
 
         this.EDITOR_URL = new URL(`${globalThis.document.baseURI}plugins/${this.name}/editor`);

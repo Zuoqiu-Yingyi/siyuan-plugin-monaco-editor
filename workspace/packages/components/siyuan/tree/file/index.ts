@@ -32,25 +32,28 @@ export interface ITree {
 }
 
 /* 文档树派遣的事件载荷 */
-export interface IFileTreeEventDetails {
-    e: MouseEvent; // 鼠标事件
+export interface IFileTreeEventDetails<E extends Event> {
+    e: E; // 鼠标事件
+    li: HTMLLIElement; // 节点元素
+    ul: HTMLUListElement; // 下级节点列表元素
     props: IFileTreeNodeStores; // 组件响应式状态变量
     dispatcher: ReturnType<typeof createEventDispatcher<IFileTreeEvent>>; // 组件事件派遣器
 }
 
 /* 文档树派遣的事件 */
 export interface IFileTreeEvent {
-    create: {}, // 创建文件/文件夹
-    delete: {}, // 删除文件/文件夹
-    copy: {}, // 复制文件/文件夹
-    move: {}, // 移动文件/文件夹
-    rename: {}, // 重命名文件/文件夹
-    refresh: {}, // 刷新文件夹
+    dragstart: IFileTreeEventDetails<DragEvent>, // 拖拽开始
+    drag: IFileTreeEventDetails<DragEvent>, // 拖拽中 (...)
+    dragenter: IFileTreeEventDetails<DragEvent>, // 拖拽进入
+    dragover: IFileTreeEventDetails<DragEvent>, // 拖拽悬停 (...)
+    dragleave: IFileTreeEventDetails<DragEvent>, // 拖拽离开
+    dragend: IFileTreeEventDetails<DragEvent>, // 拖拽结束
+    drop: IFileTreeEventDetails<DragEvent>, // 放置在有效位置 (dragover e.preventDefault())
 
-    open: IFileTreeEventDetails, // 打开文件
-    menu: IFileTreeEventDetails, // 打开菜单
-    fold: IFileTreeEventDetails, // 折叠文件夹
-    unfold: IFileTreeEventDetails // 展开文件夹
+    open: IFileTreeEventDetails<MouseEvent>, // 打开文件
+    menu: IFileTreeEventDetails<MouseEvent>, // 打开菜单
+    fold: IFileTreeEventDetails<MouseEvent>, // 折叠文件夹
+    unfold: IFileTreeEventDetails<MouseEvent> // 展开文件夹
 }
 
 /* 文档树节点 */
@@ -67,8 +70,13 @@ export interface IFileTreeNode {
     focus?: boolean; // 是否聚焦
     folded?: boolean; // 是否折叠
     symlink?: boolean; // 是否为符号链接
+    dragging?: boolean; // 是否正在拖拽
     draggable?: boolean; // 是否可拖拽
     hideActions?: boolean; // 是否显隐藏功能按钮
+
+    dragoverTop?: boolean; // 是否拖拽至其上方
+    dragover?: boolean; // 是否拖拽至其内部
+    dragoverBottom?: boolean; // 是否拖拽至其下方
 
     title?: string; // 节点标题 (完整路径)
     children?: IFileTreeNode[]; // 下级节点

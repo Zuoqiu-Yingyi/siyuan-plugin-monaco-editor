@@ -17,17 +17,20 @@
 
 <script lang="ts">
     import type MonacoEditorPlugin from "@/index";
-    import { FileTree } from "@/explorer/filetree";
+    import { FileTree, IFile } from "@/explorer/filetree";
     import List from "@workspace/components/siyuan/list/List.svelte";
     import type { IListItem } from "@workspace/components/siyuan/list/list";
     import { createEventDispatcher } from "svelte";
     import type { IUpdateDialogEvent } from "@/types/upload";
     import { join } from "@workspace/utils/path/browserify";
+    import { normalize } from "@workspace/utils/path/normalize";
     import { fn__code } from "@workspace/utils/siyuan/text/span";
+    import { trimPrefix } from "@workspace/utils/misc/string";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
     export let path: string; // 当前路径
-    export let files: FileList | File[]; // 待上传的文件列表
+    export let files: FileList | IFile[]; // 待上传的文件列表
+    export let prefix: string = "/"; // 需要移除的目录前缀
 
     let cancelButtonText: string = globalThis.siyuan?.languages?.cancel ?? "Cancel"; // 取消按钮文本
     let confirmButtonText: string = plugin.i18n.menu.upload.tips.startUpload; // 确定按钮文本
@@ -57,7 +60,7 @@
 
     /* 通过文件路径构建文件树 */
     $: {
-        filetree = new FileTree(plugin, files);
+        filetree = new FileTree(plugin, files, prefix);
         items = filetree.toList(fold);
         confirmButtonDisabled = false;
     }
@@ -78,11 +81,11 @@
             dispatcher("cancel", { finished, event });
         } else {
             confirmButtonDisabled = true;
-            const errorList: File[] = []; // 上传失败的文件列表
+            const errorList: IFile[] = []; // 上传失败的文件列表
             for (const file of filetree.files) {
                 try {
                     await plugin.client.putFile({
-                        path: join(path, file.webkitRelativePath || file.name),
+                        path: join(path, file.webkitRelativePath || normalize(trimPrefix(file.path ?? "", prefix)) || file.name),
                         file,
                         modTime: file.lastModified,
                     });

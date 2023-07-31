@@ -31,6 +31,12 @@
         on:fold
         on:menu
         on:unfold
+        on:dragstart
+        on:dragend
+        on:dragenter
+        on:dragover
+        on:dragleave
+        on:drop
         {...root}
     />
 </ul>

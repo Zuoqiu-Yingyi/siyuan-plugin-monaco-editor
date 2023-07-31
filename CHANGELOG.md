@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-01
+
+- 添加拖拽上传文件/文件夹功能 | Add drag and drop upload file/folder function.
+
 ## 2023-07-29
 
 - 添加文件/文件夹上传菜单 | Add file/folder upload menu.
