@@ -326,8 +326,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <li
     bind:this={li}
-    on:dragstart|stopPropagation|preventDefault={ondragstart}
-    on:dragend|stopPropagation|preventDefault={ondragend}
+    on:dragstart|stopPropagation={ondragstart}
+    on:dragend|stopPropagation={ondragend}
     on:dragenter|stopPropagation|preventDefault={ondragenter}
     on:dragover|stopPropagation|preventDefault={ondragover}
     on:dragleave|stopPropagation|preventDefault={ondragleave}
