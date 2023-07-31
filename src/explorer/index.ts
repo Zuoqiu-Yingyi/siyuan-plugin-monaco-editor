@@ -46,6 +46,7 @@ import { ExplorerContextMenu } from "./menu";
 import { ResourceOption, isResourceOperable } from "@/utils/permission";
 import { FileTree, type IFile } from "./filetree";
 import { trimSuffix } from "@workspace/utils/misc/string";
+import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 
 /* 资源 */
 export interface IItem {
@@ -354,9 +355,21 @@ export class Explorer implements ITree {
 
             switch (get(node.type)) {
                 case FileTreeNodeType.Folder:
-                case FileTreeNodeType.File:
-                    node.dragging.set(true);
+                case FileTreeNodeType.File: {
+                    node.dragging.set(true); // 设置为正在拖拽状态
+
+                    const dataTransfer = e.detail.e.dataTransfer; // 拖拽数据传输对象
+                    const name = get(node.name); // 文件名/文件夹名
+                    const relative = get(node.relative); // 相对于工作空间目录的相对路径
+                    if (isStaticWebFileServicePath(relative)) { // 静态文件服务路径
+                        const pathname = workspacePath2StaticPathname(relative); // 获取该文件/文件夹的静态资源引用路径
+                        // REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types
+                        dataTransfer.setData("text/plain", pathname);
+                        dataTransfer.setData("text/uri-list", pathname);
+                        dataTransfer.setData("text/html", `<a href="${globalThis.encodeURI(pathname)}">${name}</a>`);
+                    }
                     break;
+                }
                 case FileTreeNodeType.Root: // 根目录无法拖拽
                 default:
                     break;
