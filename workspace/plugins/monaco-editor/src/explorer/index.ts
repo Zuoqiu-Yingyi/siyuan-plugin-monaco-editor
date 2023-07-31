@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import type siyuan from "siyuan";
-
 import type { ComponentEvents } from "svelte";
 import { get } from "svelte/store";
 
@@ -47,6 +45,8 @@ import { ResourceOption, isResourceOperable } from "@/utils/permission";
 import { FileTree, type IFile } from "./filetree";
 import { trimSuffix } from "@workspace/utils/misc/string";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
+import type ExplorerDock from "@/components/ExplorerDock.svelte";
+import { FLAG_BROWSER } from "@workspace/utils/env/front-end";
 
 /* 资源 */
 export interface IItem {
@@ -88,6 +88,19 @@ export enum ProtectedResourceType {
     Lock, // 工作区锁标志
 }
 
+/* 文件资源管理器侧边栏事件 */
+export interface IExplorerEvent {
+    /* 拖拽入窗口 */
+    dragEnterWindow: {
+        e: DragEvent;
+    };
+
+    /* 拖拽出窗口 */
+    dragLeaveWindow: {
+        e: DragEvent;
+    };
+}
+
 /* 文件资源管理器 */
 export class Explorer implements ITree {
     public static isProtected(relative: string): ProtectedResourceType {
@@ -118,6 +131,9 @@ export class Explorer implements ITree {
 
     /* 根节点列表 */
     protected roots: IFileTreeRootNode[];
+
+    /* 是否拖拽出窗口 */
+    protected outer: boolean = false;
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
@@ -346,11 +362,22 @@ export class Explorer implements ITree {
         }
     }
 
+    /* 拖拽入窗口 */
+    public readonly dragEnterWindow = async (e: DragEvent) => {
+        this.outer = false;
+    }
+
+    /* 拖拽出窗口 */
+    public readonly dragLeaveWindow = async (e: DragEvent) => {
+        this.outer = true;
+    }
+
     /* 拖拽开始 */
     public readonly dragstart = async (e: ComponentEvents<Node>["dragstart"]) => {
         // this.plugin.logger.debug(e);
         try {
             const node = e.detail.props;
+            this.outer = false; // 重置拖拽出窗口状态
             // this.select.one(node);
 
             switch (get(node.type)) {
@@ -366,6 +393,7 @@ export class Explorer implements ITree {
                         // REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types
                         dataTransfer.setData("text/plain", pathname);
                         dataTransfer.setData("text/uri-list", pathname);
+                        dataTransfer.setData("text/markdown", `[${name}](<${pathname}>)`);
                         dataTransfer.setData("text/html", `<a href="${globalThis.encodeURI(pathname)}">${name}</a>`);
                     }
                     break;
@@ -382,7 +410,7 @@ export class Explorer implements ITree {
 
     /* 拖拽结束 */
     public readonly dragend = async (e: ComponentEvents<Node>["dragend"]) => {
-        // this.plugin.logger.debug(e);
+        this.plugin.logger.debug(e);
         try {
             const node = e.detail.props;
 
@@ -390,8 +418,15 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.Folder:
                 case FileTreeNodeType.File:
                     node.dragging.set(false);
+                    if (FLAG_BROWSER) { // 在浏览器中启用拖拽至窗口外部时下载
+                        const type = get(node.type);
+                        const name = get(node.name);
+                        const relative = get(node.relative);
+                        await this.contextMenu.download(relative, name, type);
+                        this.outer = false;
+                    }
                     break;
-                case FileTreeNodeType.Root: // 根目录无法拖拽
+                case FileTreeNodeType.Root: // 根目录无法拖拽下载
                 default:
                     break;
             }
@@ -467,7 +502,6 @@ export class Explorer implements ITree {
             this.plugin.catch(error);
         }
     }
-
 
     /* 拖拽放置 */
     public readonly drop = async (e: ComponentEvents<Node>["drop"]) => {
