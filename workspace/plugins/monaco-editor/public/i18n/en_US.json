@@ -363,7 +363,7 @@
             "title": "Import folders to ${1}"
         },
         "move": {
-            "text": "Move ${1}<br/>from ${2}<br/>to&ensp;&ensp; ${3}?",
+            "text": "Move ${1}<br/>from ${2}<br/>to&ensp;&ensp;、 ${3}?",
             "title": "Move ${1}"
         },
         "new": {
@@ -489,5 +489,46 @@
     "message": {
         "binaryError": "The file is not displayed in the text editor because it is either binary or uses an unsupported text encoding.",
         "openAnyway": "Open Anyway?"
+    },
+    "settings": {
+        "generalSettings": {
+            "editor": {
+                "description": "Enable text editor sidebar panel",
+                "title": "Text Editor"
+            },
+            "explorer": {
+                "description": "Enable explorer sidebar panel",
+                "title": "Explorer"
+            },
+            "reset": {
+                "description": "Reset all settings options to default (page will refresh after reset)",
+                "text": "Reset",
+                "title": "Reset Settings"
+            },
+            "title": "General Settings"
+        },
+        "menuSettings": {
+            "history1": {
+                "description": "Context menu for file history panel",
+                "title": "File History"
+            },
+            "history2": {
+                "description": "Context menu for document history panel",
+                "title": "Document History"
+            },
+            "shorthand": {
+                "description": "Context menu for shorthand collection",
+                "title": "Shorthand"
+            },
+            "snapshot": {
+                "description": "Context menu for snapshot panel",
+                "title": "Snapshot Panel"
+            },
+            "snippet": {
+                "description": "Context menu for code snippets",
+                "title": "Code Snippets"
+            },
+            "title": "Menu Settings"
+        }
     }
 }

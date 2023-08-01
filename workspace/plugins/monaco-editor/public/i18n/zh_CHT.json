@@ -489,5 +489,46 @@
     "message": {
         "binaryError": "檔案未顯示在文字編輯器中，因為檔案是二進位檔案或使用了不支援的文字編碼。",
         "openAnyway": "繼續開啟？"
+    },
+    "settings": {
+        "generalSettings": {
+            "editor": {
+                "description": "是否啟用文字編輯器側邊面板",
+                "title": "文字編輯器"
+            },
+            "explorer": {
+                "description": "是否啟用資源管理器側邊面板",
+                "title": "資源管理器"
+            },
+            "reset": {
+                "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
+                "text": "重置",
+                "title": "重置設定選項"
+            },
+            "title": "常規設定"
+        },
+        "menuSettings": {
+            "history1": {
+                "description": "檔案歷史面板的上下文選單（右鍵選單）",
+                "title": "檔案歷史"
+            },
+            "history2": {
+                "description": "文件歷史面板的上下文選單（右鍵選單）",
+                "title": "文件歷史"
+            },
+            "shorthand": {
+                "description": "收集箱的上下文選單（右鍵選單）",
+                "title": "收集箱"
+            },
+            "snapshot": {
+                "description": "快照面板的上下文選單（右鍵選單）",
+                "title": "快照面板"
+            },
+            "snippet": {
+                "description": "程式碼片段的上下文選單（右鍵選單）",
+                "title": "程式碼片段"
+            },
+            "title": "選單設定"
+        }
     }
 }

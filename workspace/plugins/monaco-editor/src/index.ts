@@ -49,6 +49,7 @@ import EditorTab from "./components/EditorTab.svelte";
 import PreviewTab from "./components/PreviewTab.svelte";
 import EditorDock from "./components/EditorDock.svelte";
 import ExplorerDock from "./components/ExplorerDock.svelte";
+import Settings from "./components/Settings.svelte";
 
 /* 项目资源 */
 import {
@@ -181,7 +182,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             .catch(error => this.logger.error(error))
             .finally(() => {
                 const plugin = this;
-                /* 添加侧边面板 */
+
+                /* 添加编辑器侧边面板 */
                 if (this.config.dock.editor.enable) {
                     this.editorDock = {
                         dock: this.addDock({
@@ -228,6 +230,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         }),
                     };
                 }
+
+                /* 添加文件资源管理器侧边面板 */
                 if (this.config.dock.explorer) {
                     this.explorerDock = {
                         dock: this.addDock({
@@ -304,7 +308,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     onLayoutReady(): void {
-        this.openSetting();
+        // this.openSetting();
     }
 
     onunload(): void {
@@ -319,20 +323,19 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     openSetting(): void {
-        // const that = this;
-        // const dialog = new siyuan.Dialog({
-        //     title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
-        //     content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
-        //     width: FLAG_MOBILE ? "92vw" : "720px",
-        //     height: FLAG_MOBILE ? undefined : "640px",
-        // });
-        // const settings = new Settings({
-        //     target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
-        //     props: {
-        //         config: this.config,
-        //         plugin: this,
-        //     },
-        // });
+        const dialog = new siyuan.Dialog({
+            title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
+            content: `<div id="${this.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
+            width: "720px",
+            height: "640px",
+        });
+        const settings = new Settings({
+            target: dialog.element.querySelector(`#${this.SETTINGS_DIALOG_ID}`),
+            props: {
+                config: this.config,
+                plugin: this,
+            },
+        });
     }
 
     /* 捕获错误 */

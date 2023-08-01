@@ -17,7 +17,7 @@
 
 <script lang="ts">
     import type MonacoEditorPlugin from "@/index";
-    import { FileTree, IFile } from "@/explorer/filetree";
+    import { FileTree, type IFile } from "@/explorer/filetree";
     import List from "@workspace/components/siyuan/list/List.svelte";
     import type { IListItem } from "@workspace/components/siyuan/list/list";
     import { createEventDispatcher } from "svelte";
