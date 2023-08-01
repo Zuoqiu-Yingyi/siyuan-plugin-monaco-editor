@@ -116,6 +116,23 @@
             />
         </Item>
 
+        <!-- 安全模式 -->
+        <Item
+            title={i18n.settings.generalSettings.safeMode.title}
+            text={i18n.settings.generalSettings.safeMode.description}
+        >
+            <Input
+                slot="input"
+                type={ItemType.checkbox}
+                settingKey="Safe Mode"
+                settingValue={config.dock.explorer.safe}
+                on:changed={async e => {
+                    config.dock.explorer.safe = e.detail.value;
+                    await updated();
+                }}
+            />
+        </Item>
+
         <!-- 重置设置 -->
         <Item
             title={i18n.settings.generalSettings.reset.title}

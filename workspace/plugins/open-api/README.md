@@ -19,7 +19,7 @@
 
 [简体中文](./public/README_zh_CN.md) \| [English](./public/README.md)
 
-## DEVELOPMENT GUIDE
+## DEVELOPER GUIDE
 
 ### RELEASE STEPS
 

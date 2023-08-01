@@ -7,6 +7,7 @@
 - 添加拖拽资源至窗口外时的下载功能 | Add download function when dragging resources out of the window.
 - 添加拖拽资源移动其位置的功能 | Add the function of dragging resources to move their positions.
 - 添加设置面板 | Add settings panel.
+- 完善说明文档 | Improve documentation.
 
 ## 2023-07-29
 

@@ -500,6 +500,10 @@
                 "description": "Enable explorer sidebar panel",
                 "title": "Explorer"
             },
+            "safeMode": {
+                "description": "Whether to disable dangerous operations under the important directory",
+                "title": "Safe Mode"
+            },
             "reset": {
                 "description": "Reset all settings options to default (page will refresh after reset)",
                 "text": "Reset",
@@ -510,23 +514,23 @@
         "menuSettings": {
             "history1": {
                 "description": "Context menu for file history panel",
-                "title": "File History"
+                "title": "File History Menu"
             },
             "history2": {
                 "description": "Context menu for document history panel",
-                "title": "Document History"
+                "title": "Document History Menu"
             },
             "shorthand": {
                 "description": "Context menu for shorthand collection",
-                "title": "Shorthand"
+                "title": "Shorthand Menu"
             },
             "snapshot": {
                 "description": "Context menu for snapshot panel",
-                "title": "Snapshot Panel"
+                "title": "Snapshot Panel Menu"
             },
             "snippet": {
                 "description": "Context menu for code snippets",
-                "title": "Code Snippets"
+                "title": "Code Snippets Menu"
             },
             "title": "Menu Settings"
         }
