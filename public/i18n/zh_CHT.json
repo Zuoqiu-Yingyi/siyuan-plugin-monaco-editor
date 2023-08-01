@@ -500,6 +500,10 @@
                 "description": "是否啟用資源管理器側邊面板",
                 "title": "資源管理器"
             },
+            "safeMode": {
+                "description": "是否禁用重要目錄下的危險操作",
+                "title": "安全模式"
+            },
             "reset": {
                 "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
                 "text": "重置",
@@ -510,23 +514,23 @@
         "menuSettings": {
             "history1": {
                 "description": "檔案歷史面板的上下文選單（右鍵選單）",
-                "title": "檔案歷史"
+                "title": "檔案歷史選單"
             },
             "history2": {
                 "description": "文件歷史面板的上下文選單（右鍵選單）",
-                "title": "文件歷史"
+                "title": "文件歷史選單"
             },
             "shorthand": {
                 "description": "收集箱的上下文選單（右鍵選單）",
-                "title": "收集箱"
+                "title": "收集箱選單"
             },
             "snapshot": {
                 "description": "快照面板的上下文選單（右鍵選單）",
-                "title": "快照面板"
+                "title": "快照面板選單"
             },
             "snippet": {
                 "description": "程式碼片段的上下文選單（右鍵選單）",
-                "title": "程式碼片段"
+                "title": "程式碼片段選單"
             },
             "title": "選單設定"
         }

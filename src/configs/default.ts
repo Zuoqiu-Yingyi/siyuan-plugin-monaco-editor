@@ -97,7 +97,7 @@ export const DEFAULT_CONFIG: IConfig = {
         },
         explorer: {
             enable: true,
-            safe: false,
+            safe: true,
             permission: {
                 protected: {
                     enable: true,
