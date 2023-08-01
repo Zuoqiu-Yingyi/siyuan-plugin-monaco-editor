@@ -489,5 +489,46 @@
     "message": {
         "binaryError": "此文件是二进制文件或使用了不受支持的文本编码，所以无法在文本编辑器中显示。",
         "openAnyway": "仍然打开？"
+    },
+    "settings": {
+        "generalSettings": {
+            "editor": {
+                "description": "是否启用文本编辑器侧边面板",
+                "title": "文本编辑器"
+            },
+            "explorer": {
+                "description": "是否启用资源管理器侧边面板",
+                "title": "资源管理器"
+            },
+            "reset": {
+                "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
+                "text": "重置",
+                "title": "重置设置选项"
+            },
+            "title": "常规设置"
+        },
+        "menuSettings": {
+            "history1": {
+                "description": "文件历史面板的上下文菜单（右键菜单）",
+                "title": "文件历史"
+            },
+            "history2": {
+                "description": "文档历史面板的上下文菜单（右键菜单）",
+                "title": "文档历史"
+            },
+            "shorthand": {
+                "description": "收集箱的上下文菜单（右键菜单）",
+                "title": "收集箱"
+            },
+            "snapshot": {
+                "description": "快照面板的上下文菜单（右键菜单）",
+                "title": "快照面板"
+            },
+            "snippet": {
+                "description": "代码片段的上下文菜单（右键菜单）",
+                "title": "代码片段"
+            },
+            "title": "菜单设置"
+        }
     }
 }
