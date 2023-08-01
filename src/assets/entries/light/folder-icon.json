@@ -1,0 +1,18 @@
+[
+    [
+        "jinja",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "jinja2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "j2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        ".idea",
+        "#icon-monaco-editor-material-folder-intellij_light"
+    ]
+]

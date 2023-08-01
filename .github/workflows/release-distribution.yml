@@ -1,0 +1,81 @@
+# 发行构建产物 | Release the distribution
+
+name: release-distribution
+
+on:
+  workflow_dispatch:
+  # REF https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
+  push:
+    branches:
+      - publish
+
+permissions:
+  contents: write
+
+jobs:
+  release-distribution:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      # REF https://github.com/marketplace/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: publish
+
+      # Package
+      - name: Package
+        run: |
+          git archive -o ./package.zip HEAD
+
+      # Get latest release
+      # REF https://github.com/marketplace/actions/get-latest-release
+      - name: Get latest release
+        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        id: latest-release
+        with:
+          ## 仓库所有者/仓库名 | owner/name
+          repository: ${{ github.repository }}
+
+          ## 排除的发行类型 | Excluded types of release
+          # excludes: prerelease, draft
+          excludes: draft
+
+      # Get timestamp
+      # REF https://github.com/marketplace/actions/get-timestamp-action
+      - name: Get timestamp
+        uses: nanzm/get-time-action@v1.1
+        id: timestamp
+        with:
+          ## 时区 | time zone
+          timeZone: 8
+
+          ## 时间戳格式 | timestamp format
+          format: "YYYYMMDDHHmmss"
+
+      # Release distribution
+      # REF https://github.com/marketplace/actions/gh-release
+      - name: Release distribution
+        uses: softprops/action-gh-release@v1
+        with:
+          ## 发行描述 | description of release
+          body: ${{ steps.latest-release.outputs.description }}
+
+          ## 是否为预发行 | is prelease?
+          prerelease: true
+
+          ## 标签名称 | tag name
+          # REF https://semver.org/
+          tag_name: ${{ steps.latest-release.outputs.release }}+${{ steps.timestamp.outputs.time }}
+
+          ## 标签关联的提交/分支 | The commit/branch associated with the tag
+          target_commitish: publish
+
+          ## 附件列表 | attachment list
+          files: |
+            package.zip
