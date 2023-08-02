@@ -3,11 +3,17 @@
   "menu": {
     "allFonts": {
       "label": "All Fonts"
+    },
+    "clearFontStyle": {
+      "label": "Clear Font Style"
+    },
+    "customBlockFont": {
+      "label": "Custom Block Font"
     }
   },
   "message": {
-    "notSupportQueryLocalFonts": "The current app doesn't support querying local fonts!",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "notSupportQueryLocalFonts": "The current app doesn't support querying local fonts!"
   },
   "settings": {
     "cssSettings": {
@@ -102,6 +108,14 @@
         "title": "The List of Usable Fonts"
       },
       "title": "General Settings"
+    },
+    "menuSettings": {
+      "blockFontList": {
+        "description": "Use the block menu to quickly set the font of block, one font name per line, please refer to <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/font-family'>font-family</a> for the name format",
+        "placeholder": "Please enter a list of custom fonts here",
+        "title": "Block Font List"
+      },
+      "title": "Menu Settings"
     }
   }
 }

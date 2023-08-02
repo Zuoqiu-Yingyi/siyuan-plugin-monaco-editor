@@ -28,6 +28,7 @@ import { type IListItem } from "@workspace/components/siyuan/list/list";
 import List from "@workspace/components/siyuan/list/List.svelte"
 
 import { fontData2CssFontStyle } from "@workspace/utils/font/css";
+import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 
 import Settings from "./components/Settings.svelte";
 
@@ -36,9 +37,13 @@ import {
 } from "./utils/style";
 import { DEFAULT_CONFIG } from "./configs/default";
 import type { IConfig } from "./types/config";
+import type { IClickBlockIconEvent } from "@workspace/types/siyuan/events";
+import type { I18N } from "@/utils/i18n";
 
 export default class CustomFontsPlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
+
+    declare public readonly i18n: I18N;
 
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
@@ -69,8 +74,24 @@ export default class CustomFontsPlugin extends siyuan.Plugin {
                 this.config = mergeIgnoreArray(DEFAULT_CONFIG, config || {}) as IConfig;
             })
             .catch(error => this.logger.error(error))
-            .finally(() => {
-                this.updateStyle();
+            .finally(async () => {
+                await this.updateStyle();
+
+                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+
+                /* 注册命令 */
+                this.addCommand({
+                    langKey: "show-system-fonts",
+                    langText: this.i18n.settings.generalSettings.showSystemFonts.title,
+                    hotkey: "",
+                    callback: () => this.showSystemFonts(),
+                });
+                this.addCommand({
+                    langKey: "show-usable-fonts",
+                    langText: this.i18n.settings.generalSettings.showUsableFonts.title,
+                    hotkey: "",
+                    callback: () => this.showUsableFonts(),
+                });
             });
     }
 
@@ -78,6 +99,8 @@ export default class CustomFontsPlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
+        this.eventBus.off("click-blockicon", this.blockMenuEventListener);
+
         this.client.getSnippet({
             type: "css",
             enabled: 2,
@@ -136,7 +159,7 @@ export default class CustomFontsPlugin extends siyuan.Plugin {
         }
         else {
             snippets.push({
-                id: siyuan.Lute.NewNodeID(),
+                id: globalThis.Lute.NewNodeID(),
                 type: "css",
                 name: this.STYLE_SNIPPET_NAME,
                 memo: "",
@@ -244,6 +267,74 @@ export default class CustomFontsPlugin extends siyuan.Plugin {
         }
         else { // 当前应用不支持查询本地字体
             siyuan.showMessage(`${this.i18n.message.notSupportQueryLocalFonts}<br />[${this.i18n.displayName} <code class="fn__code">${this.name}</code>]`, undefined, "error");
+        }
+    }
+
+    /* 块菜单 */
+    protected readonly blockMenuEventListener = (e: IClickBlockIconEvent) => {
+        // this.logger.debug(e);
+        const detail = e.detail;
+        const context = getBlockMenuContext(e.detail);
+        if (context) {
+            const submenu: siyuan.IMenuItemOption[] = [];
+
+            /* 清除字体 */
+            submenu.push({
+                icon: "iconClear",
+                label: this.i18n.menu.clearFontStyle.label,
+                click: () => {
+                    context.blocks.forEach(async block => {
+                        block.element.style.fontFamily = null;
+                        const style = block.element.getAttribute("style");
+                        this.client.setBlockAttrs({
+                            id: block.id,
+                            attrs: {
+                                style,
+                            },
+                        });
+                    });
+                },
+            });
+
+            submenu.push({
+                type: "separator",
+            });
+
+            /* 设置字体 */
+            this.config.menu.block.list.forEach(font => {
+                if (/^\s*$/.test(font)) return;
+                else font = font.trim();
+
+                submenu.push({
+                    icon: "iconFont",
+                    label: font,
+                    accelerator: `font-family: ${font}`,
+                    click: () => {
+                        context.blocks.forEach(async block => {
+                            block.element.style.fontFamily = font;
+                            const style = block.element.getAttribute("style");
+                            this.client.setBlockAttrs({
+                                id: block.id,
+                                attrs: {
+                                    style,
+                                },
+                            });
+                        });
+                    },
+                    bind: element => {
+                        const label: HTMLElement = element.querySelector(".b3-menu__label");
+                        if (label) {
+                            label.style.fontFamily = font;
+                        }
+                    },
+                });
+            });
+
+            detail.menu.addItem({
+                icon: "iconFont",
+                label: this.i18n.menu.customBlockFont.label,
+                submenu,
+            });
         }
     }
 };

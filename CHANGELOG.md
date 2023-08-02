@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-03
+
+- 使用块菜单设置块字体 | Set block font using block menu.
+
 ## 2023-08-02
 
 - 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump.

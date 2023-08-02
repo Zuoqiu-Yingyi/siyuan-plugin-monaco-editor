@@ -20,6 +20,7 @@
     import type { IMenuItemEvent } from ".";
 
     export let icon: string = ""; // 图标
+    export let font: string = ""; // 菜单项文本字体样式
     export let label: string = ""; // 菜单项文本/input 提示
     export let disabled: boolean = false; // 是否禁用
 
@@ -75,6 +76,7 @@
 
 <!-- 菜单项标签 -->
 <span
+    style:font
     style:position={file ? "relative" : "initial"}
     class="b3-menu__label"
 >

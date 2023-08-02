@@ -109,6 +109,13 @@ After installing this plugin, click <kbd>SiYuan Settings</kbd> > <kbd>Marketplac
 
     * Customizable font list for emoji symbols used in document icons
 
+* `Menu Settings`
+
+  * `Block font list`
+
+    * This is a text input box
+    * Each line of the text box specifies a font name, and you can use the block menu to set the font of the block to this font
+
 ## CHANGELOG
 
 [CHANGELOG.md](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts/blob/main/CHANGELOG.md)
