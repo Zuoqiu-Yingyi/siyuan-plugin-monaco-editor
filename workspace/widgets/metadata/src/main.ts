@@ -43,13 +43,15 @@ async function init() {
     });
 
     /* 客户端 */
-    const client = new Client();
+    const client = new Client({
+        baseURL: globalThis.parent?.document.baseURI ?? globalThis.location.origin,
+    });
 
     if (import.meta.env.DEV) { // 开发环境
-        client.updateOptions({
+        client._updateOptions({
             baseURL: import.meta.env.VITE_SIYUAN_SERVE,
             token: import.meta.env.VITE_SIYUAN_TOKEN,
-        });
+        }, "fetch");
     }
 
     var siyuan: ISiyuan;

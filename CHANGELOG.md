@@ -5,6 +5,7 @@
 - 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump.
 - [#11](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/issues/11) 添加在屏幕中间显示新窗口功能 | Add the function of displaying new windows in the middle of the screen.
 - 调整菜单文本 | Adjust menu text.
+- 修复挂件中 API 请求 `baseURL` 初始化错误问题 | Fix the issue of incorrect initialization of `baseURL` in API request in widget.
 
 ## 2023-08-01
 
