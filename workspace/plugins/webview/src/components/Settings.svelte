@@ -412,6 +412,23 @@
                     />
                 </Item>
 
+                <!-- 窗口居中 -->
+                <Item
+                    title={i18n.settings.window.center.title}
+                    text={i18n.settings.window.center.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="center"
+                        settingValue={config.window.params.center}
+                        on:changed={e => {
+                            config.window.params.center = e.detail.value;
+                            updated();
+                        }}
+                    />
+                </Item>
+
                 <!-- 窗口置顶 -->
                 <Item
                     title={i18n.settings.window.top.title}

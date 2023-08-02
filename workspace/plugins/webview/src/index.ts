@@ -25,7 +25,6 @@ import {
 import { Logger } from "@workspace/utils/logger";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { merge } from "@workspace/utils/misc/merge";
-import { getElementScreenPosition } from "@workspace/utils/misc/position";
 import { getBlockID } from "@workspace/utils/siyuan/dom";
 import {
     Pathname,
@@ -38,7 +37,6 @@ import {
     getBlockMenuContext,
 } from "@workspace/utils/siyuan/menu/block";
 import { EditorType } from "@workspace/utils/siyuan";
-import { calculateScreenPosition, type IPosition } from "@workspace/utils/dom/position";
 
 import type {
     IClickBlockIconEvent,
@@ -47,6 +45,7 @@ import type {
     IOpenMenuLinkEvent,
 } from "@workspace/types/siyuan/events";
 import type { BlockID } from "@workspace/types/siyuan";
+import type { IPosition } from "@workspace/utils/dom/position";
 
 // import Settings from "@workspace/components/siyuan/setting/Example.svelte";
 
@@ -170,9 +169,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     menu.addItem({
                         icon: "iconSiYuan",
                         label: this.i18n.menu.openDesktopWindow.label,
-                        click: (element) => {
-                            const position = getElementScreenPosition(element);
-                            this.openSiyuanDesktopWindow({ screenX: position.centerX, screenY: position.centerY });
+                        click: (_element) => {
+                            this.openSiyuanDesktopWindow({
+                                screenX: globalThis.siyuan.coordinates.screenX,
+                                screenY: globalThis.siyuan.coordinates.screenY,
+                            });
                         },
                     });
 
@@ -180,9 +181,11 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     menu.addItem({
                         icon: "iconSiYuan",
                         label: this.i18n.menu.openMobildWindow.label,
-                        click: (element) => {
-                            const position = getElementScreenPosition(element);
-                            this.openSiyuanMobileWindow({ screenX: position.centerX, screenY: position.centerY });
+                        click: (_element) => {
+                            this.openSiyuanDesktopWindow({
+                                screenX: globalThis.siyuan.coordinates.screenX,
+                                screenY: globalThis.siyuan.coordinates.screenY,
+                            });
                         },
                     });
 
@@ -437,7 +440,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
     /* 通过 URL 打开思源窗口 */
     public openSiyuanWindowByURL(element: HTMLElement, url: URL) {
-        this.openSiyuanWindow(url, calculateScreenPosition(element) as any);
+        this.openSiyuanWindow(url, {
+            screenX: globalThis.siyuan.coordinates.screenX,
+            screenY: globalThis.siyuan.coordinates.screenY,
+        });
     }
 
     /* 是否为有效的 URL 协议 */
@@ -678,7 +684,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     click: () => this.openWebpageWindow(
                         href,
                         link.title,
-                        calculateScreenPosition(element),
+                        {
+                            screenX: globalThis.siyuan.coordinates.screenX,
+                            screenY: globalThis.siyuan.coordinates.screenY,
+                        },
                     ),
                 });
                 break;
@@ -728,7 +737,10 @@ export default class WebviewPlugin extends siyuan.Plugin {
                     click: () => this.openWebpageWindow(
                         link.href,
                         link.title,
-                        calculateScreenPosition(element),
+                        {
+                            screenX: globalThis.siyuan.coordinates.screenX,
+                            screenY: globalThis.siyuan.coordinates.screenY,
+                        },
                     ),
                 });
                 break;

@@ -3,6 +3,7 @@
 ## 2023-08-02
 
 - 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump.
+- [#11](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview/issues/11) 添加在屏幕中间显示新窗口功能 | Add the function of displaying new windows in the middle of the screen.
 
 ## 2023-08-01
 

@@ -120,6 +120,10 @@
       "title": "SiYuan Editor"
     },
     "window": {
+      "center": {
+        "description": "Show new window in the center of the screen",
+        "title": "Window Centering"
+      },
       "height": {
         "description": "The default height of the new window",
         "title": "Window Height"

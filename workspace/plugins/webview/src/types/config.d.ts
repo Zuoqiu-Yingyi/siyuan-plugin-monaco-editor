@@ -54,6 +54,7 @@ export interface IOpen {
 export interface IWindowParams extends Electron.BrowserWindowConstructorOptions {
     width: number, // 窗口宽度
     height: number, // 窗口高度
+    center: boolean, // 新窗口是否显示在屏幕中间
     frame: boolean, // 窗口边框
     alwaysOnTop: boolean, // 是否置顶
     autoHideMenuBar: boolean, // 是否自动隐藏菜单栏
