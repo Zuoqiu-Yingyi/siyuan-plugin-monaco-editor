@@ -73,6 +73,10 @@ export const DEFAULT_CONFIG: IConfig = {
                     enable: true,
                     prefix: "//",
                 },
+                "#": { // URL hash
+                    enable: false,
+                    prefix: "#",
+                },
             },
         },
     },

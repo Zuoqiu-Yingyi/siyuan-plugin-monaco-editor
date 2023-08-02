@@ -514,23 +514,23 @@
         "menuSettings": {
             "history1": {
                 "description": "文件历史面板的上下文菜单（右键菜单）",
-                "title": "文件历史菜單"
+                "title": "文件历史菜单"
             },
             "history2": {
                 "description": "文档历史面板的上下文菜单（右键菜单）",
-                "title": "文档历史菜單"
+                "title": "文档历史菜单"
             },
             "shorthand": {
                 "description": "收集箱的上下文菜单（右键菜单）",
-                "title": "收集箱菜單"
+                "title": "收集箱菜单"
             },
             "snapshot": {
                 "description": "快照面板的上下文菜单（右键菜单）",
-                "title": "快照面板菜單"
+                "title": "快照面板菜单"
             },
             "snippet": {
                 "description": "代码片段的上下文菜单（右键菜单）",
-                "title": "代码片段菜單"
+                "title": "代码片段菜单"
             },
             "title": "菜单设置"
         }

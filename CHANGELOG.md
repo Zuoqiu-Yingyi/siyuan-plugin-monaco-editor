@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-02
+
+- 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump.
+
 ## 2023-08-01
 
 - 添加拖拽上传文件/文件夹功能 | Add drag and drop upload file/folder function.

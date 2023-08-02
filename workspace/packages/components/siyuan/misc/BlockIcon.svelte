@@ -79,12 +79,14 @@
     动态标签名
     REF: https://svelte.dev/docs/special-elements#svelte-element
 -->
+<!-- svelte-ignore a11y-interactive-supports-focus -->
 <svelte:element
     this={tag}
     bind:this={element}
     on:click
     on:dblclick
     on:click={e => onClick(e, element, props)}
+    role="button"
     data-type={type}
     aria-label={ariaLabel}
     class:fn__none={none}
