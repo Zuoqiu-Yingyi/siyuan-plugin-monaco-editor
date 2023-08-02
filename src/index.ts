@@ -467,7 +467,8 @@ export default class WebviewPlugin extends siyuan.Plugin {
             case "a":
                 meta.valid = true;
                 meta.enabled = targets.hyperlink.other.enable;
-                meta.href = (element as HTMLAnchorElement).href || "";
+                // meta.href = (element as HTMLAnchorElement).href || "";
+                meta.href = element.getAttribute("href") || "";
                 meta.title = element.title || element.innerText;
                 break;
             case "span":
@@ -790,7 +791,7 @@ export default class WebviewPlugin extends siyuan.Plugin {
 
             /* 判断目标元素是否有效 */
             if (meta.valid) {
-                this.logger.info(meta.href);
+                this.logger.info(meta);
                 if (this.isUrlSchemeAvailable(meta.href, this.config.tab.open.protocols)) {
                     try {
                         e.preventDefault();

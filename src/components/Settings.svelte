@@ -243,9 +243,9 @@
                         slot="input"
                         type={ItemType.checkbox}
                         settingKey="Checkbox"
-                        settingValue={config.tab.open.targets.hyperlink.editor}
+                        settingValue={config.tab.open.targets.hyperlink.editor.enable}
                         on:changed={e => {
-                            config.tab.open.targets.hyperlink.editor = e.detail.value;
+                            config.tab.open.targets.hyperlink.editor.enable = e.detail.value;
                             updated();
                         }}
                     />
@@ -260,9 +260,9 @@
                         slot="input"
                         type={ItemType.checkbox}
                         settingKey="Checkbox"
-                        settingValue={config.tab.open.targets.hyperlink.other}
+                        settingValue={config.tab.open.targets.hyperlink.other.enable}
                         on:changed={e => {
-                            config.tab.open.targets.hyperlink.other = e.detail.value;
+                            config.tab.open.targets.hyperlink.other.enable = e.detail.value;
                             updated();
                         }}
                     />
