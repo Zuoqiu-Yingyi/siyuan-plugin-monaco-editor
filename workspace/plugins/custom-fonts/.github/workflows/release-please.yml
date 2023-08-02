@@ -14,7 +14,7 @@ permissions:
 
 env:
   PACKAGE_NAME: custom-fonts
-  PACKAGE_VERSION: 1.0.0
+  PACKAGE_VERSION: 1.1.0
 
 jobs:
   release-please:
