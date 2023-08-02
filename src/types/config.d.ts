@@ -36,7 +36,12 @@ export interface IFonts {
     emoji: IFont, // 表情符号字体列表
 }
 
+export interface IMenu {
+    font: IFont, // 
+}
+
 export interface IConfig {
     css: ICSS, // css 代码片段
     fonts: IFonts, // 字体设置
+    menu: IMenu, // 菜单设置
 }
