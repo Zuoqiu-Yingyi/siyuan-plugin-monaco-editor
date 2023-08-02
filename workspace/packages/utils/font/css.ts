@@ -15,33 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* CSS 片段 */
-export interface ICSS {
-    enable: boolean, // 是否启用
-    code: string, // CSS 代码片段
+import parseFont from "mapbox-to-css-font";
+export { parseFont };
+
+import type { FontData } from "@workspace/types/misc/browser";
+
+
+/**
+ * 将字体样式转换为对应的 CSS 样式
+ * @param font 字体信息
+ * @param size 字号
+ * @returns CSS `font` 属性 样式
+ */
+export function fontData2CssFontStyle(
+    font: FontData,
+    size: number = 16,
+): string {
+    return parseFont(`${font.family} ${font.style}`, size);
 }
 
-/* 字体列表 */
-export interface IFont {
-    enable: boolean, // 是否启用
-    list: string[], // 字体列表
-}
-
-/* 字体设置 */
-export interface IFonts {
-    base: IFont, // 基础字体列表
-    code: IFont, // 代码字体列表
-    graph: IFont, // 关系图字体列表
-    math: IFont, // 数学公式字体列表
-    emoji: IFont, // 表情符号字体列表
-}
-
-export interface IMenu {
-    font: IFont, // 
-}
-
-export interface IConfig {
-    css: ICSS, // css 代码片段
-    fonts: IFonts, // 字体设置
-    menu: IMenu, // 菜单设置
-}
