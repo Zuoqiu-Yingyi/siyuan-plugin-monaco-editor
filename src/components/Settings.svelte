@@ -58,6 +58,7 @@
         general,
         snippet,
         fonts,
+        menu,
     }
 
     enum TabKey {
@@ -87,6 +88,12 @@
             text: i18n.settings.fontsSettings.title,
             name: i18n.settings.fontsSettings.title,
             icon: "#iconFont",
+        },
+        {
+            key: PanelKey.menu,
+            text: i18n.settings.menuSettings.title,
+            name: i18n.settings.menuSettings.title,
+            icon: "#iconMenu",
         },
     ];
 
@@ -465,6 +472,34 @@
                 </Item>
             </div>
         </Tabs>
+    </Panel>
+
+    <!-- 块菜单设置面板 -->
+    <Panel display={panels[3].key === focusPanel}>
+        <!-- CSS 片段输入框 -->
+        <Item
+            block={true}
+            title={i18n.settings.menuSettings.blockFontList.title}
+            text={i18n.settings.menuSettings.blockFontList.description}
+        >
+            <Input
+                slot="input"
+                block={true}
+                type={ItemType.textarea}
+                height={textareaHeight}
+                settingKey="list"
+                settingValue={config.menu.block.list.join("\n")}
+                placeholder={i18n.settings.menuSettings.blockFontList.placeholder}
+                on:changed={e => {
+                    if (e.detail.value === "") {
+                        config.menu.block.list = [];
+                    } else {
+                        config.menu.block.list = e.detail.value.split("\n");
+                    }
+                    updated();
+                }}
+            />
+        </Item>
     </Panel>
 </Panels>
 

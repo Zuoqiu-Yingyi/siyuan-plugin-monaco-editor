@@ -37,7 +37,7 @@ export interface IFonts {
 }
 
 export interface IMenu {
-    font: IFont, // 
+    block: IFont, // 自定义块字体
 }
 
 export interface IConfig {

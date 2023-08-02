@@ -109,6 +109,13 @@
 
     * 在该选项卡中可以自定义文档图标中的表情符号所使用的字体
 
+* `菜单设置`
+
+  * `块字体列表`
+
+    * 这是一个文本输入框
+    * 文本框的的每一行指定一个字体名称, 可以使用块菜单设置块的字体为该字体
+
 ## 更改日志
 
 [CHANGELOG.md](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-custom-fonts/blob/main/CHANGELOG.md)
