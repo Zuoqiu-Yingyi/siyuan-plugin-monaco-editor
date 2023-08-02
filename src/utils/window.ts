@@ -60,8 +60,16 @@ export function openNewWindow(
 ): Window | Electron.BrowserWindow {
     overwriteParams.webPreferences = merge(overwriteParams.webPreferences || {}, webPreferences) as IWebPreferences;
     const params = merge(windowParams, overwriteParams) as IOverwrite & IWindowParams;
+
     if (isElectron()) {
         try {
+            /* 若窗口需要显示在屏幕中间, 不设置窗口位置 */
+            if (params.center) {
+                delete params.x;
+                delete params.y;
+            }
+
+            /* 创建窗口 */
             const {
                 BrowserWindow,
                 Menu,
@@ -98,16 +106,25 @@ export function openNewWindow(
             plugin.logger.warn(err);
         }
     }
+    else {
+        /* 若窗口需要显示在屏幕中间, 计算窗口位置 */
+        if (params.center) {
+            params.x = (globalThis.screen.width - params.width) / 2;
+            params.y = (globalThis.screen.height - params.height) / 2;
+        }
+        console.debug(globalThis.screen, params);
 
-    return globalThis.open(
-        url.href,
-        url.href,
-        [
-            `popup = true`,
-            `width = ${params.width}`,
-            `height = ${params.height}`,
-            `left = ${params.x}`,
-            `top = ${params.y}`,
-        ].join(","),
-    );
+        return globalThis.open(
+            url.href,
+            url.href,
+            [
+                `popup = true`,
+                `width = ${params.width}`,
+                `height = ${params.height}`,
+                `left = ${params.x}`,
+                `top = ${params.y}`,
+            ].join(", "),
+        );
+    }
+
 }

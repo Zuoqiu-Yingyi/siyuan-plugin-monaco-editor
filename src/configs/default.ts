@@ -136,6 +136,7 @@ export const DEFAULT_CONFIG: IConfig = {
         params: {
             width: 800,
             height: 600,
+            center: false,
             frame: true,
             alwaysOnTop: true,
             autoHideMenuBar: true,

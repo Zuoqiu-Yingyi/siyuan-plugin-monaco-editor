@@ -120,6 +120,10 @@
       "title": "思源編輯器"
     },
     "window": {
+      "center": {
+        "description": "在螢幕中央顯示新視窗",
+        "title": "視窗居中"
+      },
       "height": {
         "description": "新窗口的默認高度",
         "title": "窗口高度"
