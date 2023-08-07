@@ -40,6 +40,19 @@ export interface IOpenMenuBlockRefDetail {
     protyle: IProtyle;
 }
 
+export interface IOpenSiyuanUrlDetail {
+    url: string;
+}
+
+export interface IOpenSiyuanUrlBlocksDetail extends IOpenSiyuanUrlDetail {
+    id: string;
+    focus: boolean;
+    exist: boolean;
+}
+
+export interface IOpenSiyuanUrlPluginsDetail extends IOpenSiyuanUrlDetail {
+}
+
 export interface IClickBlockIconEvent extends CustomEvent<IOtherBlockMenuDetail> {
     type: "click-blockicon";
 }
@@ -58,4 +71,16 @@ export interface IOpenMenuLinkEvent extends CustomEvent<IOpenMenuLinkDetail> {
 
 export interface IOpenMenuBlockRefEvent extends CustomEvent<IOpenMenuBlockRefDetail> {
     type: "open-menu-blockref";
+}
+
+export interface IOpenSiyuanUrlEvent extends CustomEvent<IOpenSiyuanUrlDetail> {
+    type: "open-siyuan-url";
+}
+
+export interface IOpenSiyuanUrlBlocksEvent extends CustomEvent<IOpenSiyuanUrlBlocksDetail> {
+    type: "open-siyuan-url-blocks";
+}
+
+export interface IOpenSiyuanUrlPluginsEvent extends CustomEvent<IOpenSiyuanUrlPluginsDetail> {
+    type: "open-siyuan-url-plugins";
 }

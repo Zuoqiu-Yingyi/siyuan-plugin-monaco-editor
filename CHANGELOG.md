@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-07
+
+- 支持使用 `siyuan://plugins/monaco-editor/workspace/path/to/file` URL 打开文件 | Support opening files using the `siyuan://plugins/monaco-editor/workspace/path/to/file` URL.
+
 ## 2023-08-03
 
 - 使用块菜单设置块字体 | Set block font using block menu.

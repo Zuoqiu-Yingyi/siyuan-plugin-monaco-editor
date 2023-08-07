@@ -1,4 +1,4 @@
-// Type definitions for Electron 25.3.0
+// Type definitions for Electron 25.4.0
 // Project: http://electronjs.org/
 // Definitions by: The Electron Team <https://github.com/electron/electron>
 // Definitions: https://github.com/electron/typescript-definitions
@@ -5262,12 +5262,12 @@ export declare namespace Electron {
      * are serialized and only the `message` property from the original error is
      * provided to the renderer process. Please refer to #24427 for details.
      */
-    handle(channel: string, listener: (event: IpcMainInvokeEvent, ...args: any[]) => (Promise<void>) | (any)): void;
+    handle(channel: string, listener: (event: IpcMainInvokeEvent, ...args: any[]) => (Promise<any>) | (any)): void;
     /**
      * Handles a single `invoke`able IPC message, then removes the listener. See
      * `ipcMain.handle(channel, listener)`.
      */
-    handleOnce(channel: string, listener: (event: IpcMainInvokeEvent, ...args: any[]) => (Promise<void>) | (any)): void;
+    handleOnce(channel: string, listener: (event: IpcMainInvokeEvent, ...args: any[]) => (Promise<any>) | (any)): void;
     /**
      * Listens to `channel`, when a new message arrives `listener` would be called with
      * `listener(event, args...)`.
@@ -5503,6 +5503,12 @@ export declare namespace Electron {
      * `event.senderId` to `0`.
      */
     senderId: number;
+    /**
+     * Whether the message sent via ipcRenderer.sendTo was sent by the main frame. This
+     * is relevant when `nodeIntegrationInSubFrames` is enabled in the originating
+     * `webContents`.
+     */
+    senderIsMainFrame?: boolean;
   }
 
   interface JumpListCategory {
@@ -6861,8 +6867,10 @@ export declare namespace Electron {
     start(type: 'prevent-app-suspension' | 'prevent-display-sleep'): number;
     /**
      * Stops the specified power save blocker.
+     *
+     * Whether the specified `powerSaveBlocker` has been stopped.
      */
-    stop(id: number): void;
+    stop(id: number): boolean;
   }
 
   interface PrinterInfo {
@@ -8594,7 +8602,7 @@ export declare namespace Electron {
      * make a permission request if the check is denied. To clear the handler, call
      * `setPermissionCheckHandler(null)`.
      */
-    setPermissionCheckHandler(handler: ((webContents: (WebContents) | (null), permission: string, requestingOrigin: string, details: PermissionCheckHandlerHandlerDetails) => boolean) | (null)): void;
+    setPermissionCheckHandler(handler: ((webContents: (WebContents) | (null), permission: 'clipboard-read' | 'clipboard-sanitized-write' | 'geolocation' | 'fullscreen' | 'hid' | 'idle-detection' | 'media' | 'mediaKeySystem' | 'midi' | 'midiSysex' | 'notifications' | 'openExternal' | 'pointerLock' | 'serial' | 'usb', requestingOrigin: string, details: PermissionCheckHandlerHandlerDetails) => boolean) | (null)): void;
     /**
      * Sets the handler which can be used to respond to permission requests for the
      * `session`. Calling `callback(true)` will allow the permission and
@@ -8603,7 +8611,7 @@ export declare namespace Electron {
      * `setPermissionCheckHandler` to get complete permission handling. Most web APIs
      * do a permission check and then make a permission request if the check is denied.
      */
-    setPermissionRequestHandler(handler: ((webContents: WebContents, permission: 'clipboard-read' | 'clipboard-sanitized-write' | 'media' | 'display-capture' | 'mediaKeySystem' | 'geolocation' | 'notifications' | 'midi' | 'midiSysex' | 'pointerLock' | 'fullscreen' | 'openExternal' | 'window-management' | 'unknown', callback: (permissionGranted: boolean) => void, details: PermissionRequestHandlerHandlerDetails) => void) | (null)): void;
+    setPermissionRequestHandler(handler: ((webContents: WebContents, permission: 'clipboard-read' | 'clipboard-sanitized-write' | 'display-capture' | 'fullscreen' | 'geolocation' | 'idle-detection' | 'media' | 'mediaKeySystem' | 'midi' | 'midiSysex' | 'notifications' | 'pointerLock' | 'openExternal' | 'window-management' | 'unknown', callback: (permissionGranted: boolean) => void, details: PermissionRequestHandlerHandlerDetails) => void) | (null)): void;
     /**
      * Adds scripts that will be executed on ALL web contents that are associated with
      * this session just before normal `preload` scripts run.
