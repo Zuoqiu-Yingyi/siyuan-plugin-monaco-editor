@@ -69,7 +69,7 @@ export class ExplorerIcon {
     }
 
     protected readonly i18n: MonacoEditorPlugin["i18n"];
-    protected readonly map: Map<string, string>; // 路径 -> 图标 ID 映射表
+    protected readonly map: Map<string, string>; // 相对路径 -> 图标 ID 映射表
     protected readonly material = {
         languageIds: new Map(language_icon as IEntries),
 
@@ -112,6 +112,23 @@ export class ExplorerIcon {
     /* 收缩节点 */
     public collapse(node: IFileTreeNodeStores): void {
         node.icon.set(this.make(get(node.type), get(node.relative), false));
+    }
+
+    /* 根据节点信息获取浮窗预览 ID */
+    public getPopoverID(
+        type: FileTreeNodeType,
+        path: string,
+    ): string {
+        const info = parse(path.toLowerCase()); // 节点路径信息
+
+        switch (true) {
+            case /^data\/\d{14}-[0-9a-z]{7}/.test(info.dir): // 笔记本下的文件/文件夹
+                if (/^\d{14}-[0-9a-z]{7}$/.test(info.name)) { // 文档文件/文件夹
+                    return info.name;
+                }
+            default:
+                return "";
+        }
     }
 
     /* 根据节点信息生成图标 ID */
