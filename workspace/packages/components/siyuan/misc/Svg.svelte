@@ -16,6 +16,8 @@
 -->
 
 <script lang="ts">
+    import regexp from "@workspace/utils/regexp";
+
     export let icon: string;
     export let id: string = "";
     export let className: string = "";
@@ -25,7 +27,7 @@
 <svg
     {style}
     data-id={id}
-    class:popover__block={id}
+    class:popover__block={regexp.id.test(id)}
     class={className}
 >
     <use xlink:href={icon} />

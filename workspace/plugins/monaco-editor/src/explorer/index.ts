@@ -676,6 +676,7 @@ export class Explorer implements ITree {
 
                 icon: this.icon.make(FileTreeNodeType.Folder, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.Folder, item.relative),
+                iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.Folder, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,
@@ -698,6 +699,7 @@ export class Explorer implements ITree {
 
                 icon: this.icon.make(FileTreeNodeType.File, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.File, item.relative),
+                iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.File, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,

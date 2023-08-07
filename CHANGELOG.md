@@ -3,6 +3,7 @@
 ## 2023-08-08
 
 - 添加复制超链接菜单项 | Add copy hyperlink menu item.
+- 添加文档文件/文件夹鼠标悬浮预览功能 | Add document file/folder mouse hover preview function.
 
 ## 2023-08-07
 

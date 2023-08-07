@@ -51,6 +51,7 @@
 
     export let icon: IFileTreeNode["icon"] = "";
     export let iconAriaLabel: IFileTreeNode["iconAriaLabel"] = "";
+    export let iconPopoverID: IFileTreeNode["iconPopoverID"] = "";
 
     export let text: IFileTreeNode["text"];
     export let textAriaLabel: IFileTreeNode["textAriaLabel"] = "";
@@ -98,6 +99,7 @@
 
         icon: writable(icon),
         iconAriaLabel: writable(iconAriaLabel),
+        iconPopoverID: writable(iconPopoverID),
 
         text: writable(text),
         textAriaLabel: writable(textAriaLabel),
@@ -140,6 +142,7 @@
 
     $: props.icon.set(icon);
     $: props.iconAriaLabel.set(iconAriaLabel);
+    $: props.iconPopoverID.set(iconPopoverID);
 
     $: props.text.set(text);
     $: props.textAriaLabel.set(textAriaLabel);
@@ -182,6 +185,7 @@
 
         props.icon.subscribe(v => (icon = v)), //
         props.iconAriaLabel.subscribe(v => (iconAriaLabel = v)), //
+        props.iconPopoverID.subscribe(v => (iconPopoverID = v)), //
 
         props.text.subscribe(v => (text = v)), //
         props.textAriaLabel.subscribe(v => (textAriaLabel = v)), //
@@ -376,7 +380,10 @@
     >
         {#if icon.startsWith("#")}
             <!-- svg 图标 -->
-            <Svg {icon} />
+            <Svg
+                {icon}
+                id={iconPopoverID}
+            />
         {:else if icon.startsWith("/")}
             <!-- url 图标 -->
             <img
@@ -388,16 +395,28 @@
             {icon}
         {:else if type === FileTreeNodeType.File}
             <!-- 文件图标 -->
-            <Svg icon={"#iconFile"} />
+            <Svg
+                icon={"#iconFile"}
+                id={iconPopoverID}
+            />
         {:else if type === FileTreeNodeType.Folder}
             <!-- 文件夹图标 -->
-            <Svg icon={"#iconFolder"} />
+            <Svg
+                icon={"#iconFolder"}
+                id={iconPopoverID}
+            />
         {:else if type === FileTreeNodeType.Root}
             <!-- 根目录图标 -->
-            <Svg icon={"#iconFilesRoot"} />
+            <Svg
+                icon={"#iconFilesRoot"}
+                id={iconPopoverID}
+            />
         {:else}
             <!-- 未知图标 -->
-            <Svg icon={"#iconHelp"} />
+            <Svg
+                icon={"#iconHelp"}
+                id={iconPopoverID}
+            />
         {/if}
     </span>
 

@@ -86,6 +86,7 @@ export interface IFileTreeNode {
 
     icon?: string; // 图标
     iconAriaLabel?: string; // 图标提示文本 (目录备注)
+    iconPopoverID?: string; // 图标浮窗预览块 ID
 
     text: string; // 文本
     textAriaLabel: string; // 文本提示文本 (相对路径)
