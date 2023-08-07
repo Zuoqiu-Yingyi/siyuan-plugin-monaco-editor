@@ -293,6 +293,9 @@
         "copy": {
             "label": "複製"
         },
+        "copyEditHyperlink": {
+            "label": "複製編輯超連結"
+        },
         "copyFullPath": {
             "label": "複製完整路徑"
         },
@@ -301,6 +304,9 @@
         },
         "copyName": {
             "label": "複製名稱"
+        },
+        "copyPreviewHyperlink": {
+            "label": "複製預覽超連結"
         },
         "copyReferencePath": {
             "label": "複製引用路徑"
@@ -500,14 +506,14 @@
                 "description": "是否啟用資源管理器側邊面板",
                 "title": "資源管理器"
             },
-            "safeMode": {
-                "description": "是否禁用重要目錄下的危險操作",
-                "title": "安全模式"
-            },
             "reset": {
                 "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
                 "text": "重置",
                 "title": "重置設定選項"
+            },
+            "safeMode": {
+                "description": "是否禁用重要目錄下的危險操作",
+                "title": "安全模式"
             },
             "title": "常規設定"
         },
