@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-08
+
+- 添加复制超链接菜单项 | Add copy hyperlink menu item.
+
 ## 2023-08-07
 
 - 支持使用 `siyuan://plugins/monaco-editor/workspace/path/to/file` URL 打开文件 | Support opening files using the `siyuan://plugins/monaco-editor/workspace/path/to/file` URL.

@@ -7,11 +7,13 @@
     },
     "devDependencies": {
         "@types/file-saver": "^2.0.5",
+        "@types/html-escaper": "^3.0.0",
         "@types/streamsaver": "^2.0.1",
         "binary-extensions": "^2.2.0",
         "copy-to-clipboard": "^3.3.3",
         "deepmerge": "^4.3.1",
         "file-saver": "^2.0.5",
+        "html-escaper": "^3.0.3",
         "mapbox-to-css-font": "^2.4.2",
         "normalize-path": "^3.0.0",
         "parse-data-url": "^5.0.0",

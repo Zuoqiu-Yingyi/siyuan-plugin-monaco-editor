@@ -293,6 +293,9 @@
         "copy": {
             "label": "复制"
         },
+        "copyEditHyperlink": {
+            "label": "复制编辑超链接"
+        },
         "copyFullPath": {
             "label": "复制完整路径"
         },
@@ -301,6 +304,9 @@
         },
         "copyName": {
             "label": "复制名称"
+        },
+        "copyPreviewHyperlink": {
+            "label": "复制预览超链接"
         },
         "copyReferencePath": {
             "label": "复制引用路径"
