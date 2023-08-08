@@ -4,6 +4,7 @@
 
 - 添加复制超链接菜单项 | Add copy hyperlink menu item.
 - 添加文档文件/文件夹鼠标悬浮预览功能 | Add document file/folder mouse hover preview function.
+- 添加拖拽文件至文件夹时自动展开文件夹功能 | Add the function of automatically expanding the folder when dragging files to the folder.
 
 ## 2023-08-07
 
