@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-10
+
+- 添加格式化 Markdown 文本功能 | Add function of formatting Markdown text.
+
 ## 2023-08-08
 
 - 添加复制超链接菜单项 | Add copy hyperlink menu item.

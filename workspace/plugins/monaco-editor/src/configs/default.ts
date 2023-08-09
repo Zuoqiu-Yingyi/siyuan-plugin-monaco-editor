@@ -19,6 +19,13 @@ import type { IConfig, IMonacoEditorOptions } from "@/types/config";
 import { MouseButton } from "@workspace/utils/shortcut";
 // import type { editor as Editor } from "monaco-editor";
 
+export function getCodeFontFamily(
+    element: HTMLElement = document.documentElement,
+    property: string = "--b3-font-family-code"
+): string {
+    return globalThis.getComputedStyle(element).getPropertyValue(property);
+}
+
 /**
  * 将思源的设置转换为编辑器设置
  */
@@ -28,7 +35,7 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
          * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle
          * REF: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties#javascript_%E4%B8%AD%E7%9A%84%E5%80%BC
          */
-        fontFamily: globalThis.getComputedStyle(document.documentElement).getPropertyValue("--b3-font-family-code"),
+        fontFamily: getCodeFontFamily(),
         fontLigatures: config.editor.codeLigatures,
         mouseWheelZoom: config.editor.fontSizeScrollZoom,
         readOnly: config.editor.readOnly,
