@@ -54,6 +54,7 @@ import Settings from "./components/Settings.svelte";
 /* 项目资源 */
 import {
     DEFAULT_CONFIG,
+    getCodeFontFamily,
     siyuanConfig2EditorOptions,
 } from "./configs/default";
 import { Inline, Language } from "./handlers/block";
@@ -316,6 +317,10 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     onLayoutReady(): void {
         // this.openSetting();
+        /* 若之前未查询到 --b3-font-family-code */
+        if (this.config?.editor?.options) {
+            this.config.editor.options.fontFamily = getCodeFontFamily();
+        }
     }
 
     onunload(): void {
@@ -379,6 +384,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     /* 通过思源配置更新插件配置 */
     public updateConfigBySiyuanConfig(): void {
         this.config.editor.options = merge(this.config.editor.options, siyuanConfig2EditorOptions());
+        // this.logger.debug(this.config.editor.options);
     }
 
     /* 更新侧边栏编辑器内容 */

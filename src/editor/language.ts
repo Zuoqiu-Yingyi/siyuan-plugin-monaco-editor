@@ -19,6 +19,7 @@ import type { IEditorEvent, IPlugin } from "@/types/editor";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { default as Monaco, languages } from "monaco-editor";
 import type { createEventDispatcher } from "svelte";
+import { MarkdownFormatter } from "./markdown/formatter";
 
 
 /* 将 heightlight.js 的语言映射为 monaco 支持的语言 */
@@ -145,6 +146,7 @@ export class Languages {
             /* 注册思源相关超链接悬浮解析器 */
             this._monaco.languages.registerHoverProvider(id, this.siyuanHoverProvider);
 
+
             if (lang.aliases) {
                 lang.aliases.forEach(alias => {
                     this._map_alias_id.set(this.wash(alias), id);
@@ -172,6 +174,9 @@ export class Languages {
         this._map_extension_id.set(".sy", "json");
         this._map_extension_id.set(".ipynb", "json");
         this._map_extension_id.set(".drawio", "xml");
+
+        /* 注册 Markdown 格式化工具 */
+        this._monaco.languages.registerDocumentFormattingEditProvider("markdown", new MarkdownFormatter(this._monaco));
     }
 
     /* 鼠标悬浮在思源链接 */
