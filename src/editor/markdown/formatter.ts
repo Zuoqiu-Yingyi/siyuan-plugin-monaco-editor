@@ -17,8 +17,10 @@
 
 /**
  * REF: https://github.com/yzhang-gh/vscode-markdown/blob/master/src/tableFormatter.ts
+ * version: 3.4.0
  */
 
+import type { IPlugin } from "@/types/editor";
 import GraphemeSplitter from "grapheme-splitter";
 import type Monaco from "monaco-editor";
 
@@ -39,6 +41,7 @@ export class MarkdownFormatter implements Monaco.languages.DocumentFormattingEdi
     public static readonly splitter = new GraphemeSplitter();
 
     constructor(
+        public readonly pluign: IPlugin,
         protected readonly _monaco: typeof Monaco,
     ) { }
 
