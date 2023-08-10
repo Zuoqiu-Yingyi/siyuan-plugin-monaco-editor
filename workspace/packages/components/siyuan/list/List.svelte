@@ -22,6 +22,7 @@
 
     export let items: IListItem[] = [];
     export let className: string = "b3-list b3-list--background";
+    export let border: boolean = false;
     export let fn__none: boolean = false;
     export let flex_1: boolean = true;
     export let width: number = 0;
@@ -30,6 +31,7 @@
 
 <ul
     class={className}
+    class:b3-list--border={border}
     class:fn__none={fn__none}
     class:fn__flex-1={flex_1}
     style:margin-left={indent}

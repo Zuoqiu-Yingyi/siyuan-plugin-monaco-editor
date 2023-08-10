@@ -23,6 +23,9 @@ export interface IListItem {
     meta?: string, // 元信息
     style?: string, // 样式
 
+    narrow?: boolean, // 是否为紧凑布局
+    border?: boolean, // 是否显示下级列表边框
+
     fold?: boolean, // 是否折叠
     children?: IListItem[], // 下级列表
     indent?: string, // 下级列表缩进

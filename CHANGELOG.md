@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-11
+
+- 添加 KaTeX 自动补全功能 | Add KaTeX auto-completion function.
+
 ## 2023-08-10
 
 - 添加格式化 Markdown 文本功能 | Add function of formatting Markdown text.

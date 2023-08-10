@@ -20,6 +20,7 @@ import type { BlockID } from "@workspace/types/siyuan";
 import type { default as Monaco, languages } from "monaco-editor";
 import type { createEventDispatcher } from "svelte";
 import { MarkdownFormatter } from "./markdown/formatter";
+import { MarkdownCompletion } from "./markdown/completion";
 
 
 /* 将 heightlight.js 的语言映射为 monaco 支持的语言 */
@@ -176,7 +177,9 @@ export class Languages {
         this._map_extension_id.set(".drawio", "xml");
 
         /* 注册 Markdown 格式化工具 */
-        this._monaco.languages.registerDocumentFormattingEditProvider("markdown", new MarkdownFormatter(this._monaco));
+        this._monaco.languages.registerDocumentFormattingEditProvider("markdown", new MarkdownFormatter(this.pluign, this._monaco));
+        /* 注册 Markdown 自动补全工具 */
+        this._monaco.languages.registerCompletionItemProvider("markdown", new MarkdownCompletion(this.pluign, this._monaco));
     }
 
     /* 鼠标悬浮在思源链接 */

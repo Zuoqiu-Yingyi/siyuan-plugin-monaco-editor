@@ -29,6 +29,9 @@
     export let meta: IListItem["meta"] = ""; // 元信息
     export let style: IListItem["style"] = ""; // 文本样式
 
+    export let narrow: IListItem["narrow"] = false; // 是否为紧凑布局
+    export let border: IListItem["border"] = false; // 是否显示下级列表边框
+
     export let fold: IListItem["fold"] = true; // 是否折叠下级列表
     export let children: IListItem["children"] = []; // 下级列表
     export let indent: IListItem["indent"] = ""; // 下级列表
@@ -41,6 +44,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <li
     on:click={onToggle}
+    class:toggle={children.length > 0}
+    class:b3-list-item--narrow={narrow}
     class="b3-list-item"
 >
     <!-- 下级列表折叠按钮 -->
@@ -86,7 +91,7 @@
 {#if children.length > 0}
     <List
         items={children}
-        className={null}
+        {border}
         fn__none={fold}
         flex_1={false}
         {indent}
