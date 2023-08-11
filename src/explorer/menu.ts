@@ -35,6 +35,7 @@ import {
 } from "@workspace/utils/siyuan/text/span";
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
+import { escapeHTML } from "@workspace/utils/misc/html";
 import { ResourceOption, isResourceOperable } from "@/utils/permission";
 import {
     openPath,
@@ -43,6 +44,7 @@ import {
 import { showOpenDialog, showSaveDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
+import { OpenType } from "@/utils/url";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -439,18 +441,25 @@ export class ExplorerContextMenu {
                 label: this.i18n.menu.copy.label,
             },
             submenu: (() => {
-                const submenu: IMenuItem[] = [
+                const submenu: IMenuItem[] = [];
+                submenu.push(
                     /* 复制名称 */
                     {
                         type: MenuItemType.Action,
                         options: {
                             icon: ExplorerIcon.makeDefaultNodeIcon(type),
                             label: this.i18n.menu.copyName.label,
-                            accelerator: name,
+                            accelerator: escapeHTML(name),
                             click: () => {
                                 copyText(name);
                             },
                         },
+                        root: true,
+                        folder: true,
+                        file: true,
+                    },
+                    {
+                        type: MenuItemType.Separator,
                         root: true,
                         folder: true,
                         file: true,
@@ -461,7 +470,7 @@ export class ExplorerContextMenu {
                         options: {
                             icon: "iconCopy",
                             label: this.i18n.menu.copyRelativePath.label,
-                            accelerator: relative,
+                            accelerator: escapeHTML(relative),
                             click: () => {
                                 copyText(relative);
                             },
@@ -476,7 +485,7 @@ export class ExplorerContextMenu {
                         options: {
                             icon: "iconCopy",
                             label: this.i18n.menu.copyFullPath.label,
-                            accelerator: path,
+                            accelerator: escapeHTML(path),
                             click: () => {
                                 copyText(path);
                             },
@@ -485,14 +494,77 @@ export class ExplorerContextMenu {
                         folder: true,
                         file: true,
                     },
-                ];
+                    {
+                        type: MenuItemType.Separator,
+                        root: true,
+                        folder: true,
+                        file: true,
+                    },
+                );
+
+                {
+                    const url = new URL(`siyuan://plugins/${this.plugin.name}/workspace/${relative}`);
+                    const href_edit = url.href;
+
+                    /* 复制编辑超链接 */
+                    submenu.push({
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconEdit",
+                            label: this.i18n.menu.copyEditHyperlink.label,
+                            accelerator: escapeHTML(href_edit),
+                            click: () => {
+                                copyText(href_edit);
+                            },
+                        },
+                        root: false,
+                        folder: false,
+                        file: true,
+                    });
+
+                    if (accessible) {
+                        url.searchParams.set("type", OpenType.Preview);
+                        const href_preview = url.href;
+
+                        /* 复制预览超链接 */
+                        submenu.push({
+                            type: MenuItemType.Action,
+                            options: {
+                                icon: "iconPreview",
+                                label: this.i18n.menu.copyPreviewHyperlink.label,
+                                accelerator: escapeHTML(href_preview),
+                                click: () => {
+                                    copyText(href_preview);
+                                },
+                            },
+                            root: false,
+                            folder: false,
+                            file: true,
+                        });
+                    }
+
+                    submenu.push({
+                        type: MenuItemType.Separator,
+                        root: false,
+                        folder: false,
+                        file: true,
+                    });
+                }
+
+                submenu.push({
+                    type: MenuItemType.Separator,
+                    root: true,
+                    folder: true,
+                    file: true,
+                });
+
+
                 if (accessible) {
                     const pathname = workspacePath2StaticPathname(relative);
                     const url = new URL(`${globalThis.document.baseURI}${pathname}`);
                     const link1 = `[${name}](<${pathname}>)`;
                     const link2 = `[${name}](<${url.href}>)`;
-                    const link1_accelerator = `[${name}](&lt;${pathname}&gt;)`;
-                    const link2_accelerator = `[${name}](&lt;${url.href}&gt;)`;
+
                     submenu.push(
                         /* 复制引用路径 */
                         {
@@ -500,7 +572,7 @@ export class ExplorerContextMenu {
                             options: {
                                 icon: "iconLink",
                                 label: this.i18n.menu.copyReferencePath.label,
-                                accelerator: pathname,
+                                accelerator: escapeHTML(pathname),
                                 click: () => {
                                     copyText(pathname);
                                 },
@@ -515,7 +587,7 @@ export class ExplorerContextMenu {
                             options: {
                                 icon: "iconLink",
                                 label: this.i18n.menu.copyURL.label,
-                                accelerator: url.href,
+                                accelerator: escapeHTML(url.href),
                                 click: () => {
                                     copyText(url.href);
                                 },
@@ -530,7 +602,7 @@ export class ExplorerContextMenu {
                             options: {
                                 icon: "iconMarkdown",
                                 label: this.i18n.menu.copyMarkdownHyperlink.label,
-                                accelerator: link1_accelerator,
+                                accelerator: escapeHTML(link1),
                                 click: () => {
                                     copyText(link1);
                                 },
@@ -544,7 +616,7 @@ export class ExplorerContextMenu {
                             options: {
                                 icon: "iconMarkdown",
                                 label: this.i18n.menu.copyMarkdownHyperlink.label,
-                                accelerator: link2_accelerator,
+                                accelerator: escapeHTML(link2),
                                 click: () => {
                                     copyText(link2);
                                 },

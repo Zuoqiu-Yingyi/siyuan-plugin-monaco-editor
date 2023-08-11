@@ -36,7 +36,7 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
 import { getBlockID, getHistoryCreated, getHistoryPath, getShorthandID, getSnapshotIDs, getSnippetID } from "@workspace/utils/siyuan/dom";
-import { isStaticPathname } from "@workspace/utils/siyuan/url";
+import { isStaticPathname, isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
@@ -54,6 +54,7 @@ import Settings from "./components/Settings.svelte";
 /* 项目资源 */
 import {
     DEFAULT_CONFIG,
+    getCodeFontFamily,
     siyuanConfig2EditorOptions,
 } from "./configs/default";
 import { Inline, Language } from "./handlers/block";
@@ -61,7 +62,7 @@ import { EditorWindow } from "./editor/window";
 import { HandlerType, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
-import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent } from "@workspace/types/siyuan/events";
+import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginsEvent } from "@workspace/types/siyuan/events";
 import type { BlockID } from "@workspace/types/siyuan";
 
 import type {
@@ -69,10 +70,14 @@ import type {
 } from "./types/config";
 import type { I18N } from "@/utils/i18n";
 import type { IDockData } from "./types/dock";
+import { trimPrefix } from "@workspace/utils/misc/string";
+import { OpenMode, OpenType } from "./utils/url";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
-    static readonly GLOBAL_CONFIG_NAME = "global-config";
-    static readonly CUSTOM_MENU_NAME = "plugin-monaco-editor-custom-menu";
+    public static readonly GLOBAL_CONFIG_NAME = "global-config";
+    public static readonly CUSTOM_MENU_NAME = "plugin-monaco-editor-custom-menu";
+    public static readonly CUSTOM_TAB_TYPE_EDITOR = "-editor-tab";
+    public static readonly CUSTOM_TAB_TYPE_PREVIEW = "-preview-tab";
 
     declare public readonly i18n: I18N;
     public readonly siyuan = siyuan;
@@ -112,7 +117,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
         const plugin = this;
         this.editorTab = this.addTab({
-            type: "-editor-tab",
+            type: MonacoEditorPlugin.CUSTOM_TAB_TYPE_EDITOR,
             beforeDestroy() {
                 // plugin.logger.debug("tab-beforeDestroy");
             },
@@ -141,7 +146,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             },
         });
         this.previewTab = this.addTab({
-            type: "-preview-tab",
+            type: MonacoEditorPlugin.CUSTOM_TAB_TYPE_PREVIEW,
             init() {
                 // plugin.logger.debug("tab-init");
                 // plugin.logger.debug(this);
@@ -284,6 +289,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 /* 超链接菜单 */
                 this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
+                /* 思源 URL */
+                this.eventBus.on("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
+
                 // /* 快捷键/命令 */
                 // this.addCommand({
                 //     langKey: "openDesktopWindow",
@@ -309,6 +317,10 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     onLayoutReady(): void {
         // this.openSetting();
+        /* 若之前未查询到 --b3-font-family-code */
+        if (this.config?.editor?.options) {
+            this.config.editor.options.fontFamily = getCodeFontFamily();
+        }
     }
 
     onunload(): void {
@@ -320,6 +332,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
         this.eventBus.off("open-menu-link", this.linkMenuEventListener);
+        this.eventBus.off("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
     }
 
     openSetting(): void {
@@ -371,6 +384,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     /* 通过思源配置更新插件配置 */
     public updateConfigBySiyuanConfig(): void {
         this.config.editor.options = merge(this.config.editor.options, siyuanConfig2EditorOptions());
+        // this.logger.debug(this.config.editor.options);
     }
 
     /* 更新侧边栏编辑器内容 */
@@ -888,6 +902,148 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     label: this.i18n.displayName,
                     submenu,
                 });
+            }
+        }
+    }
+
+    /* 思源 URL 打开事件监听器 */
+    protected readonly openSiyuanUrlEventListener = async (e: IOpenSiyuanUrlPluginsEvent) => {
+        // this.logger.debug(e);
+        const url = new URL(e.detail.url);
+        if (url.pathname.startsWith(`//plugins/${this.name}/workspace/`)) {
+            const type = (url.searchParams.get("type") as OpenType | null);
+            const mode = (url.searchParams.get("mode") as OpenMode | null);
+            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/workspace/`);
+
+            switch (type) {
+                default:
+                case OpenType.Editor: { // 文本编辑器
+                    const custom = {
+                        icon: "iconCode",
+                        title: relative,
+                        fn: this.editorTab,
+                        data: {
+                            options: this.config.editor.options,
+                            facadeOptions: {
+                                type: HandlerType.asset,
+                                handler: {
+                                    path: relative,
+                                    updatable: true,
+                                },
+                                breadcrumb: {
+                                    path: relative,
+                                },
+                            } as IFacadeOptions,
+                        },
+                    }; // 自定义页签参数
+
+                    switch (mode) {
+                        default:
+                        case OpenMode.Tab:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabBackground:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                keepCursor: true,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabRight:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                position: "right",
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabBottom:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                position: "bottom",
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.Window: {
+                            const { screenX: x, screenY: y } = globalThis.siyuan.coordinates;
+
+                            const editor = new EditorWindow(this);
+                            await editor.init(custom.data);
+                            editor.open({
+                                x,
+                                y,
+                                title: custom.title,
+                                ...this.config.window.options,
+                            });
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case OpenType.Preview: { // 文件预览
+                    if (isStaticWebFileServicePath(relative)) {
+                        const pathname = workspacePath2StaticPathname(relative);
+                        const custom = {
+                            icon: "iconPreview",
+                            title: relative,
+                            fn: this.previewTab,
+                            data: {
+                                pathname,
+                                title: relative,
+                            },
+                        }; // 自定义页签参数
+
+                        switch (mode) {
+                            default:
+                            case OpenMode.Tab:
+                                siyuan.openTab({
+                                    app: this.app,
+                                    custom,
+                                    keepCursor: false,
+                                    removeCurrentTab: false,
+                                });
+                                break;
+                            case OpenMode.TabBackground:
+                                siyuan.openTab({
+                                    app: this.app,
+                                    custom,
+                                    keepCursor: true,
+                                    removeCurrentTab: false,
+                                });
+                                break;
+                            case OpenMode.TabRight:
+                                siyuan.openTab({
+                                    app: this.app,
+                                    custom,
+                                    position: "right",
+                                    keepCursor: false,
+                                    removeCurrentTab: false,
+                                });
+                                break;
+                            case OpenMode.TabBottom:
+                                siyuan.openTab({
+                                    app: this.app,
+                                    custom,
+                                    position: "bottom",
+                                    keepCursor: false,
+                                    removeCurrentTab: false,
+                                });
+                                break;
+                            case OpenMode.Window:
+                                break;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }

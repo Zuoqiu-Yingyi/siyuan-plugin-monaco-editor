@@ -293,6 +293,9 @@
         "copy": {
             "label": "Copy"
         },
+        "copyEditHyperlink": {
+            "label": "Copy Edit Hyperlink"
+        },
         "copyFullPath": {
             "label": "Copy Absolute Path"
         },
@@ -301,6 +304,9 @@
         },
         "copyName": {
             "label": "Copy Name"
+        },
+        "copyPreviewHyperlink": {
+            "label": "Copy Preview Hyperlink"
         },
         "copyReferencePath": {
             "label": "Copy Reference Path"
@@ -339,7 +345,7 @@
         },
         "export": {
             "accelerator": "Export",
-            "label": "Export"
+            "label": "Export..."
         },
         "exportFile": {
             "label": "File Export",
@@ -355,11 +361,11 @@
             "label": "Import"
         },
         "importFile": {
-            "label": "Files Import",
+            "label": "Files Import...",
             "title": "Import files to ${1}"
         },
         "importFolder": {
-            "label": "Folders Import",
+            "label": "Folders Import...",
             "title": "Import folders to ${1}"
         },
         "move": {
@@ -370,7 +376,7 @@
             "label": "New"
         },
         "newFile": {
-            "label": "New File",
+            "label": "New File...",
             "placeholder": "File name",
             "text": "Create a new file in the folder ${1}",
             "tips": {
@@ -382,7 +388,7 @@
             }
         },
         "newFolder": {
-            "label": "New Folder",
+            "label": "New Folder...",
             "placeholder": "Folder name",
             "text": "Create a new folder in the folder ${1}",
             "tips": {
@@ -433,7 +439,7 @@
             "label": "Refresh the Directory Deeply"
         },
         "rename": {
-            "label": "Rename"
+            "label": "Rename..."
         },
         "renameFile": {
             "label": "Rename File",
@@ -477,10 +483,10 @@
             }
         },
         "uploadFile": {
-            "label": "Files Upload"
+            "label": "Files Upload..."
         },
         "uploadFolder": {
-            "label": "Folders Upload"
+            "label": "Folders Upload..."
         },
         "viewNetworkFile": {
             "label": "View Network File"
@@ -500,14 +506,14 @@
                 "description": "Enable explorer sidebar panel",
                 "title": "Explorer"
             },
-            "safeMode": {
-                "description": "Whether to disable dangerous operations under the important directory",
-                "title": "Safe Mode"
-            },
             "reset": {
                 "description": "Reset all settings options to default (page will refresh after reset)",
                 "text": "Reset",
                 "title": "Reset Settings"
+            },
+            "safeMode": {
+                "description": "Whether to disable dangerous operations under the important directory",
+                "title": "Safe Mode"
             },
             "title": "General Settings"
         },

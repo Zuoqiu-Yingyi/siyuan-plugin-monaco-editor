@@ -135,6 +135,9 @@ export class Explorer implements ITree {
     /* 是否拖拽出窗口 */
     protected outer: boolean = false;
 
+    /* 拖拽进入用定时器 */
+    protected timer;
+
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
         public readonly workspace: string, // 工作空间目录
@@ -454,6 +457,19 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.Root:
                 case FileTreeNodeType.Folder:
                     node.dragover.set(true);
+
+                    if (get(node.folded)) {
+                        /**
+                         * 设置展开定时器
+                         * 避免被其他元素的拖拽离开事件移除
+                         */
+                        setTimeout(() => {
+                            this.timer = setTimeout(() => {
+                                this.timer = undefined;
+                                this.expandNode(node);
+                            }, 500);
+                        });
+                    }
                     break;
                 case FileTreeNodeType.File: // 文件所在目录
                     const parent = this.path2node(get(node.directory));
@@ -496,6 +512,10 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.Root:
                 case FileTreeNodeType.Folder:
                     node.dragover.set(false);
+
+                    /* 移除定时器 */
+                    clearTimeout(this.timer);
+                    this.timer = undefined;
                     break;
                 case FileTreeNodeType.File: // 文件所在目录
                     const parent = this.path2node(get(node.directory));
@@ -676,6 +696,7 @@ export class Explorer implements ITree {
 
                 icon: this.icon.make(FileTreeNodeType.Folder, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.Folder, item.relative),
+                iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.Folder, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,
@@ -698,6 +719,7 @@ export class Explorer implements ITree {
 
                 icon: this.icon.make(FileTreeNodeType.File, item.relative),
                 iconAriaLabel: this.tooltip.make(FileTreeNodeType.File, item.relative),
+                iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.File, item.relative),
 
                 text: item.name,
                 textAriaLabel: item.relative,

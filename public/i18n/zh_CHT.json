@@ -293,6 +293,9 @@
         "copy": {
             "label": "複製"
         },
+        "copyEditHyperlink": {
+            "label": "複製編輯超連結"
+        },
         "copyFullPath": {
             "label": "複製完整路徑"
         },
@@ -301,6 +304,9 @@
         },
         "copyName": {
             "label": "複製名稱"
+        },
+        "copyPreviewHyperlink": {
+            "label": "複製預覽超連結"
         },
         "copyReferencePath": {
             "label": "複製引用路徑"
@@ -339,7 +345,7 @@
         },
         "export": {
             "accelerator": "導出",
-            "label": "導出"
+            "label": "導出..."
         },
         "exportFile": {
             "label": "導出檔案",
@@ -355,11 +361,11 @@
             "label": "導入"
         },
         "importFile": {
-            "label": "導入文件",
+            "label": "導入文件...",
             "title": "導入文件至 ${1}"
         },
         "importFolder": {
-            "label": "導入文件夾",
+            "label": "導入文件夾...",
             "title": "導入文件夾至 ${1}"
         },
         "move": {
@@ -370,7 +376,7 @@
             "label": "新增"
         },
         "newFile": {
-            "label": "新建檔案",
+            "label": "新建檔案...",
             "placeholder": "檔名",
             "text": "在資料夾 ${1} 下新建一個檔案",
             "tips": {
@@ -382,7 +388,7 @@
             }
         },
         "newFolder": {
-            "label": "新建資料夾",
+            "label": "新建資料夾...",
             "placeholder": "資料夾名",
             "text": "在資料夾 ${1} 下新建一個資料夾",
             "tips": {
@@ -433,7 +439,7 @@
             "label": "深度重新整理該目錄"
         },
         "rename": {
-            "label": "重新命名"
+            "label": "重新命名..."
         },
         "renameFile": {
             "label": "重新命名檔案",
@@ -477,10 +483,10 @@
             }
         },
         "uploadFile": {
-            "label": "上傳檔案"
+            "label": "上傳檔案..."
         },
         "uploadFolder": {
-            "label": "上傳資料夾"
+            "label": "上傳資料夾..."
         },
         "viewNetworkFile": {
             "label": "查看網路文檔"
@@ -500,14 +506,14 @@
                 "description": "是否啟用資源管理器側邊面板",
                 "title": "資源管理器"
             },
-            "safeMode": {
-                "description": "是否禁用重要目錄下的危險操作",
-                "title": "安全模式"
-            },
             "reset": {
                 "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
                 "text": "重置",
                 "title": "重置設定選項"
+            },
+            "safeMode": {
+                "description": "是否禁用重要目錄下的危險操作",
+                "title": "安全模式"
             },
             "title": "常規設定"
         },

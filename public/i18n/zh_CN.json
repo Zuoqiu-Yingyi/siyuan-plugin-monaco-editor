@@ -293,6 +293,9 @@
         "copy": {
             "label": "复制"
         },
+        "copyEditHyperlink": {
+            "label": "复制编辑超链接"
+        },
         "copyFullPath": {
             "label": "复制完整路径"
         },
@@ -301,6 +304,9 @@
         },
         "copyName": {
             "label": "复制名称"
+        },
+        "copyPreviewHyperlink": {
+            "label": "复制预览超链接"
         },
         "copyReferencePath": {
             "label": "复制引用路径"
@@ -339,7 +345,7 @@
         },
         "export": {
             "accelerator": "导出",
-            "label": "导出"
+            "label": "导出..."
         },
         "exportFile": {
             "label": "导出文件",
@@ -355,11 +361,11 @@
             "label": "导入"
         },
         "importFile": {
-            "label": "导入文件",
+            "label": "导入文件...",
             "title": "导入文件至 ${1}"
         },
         "importFolder": {
-            "label": "导入文件夹",
+            "label": "导入文件夹...",
             "title": "导入文件夹至 ${1}"
         },
         "move": {
@@ -370,7 +376,7 @@
             "label": "新建"
         },
         "newFile": {
-            "label": "新建文件",
+            "label": "新建文件...",
             "placeholder": "文件名",
             "text": "在文件夹 ${1} 下新建一个文件",
             "tips": {
@@ -382,7 +388,7 @@
             }
         },
         "newFolder": {
-            "label": "新建文件夹",
+            "label": "新建文件夹...",
             "placeholder": "文件夹名",
             "text": "在文件夹 ${1} 下新建一个文件夹",
             "tips": {
@@ -433,7 +439,7 @@
             "label": "深度刷新该目录"
         },
         "rename": {
-            "label": "重命名"
+            "label": "重命名..."
         },
         "renameFile": {
             "label": "重命名文件",
@@ -477,10 +483,10 @@
             }
         },
         "uploadFile": {
-            "label": "上传文件"
+            "label": "上传文件..."
         },
         "uploadFolder": {
-            "label": "上传文件夹"
+            "label": "上传文件夹..."
         },
         "viewNetworkFile": {
             "label": "查看网络文件"
@@ -500,37 +506,37 @@
                 "description": "是否启用资源管理器侧边面板",
                 "title": "资源管理器"
             },
-            "safeMode": {
-                "description": "是否禁用重要目录下的危险操作",
-                "title": "安全模式"
-            },
             "reset": {
                 "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
                 "text": "重置",
                 "title": "重置设置选项"
+            },
+            "safeMode": {
+                "description": "是否禁用重要目录下的危险操作",
+                "title": "安全模式"
             },
             "title": "常规设置"
         },
         "menuSettings": {
             "history1": {
                 "description": "文件历史面板的上下文菜单（右键菜单）",
-                "title": "文件历史菜單"
+                "title": "文件历史菜单"
             },
             "history2": {
                 "description": "文档历史面板的上下文菜单（右键菜单）",
-                "title": "文档历史菜單"
+                "title": "文档历史菜单"
             },
             "shorthand": {
                 "description": "收集箱的上下文菜单（右键菜单）",
-                "title": "收集箱菜單"
+                "title": "收集箱菜单"
             },
             "snapshot": {
                 "description": "快照面板的上下文菜单（右键菜单）",
-                "title": "快照面板菜單"
+                "title": "快照面板菜单"
             },
             "snippet": {
                 "description": "代码片段的上下文菜单（右键菜单）",
-                "title": "代码片段菜單"
+                "title": "代码片段菜单"
             },
             "title": "菜单设置"
         }
