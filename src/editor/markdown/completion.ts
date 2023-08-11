@@ -102,6 +102,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         this.displayMathSuggestionsJSON = JSON.stringify(this.displayMathSuggestions);
     }
 
+    /* 提供建议列表 */
     async provideCompletionItems(
         model: Monaco.editor.ITextModel,
         position: Monaco.Position,
@@ -153,6 +154,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         };
     }
 
+    /* 当前聚焦的建议 */
     async resolveCompletionItem(
         item: Monaco.languages.CompletionItem,
         token: Monaco.CancellationToken,
