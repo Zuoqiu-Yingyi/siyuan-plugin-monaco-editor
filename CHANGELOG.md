@@ -3,6 +3,7 @@
 ## 2023-08-11
 
 - 添加 KaTeX 自动补全功能 | Add KaTeX auto-completion function.
+- 添加 KaTeX 自动补全中的描述与详情信息 | Add description and details information in KaTeX auto-completion.
 
 ## 2023-08-10
 

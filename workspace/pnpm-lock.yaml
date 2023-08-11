@@ -136,6 +136,9 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
+      grapheme-splitter:
+        specifier: ^1.0.4
+        version: 1.0.4
       html-escaper:
         specifier: ^3.0.3
         version: 3.0.3
@@ -297,8 +300,8 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(monaco-editor@0.41.0)
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^2.4.4
-        version: 2.4.4(svelte@3.59.2)(vite@4.4.9)
+        specifier: ^2.4.5
+        version: 2.4.5(svelte@3.59.2)(vite@4.4.9)
       '@tsconfig/svelte':
         specifier: ^4.0.1
         version: 4.0.1
@@ -311,9 +314,6 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
-      grapheme-splitter:
-        specifier: ^1.0.4
-        version: 1.0.4
       less:
         specifier: ^4.2.0
         version: 4.2.0
@@ -2007,7 +2007,7 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte-inspector@1.0.3(@sveltejs/vite-plugin-svelte@2.4.4)(svelte@3.59.2)(vite@4.4.9):
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.3(@sveltejs/vite-plugin-svelte@2.4.5)(svelte@3.59.2)(vite@4.4.9):
     resolution: {integrity: sha512-Khdl5jmmPN6SUsVuqSXatKpQTMIifoQPDanaxC84m9JxIibWvSABJyHpyys0Z+1yYrxY5TTEQm+6elh0XCMaOA==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -2015,7 +2015,7 @@ packages:
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 2.4.4(svelte@3.59.2)(vite@4.4.9)
+      '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@3.59.2)(vite@4.4.9)
       debug: 4.3.4
       svelte: 3.59.2
       vite: 4.4.9(@types/node@20.4.9)(less@4.2.0)
@@ -2123,14 +2123,14 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte@2.4.4(svelte@3.59.2)(vite@4.4.9):
-    resolution: {integrity: sha512-Q5z7+iIjs3sw/Jquxaa9KSY5/MShboNjvsxnQYRMdREx/SBDmEYTjeXenpMBh6k0IQ3tMKESCiwKq3/TeAQ8Og==}
+  /@sveltejs/vite-plugin-svelte@2.4.5(svelte@3.59.2)(vite@4.4.9):
+    resolution: {integrity: sha512-UJKsFNwhzCVuiZd06jM/psscyNJNDwjQC+qIeb7GBJK9iWeQCcIyfcPWDvbCudfcJggY9jtxJeeaZH7uny93FQ==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.4)(svelte@3.59.2)(vite@4.4.9)
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.5)(svelte@3.59.2)(vite@4.4.9)
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
