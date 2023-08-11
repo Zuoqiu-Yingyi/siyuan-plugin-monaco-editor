@@ -31,10 +31,15 @@ export const special2 = [
 export const extend0 = [
     '\\',
     'newline',
+    'nobreak',
+    'allowbreak',
     'cr',
     'cline',
     'hline',
     'multicolumn',
+    'KaTeX',
+    'LaTeX',
+    'TeX',
 ];
 /* \cmd{} */
 export const extend1 = [
@@ -72,6 +77,19 @@ export const html2 = [
 // source https://github.com/KaTeX/KaTeX/blob/main/docs/supported.md
 //
 export const accents1 = [
+    // REF: https://katex.org/docs/supported#accents
+    '\'',
+    '`',
+    '^',
+    '~',
+    '=',
+    'u',
+    '.',
+    '"',
+    'r',
+    'H',
+    'v',
+
     'tilde', 'mathring',
     'widetilde', 'overgroup',
     'utilde', 'undergroup',
@@ -86,6 +104,11 @@ export const accents1 = [
     'widehat', 'widecheck', 'underbar'
 ];
 export const delimiters0 = [
+    // REF: https://katex.org/docs/supported#delimiters
+    '{',
+    '}',
+    '|',
+
     'lparen', 'rparen', 'lceil', 'rceil', 'uparrow',
     'lbrack', 'rbrack', 'lfloor', 'rfloor', 'downarrow',
     'lbrace', 'rbrace', 'lmoustache', 'rmoustache', 'updownarrow',
@@ -327,7 +350,12 @@ export const classAssignment1 = [
     'mathopen', 'mathord', 'mathpunct', 'mathrel'
 ];
 export const color2 = ['color', 'textcolor', 'colorbox'];
-export const font0 = ['rm', 'bf', 'it', 'sf', 'tt'];
+export const font0 = [
+    // REF: https://katex.org/docs/supported#style-color-size-and-font
+    'cal',
+
+    'rm', 'bf', 'it', 'sf', 'tt'
+];
 export const font1 = [
     'mathrm', 'mathbf', 'mathit',
     'mathnormal', 'textbf', 'textit',

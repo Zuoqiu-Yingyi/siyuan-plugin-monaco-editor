@@ -20,8 +20,8 @@
  * version: 3.4.0
  */
 
+import { splitter } from "@workspace/utils/misc/splitter";
 import type { IPlugin } from "@/types/editor";
-import GraphemeSplitter from "grapheme-splitter";
 import type Monaco from "monaco-editor";
 
 export interface ITableRange {
@@ -38,8 +38,6 @@ export enum ColumnAlignment {
 }
 
 export class MarkdownFormatter implements Monaco.languages.DocumentFormattingEditProvider {
-    public static readonly splitter = new GraphemeSplitter();
-
     constructor(
         public readonly pluign: IPlugin,
         protected readonly _monaco: typeof Monaco,
@@ -169,7 +167,7 @@ export class MarkdownFormatter implements Monaco.languages.DocumentFormattingEdi
                 // In typical fixed-width typesetting without ligature, one grapheme is finally mapped to one glyph.
                 // Such a glyph is usually the same width as an ASCII letter, but a CJK glyph is twice.
 
-                const graphemeCount = MarkdownFormatter.splitter.countGraphemes(cell);
+                const graphemeCount = splitter.countGraphemes(cell);
                 const cjkPoints = cell.match(cjkRegex);
                 const width = graphemeCount + (cjkPoints?.length ?? 0);
                 colWidth[iCol] = Math.max(colWidth[iCol] || 0, width);
@@ -217,7 +215,7 @@ export class MarkdownFormatter implements Monaco.languages.DocumentFormattingEdi
 
             let cells = row.map((cell, iCol) => {
                 const visualWidth = colWidth[iCol];
-                let jsLength = MarkdownFormatter.splitter.splitGraphemes(cell + ' '.repeat(visualWidth)).slice(0, visualWidth).join('').length;
+                let jsLength = splitter.splitGraphemes(cell + ' '.repeat(visualWidth)).slice(0, visualWidth).join('').length;
 
                 const cjkPoints = cell.match(cjkRegex);
                 if (cjkPoints) {
