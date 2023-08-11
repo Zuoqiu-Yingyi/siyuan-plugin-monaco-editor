@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.1.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.0...v0.1.1) (2023-08-11)
+
+
+### Miscellaneous
+
+* **custom-fonts:** release v1.1.0 ([dc06db4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/dc06db4f2a0d2b6d3d9a7133cf20f7634f5f5458))
+* **monaco-editor:** release v0.1.1 ([6b4071a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/6b4071ae89a570d9926ffab3580880b1097348c6))
+* **webview:** release v1.3.1 ([d81ba84](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/d81ba840bf04b37392ddcd4d7147c916d264647f))
+
+
+### Features
+
+* **custom-fonts:** 使用块菜单设置块字体 | Set block font using block menu. ([5cf3bcb](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/5cf3bcb74c381111eb524ea37ec28a3d964b4d2a))
+* **monaco-editor:** 支持使用 `siyuan://plugins/monaco-editor/workspace/path/to/file` URL 打开文件 | Support opening files using the `siyuan://plugins/monaco-editor/workspace/path/to/file` URL. ([ccc9680](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/ccc968010941c0b872682ddb8d6ca1423f8d6e09))
+* **monaco-editor:** 添加 KaTeX 自动补全中的描述与详情信息 | Add description and details information in KaTeX auto-completion. ([25c4e4a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/25c4e4ab01350e76704f06d6d2998431fd498b12))
+* **monaco-editor:** 添加 KaTeX 自动补全功能 | Add KaTeX auto-completion function. ([d4cd58c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/d4cd58c3f3ea0b503a6d5bef720c4626e24b68f5))
+* **monaco-editor:** 添加复制超链接菜单项 | Add copy hyperlink menu item. ([23a4834](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/23a4834081ec5aa4a0c235541461d10c270bdf15))
+* **monaco-editor:** 添加拖拽文件至文件夹时自动展开文件夹功能 | Add the function of automatically expanding the folder when dragging files to the folder. ([795d4cc](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/795d4cc3dcbe46e2df75fcc4a8d03e97a49af02e))
+* **monaco-editor:** 添加文档文件/文件夹鼠标悬浮预览功能 | Add document file/folder mouse hover preview function. ([c4ffb1a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c4ffb1a57a90936f30586496ba554b2de7f0a214))
+* **monaco-editor:** 添加格式化 Markdown 文本功能 | Add function of formatting Markdown text. ([d1aa0ac](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/d1aa0accfc7307e0dff6f1a7ce78e35427616fab))
+* **webview:** 添加在屏幕中间显示新窗口功能 | Add the function of displaying new windows in the middle of the screen. ([b1ff7a8](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/b1ff7a8f98c6760fbc8c15132ec6b71de6aeaa23))
+
+
+### Bug Fixes
+
+* **webview:** 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump. ([1b0985b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/1b0985b1f91f7d4df9589aebf67887aaa4948b31))
+* **webview:** 修复 `#` 链接无法跳转问题 | Fix the issue that `#` link cannot jump. ([94cd77d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/94cd77dd09f4613cba546f9f54714591ee9d5eed))
+
+
+### Performance Improvements
+
+* **custom-font:** 优化字体列表样式 | Optimize font list style. ([bcb99eb](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/bcb99eb4ef253ad4b2c301866caac5d544fb215a))
+* **monaco-editor:** 调整菜单文本 | Adjust menu text. ([46d702c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/46d702c542387b8bd4c8f6192c91abc8ccc36c89))
+
 ## 0.1.0 (2023-08-01)
 
 
