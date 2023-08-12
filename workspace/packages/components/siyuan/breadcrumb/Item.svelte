@@ -27,11 +27,14 @@
     export let text: IBreadcrumbItem["text"] = "";
     export let textTitle: IBreadcrumbItem["textTitle"] = "";
     export let textEllipsis: IBreadcrumbItem["textEllipsis"] = true;
+
+    export let active: IBreadcrumbItem["active"] = false;
 </script>
 
 <span
-    class="protyle-breadcrumb__item"
     data-node-id={itemId}
+    class:protyle-breadcrumb__item--active={active}
+    class="protyle-breadcrumb__item"
 >
     <slot name="svg">
         {#if icon}

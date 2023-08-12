@@ -39,6 +39,25 @@ export interface IBreadcrumb {
 }
 
 export abstract class Breadcrumb {
+    /**
+     * 设置面包屑中最后一项的状态为激活
+     * @param breadcrumb 面包屑
+     * @param index 面包屑项索引
+     * @returns 是否成功设置
+     */
+    public static setLastBreadcrumbItemActive(
+        breadcrumb: IBreadcrumb,
+        index: number = -1,
+    ): boolean {
+        const item = breadcrumb.breadcrumbItems.at(index);
+        if (item && item.type === "item") {
+            item.active = true;
+            return true;
+        }
+        return false;
+    }
+
+
     public readonly client: Plugin["client"];
     public readonly logger: Plugin["logger"];
     public readonly i18n: Plugin["i18n"];

@@ -139,6 +139,9 @@ export class BlockBreadcrumb extends Breadcrumb {
                             textEllipsis: true,
                         });
                     });
+
+                    /* 当前文档对应的面包屑显示为激活状态 */
+                    Breadcrumb.setLastBreadcrumbItemActive(breadcrumb);
                     break;
                 }
                 default: {
@@ -158,7 +161,7 @@ export class BlockBreadcrumb extends Breadcrumb {
                 }
             }
         });
-        /* 面包屑最后一项非 id 对应的块 */
+        /* 面包屑最后一项非 id 对应的块, 说明面包屑未导航到当前块 */
         if (id !== response_getBlockBreadcrumb.data.at(-1).id) {
             const response_getDoc = await this.client.getDoc({
                 id,
@@ -176,6 +179,9 @@ export class BlockBreadcrumb extends Breadcrumb {
                 icon: NodeType2IconID.get(response_getDoc.data.type as NodeType),
             });
         }
+
+        /* 当前块对应的面包屑显示为激活状态 */
+        Breadcrumb.setLastBreadcrumbItemActive(breadcrumb);
 
         if (options.stores) {
             /* 实时更新 */

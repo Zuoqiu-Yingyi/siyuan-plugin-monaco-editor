@@ -27,11 +27,15 @@ export type IBreadcrumbElement = IBreadcrumbItem | IBreadcrumbArrow;
 export interface IBreadcrumbItem {
     type: "item";
     itemId?: string; // 块 ID (item 点击跳转)
+
     iconId?: string; // 块 ID (svg 悬浮预览)
     icon?: string; // svg 图标引用
+
     text?: string; // 文本
     textTitle?: string; // 文本标题
     textEllipsis?: boolean; // 文本收缩
+
+    active?: boolean; // 是否为激活状态
 }
 
 export interface IBreadcrumbArrow {

@@ -67,6 +67,7 @@ export class NetworkBreadcrumb extends Breadcrumb {
             text: paths[1],
             textTitle: paths.join("/"),
             textEllipsis: false,
+            active: true,
         });
         url.pathname.split("/").forEach(p => {
             if (p) {
@@ -82,6 +83,9 @@ export class NetworkBreadcrumb extends Breadcrumb {
                 });
             }
         });
+
+        /* 当前文件对应的面包屑显示为激活状态 */
+        Breadcrumb.setLastBreadcrumbItemActive(breadcrumb);
 
         if (options.stores) {
             /* 全屏 */

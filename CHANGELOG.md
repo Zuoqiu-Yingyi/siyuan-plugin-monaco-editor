@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-13
+
+- 为面包屑添加激活状态 | Add active state to breadcrumb.
+
 ## 2023-08-11
 
 - 添加 KaTeX 自动补全功能 | Add KaTeX auto-completion function.

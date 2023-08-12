@@ -70,6 +70,7 @@ export class SnippetBreadcrumb extends Breadcrumb {
                 text: `${snippet.name}.${snippet.type}`,
                 textTitle: `${baseURL}snippets/${snippet.name}.${snippet.type}`,
                 textEllipsis: false,
+                active: true,
             });
 
             if (options.stores) {
