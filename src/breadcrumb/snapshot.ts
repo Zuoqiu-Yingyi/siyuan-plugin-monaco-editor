@@ -61,6 +61,7 @@ export class SnapshotBreadcrumb extends Breadcrumb {
                     text: options.new,
                     textTitle: options.name,
                     textEllipsis: false,
+                    active: true,
                 },
             ],
             breadcrumbIcons: [],

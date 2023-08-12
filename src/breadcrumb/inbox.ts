@@ -68,6 +68,9 @@ export class InboxBreadcrumb extends Breadcrumb {
             textEllipsis: false,
         });
 
+        /* 当前收集箱项对应的面包屑显示为激活状态 */
+        Breadcrumb.setLastBreadcrumbItemActive(breadcrumb);
+
         if (options.stores) {
             /* 全屏 */
             breadcrumb.breadcrumbIcons.push({
