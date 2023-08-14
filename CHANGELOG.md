@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-14
+
+- 添加附属仓库 `wakatime` 的管理脚本 | Add management scripts for sub-repository `wakatime`.
+
 ## 2023-08-13
 
 - 为面包屑添加激活状态 | Add active state to breadcrumb.
