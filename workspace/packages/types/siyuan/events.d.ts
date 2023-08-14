@@ -59,13 +59,13 @@ export interface IOpenSiyuanUrlDetail {
     url: string;
 }
 
-export interface IOpenSiyuanUrlBlocksDetail extends IOpenSiyuanUrlDetail {
+export interface IOpenSiyuanUrlBlockDetail extends IOpenSiyuanUrlDetail {
     id: string;
     focus: boolean;
     exist: boolean;
 }
 
-export interface IOpenSiyuanUrlPluginsDetail extends IOpenSiyuanUrlDetail {
+export interface IOpenSiyuanUrlPluginDetail extends IOpenSiyuanUrlDetail {
 }
 
 export interface ILoadedProtyleDetail extends IProtyle {
@@ -99,12 +99,12 @@ export interface IOpenSiyuanUrlEvent extends CustomEvent<IOpenSiyuanUrlDetail> {
     type: "open-siyuan-url";
 }
 
-export interface IOpenSiyuanUrlBlocksEvent extends CustomEvent<IOpenSiyuanUrlBlocksDetail> {
-    type: "open-siyuan-url-blocks";
+export interface IOpenSiyuanUrlBlockEvent extends CustomEvent<IOpenSiyuanUrlBlockDetail> {
+    type: "open-siyuan-url-block";
 }
 
-export interface IOpenSiyuanUrlPluginsEvent extends CustomEvent<IOpenSiyuanUrlPluginsDetail> {
-    type: "open-siyuan-url-plugins";
+export interface IOpenSiyuanUrlPluginEvent extends CustomEvent<IOpenSiyuanUrlPluginDetail> {
+    type: "open-siyuan-url-plugin";
 }
 
 export interface ILoadedProtyleEvent extends CustomEvent<ILoadedProtyleDetail> {

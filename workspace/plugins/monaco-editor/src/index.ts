@@ -62,7 +62,7 @@ import { EditorWindow } from "./editor/window";
 import { HandlerType, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
-import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginsEvent } from "@workspace/types/siyuan/events";
+import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginEvent } from "@workspace/types/siyuan/events";
 import type { BlockID } from "@workspace/types/siyuan";
 
 import type {
@@ -290,7 +290,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
                 /* 思源 URL */
-                this.eventBus.on("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
+                this.eventBus.on("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
 
                 // /* 快捷键/命令 */
                 // this.addCommand({
@@ -332,7 +332,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
         this.eventBus.off("open-menu-link", this.linkMenuEventListener);
-        this.eventBus.off("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
+        this.eventBus.off("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
     }
 
     openSetting(): void {
@@ -907,7 +907,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 思源 URL 打开事件监听器 */
-    protected readonly openSiyuanUrlEventListener = async (e: IOpenSiyuanUrlPluginsEvent) => {
+    protected readonly openSiyuanUrlEventListener = async (e: IOpenSiyuanUrlPluginEvent) => {
         // this.logger.debug(e);
         const url = new URL(e.detail.url);
         if (url.pathname.startsWith(`//plugins/${this.name}/workspace/`)) {
