@@ -8,6 +8,7 @@
     "devDependencies": {
         "@types/file-saver": "^2.0.5",
         "@types/html-escaper": "^3.0.0",
+        "@types/jstimezonedetect": "^1.0.3",
         "@types/streamsaver": "^2.0.1",
         "binary-extensions": "^2.2.0",
         "copy-to-clipboard": "^3.3.3",
@@ -15,6 +16,7 @@
         "file-saver": "^2.0.5",
         "grapheme-splitter": "^1.0.4",
         "html-escaper": "^3.0.3",
+        "jstimezonedetect": "^1.0.7",
         "mapbox-to-css-font": "^2.4.2",
         "normalize-path": "^3.0.0",
         "parse-data-url": "^5.0.0",

@@ -17,11 +17,26 @@
 
 import siyuan from "siyuan";
 import type { IProtyle } from "./protyle";
+import type { ITransaction } from "./transaction";
 
 import type {
     IDocumentBlockMenuDetail,
     IOtherBlockMenuDetail,
 } from "@workspace/utils/siyuan/menu/block";
+
+export interface IWebSocketMainDetail {
+    cmd?: string
+    callback?: string
+    data?: any
+    msg: string
+    code: number
+    sid?: string
+}
+
+export interface IWebSocketTransactionsDetail extends IWebSocketMainDetail {
+    cmd: "transactions"
+    data: ITransaction[]
+}
 
 export interface IClickEditorContentDetail {
     event: PointerEvent;
@@ -51,6 +66,13 @@ export interface IOpenSiyuanUrlBlocksDetail extends IOpenSiyuanUrlDetail {
 }
 
 export interface IOpenSiyuanUrlPluginsDetail extends IOpenSiyuanUrlDetail {
+}
+
+export interface ILoadedProtyleDetail extends IProtyle {
+}
+
+export interface IWebSocketMainEvent extends CustomEvent<IWebSocketMainDetail> {
+    type: "ws-main";
 }
 
 export interface IClickBlockIconEvent extends CustomEvent<IOtherBlockMenuDetail> {
@@ -83,4 +105,8 @@ export interface IOpenSiyuanUrlBlocksEvent extends CustomEvent<IOpenSiyuanUrlBlo
 
 export interface IOpenSiyuanUrlPluginsEvent extends CustomEvent<IOpenSiyuanUrlPluginsDetail> {
     type: "open-siyuan-url-plugins";
+}
+
+export interface ILoadedProtyleEvent extends CustomEvent<ILoadedProtyleDetail> {
+    type: "loaded-protyle";
 }

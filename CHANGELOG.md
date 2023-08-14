@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-15
+
+- 实现 `wakatime` 插件基础功能 | Implement the basic functions of the `wakatime` plugin.
+
 ## 2023-08-14
 
 - 添加附属仓库 `wakatime` 的管理脚本 | Add management scripts for sub-repository `wakatime`.
