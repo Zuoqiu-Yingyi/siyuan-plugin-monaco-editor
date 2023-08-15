@@ -73,25 +73,32 @@ export namespace Context {
         "X-Machine-Name": string; // Machine Name
         [key: string]: string;
     }
-    
+
     export interface IEvent {
         time: number; // UNIX 时间戳 (单位: s)
         is_write: boolean; // 是否写入
     }
-    
+
     export interface IRoot {
         id: BlockID; // 文档 ID
         box: BlockID; // 笔记本 ID
         path: string; // 文档路径
         events: IEvent[]; // 事件
     }
-    
+
     export interface IContext {
         url: string;
         method: "POST";
+        headers: IHeaders;
+
         project: string;
         language: string;
-        headers: IHeaders;
+
+        includeID: (string | RegExp)[],
+        excludeID: (string | RegExp)[],
+        include: (string | RegExp)[],
+        exclude: (string | RegExp)[],
+
         blocks: Map<BlockID, BlockID>; // block -> root
         roots: Map<BlockID, IRoot>; // root -> { box, path }
         actions: Heartbeats.IAction[]; // 待提交的活动
