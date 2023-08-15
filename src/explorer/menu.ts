@@ -27,7 +27,7 @@ import { copyText } from "@workspace/utils/misc/copy";
 import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
 import { Explorer, ProtectedResourceType } from ".";
-import { basename, extname, join, parse } from "@workspace/utils/path/browserify";
+import { extname, join, parse } from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
@@ -41,7 +41,7 @@ import {
     openPath,
     showItemInFolder,
 } from "@workspace/utils/electron/shell";
-import { showOpenDialog, showSaveDialog } from "@workspace/utils/electron/dialog";
+import { showOpenDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
 import { OpenType } from "@/utils/url";
@@ -503,7 +503,7 @@ export class ExplorerContextMenu {
                 );
 
                 {
-                    const url = new URL(`siyuan://plugins/${this.plugin.name}/workspace/${relative}`);
+                    const url = new URL(`siyuan://plugins/${this.plugin.name}/open/workspace/${relative}`);
                     const href_edit = url.href;
 
                     /* 复制编辑超链接 */
@@ -543,10 +543,28 @@ export class ExplorerContextMenu {
                         });
                     }
 
+                    const href_export = `siyuan://plugins/${this.plugin.name}/export/workspace/${relative}`;
+
+                    /* 复制导出超链接 */
+                    submenu.push({
+                        type: MenuItemType.Action,
+                        options: {
+                            icon: "iconDownload",
+                            label: this.i18n.menu.copyExportHyperlink.label,
+                            accelerator: escapeHTML(href_export),
+                            click: () => {
+                                copyText(href_export);
+                            },
+                        },
+                        root: false,
+                        folder: true,
+                        file: true,
+                    });
+
                     submenu.push({
                         type: MenuItemType.Separator,
                         root: false,
-                        folder: false,
+                        folder: true,
                         file: true,
                     });
                 }
@@ -661,7 +679,7 @@ export class ExplorerContextMenu {
                             label: this.i18n.menu.importFile.label,
                             click: async () => {
                                 const result = await showOpenDialog({
-                                    title: i10n_save_as.title.replaceAll("${1}", relative),
+                                    title: this.i18n.menu.importFile.title.replaceAll("${1}", relative),
                                     buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openFile",
@@ -697,7 +715,7 @@ export class ExplorerContextMenu {
                             label: this.i18n.menu.importFolder.label,
                             click: async () => {
                                 const result = await showOpenDialog({
-                                    title: i10n_save_as.title.replaceAll("${1}", relative),
+                                    title: this.i18n.menu.importFolder.title.replaceAll("${1}", relative),
                                     buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openDirectory",
@@ -738,45 +756,17 @@ export class ExplorerContextMenu {
              * 文件/文件夹另存为
              * REF: https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowsavedialogbrowserwindow-options
              */
-            const i10n_save_as = file
-                ? this.i18n.menu.exportFile
-                : this.i18n.menu.exportFolder;
             items.push({
                 type: MenuItemType.Action,
                 options: {
                     icon: "iconDownload",
                     label: this.i18n.menu.export.label,
                     click: async () => {
-                        const asyncFs = globalThis.require("fs/promises") as typeof import("fs/promises");
-                        const result = await showSaveDialog({
-                            title: i10n_save_as.title.replaceAll("${1}", relative),
-                            defaultPath: name,
-                            properties: [
-                                "showHiddenFiles",
-                                "createDirectory",
-                                "treatPackageAsDirectory",
-                                "showOverwriteConfirmation",
-                            ],
-                        });
-                        if (!result.canceled && result.filePath) {
-                            // this.plugin.logger.debugs(path, result.filePath);
-                            await asyncFs.cp(
-                                path,
-                                result.filePath,
-                                {
-                                    recursive: true, // 递归复制
-                                },
-                            );
-                            this.plugin.siyuan.confirm(
-                                i10n_save_as.label,
-                                i10n_save_as.message
-                                    .replaceAll("${1}", fn__code(relative))
-                                    .replaceAll("${2}", fn__code(result.filePath)),
-                                () => {
-                                    showItemInFolder(result.filePath);
-                                },
-                            )
-                        }
+                        await this.plugin.export(
+                            relative,
+                            name,
+                            type,
+                        );
                     },
                 },
                 root: false,
@@ -871,7 +861,7 @@ export class ExplorerContextMenu {
                     icon: "iconDownload",
                     label: this.i18n.menu.download.label,
                     click: async () => {
-                        await this.download(relative, name, type);
+                        await this.plugin.download(relative, name, type);
                     },
                 },
                 root: false,
@@ -1066,42 +1056,6 @@ export class ExplorerContextMenu {
                 resolve(e.detail.finished);
             });
         });
-    }
-
-    /**
-     * 下载文件/文件夹
-     * @param path - 所需下载的文件/文件夹相对于工作空间目录的路径
-     * @param name - 所需下载的文件/文件夹名称
-     * @param type - 下载内容类型
-     */
-    public async download(
-        path: string,
-        name: string,
-        type: FileTreeNodeType,
-    ): Promise<void> {
-        /* 文件夹需要首先打包为压缩文件 */
-        if (type === FileTreeNodeType.Folder) {
-            const response = await this.plugin.client.exportResources({
-                paths: [
-                    path,
-                ],
-                name,
-            });
-            path = response.data.path;
-        }
-
-        /* 下载文件流 */
-        const response = await this.plugin.client.getFile({ path }, "stream");
-        if (response) {
-            // this.plugin.logger.debugs(basename(path), response);
-            const write_stream = this.plugin.streamsaver.createWriteStream(basename(path));
-            await response.pipeTo(write_stream);
-        }
-
-        /* 下载完压缩文件后删除 */
-        if (type === FileTreeNodeType.Folder) {
-            await this.plugin.client.removeFile({ path });
-        }
     }
 
     /**

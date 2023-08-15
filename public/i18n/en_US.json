@@ -66,6 +66,9 @@
         "folder": {
             "ariaLabel": "Folder"
         },
+        "lastUpdated": {
+            "text": "Last Updated"
+        },
         "menu": {
             "ariaLabel": "Menu"
         },
@@ -293,8 +296,14 @@
         "copy": {
             "label": "Copy"
         },
+        "copyDownloadHyperlink": {
+            "label": "Copy Download Hyperlink"
+        },
         "copyEditHyperlink": {
             "label": "Copy Edit Hyperlink"
+        },
+        "copyExportHyperlink": {
+            "label": "Copy Export Hyperlink"
         },
         "copyFullPath": {
             "label": "Copy Absolute Path"

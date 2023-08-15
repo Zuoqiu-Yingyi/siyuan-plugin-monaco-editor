@@ -1,9 +1,9 @@
 {
     "name": "monaco-editor",
     "author": "Zuoqiu Yingyi",
-    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-webview",
-    "version": "0.1.1",
-    "minAppVersion": "2.9.9",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor",
+    "version": "0.1.2",
+    "minAppVersion": "2.10.0",
     "backends": [
         "all"
     ],

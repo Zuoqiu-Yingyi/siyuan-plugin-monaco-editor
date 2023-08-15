@@ -62,7 +62,7 @@ import { EditorWindow } from "./editor/window";
 import { HandlerType, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
-import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginsEvent } from "@workspace/types/siyuan/events";
+import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginEvent } from "@workspace/types/siyuan/events";
 import type { BlockID } from "@workspace/types/siyuan";
 
 import type {
@@ -72,6 +72,11 @@ import type { I18N } from "@/utils/i18n";
 import type { IDockData } from "./types/dock";
 import { trimPrefix } from "@workspace/utils/misc/string";
 import { OpenMode, OpenType } from "./utils/url";
+import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
+import { basename, parse } from "@workspace/utils/path/browserify";
+import { showSaveDialog } from "@workspace/utils/electron/dialog";
+import { fn__code } from "@workspace/utils/siyuan/text/span";
+import { showItemInFolder } from "@workspace/utils/electron/shell";
 
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     public static readonly GLOBAL_CONFIG_NAME = "global-config";
@@ -290,7 +295,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
                 /* 思源 URL */
-                this.eventBus.on("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
+                this.eventBus.on("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
 
                 // /* 快捷键/命令 */
                 // this.addCommand({
@@ -332,7 +337,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
         this.eventBus.off("open-menu-link", this.linkMenuEventListener);
-        this.eventBus.off("open-siyuan-url-plugins", this.openSiyuanUrlEventListener);
+        this.eventBus.off("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
     }
 
     openSetting(): void {
@@ -907,13 +912,13 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 思源 URL 打开事件监听器 */
-    protected readonly openSiyuanUrlEventListener = async (e: IOpenSiyuanUrlPluginsEvent) => {
+    protected readonly openSiyuanUrlEventListener = async (e: IOpenSiyuanUrlPluginEvent) => {
         // this.logger.debug(e);
         const url = new URL(e.detail.url);
-        if (url.pathname.startsWith(`//plugins/${this.name}/workspace/`)) {
+        if (url.pathname.startsWith(`//plugins/${this.name}/open/workspace/`)) { // 打开文件
             const type = (url.searchParams.get("type") as OpenType | null);
             const mode = (url.searchParams.get("mode") as OpenMode | null);
-            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/workspace/`);
+            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`);
 
             switch (type) {
                 default:
@@ -1044,6 +1049,31 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     }
                     break;
                 }
+            }
+        }
+        else if (url.pathname.startsWith(`//plugins/${this.name}/export/workspace/`)) { // 导出文件/文件夹
+            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/export/workspace/`);
+            const info = parse(relative);
+            const response = await this.client.readDir({ path: info.dir });
+            const entry = response.data.find((entry) => entry.name === info.base);
+
+            switch (entry?.isDir) {
+                case true:
+                    await this.export(
+                        relative,
+                        info.base,
+                        FileTreeNodeType.Folder,
+                    );
+                    break;
+                case false:
+                    await this.export(
+                        relative,
+                        info.base,
+                        FileTreeNodeType.File,
+                    );
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -1302,5 +1332,93 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             },
             ...options,
         });
+    }
+
+    /**
+     * 下载文件/文件夹
+     * @param path - 所需下载的文件/文件夹相对于工作空间目录的路径
+     * @param name - 所需下载的文件/文件夹名称
+     * @param type - 下载内容类型
+     */
+    public async download(
+        path: string,
+        name: string,
+        type: FileTreeNodeType,
+    ): Promise<void> {
+        /* 文件夹需要首先打包为压缩文件 */
+        if (type === FileTreeNodeType.Folder) {
+            const response = await this.client.exportResources({
+                paths: [
+                    path,
+                ],
+                name,
+            });
+            path = response.data.path;
+        }
+
+        /* 下载文件流 */
+        const response = await this.client.getFile({ path }, "stream");
+        if (response) {
+            // this.logger.debugs(basename(path), response);
+            const write_stream = this.streamsaver.createWriteStream(basename(path));
+            await response.pipeTo(write_stream);
+        }
+
+        /* 下载完压缩文件后删除 */
+        if (type === FileTreeNodeType.Folder) {
+            await this.client.removeFile({ path });
+        }
+    }
+
+    /**
+     * 导出文件/文件夹
+     * @param path - 所需导出的文件/文件夹相对于工作空间目录的路径
+     * @param name - 所需导出的文件/文件夹名称
+     * @param type - 下载内容类型
+     */
+    public async export(
+        path: string,
+        name: string,
+        type: FileTreeNodeType,
+    ): Promise<void> {
+        const i10n_save_as = type === FileTreeNodeType.File
+            ? this.i18n.menu.exportFile
+            : this.i18n.menu.exportFolder;
+
+        const asyncFs = globalThis.require("fs/promises") as typeof import("fs/promises");
+        const result = await showSaveDialog({
+            title: i10n_save_as.title.replaceAll("${1}", path),
+            defaultPath: name,
+            properties: [
+                "showHiddenFiles",
+                "createDirectory",
+                "treatPackageAsDirectory",
+                "showOverwriteConfirmation",
+            ],
+        });
+        if (!result.canceled && result.filePath) {
+            // this.logger.debugs(path, result.filePath);
+            const { join } = globalThis.require("path") as typeof import("path");
+            const source = join(
+                globalThis.siyuan.config.system.workspaceDir,
+                path,
+            );
+            await asyncFs.cp(
+                source,
+                result.filePath,
+                {
+                    recursive: true, // 递归复制
+                },
+            );
+            this.siyuan.confirm(
+                i10n_save_as.label,
+                i10n_save_as.message
+                    .replaceAll("${1}", fn__code(path))
+                    .replaceAll("${2}", fn__code(result.filePath)),
+                () => {
+                    showItemInFolder(result.filePath);
+                },
+            )
+        }
     }
 }

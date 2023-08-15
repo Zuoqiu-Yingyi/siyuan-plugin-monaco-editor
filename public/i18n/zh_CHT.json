@@ -66,6 +66,9 @@
         "folder": {
             "ariaLabel": "資料夾"
         },
+        "lastUpdated": {
+            "text": "更新時間"
+        },
         "menu": {
             "ariaLabel": "菜單"
         },
@@ -293,8 +296,14 @@
         "copy": {
             "label": "複製"
         },
+        "copyDownloadHyperlink": {
+            "label": "複製下載超連結"
+        },
         "copyEditHyperlink": {
             "label": "複製編輯超連結"
+        },
+        "copyExportHyperlink": {
+            "label": "複製匯出超連結"
         },
         "copyFullPath": {
             "label": "複製完整路徑"
