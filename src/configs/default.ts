@@ -29,6 +29,7 @@ export const DEFAULT_CONFIG: IConfig = {
         heartbeats: true,
         project: "",
         language: "",
+        hostname: "",
         interval: 60,
 
         view: {

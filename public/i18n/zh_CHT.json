@@ -29,7 +29,7 @@
                 },
                 "project": {
                     "description": "自定義當前工作空間名稱<br/>對應 Wakapi/WakaTime 統計中的 <code class='fn__code'>Projects</code> 項",
-                    "title": "工作空間名稱"
+                    "title": "项目名稱"
                 },
                 "title": "常規設定",
                 "viewCategory": {
@@ -53,6 +53,10 @@
                 "hide_file_names": {
                     "description": "是否隱藏文件標題，開啟後將使用文件塊 ID 替換文件標題<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
                     "title": "隱藏文件標題"
+                },
+                "hostname": {
+                    "description": "自定義當前主機名稱<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>hostname</code>",
+                    "title": "主機名稱"
                 },
                 "test": {
                     "description": "測試是否正確連線到 Wakapi/WakaTime 服務",

@@ -479,6 +479,11 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         return WakaTimePlugin.WAKATIME_DEFAULT_API_URL;
     }
 
+    /* default hostname */
+    public get wakatimeDefaultHostname(): string {
+        return globalThis.siyuan.config.system.name;
+    }
+
     /* wakatime project */
     public get wakatimeProject(): string {
         return this.config?.wakatime?.project
@@ -530,6 +535,6 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* wakatime Hostname */
     public get wakatimeHostname(): string {
-        return globalThis.siyuan.config.system.name;
+        return this.config?.wakatime.hostname || this.wakatimeDefaultHostname;
     }
 };

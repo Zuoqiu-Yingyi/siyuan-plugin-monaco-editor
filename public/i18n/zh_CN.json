@@ -54,6 +54,10 @@
                     "description": "是否隐藏文档标题，开启后将使用文档块 ID 替换文档标题<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
                     "title": "隐藏文档标题"
                 },
+                "hostname": {
+                    "description": "自定义当前主机名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hostname</code>",
+                    "title": "主机名称"
+                },
                 "test": {
                     "description": "测试是否正确连接到 Wakapi/WakaTime 服务",
                     "messages": {
