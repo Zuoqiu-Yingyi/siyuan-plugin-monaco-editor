@@ -296,8 +296,14 @@
         "copy": {
             "label": "Copy"
         },
+        "copyDownloadHyperlink": {
+            "label": "Copy Download Hyperlink"
+        },
         "copyEditHyperlink": {
             "label": "Copy Edit Hyperlink"
+        },
+        "copyExportHyperlink": {
+            "label": "Copy Export Hyperlink"
         },
         "copyFullPath": {
             "label": "Copy Absolute Path"

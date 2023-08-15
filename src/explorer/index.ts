@@ -435,7 +435,7 @@ export class Explorer implements ITree {
                         const type = get(node.type);
                         const name = get(node.name);
                         const relative = get(node.relative);
-                        await this.contextMenu.download(relative, name, type);
+                        await this.plugin.download(relative, name, type);
                     }
                     break;
                 case FileTreeNodeType.Root: // 根目录无法拖拽下载
