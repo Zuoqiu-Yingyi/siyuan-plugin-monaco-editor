@@ -1,0 +1,79 @@
+{
+    "displayName": "WakaTime",
+    "settings": {
+        "generalSettings": {
+            "reset": {
+                "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
+                "text": "重置",
+                "title": "重置设置选项"
+            },
+            "title": "常规设置"
+        },
+        "wakatimeSettings": {
+            "generalTab": {
+                "editCategory": {
+                    "description": "为编辑操作设置的活动类型标签",
+                    "title": "编辑操作标签"
+                },
+                "heartbeats": {
+                    "description": "开启后将在查看/编辑文档时向 Wakapi/WakaTime 服务提交活动信息",
+                    "title": "心跳连接"
+                },
+                "interval": {
+                    "description": "将编辑活动推送到 Wakapi/WakaTime 服务器的时间间隔（单位：秒）",
+                    "title": "推送时间间隔"
+                },
+                "language": {
+                    "description": "自定义思源文件语言名称<br/>对应 Wakapi/WakaTime 统计中的 <code class='fn__code'>Languages</code> 项",
+                    "title": "语言名称"
+                },
+                "project": {
+                    "description": "自定义当前工作空间名称<br/>对应 Wakapi/WakaTime 统计中的 <code class='fn__code'>Projects</code> 项",
+                    "title": "项目名称"
+                },
+                "title": "常规设置",
+                "viewCategory": {
+                    "description": "为查看操作设置的活动类型标签",
+                    "title": "查看操作标签"
+                }
+            },
+            "serviceTab": {
+                "apiKey": {
+                    "description": "Wakapi/WakaTime API 密钥<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_key</code>",
+                    "title": "API 密钥"
+                },
+                "apiURL": {
+                    "description": "Wakapi/WakaTime API URL<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_url</code>",
+                    "title": "API URL"
+                },
+                "hide_branch_names": {
+                    "description": "是否隐藏笔记本名称，开启后将使用笔记本 ID 替换笔记本名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_branch_names</code>",
+                    "title": "隐藏笔记本名称"
+                },
+                "hide_file_names": {
+                    "description": "是否隐藏文档标题，开启后将使用文档块 ID 替换文档标题<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
+                    "title": "隐藏文档标题"
+                },
+                "hostname": {
+                    "description": "自定义当前主机名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hostname</code>",
+                    "title": "主机名称"
+                },
+                "test": {
+                    "description": "测试是否正确连接到 Wakapi/WakaTime 服务",
+                    "messages": {
+                        "error": "无法与 ${1} 服务建立连接",
+                        "success": "与 ${1} 服务的连接正常"
+                    },
+                    "text": "测试",
+                    "title": "测试 Wakapi/WakaTime 服务"
+                },
+                "timeout": {
+                    "description": "Wakapi/WakaTime API 请求超时时间<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>timeout</code>",
+                    "title": "超时时间"
+                },
+                "title": "服务设置"
+            },
+            "title": "Wakapi/WakaTime"
+        }
+    }
+}
