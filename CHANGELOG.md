@@ -1,5 +1,9 @@
 # 更改日志 | CHANGE LOG
 
+## 2023-08-16
+
+- 添加文件/文件夹更新时间 | Add file/folder update time.
+
 ## 2023-08-15
 
 - 实现 `wakatime` 插件基础功能 | Implement the basic functions of the `wakatime` plugin.

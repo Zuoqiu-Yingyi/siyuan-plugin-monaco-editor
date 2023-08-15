@@ -51,6 +51,7 @@ import { FLAG_BROWSER } from "@workspace/utils/env/front-end";
 /* 资源 */
 export interface IItem {
     name: string; // 文件名/文件夹名
+    updated: number; // 更新时间
     path: string; // 绝对路径
     relative: string; // 相对于工作空间目录的相对路径
     isFile: boolean; // 是否为文件
@@ -651,6 +652,7 @@ export class Explorer implements ITree {
             if (item.isDir) {
                 resources.folders.push({
                     name: item.name,
+                    updated: item.updated,
                     path: join(directory, item.name),
                     relative: join(relative, item.name),
                     isFile: false,
@@ -661,6 +663,7 @@ export class Explorer implements ITree {
             else {
                 resources.files.push({
                     name: item.name,
+                    updated: item.updated,
                     path: join(directory, item.name),
                     relative: join(relative, item.name),                    // relative: `${relative}/${item.name}`,
                     isFile: true,
@@ -699,7 +702,10 @@ export class Explorer implements ITree {
                 iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.Folder, item.relative),
 
                 text: item.name,
-                textAriaLabel: item.relative,
+                textAriaLabel: `${item.relative
+                    }<br/>${this.plugin.i18n.explorer.lastUpdated.text
+                    }: ${new Date(item.updated * 1_000).toLocaleString()
+                    }`,
             });
         });
 
@@ -722,7 +728,10 @@ export class Explorer implements ITree {
                 iconPopoverID: this.icon.getPopoverID(FileTreeNodeType.File, item.relative),
 
                 text: item.name,
-                textAriaLabel: item.relative,
+                textAriaLabel: `${item.relative
+                    }<br/>${this.plugin.i18n.explorer.lastUpdated.text
+                    }: ${new Date(item.updated * 1_000).toLocaleString()
+                    }`,
             });
         });
 

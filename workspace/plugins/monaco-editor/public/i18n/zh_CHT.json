@@ -66,6 +66,9 @@
         "folder": {
             "ariaLabel": "資料夾"
         },
+        "lastUpdated": {
+            "text": "更新時間"
+        },
         "menu": {
             "ariaLabel": "菜單"
         },
