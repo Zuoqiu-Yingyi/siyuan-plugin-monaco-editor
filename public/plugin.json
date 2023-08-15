@@ -1,0 +1,35 @@
+{
+    "name": "wakatime",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime",
+    "version": "0.1.0",
+    "minAppVersion": "2.9.9",
+    "backends": [
+        "all"
+    ],
+    "frontends": [
+        "all"
+    ],
+    "displayName": {
+        "default": "WakaTime"
+    },
+    "description": {
+        "default": "Use <a href='https://github.com/muety/wakapi'>Wakapi</a> or <a href='https://wakatime.com/'>WakaTime</a> to count your editing Activity",
+        "zh_CN": "使用 <a href='https://github.com/muety/wakapi'>Wakapi</a> 或 <a href='https://wakatime.com/'>WakaTime</a> 统计您的编辑活动",
+        "zh_CHT": "使用 <a href='https://github.com/muety/wakapi'>Wakapi</a> 或 <a href='https://wakatime.com/'>WakaTime</a> 統計您的編輯活動"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh_CN": "README_zh_CN.md",
+        "zh_CHT": "README_zh_CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "",
+        "custom": [
+            "https://afdian.net/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}
