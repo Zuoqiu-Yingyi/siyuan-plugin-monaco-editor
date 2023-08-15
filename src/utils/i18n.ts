@@ -15,26 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IConfig } from "@/types/config";
-import { Category } from "@/wakatime/heartbeats";
+import {
+    i18nCheck,
+    i18nChecks,
+} from "@workspace/types/siyuan/i18n";
 
-export const DEFAULT_CONFIG: IConfig = {
-    wakatime: {
-        api_url: "",
-        api_key: "",
-        timeout: 30,
-        hide_branch_names: true,
-        hide_file_names: true,
+import zh_Hans from "~/public/i18n/zh_CN.json";
+import zh_Hant from "~/public/i18n/zh_CHT.json";
+import en from "~/public/i18n/en_US.json";
 
-        project: "",
-        language: "",
-        interval: 60,
+export type I18N = typeof zh_Hans;
 
-        view: {
-            category: Category.Browsing,
-        },
-        edit: {
-            category: Category.Learning,
-        },
-    },
-} as const;
+i18nChecks([
+    i18nCheck<I18N, typeof zh_Hans>(),
+    i18nCheck<I18N, typeof zh_Hant>(),
+    i18nCheck<I18N, typeof en>(),
+]);

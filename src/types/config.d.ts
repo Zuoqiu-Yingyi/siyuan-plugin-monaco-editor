@@ -15,11 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import type { Category } from "@/wakatime/heartbeats";
+
+/* 活动 */
+export interface IActivity {
+    category: Category;
+}
+
 export interface IWakaTime {
-    api_url: string;
-    api_key: string;
-    project: string;
-    interval: number; // 推送时间间隔 (单位: ms)
+    api_url: string; // API URL
+    api_key: string; // API KEY
+    timeout: number; // 请求超时时间 (单位: s)
+    hide_branch_names: boolean; // 是否隐藏笔记本名 (使用笔记本 ID 代替)
+    hide_file_names: boolean; // 是否隐藏文件名 (使用文档 ID 代替)
+
+    project: string; // 项目名称
+    language: string; // 语言名称
+    interval: number; // 推送时间间隔 (单位: s)
+
+    view: IActivity; // 查看活动
+    edit: IActivity; // 编辑活动
 }
 
 export interface IConfig {
