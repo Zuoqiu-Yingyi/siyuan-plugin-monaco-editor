@@ -27,8 +27,9 @@ export interface IWakaTime {
     api_key: string; // API KEY
     timeout: number; // 请求超时时间 (单位: s)
     hide_branch_names: boolean; // 是否隐藏笔记本名 (使用笔记本 ID 代替)
-    hide_file_names: boolean; // 是否隐藏文件名 (使用文档 ID 代替)
+    hide_file_names: boolean; // 是否隐藏文件路径 (使用文档 ID 代替)
 
+    heartbeats: boolean; // 是否开启心跳连接
     project: string; // 项目名称
     language: string; // 语言名称
     interval: number; // 推送时间间隔 (单位: s)
