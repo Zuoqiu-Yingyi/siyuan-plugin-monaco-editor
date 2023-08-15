@@ -29,6 +29,12 @@ export interface IWakaTime {
     hide_branch_names: boolean; // 是否隐藏笔记本名 (使用笔记本 ID 代替)
     hide_file_names: boolean; // 是否隐藏文件路径 (使用文档 ID 代替)
 
+    includeID: string[]; // ID 包含列表, 在 ID 中过滤, 为空则包含所有笔记本与文档
+    excludeID: string[]; // ID 排除列表, 在 ID 中过滤, 为空则不排除任何笔记本与文档
+
+    include: string[]; // 包含列表, 在 entity 中过滤, 为空则包含所有笔记本与文档, "/foo/" 表示正则表达式
+    exclude: string[]; // 排除列表, 在 entity 中过滤, 为空则不排除任何笔记本与文档, "/foo/" 表示正则表达式
+
     heartbeats: boolean; // 是否开启心跳连接
     project: string; // 项目名称
     language: string; // 语言名称

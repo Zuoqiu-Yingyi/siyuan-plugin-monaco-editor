@@ -29,8 +29,6 @@ import {
 import Settings from "./components/Settings.svelte";
 
 import {
-    FLAG_ELECTRON,
-    FLAG_DESKTOP,
     FLAG_MOBILE,
 } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
@@ -83,9 +81,16 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.context = {
             url: this.wakatimeHeartbeatsUrl,
             method: "POST",
+            headers: this.wakatimeHeaders,
+
             project: this.wakatimeProject,
             language: this.wakatimeLanguage,
-            headers: this.wakatimeHeaders,
+
+            includeID: [],
+            excludeID: [],
+            include: [],
+            exclude: [],
+
             blocks: new Map<BlockID, BlockID>(),
             roots: new Map<BlockID, Context.IRoot>(),
             actions: new Array<Heartbeats.IAction>(),
@@ -178,9 +183,16 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     /* 更新 wakatime 请求上下文 */
     public updateContext() {
         this.context.url = this.wakatimeHeartbeatsUrl;
+        this.context.headers = this.wakatimeHeaders;
+
         this.context.project = this.wakatimeProject;
         this.context.language = this.wakatimeLanguage;
-        this.context.headers = this.wakatimeHeaders;
+
+        this.context.includeID = this.wakatimeIncludeID;
+        this.context.excludeID = this.wakatimeExcludeID;
+
+        this.context.include = this.wakatimeInclude;
+        this.context.exclude = this.wakatimeExclude;
     }
 
     /* 更新 notebook */
@@ -196,8 +208,31 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.context.blocks.clear();
         this.context.roots.clear();
 
-        const actions = await this.buildHeartbeats(roots);
-        this.context.actions.push(...actions);
+        /* 在 ID 中进行过滤 */
+        const valid_roots = roots
+            .filter(root => {
+                const entity = `${root.box}${root.path}`;
+                return this.filter(
+                    entity,
+                    this.context.includeID,
+                    this.context.excludeID,
+                );
+            });
+
+        const actions = await this.buildHeartbeats(valid_roots);
+
+        /* 在 entity 中进行过滤 */
+        const valid_actions = actions
+            .filter(action => {
+                const entity = action.entity;
+                return this.filter(
+                    entity,
+                    this.context.include,
+                    this.context.exclude,
+                );
+            });
+
+        this.context.actions.push(...valid_actions);
 
         if (this.context.actions.length > 0) {
             if (this.config.wakatime.heartbeats) { // 是否发送心跳连接
@@ -454,6 +489,91 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         }
     }
 
+    /**
+     * 黑白名单过滤
+     * @param entity 文件路径
+     * @param include 包含列表
+     * @param exclude 排除列表
+     * @returns 是否通过过滤
+     */
+    protected filter(
+        entity: string,
+        include: (string | RegExp)[],
+        exclude: (string | RegExp)[],
+    ): boolean {
+        if (include.length > 0) { // 白名单过滤
+            let pass = false; // 是否通过白名单过滤
+            for (const entry of include) {
+                if (typeof entry === "string") {
+                    if (entity.includes(entry)) {
+                        pass = true;
+                        break;
+                    }
+                }
+                else if (entry instanceof RegExp) {
+                    if (entry.test(entity)) {
+                        pass = true;
+                        break;
+                    }
+                }
+            }
+            if (!pass) return false;
+        }
+        if (exclude.length > 0) { // 黑名单过滤
+            let pass = true; // 是否通过黑名单过滤
+            for (const entry of exclude) {
+                if (typeof entry === "string") {
+                    if (entity.includes(entry)) {
+                        pass = false;
+                        break;
+                    }
+                }
+                else if (entry instanceof RegExp) {
+                    if (entry.test(entity)) {
+                        pass = false;
+                        break;
+                    }
+                }
+            }
+            return pass;
+        }
+        return true;
+    }
+
+    /* 清洗列表 */
+    protected washList(list: string[]): (string | RegExp)[] {
+        return list
+            .filter(entry => {
+                entry = entry.trim();
+                if (entry !== "" && entry !== "//") {
+                    /* 过滤无效的正则表达式 */
+                    if (entry.startsWith("/") && entry.endsWith("/")) {
+                        try {
+                            new RegExp(entry.slice(1, -1));
+                            return true;
+                        } catch (error) {
+                            this.siyuan.showMessage(
+                                error,
+                                undefined,
+                                "error",
+                            );
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else return false;
+            })
+            .map(entry => {
+                if (entry.startsWith("/") && entry.endsWith("/")) {
+                    return new RegExp(entry.slice(1, -1));
+                }
+                else {
+                    return entry;
+                }
+            });
+    }
+
     /* 获取时间戳 */
     public time(date: Date = new Date()): number {
         return date.getTime() / 1_000;
@@ -536,5 +656,21 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     /* wakatime Hostname */
     public get wakatimeHostname(): string {
         return this.config?.wakatime.hostname || this.wakatimeDefaultHostname;
+    }
+
+    /* wakatime include */
+    public get wakatimeIncludeID(): (string | RegExp)[] {
+        return this.washList(this.config.wakatime.includeID);
+    }
+    public get wakatimeInclude(): (string | RegExp)[] {
+        return this.washList(this.config.wakatime.include);
+    }
+
+    /* wakatime exclude */
+    public get wakatimeExcludeID(): (string | RegExp)[] {
+        return this.washList(this.config.wakatime.excludeID);
+    }
+    public get wakatimeExclude(): (string | RegExp)[] {
+        return this.washList(this.config.wakatime.exclude);
     }
 };

@@ -129,7 +129,7 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
     * `API URL`
 
       * Customize the API service address for `Wakapi/WakaTime`.
-      * Corresponds to the `api_url` configuration item in the `Wakapi/WakaTime` configuration file.
+      * Corresponds to the `api_url` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If empty, the service address of `WakaTime` will be used (`https://wakatime.com/api/v1`).
       * If using a hosted `Wakapi` service, it should be set to `https://wakapi.dev/api`.
       * If using a privately deployed `Wakapi` service, it should be set to `http(s)://host[:port]/api`.
@@ -144,23 +144,119 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
     * `API KEY`
 
       * Customize the access key for the `Wakapi/WakaTime` API service.
+      * Corresponds to the `api_key` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * This is a required field, and if not set, a connection cannot be established with `Wakapi/WakaTime`.
     * `Hostname`
 
       * Customize the device name.
+      * Corresponds to the `hostname` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If empty, the host name of the device where Obsidian is located will be used.
     * `Timeout`
 
       * Timeout duration when calling the `Wakapi/WakaTime` API.
+      * Corresponds to the `timeout` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * Unit: seconds
     * `Hide Notebook Name`
 
       * Whether to hide the notebook name in the submitted activity information.
+      * Corresponds to the `hide_branch_names` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If enabled, all <kbd>Notebook Name</kbd> in the submitted information will be replaced with <kbd>Notebook ID</kbd>.
     * `Hide Document Title`
 
       * Whether to hide the document title in the submitted activity information.
+      * Corresponds to the `hide_file_names` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If enabled, all <kbd>Document Title</kbd> in the submitted information will be replaced with <kbd>Block ID</kbd>.
+    * `ID Include List`
+
+      * Only submit documents whose ID path includes the list field.
+      * If empty, it includes all notebooks and documents.
+      * If not empty, only submit documents whose ID path includes the list field.
+
+        * ID path format: `notebook/document/.../document.sy`
+        * ID path examples:
+
+          * `20210808180117-czj9bvb/20200812220555-lj3enxa.sy`
+          * `20210808180117-czj9bvb/20200812220555-lj3enxa/20210808180320-fqgskfj.sy`
+      * One record per line, can be text or regular expression. Regular expressions need to be wrapped in `/` as shown below:
+
+        ```plaintext
+        20200812220555-lj3enxa
+        /^20210917000226-w9fa32i\/20230522022822-roxea7p/
+        ```
+
+        The above list is equivalent to the following JavaScript code:
+
+        ```javascript
+        path.includes("20200812220555-lj3enxa") && /^20210917000226-w9fa32i\/20230522022822-roxea7p/.test(path)
+        ```
+
+        * `20200812220555-lj3enxa`
+
+          * Submit documents that have the ID `20200812220555-lj3enxa`, including itself and its sub-documents.
+
+            * Example:
+
+              * `20210808180117-czj9bvb/20200812220555-lj3enxa.sy`: included
+              * `20210808180117-czj9bvb/20200812220555-lj3enxa/20210808180320-fqgskfj.sy`: included
+              * `20210808180117-czj9bvb/20210117211155-56n4odu.sy`: not included
+        * `/^20210917000226-w9fa32i\/20230522022822-roxea7p/`
+
+          * Submit documents that match the regular expression `^20210917000226-w9fa32i/20230522022822-roxea7p`.
+
+            * Example:
+
+              * `20210917000226-w9fa32i/20230522022822-roxea7p.sy`: included
+              * `20210917000226-w9fa32i/20230522022822-roxea7p/20230522022929-ojqqfyn.sy`: included
+              * `20210917000226-w9fa32i/20220424113742-2eznev2.sy`: not included
+              * `20210808180117-czj9bvb/20210917000226-w9fa32i/20230522022822-roxea7p.sy`: not included
+    * `ID Exclude List`
+
+      * Exclude documents whose ID path includes the list field when submitting.
+      * If empty, do not exclude any notebooks or documents.
+      * If not empty, exclude documents whose ID path includes the list field.
+
+        * ID path format and matching rules can be found in `Wakapi/WakaTime > Service Settings > ID Inclusion List`.
+      * One record per line, can be text or regular expression. Regular expressions need to be wrapped in `/`.
+      * The exclusion list takes precedence over the inclusion list.
+
+        * If a document's ID path matches both the ID inclusion list and the ID exclusion list, the document will be excluded.
+    * `Include List`
+
+      * Only submit documents whose path includes the list field.
+      * Corresponds to the `include` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
+      * If empty, it includes all notebooks and documents.
+      * If not empty, only submit documents whose path includes the list field.
+
+        * Path format and examples:
+
+          |                           | `Hide notebook names`: ✔                                                                                         | `Hide notebook names`: ✖<br />                                                                         |
+          | ------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+          | `Hide document titles`: ✔ | `<Notebook ID>/<Document ID>/.../<Document ID>.sy`<br />`20210808180117-czj9bvb/20200812220555-lj3enxa.sy`<br /> | `<Notebook Name>/<Document ID>/.../<Document ID>.sy`<br />`User Guide/20200812220555-lj3enxa.sy`<br /> |
+          | `Hide document titles`: ✖ | `<Notebook ID>/<Document Title>/.../<Document Title>.sy`<br />`20210808180117-czj9bvb/Start Here.sy`             | `<Notebook Name>/<Document Title>/.../<Document Title>.sy`<br />`User Guide/Start Here.sy`<br />       |
+      * One record per line, can be text or regular expression. Regular expressions need to be wrapped in `/` as shown below:
+
+        ```plaintext
+        Start Here
+        /^User Guide\/Start Here/
+        ```
+
+        The above list is equivalent to the following JavaScript code:
+
+        ```javascript
+        path.includes("Start Here") && /^User Guide\/Start Here/.test(path)
+        ```
+    * `Exclude List`
+
+      * Exclude documents whose path includes the list field when submitting.
+      * Corresponds to the `exclude` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
+      * If empty, do not exclude any notebooks or documents.
+      * If not empty, exclude documents whose path includes the list field.
+
+        * Path format and matching rules can be found in `Wakapi/WakaTime > Service Settings > Inclusion List`.
+      * One record per line, can be text or regular expression. Regular expressions need to be wrapped in `/`.
+      * The exclusion list takes precedence over the inclusion list.
+
+        * If a document's path matches both the inclusion list and the exclusion list, the document will be excluded.
 
 ## CHANGELOG
 

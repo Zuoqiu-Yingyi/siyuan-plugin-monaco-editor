@@ -46,6 +46,16 @@
                     "description": "Wakapi/WakaTime API URL<br/>Corresponds to <code class='fn__code'>api_url</code> in Wakapi/WakaTime configuration",
                     "title": "API URL"
                 },
+                "exclude": {
+                    "description": "Exclude documents with fields listed in the submission path.<br/>Each entry should be on a separate line. Use <span data-type='code'>/</span> to enclose regular expressions.<br/>Corresponds to the <span data-type='code'>exclude</span> option in the Wakapi/WakaTime configuration.",
+                    "placeholder": "Exclude no notebooks or documents",
+                    "title": "Exclude List"
+                },
+                "excludeID": {
+                    "description": "Exclude documents with fields listed in the submission ID path.<br/>Each entry should be on a separate line. Use <span data-type='code'>/</span> to enclose regular expressions.",
+                    "placeholder": "Exclude no notebooks or documents",
+                    "title": "ID Exclude List"
+                },
                 "hide_branch_names": {
                     "description": "Whether to hide notebook names. If enabled, the notebook name is replaced with the notebook ID<br/>Corresponds to <code class='fn__code'>hide_branch_names</code> in Wakapi/WakaTime configuration",
                     "title": "Hide notebook names"
@@ -57,6 +67,16 @@
                 "hostname": {
                     "description": "Custom current host name<br/>Corresponds to <code class='fn__code'>hostname</code> in Wakapi/WakaTime configuration",
                     "title": "Hostname"
+                },
+                "include": {
+                    "description": "Only include documents with fields listed in the submission path.<br/>Each entry should be on a separate line. Use <span data-type='code'>/</span> to enclose regular expressions.<br/>Corresponds to the <span data-type='code'>include</span> option in the Wakapi/WakaTime configuration.",
+                    "placeholder": "Include all notebooks and documents",
+                    "title": "Include List"
+                },
+                "includeID": {
+                    "description": "Only include documents with fields listed in the submission ID path.<br/>Each entry should be on a separate line. Use <span data-type='code'>/</span> to enclose regular expressions.",
+                    "placeholder": "Include all notebooks and documents",
+                    "title": "ID Include List"
                 },
                 "test": {
                     "description": "Test if connected to Wakapi/WakaTime service correctly",

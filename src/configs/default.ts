@@ -26,6 +26,12 @@ export const DEFAULT_CONFIG: IConfig = {
         hide_branch_names: true,
         hide_file_names: true,
 
+        includeID: [],
+        excludeID: [],
+
+        include: [],
+        exclude: [],
+
         heartbeats: false,
         project: "",
         language: "",
@@ -39,4 +45,4 @@ export const DEFAULT_CONFIG: IConfig = {
             category: Category.Learning,
         },
     },
-} as const;
+};
