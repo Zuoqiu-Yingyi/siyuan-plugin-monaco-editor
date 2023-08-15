@@ -7,6 +7,7 @@
 - 调整心跳活动推送策略 | Adjust the heartbeat activity push strategy.
 - 添加 `hostname` 设置项 | Add `hostname` setting item.
 - 重新添加附属仓库 `wakatime` | Re-add sub-repository `wakatime`.
+- 实现包含列表与排除列表功能 | Implement include list and exclude list function.
 
 ## 2023-08-14
 
