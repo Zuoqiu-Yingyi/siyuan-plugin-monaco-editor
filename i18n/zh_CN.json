@@ -1,0 +1,553 @@
+{
+    "button": {
+        "fullscreen": {
+            "ariaLabel": "全屏"
+        },
+        "realTime": {
+            "ariaLabel": "实时保存更改"
+        },
+        "workspace": {
+            "text": "工作空间"
+        }
+    },
+    "displayName": "集成编辑环境",
+    "dock": {
+        "collapse": {
+            "ariaLabel": "折叠所有文件夹"
+        },
+        "inline": {
+            "ariaLabel": "markdown: 编辑标准 markdown\nkramdown: 行内元素使用 <span> 标签"
+        },
+        "kramdown": {
+            "ariaLabel": "使用 kramdown 编辑"
+        },
+        "refresh": {
+            "ariaLabel": "实时保存更改"
+        },
+        "title": "代码编辑"
+    },
+    "editor": {
+        "action": {
+            "save": {
+                "label": "保存"
+            },
+            "saveAs": {
+                "label": "另存为"
+            },
+            "setModelLanguage": {
+                "label": "设置编辑器语言模式"
+            },
+            "toggleWordWrap": {
+                "label": "切换自动换行"
+            }
+        },
+        "tooltip": {
+            "siyuanBlockHyperlink": {
+                "label": "思源块超链接"
+            },
+            "siyuanBlockID": {
+                "label": "思源块 ID"
+            },
+            "siyuanBlockReference": {
+                "label": "思源块引用"
+            }
+        }
+    },
+    "explorer": {
+        "count": {
+            "ariaLabel": "资源数量"
+        },
+        "file": {
+            "ariaLabel": "文件"
+        },
+        "fold": {
+            "ariaLabel": "折叠"
+        },
+        "folder": {
+            "ariaLabel": "文件夹"
+        },
+        "lastUpdated": {
+            "text": "更新时间"
+        },
+        "menu": {
+            "ariaLabel": "菜单"
+        },
+        "refresh": {
+            "ariaLabel": "刷新资源管理器"
+        },
+        "symlink": {
+            "ariaLabel": "符号链接"
+        },
+        "title": "文件资源管理器",
+        "toggle": {
+            "ariaLabel": "折叠/展开"
+        },
+        "tooltips": {
+            "paths": [
+                [
+                    "conf",
+                    "配置目录"
+                ],
+                [
+                    "conf/appearance",
+                    "外观目录"
+                ],
+                [
+                    "conf/appearance/boot",
+                    "启动窗口目录"
+                ],
+                [
+                    "conf/appearance/emojis",
+                    "表情符号目录"
+                ],
+                [
+                    "conf/appearance/icons",
+                    "界面图标目录"
+                ],
+                [
+                    "conf/appearance/langs",
+                    "本地化目录"
+                ],
+                [
+                    "conf/appearance/themes",
+                    "主题目录"
+                ],
+                [
+                    "conf/conf.json",
+                    "配置文件"
+                ],
+                [
+                    "conf/windowState.json",
+                    "窗口状态文件"
+                ],
+                [
+                    "data",
+                    "数据目录"
+                ],
+                [
+                    "data/.siyuan",
+                    "元数据目录"
+                ],
+                [
+                    "data/.siyuan/filesys_status_check",
+                    "文件系统状态检查临时文件目录"
+                ],
+                [
+                    "data/.siyuan/conf.json",
+                    "数据目录状态文件"
+                ],
+                [
+                    "data/.siyuan/syncignore",
+                    "数据快照忽略配置文件"
+                ],
+                [
+                    "data/assets",
+                    "资源文件目录"
+                ],
+                [
+                    "data/assets/ocr-texts.json",
+                    "图片 OCR 结果"
+                ],
+                [
+                    "data/emojis",
+                    "自定义表情文件目录"
+                ],
+                [
+                    "data/plugins",
+                    "插件目录"
+                ],
+                [
+                    "data/public",
+                    "公共文件目录"
+                ],
+                [
+                    "data/snippets",
+                    "代码片段目录"
+                ],
+                [
+                    "data/snippets/conf.json",
+                    "代码片段列表"
+                ],
+                [
+                    "data/storage",
+                    "数据存储目录"
+                ],
+                [
+                    "data/storage/av",
+                    "属性视图目录"
+                ],
+                [
+                    "data/storage/petal",
+                    "插件数据目录"
+                ],
+                [
+                    "data/storage/petal/petals.json",
+                    "插件状态目录"
+                ],
+                [
+                    "data/storage/riff",
+                    "闪卡数据目录"
+                ],
+                [
+                    "data/storage/criteria.json",
+                    "搜索配置"
+                ],
+                [
+                    "data/storage/local.json",
+                    "本地界面配置"
+                ],
+                [
+                    "data/storage/recent-doc.json",
+                    "最近打开的文档"
+                ],
+                [
+                    "data/templates",
+                    "模板目录"
+                ],
+                [
+                    "data/widgets",
+                    "挂件目录"
+                ],
+                [
+                    "history",
+                    "历史数据目录"
+                ],
+                [
+                    "repo",
+                    "数据快照目录"
+                ],
+                [
+                    "temp",
+                    "临时文件目录"
+                ],
+                [
+                    "temp/blocktree",
+                    "内容块结构索引目录"
+                ],
+                [
+                    "temp/os",
+                    "系统信息目录"
+                ],
+                [
+                    "temp/pandoc",
+                    "Pandoc 目录"
+                ],
+                [
+                    "temp/pandoc/bin",
+                    "Pandoc 可执行文件目录"
+                ],
+                [
+                    "temp/history.db",
+                    "历史文档索引数据库文件"
+                ],
+                [
+                    "temp/history.db-shm",
+                    "历史文档索引数据库共享内存文件"
+                ],
+                [
+                    "temp/history.db-wal",
+                    "历史文档索引数据库预写日志文件"
+                ],
+                [
+                    "temp/siyuan.db",
+                    "内容块索引数据库文件"
+                ],
+                [
+                    "temp/siyuan.db-shm",
+                    "内容块索引数据库共享内存文件"
+                ],
+                [
+                    "temp/siyuan.db-wal",
+                    "内容块索引数据库预写日志文件"
+                ],
+                [
+                    "temp/siyuan.log",
+                    "内核日志文件"
+                ],
+                [
+                    ".lock",
+                    "工作区占用标志"
+                ]
+            ],
+            "siyuanDoc": "文档文件",
+            "siyuanDocCustomSort": "文档自定义排序文件",
+            "siyuanDocDir": "文档目录",
+            "siyuanNotebook": "笔记本目录",
+            "siyuanNotebookConfig": "笔记本配置文件",
+            "siyuanNotebookMetadataDir": "笔记本元数据目录"
+        },
+        "unfold": {
+            "ariaLabel": "展开"
+        },
+        "workspace": {
+            "name": "工作空间"
+        }
+    },
+    "menu": {
+        "confirm": {
+            "placeholder": "资源完整路径",
+            "text": "警告：您正在操作受保护的资源 ${1} ！<br/>您之后的活动可能导致数据丢失或损坏！<br/><br/>若继续操作，请在下方文本框中输入该资源的完整路径 ${2}",
+            "tips": {
+                "pleaseEnter": "请输入资源的完整路径",
+                "warn": "您确定要继续操作资源 ${1} ？"
+            },
+            "title": "⚠️ 高风险操作确认"
+        },
+        "copy": {
+            "label": "复制"
+        },
+        "copyDownloadHyperlink": {
+            "label": "复制下载超链接"
+        },
+        "copyEditHyperlink": {
+            "label": "复制编辑超链接"
+        },
+        "copyExportHyperlink": {
+            "label": "复制导出超链接"
+        },
+        "copyFullPath": {
+            "label": "复制完整路径"
+        },
+        "copyMarkdownHyperlink": {
+            "label": "复制 Markdown 超链接"
+        },
+        "copyName": {
+            "label": "复制名称"
+        },
+        "copyPreviewHyperlink": {
+            "label": "复制预览超链接"
+        },
+        "copyReferencePath": {
+            "label": "复制引用路径"
+        },
+        "copyRelativePath": {
+            "label": "复制相对路径"
+        },
+        "copyURL": {
+            "label": "复制 URL"
+        },
+        "delete": {
+            "label": "删除"
+        },
+        "deleteFile": {
+            "label": "删除文件",
+            "text": "确定要删除文件 ${1} ？<br/>该文件的完整路径为 ${2}"
+        },
+        "deleteFolder": {
+            "label": "删除文件夹",
+            "text": "确定要删除文件夹 ${1} ？<br/>该文件夹的完整路径为 ${2}"
+        },
+        "diffEdit": {
+            "label": "对比编辑"
+        },
+        "diffView": {
+            "label": "对比查看"
+        },
+        "download": {
+            "label": "下载"
+        },
+        "editAssetFile": {
+            "label": "编辑资源文件"
+        },
+        "editLocalFile": {
+            "label": "编辑本地文件"
+        },
+        "export": {
+            "accelerator": "导出",
+            "label": "导出..."
+        },
+        "exportFile": {
+            "label": "导出文件",
+            "message": "文件 ${1} 已导出至 ${2}，是否在文件资源管理器中查看？",
+            "title": "导出文件 ${1}"
+        },
+        "exportFolder": {
+            "label": "导出文件夹",
+            "message": "文件夹 ${1} 已导出至 ${2}，是否在文件资源管理器中查看？",
+            "title": "导出文件夹 ${1}"
+        },
+        "import": {
+            "label": "导入"
+        },
+        "importFile": {
+            "label": "导入文件...",
+            "title": "导入文件至 ${1}"
+        },
+        "importFolder": {
+            "label": "导入文件夹...",
+            "title": "导入文件夹至 ${1}"
+        },
+        "move": {
+            "text": "是否将 ${1}<br/>从&emsp;&emsp; ${2}<br/>移动至 ${3}？",
+            "title": "移动 ${1}"
+        },
+        "new": {
+            "label": "新建"
+        },
+        "newFile": {
+            "label": "新建文件...",
+            "placeholder": "文件名",
+            "text": "在文件夹 ${1} 下新建一个文件",
+            "tips": {
+                "empty": "文件名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件名，请输入其他名称",
+                "normal": "新建文件 ${1} ？",
+                "pleaseEnter": "请输入文件名"
+            }
+        },
+        "newFolder": {
+            "label": "新建文件夹...",
+            "placeholder": "文件夹名",
+            "text": "在文件夹 ${1} 下新建一个文件夹",
+            "tips": {
+                "empty": "文件夹名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称。",
+                "invalid": "名称 ${1} 为无效文件夹名，请输入其他名称。",
+                "normal": "新建文件夹 ${1} ？",
+                "pleaseEnter": "请输入文件夹名"
+            }
+        },
+        "open": {
+            "label": "打开"
+        },
+        "openByNewWindow": {
+            "label": "使用新窗口打开"
+        },
+        "openFile": {
+            "label": "打开文件"
+        },
+        "openFileInEditor": {
+            "label": "在文本编辑器中打开"
+        },
+        "openFileInPreviewer": {
+            "label": "在文件预览器中打开"
+        },
+        "openInNewTab": {
+            "label": "在新页签中打开"
+        },
+        "openTabBackground": {
+            "label": "在后台页签中打开"
+        },
+        "openTabBottom": {
+            "label": "在页签下侧打开"
+        },
+        "openTabRight": {
+            "label": "在页签右侧打开"
+        },
+        "openWithDefaultProgram": {
+            "label": "使用默认程序打开"
+        },
+        "refresh": {
+            "label": "刷新"
+        },
+        "refreshDirectory": {
+            "label": "刷新该目录"
+        },
+        "refreshDirectoryDeeply": {
+            "label": "深度刷新该目录"
+        },
+        "rename": {
+            "label": "重命名..."
+        },
+        "renameFile": {
+            "label": "重命名文件",
+            "placeholder": "新文件名",
+            "text": "重命名文件 ${1}",
+            "tips": {
+                "empty": "文件名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件名，请输入其他名称",
+                "normal": "重命名文件 ${1} 为 ${2} ？",
+                "pleaseEnter": "请输入新文件名",
+                "same": "文件名未更改"
+            }
+        },
+        "renameFolder": {
+            "label": "重命名文件夹",
+            "placeholder": "新文件夹名",
+            "text": "重命名文件夹 ${1}",
+            "tips": {
+                "empty": "文件夹名不能为空",
+                "exist": "文件夹 ${1} 下已存在 ${2}，请输入其他名称",
+                "invalid": "名称 ${1} 为无效文件夹名，请输入其他名称",
+                "normal": "重命名文件夹 ${1} 为 ${2} ？",
+                "pleaseEnter": "请输入新文件夹名",
+                "same": "文件夹名未更改"
+            }
+        },
+        "revealInExplorer": {
+            "label": "在文件资源管理器中显示"
+        },
+        "standard": {
+            "accelerator": "标准"
+        },
+        "upload": {
+            "label": "上传",
+            "tips": {
+                "confirm": "确认",
+                "reUpload": "重试",
+                "startUpload": "上传",
+                "statusInfo": "已上传文件数: ${1}/${2} &emsp; 已上传文件大小: ${3}/${4} 字节"
+            }
+        },
+        "uploadFile": {
+            "label": "上传文件..."
+        },
+        "uploadFolder": {
+            "label": "上传文件夹..."
+        },
+        "viewNetworkFile": {
+            "label": "查看网络文件"
+        }
+    },
+    "message": {
+        "binaryError": "此文件是二进制文件或使用了不受支持的文本编码，所以无法在文本编辑器中显示。",
+        "openAnyway": "仍然打开？"
+    },
+    "settings": {
+        "generalSettings": {
+            "editor": {
+                "description": "是否启用文本编辑器侧边面板",
+                "title": "文本编辑器"
+            },
+            "explorer": {
+                "description": "是否启用资源管理器侧边面板",
+                "title": "资源管理器"
+            },
+            "reset": {
+                "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
+                "text": "重置",
+                "title": "重置设置选项"
+            },
+            "safeMode": {
+                "description": "是否禁用重要目录下的危险操作",
+                "title": "安全模式"
+            },
+            "title": "常规设置"
+        },
+        "menuSettings": {
+            "history1": {
+                "description": "文件历史面板的上下文菜单（右键菜单）",
+                "title": "文件历史菜单"
+            },
+            "history2": {
+                "description": "文档历史面板的上下文菜单（右键菜单）",
+                "title": "文档历史菜单"
+            },
+            "shorthand": {
+                "description": "收集箱的上下文菜单（右键菜单）",
+                "title": "收集箱菜单"
+            },
+            "snapshot": {
+                "description": "快照面板的上下文菜单（右键菜单）",
+                "title": "快照面板菜单"
+            },
+            "snippet": {
+                "description": "代码片段的上下文菜单（右键菜单）",
+                "title": "代码片段菜单"
+            },
+            "title": "菜单设置"
+        }
+    }
+}
