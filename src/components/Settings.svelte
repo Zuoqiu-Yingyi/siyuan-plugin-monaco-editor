@@ -420,6 +420,86 @@
                         }}
                     />
                 </Item>
+
+                <!-- ID 包含列表 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.includeID.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.includeID.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.textarea}
+                        settingKey="includeID"
+                        settingValue={config.wakatime.includeID.join("\n")}
+                        placeholder={i18n.settings.wakatimeSettings.serviceTab.includeID.placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.includeID = e.detail.value.split("\n");
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- ID 排除列表 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.excludeID.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.excludeID.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.textarea}
+                        settingKey="excludeID"
+                        settingValue={config.wakatime.excludeID.join("\n")}
+                        placeholder={i18n.settings.wakatimeSettings.serviceTab.excludeID.placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.excludeID = e.detail.value.split("\n");
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 包含列表 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.include.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.include.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.textarea}
+                        settingKey="include"
+                        settingValue={config.wakatime.include.join("\n")}
+                        placeholder={i18n.settings.wakatimeSettings.serviceTab.include.placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.include = e.detail.value.split("\n");
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 排除列表 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.exclude.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.exclude.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.textarea}
+                        settingKey="exclude"
+                        settingValue={config.wakatime.exclude.join("\n")}
+                        placeholder={i18n.settings.wakatimeSettings.serviceTab.exclude.placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.exclude = e.detail.value.split("\n");
+                            await updated();
+                        }}
+                    />
+                </Item>
             </div>
         </Tabs>
     </Panel>
