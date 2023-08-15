@@ -26,6 +26,7 @@ export const DEFAULT_CONFIG: IConfig = {
         hide_branch_names: true,
         hide_file_names: true,
 
+        heartbeats: true,
         project: "",
         language: "",
         interval: 60,

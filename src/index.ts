@@ -26,6 +26,8 @@ import {
     type types,
 } from "@siyuan-community/siyuan-sdk";
 
+import Settings from "./components/Settings.svelte";
+
 import {
     FLAG_ELECTRON,
     FLAG_DESKTOP,
@@ -36,6 +38,7 @@ import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import { parse } from "@workspace/utils/path/browserify";
 import { normalize } from "@workspace/utils/path/normalize";
 import { DEFAULT_CONFIG } from "./configs/default";
+import { Type } from "./wakatime/heartbeats";
 import type { IConfig } from "./types/config";
 import type {
     Heartbeats,
@@ -49,7 +52,6 @@ import type {
 import type { ITransaction } from "@workspace/types/siyuan/transaction";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { IProtyle } from "@workspace/types/siyuan/protyle";
-import { Type } from "./wakatime/heartbeats";
 
 type INotebook = types.kernel.api.notebook.lsNotebooks.INotebook;
 
@@ -68,7 +70,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly context: Context.IContext; // 心跳连接上下文
 
-    protected config: IConfig;
+    public config: IConfig;
     protected timer: number; // 定时器
 
     constructor(options: any) {
@@ -79,7 +81,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
         this.context = {
-            url: this.wakatimeURL,
+            url: this.wakatimeHeartbeatsUrl,
             method: "POST",
             project: this.wakatimeProject,
             language: this.wakatimeLanguage,
@@ -125,13 +127,29 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     }
 
     onunload(): void {
+        this.eventBus.off("ws-main", this.webSocketMainEventListener);
+        this.eventBus.off("loaded-protyle", this.loadedProtyleEventListener);
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
+
         clearInterval(this.timer);
         this.commit();
     }
 
     openSetting(): void {
-        this.testConnection().then(status => this.logger.debug(status));
+        const that = this;
+        const dialog = new siyuan.Dialog({
+            title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
+            content: `<div id="${that.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
+            width: FLAG_MOBILE ? "92vw" : "720px",
+            height: FLAG_MOBILE ? undefined : "640px",
+        });
+        const settings = new Settings({
+            target: dialog.element.querySelector(`#${that.SETTINGS_DIALOG_ID}`),
+            props: {
+                config: this.config,
+                plugin: this,
+            },
+        });
     }
 
     /* 重置插件配置 */
@@ -159,7 +177,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* 更新 wakatime 请求上下文 */
     public updateContext() {
-        this.context.url = this.wakatimeURL;
+        this.context.url = this.wakatimeHeartbeatsUrl;
         this.context.project = this.wakatimeProject;
         this.context.language = this.wakatimeLanguage;
         this.context.headers = this.wakatimeHeaders;
@@ -182,9 +200,11 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.context.actions.push(...actions);
 
         if (this.context.actions.length > 0) {
-            // WakaTime 限制一次最多提交 25 条记录
-            for (let i = 0; i < this.context.actions.length; i += 25) {
-                this.sentHeartbeats(this.context.actions.slice(i, i + 25));
+            if (this.config.wakatime.heartbeats) { // 是否发送心跳连接
+                // WakaTime 限制一次最多提交 25 条记录
+                for (let i = 0; i < this.context.actions.length; i += 25) {
+                    this.sentHeartbeats(this.context.actions.slice(i, i + 25));
+                }
             }
             this.context.actions.length = 0;
         }
@@ -408,24 +428,27 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             headers: [
                 this.context.headers,
             ],
-            timeout: this.config.wakatime.timeout,
+            timeout: this.config.wakatime.timeout * 1_000,
             payload,
         });
     }
 
-    /* 测试连接状态 */
-    public async testConnection(): Promise<boolean> {
+    /* 测试服务状态 */
+    public async testService(): Promise<boolean> {
         try {
             const response = await this.client.forwardProxy({
-                url: this.wakatimeStatusBarURL,
+                url: this.wakatimeStatusBarUrl,
                 method: "GET",
                 headers: [
                     this.context.headers,
                 ],
-                timeout: this.config.wakatime.timeout,
+                timeout: this.config.wakatime.timeout * 1_000,
             });
             if (200 <= response.data.status && response.data.status < 300) return true;
-            else return false;
+            else {
+                this.logger.warn(response);
+                return false;
+            };
         } catch (error) {
             return false;
         }
@@ -449,6 +472,11 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     /* default language name */
     public get wakatimeDefaultLanguage(): string {
         return "Siyuan";
+    }
+
+    /* default API URL */
+    public get wakatimeDefaultApiUrl(): string {
+        return WakaTimePlugin.WAKATIME_DEFAULT_API_URL;
     }
 
     /* wakatime project */
@@ -480,14 +508,19 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             }`;
     }
 
-    /* wakatime url */
-    public get wakatimeURL(): string {
-        return `${this.config?.wakatime?.api_url || WakaTimePlugin.WAKATIME_DEFAULT_API_URL}/${WakaTimePlugin.WAKATIME_HEARTBEATS_PATH}`;
+    /* wakatime API URL */
+    public get wakatimeApiUrl(): string {
+        return this.config?.wakatime?.api_url || this.wakatimeDefaultApiUrl;
     }
 
     /* wakatime url */
-    public get wakatimeStatusBarURL(): string {
-        return `${this.config?.wakatime?.api_url || WakaTimePlugin.WAKATIME_DEFAULT_API_URL}/${WakaTimePlugin.WAKATIME_STATUS_BAR_PATH}`;
+    public get wakatimeHeartbeatsUrl(): string {
+        return `${this.wakatimeApiUrl}/${WakaTimePlugin.WAKATIME_HEARTBEATS_PATH}`;
+    }
+
+    /* wakatime url */
+    public get wakatimeStatusBarUrl(): string {
+        return `${this.wakatimeApiUrl}/${WakaTimePlugin.WAKATIME_STATUS_BAR_PATH}`;
     }
 
     /* wakatime Authorization */
