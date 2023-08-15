@@ -46,6 +46,16 @@
                     "description": "Wakapi/WakaTime API URL<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_url</code>",
                     "title": "API URL"
                 },
+                "exclude": {
+                    "description": "提交时排除路径中包含列表字段的文档<br/>每行一条记录，若为正则表达式则需要使用 <code class='fn__code'>/</code> 包裹<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>exclude</code>",
+                    "placeholder": "不排除任何笔记本与文档",
+                    "title": "排除列表"
+                },
+                "excludeID": {
+                    "description": "提交时排除 ID 路径中包含列表字段的文档<br/>每行一条记录，若为正则表达式则需要使用 <code class='fn__code'>/</code> 包裹",
+                    "placeholder": "不排除任何笔记本与文档",
+                    "title": "ID 排除列表"
+                },
                 "hide_branch_names": {
                     "description": "是否隐藏笔记本名称，开启后将使用笔记本 ID 替换笔记本名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_branch_names</code>",
                     "title": "隐藏笔记本名称"
@@ -57,6 +67,16 @@
                 "hostname": {
                     "description": "自定义当前主机名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hostname</code>",
                     "title": "主机名称"
+                },
+                "include": {
+                    "description": "仅提交路径中包含列表字段的文档<br/>每行一条记录，若为正则表达式则需要使用 <code class='fn__code'>/</code> 包裹<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>include</code>",
+                    "placeholder": "包含所有笔记本与文档",
+                    "title": "包含列表"
+                },
+                "includeID": {
+                    "description": "仅提交 ID 路径中包含列表字段的文档<br/>每行一条记录，若为正则表达式则需要使用 <code class='fn__code'>/</code> 包裹",
+                    "placeholder": "包含所有笔记本与文档",
+                    "title": "ID 包含列表"
                 },
                 "test": {
                     "description": "测试是否正确连接到 Wakapi/WakaTime 服务",

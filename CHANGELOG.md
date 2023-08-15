@@ -8,6 +8,7 @@
 - 添加 `hostname` 设置项 | Add `hostname` setting item.
 - 重新添加附属仓库 `wakatime` | Re-add sub-repository `wakatime`.
 - 实现包含列表与排除列表功能 | Implement include list and exclude list function.
+- 添加包含列表与排除列表设置项 | Add include list and exclude list setting items.
 
 ## 2023-08-14
 

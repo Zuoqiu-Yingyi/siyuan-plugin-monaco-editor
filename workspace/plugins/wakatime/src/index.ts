@@ -545,7 +545,24 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         return list
             .filter(entry => {
                 entry = entry.trim();
-                return (entry !== "" && entry !== "//")
+                if (entry !== "" && entry !== "//") {
+                    /* 过滤无效的正则表达式 */
+                    if (entry.startsWith("/") && entry.endsWith("/")) {
+                        try {
+                            new RegExp(entry.slice(1, -1));
+                            return true;
+                        } catch (error) {
+                            this.siyuan.showMessage(
+                                error,
+                                undefined,
+                                "error",
+                            );
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else return false;
             })
             .map(entry => {
                 if (entry.startsWith("/") && entry.endsWith("/")) {
