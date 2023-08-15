@@ -71,8 +71,8 @@ export class FileTree {
                 }
             }
             else { // 类型一致, 比较指定层级
-                const name1 = node1.paths[depth].toLocaleLowerCase();
-                const name2 = node2.paths[depth].toLocaleLowerCase();
+                const name1 = node1.paths[depth].toLowerCase();
+                const name2 = node2.paths[depth].toLowerCase();
                 switch (true) {
                     case name1 > name2: // 名称大的在后
                         return 1;

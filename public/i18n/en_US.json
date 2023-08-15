@@ -66,6 +66,9 @@
         "folder": {
             "ariaLabel": "Folder"
         },
+        "lastUpdated": {
+            "text": "Last Updated"
+        },
         "menu": {
             "ariaLabel": "Menu"
         },
