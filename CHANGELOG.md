@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.1.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.1...v0.1.2) (2023-08-15)
+
+
+### Miscellaneous
+
+* **monaco-editor:** release v0.1.2 ([6e8b36b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/6e8b36bc6aaf6bc2f9e2b97704d58ecc904a0f54))
+* **script:** 添加附属仓库 `wakatime` 的管理脚本 | Add management scripts for sub-repository `wakatime`. ([198d146](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/198d14634225e047f0ab13c763dbf80e0ea4f5e7))
+* **wakatime:** release v0.1.0 ([afc0af6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/afc0af694c6ddedc1773da391bd0fd87f68433a3))
+* **wakatime:** release v0.1.0 ([35bd041](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/35bd041f3d08cc44fc26a11771afdeac1b72249c))
+* **wakatime:** 重新添加附属仓库 `wakatime` | Re-add sub-repository `wakatime`. ([bdec504](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/bdec5041ef281b5565d7b17f811cdef8b05c288f))
+
+
+### Documentation
+
+* **wakatime:** 完善 `i18n` | Complete `i18n` ([3eb3af9](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/3eb3af9cc117ae5d3a587e70f9dd3f3e6747d088))
+* **wakatime:** 完善 `i18n` | Complete `i18n` ([fe06bba](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/fe06bba2a1aff6b8f79ea43a685ded30d3854741))
+* **wakatime:** 完善文档说明 | Improve documentation ([f98a8fa](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f98a8faf655d49a7d56591995ca91d6cd1d10c46))
+* **wakatime:** 完善文档说明 | Improve documentation ([58efc6a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/58efc6afdc84af32b376d7c538c2ddfc0f307dda))
+
+
+### Features
+
+* **components:** 为面包屑添加激活状态 | Add active state to breadcrumb. ([daeec92](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/daeec92fea8460e9c0eb09dc3a9a5b1c40f77f57))
+* **components:** 为面包屑添加激活状态 | Add active state to breadcrumb. ([07f39be](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/07f39be8dd970130f920193e2c41ba6389825211))
+* **monaco-editor:** 添加 `复制导出超链接` 菜单项 | Add `Copy export hyperlink` menu item. ([eb44c5f](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/eb44c5fb02e8b848ed34c3a9f934ff459a05c0aa))
+* **monaco-editor:** 添加文件/文件夹更新时间 | Add file/folder update time. ([fd661e5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/fd661e5068338b3e0887479627425e47de847184))
+* **wakatime:** 实现 `wakatime` 插件基础功能 | Implement the basic functions of the `wakatime` plugin. ([fe454c2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/fe454c213dfb8d70c134820f5a64c44ef025286c))
+* **wakatime:** 实现 `wakatime` 插件基础功能 | Implement the basic functions of the `wakatime` plugin. ([ca44743](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/ca4474367cd017be36f5cc5d54f518829e105fe3))
+* **wakatime:** 实现包含列表与排除列表功能 | Implement include list and exclude list function. ([f05fe9f](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f05fe9f757f3f70af8ee4ebe1a10260fa72e9e68))
+* **wakatime:** 实现设置面板 | Implement settings panel. ([db49357](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/db49357caddb58917ccbeefb57ab46e088e120ac))
+* **wakatime:** 实现设置面板 | Implement settings panel. ([a6aaabf](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/a6aaabf17dbbd8df2ba81492271398ed4cf31a20))
+* **wakatime:** 添加 `hostname` 设置项 | Add `hostname` setting item. ([5ee3e8b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/5ee3e8b8f945e71ff0f93f64555dc8a17f05d285))
+* **wakatime:** 添加 `hostname` 设置项 | Add `hostname` setting item. ([5cbef5c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/5cbef5c6c8942e2e221ce3c252fb39f23082cb0d))
+* **wakatime:** 调整心跳活动推送策略 | Adjust the heartbeat activity push strategy. ([ff14be9](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/ff14be967bde68dfd33c90bd7ad337ee7704776b))
+* **wakatime:** 调整心跳活动推送策略 | Adjust the heartbeat activity push strategy. ([8b7adf0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/8b7adf05c39d2ad6f8f5713d50aa067c959e00e0))
+
+
+### Bug Fixes
+
+* **monaco-editor:** updage `plugin.json` ([4cd7ed1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/4cd7ed1b63cf2a15a606a0902a6f385228d356eb))
+* **monaco-editor:** updage `plugin.json` ([31b2f39](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/31b2f39a12eb067712db877d0e27c6594b048a18))
+
+
+### Performance Improvements
+
+* 调整打开 `siyuan://plugins` 链接事件的名称 | Adjust the name of the event to open the `siyuan://plugins` link. ([f4206b9](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f4206b9a1b5192f052ca8784f9c294a0ad32de1b))
+* 调整打开 `siyuan://plugins` 链接事件的名称 | Adjust the name of the event to open the `siyuan://plugins` link. ([45b6031](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/45b6031415b08bbd7819983247898f78ab3152ab))
+
 ## [0.1.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.0...v0.1.1) (2023-08-11)
 
 
