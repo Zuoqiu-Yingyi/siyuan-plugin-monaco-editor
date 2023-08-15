@@ -32,12 +32,15 @@ import {
     FLAG_MOBILE,
 } from "@workspace/utils/env/front-end";
 import { Logger } from "@workspace/utils/logger";
-import { merge } from "@workspace/utils/misc/merge";
+import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import { parse } from "@workspace/utils/path/browserify";
 import { normalize } from "@workspace/utils/path/normalize";
 import { DEFAULT_CONFIG } from "./configs/default";
 import type { IConfig } from "./types/config";
-import type { IContext, IHeaders, heartbeats } from "./types/wakatime";
+import type {
+    Heartbeats,
+    Context,
+} from "./types/wakatime";
 import type {
     IWebSocketMainEvent,
     IClickEditorContentEvent,
@@ -45,6 +48,8 @@ import type {
 } from "@workspace/types/siyuan/events";
 import type { ITransaction } from "@workspace/types/siyuan/transaction";
 import type { BlockID } from "@workspace/types/siyuan";
+import type { IProtyle } from "@workspace/types/siyuan/protyle";
+import { Type } from "./wakatime/heartbeats";
 
 type INotebook = types.kernel.api.notebook.lsNotebooks.INotebook;
 
@@ -60,11 +65,8 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     public readonly client: InstanceType<typeof Client>;
     public readonly notebook = new Map<BlockID, INotebook>(); // 笔记本 ID => 笔记本信息
 
-    public readonly ids: Set<BlockID> = new Set(); // 待处理的块 ID
-    public readonly actions: heartbeats.IPayload[] = []; // 待处理的操作
-
     protected readonly SETTINGS_DIALOG_ID: string;
-    protected readonly context: IContext; // 心跳连接上下文
+    protected readonly context: Context.IContext; // 心跳连接上下文
 
     protected config: IConfig;
     protected timer: number; // 定时器
@@ -80,7 +82,11 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             url: this.wakatimeURL,
             method: "POST",
             project: this.wakatimeProject,
+            language: this.wakatimeLanguage,
             headers: this.wakatimeHeaders,
+            blocks: new Map<BlockID, BlockID>(),
+            roots: new Map<BlockID, Context.IRoot>(),
+            actions: new Array<Heartbeats.IAction>(),
         };
     }
 
@@ -95,7 +101,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
         this.loadData(WakaTimePlugin.GLOBAL_CONFIG_NAME)
             .then(config => {
-                this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
+                this.config = mergeIgnoreArray(DEFAULT_CONFIG, config || {}) as IConfig;
             })
             .catch(error => this.logger.error(error))
             .finally(() => {
@@ -120,6 +126,8 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     onunload(): void {
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
+        clearInterval(this.timer);
+        this.commit();
     }
 
     openSetting(): void {
@@ -128,7 +136,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* 重置插件配置 */
     public async resetConfig(): Promise<void> {
-        return this.updateConfig(merge(DEFAULT_CONFIG) as IConfig);
+        return this.updateConfig(mergeIgnoreArray(DEFAULT_CONFIG) as IConfig);
     }
 
     /* 更新插件配置 */
@@ -146,13 +154,14 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         if (this.timer) {
             clearInterval(this.timer);
         }
-        this.timer = setInterval(this.commit, interval);
+        this.timer = setInterval(this.commit, interval * 1_000);
     }
 
     /* 更新 wakatime 请求上下文 */
     public updateContext() {
         this.context.url = this.wakatimeURL;
         this.context.project = this.wakatimeProject;
+        this.context.language = this.wakatimeLanguage;
         this.context.headers = this.wakatimeHeaders;
     }
 
@@ -165,14 +174,19 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* 提交活动 */
     protected readonly commit = async () => {
-        const ids = Array.from(this.ids);
-        this.ids.clear();
-        const actions = await this.buildHeartbeats(ids, true);
-        this.actions.push(...actions);
+        const roots = Array.from(this.context.roots.values());
+        this.context.blocks.clear();
+        this.context.roots.clear();
 
-        if (this.actions.length > 0) {
-            this.sentHeartbeats(this.actions);
-            this.actions.length = 0;
+        const actions = await this.buildHeartbeats(roots);
+        this.context.actions.push(...actions);
+
+        if (this.context.actions.length > 0) {
+            // WakaTime 限制一次最多提交 25 条记录
+            for (let i = 0; i < this.context.actions.length; i += 25) {
+                this.sentHeartbeats(this.context.actions.slice(i, i + 25));
+            }
+            this.context.actions.length = 0;
         }
     };
 
@@ -186,12 +200,12 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             transactions?.forEach(transaction => {
                 transaction.doOperations?.forEach(operation => {
                     if (operation.id) {
-                        this.ids.add(operation.id);
+                        this.addEditEvent(operation.id);
                     }
                 });
                 transaction.doOperations?.forEach(operation => {
                     if (operation.id) {
-                        this.ids.add(operation.id);
+                        this.addEditEvent(operation.id);
                     }
                 });
             });
@@ -202,39 +216,104 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     protected readonly loadedProtyleEventListener = (e: ILoadedProtyleEvent) => {
         // this.logger.debug(e);
         const protyle = e.detail;
-        if (protyle.notebookId && protyle.path) {
-            this.buildHeartbeat(
-                {
-                    box: protyle.notebookId,
-                    path: protyle.path,
-                },
-                Date.now() / 1_000,
-                false,
-            ).then(action => this.actions.push(action));
-        }
+        this.addViewEvent(protyle);
     }
 
     /* 编辑器点击事件监听器 */
     protected readonly clickEditorContentEventListener = (e: IClickEditorContentEvent) => {
         // this.logger.debug(e);
         const protyle = e.detail.protyle;
-        if (protyle.notebookId && protyle.path) {
-            this.buildHeartbeat(
-                {
-                    box: protyle.notebookId,
-                    path: protyle.path,
-                },
-                Date.now() / 1_000,
-                false,
-            ).then(action => this.actions.push(action));
+        this.addViewEvent(protyle);
+    }
+
+    /* 添加编辑事件 */
+    protected async addEditEvent(id: BlockID): Promise<Context.IRoot> {
+        const time = this.now;
+
+        /* 获取块对应的文档信息 */
+        let root_id = this.context.blocks.get(id);
+        let root_info = this.context.roots.get(root_id);
+        if (!root_info) {
+            const block_info = await this.client.getBlockInfo({ id });
+
+            root_id = block_info.data.rootID;
+            root_info = {
+                id: root_id,
+                box: block_info.data.box,
+                path: block_info.data.path,
+                events: [],
+            };
+
+            this.context.blocks.set(id, root_id);
+            this.context.roots.set(root_id, root_info);
+        }
+
+        /* 添加编辑事件 */
+        return this.addEvent({
+            id: root_info.id,
+            box: root_info.box,
+            path: root_info.path,
+            time,
+            is_write: true,
+        });
+    }
+
+    /* 添加查看事件 */
+    protected addViewEvent(protyle: IProtyle): Context.IRoot | undefined {
+        const time = this.now;
+
+        if (protyle.notebookId && protyle.path && protyle.block.rootID) {
+            const root_id = protyle.block.rootID;
+            this.context.blocks.set(root_id, root_id);
+            return this.addEvent({
+                id: root_id,
+                box: protyle.notebookId,
+                path: protyle.path,
+                time,
+                is_write: false,
+            });
         }
     }
 
+    /* 添加事件 */
+    protected addEvent(options: Omit<Context.IRoot, "events"> & Context.IEvent): Context.IRoot {
+        let root = this.context.roots.get(options.id);
+        if (root) {
+            const event: Context.IEvent = {
+                time: options.time,
+                is_write: options.is_write,
+            };
+
+            /* 如果上一个事件为同类型的事件, 替换该事件 */
+            if (root.events.at(-1)?.is_write === event.is_write) {
+                root.events.pop();
+            }
+            root.events.push(event);
+        }
+        else {
+            root = {
+                id: options.id,
+                box: options.box,
+                path: options.path,
+                events: [{
+                    time: options.time,
+                    is_write: options.is_write,
+                }],
+            };
+            this.context.roots.set(options.id, root);
+        }
+        return root;
+    }
+
     /**
-     * 构造心跳连接
+     * 从块 ID 构造心跳连接
+     * @deprecated
+     * @param id 块 ID
+     * @param is_write 是否为编辑活动
+     * @returns 心跳连接活动
      */
-    public async buildHeartbeats(id: BlockID | BlockID[], is_write: boolean): Promise<heartbeats.IPayload[]> {
-        const time = Date.now() / 1_000; // 当前时间
+    public async buildHeartbeatsFromID(id: BlockID | BlockID[], is_write: boolean): Promise<Heartbeats.IAction[]> {
+        const time = this.now; // 当前时间
 
         if (!Array.isArray(id)) {
             id = [id];
@@ -263,6 +342,21 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     }
 
     /**
+     * 构造心跳连接
+     * @param roots 文档信息
+     * @returns 心跳连接活动
+     */
+    public async buildHeartbeats(roots: Context.IRoot[]): Promise<Heartbeats.IAction[]> {
+        return Promise.all(roots.flatMap(root => {
+            return root.events.map(event => this.buildHeartbeat(
+                root,
+                event.time,
+                event.is_write,
+            ));
+        }));
+    }
+
+    /**
      * 构建一个心跳连接
      * @param doc 文档信息
      * @param time 时间
@@ -275,20 +369,27 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         },
         time: number,
         is_write: boolean,
-    ): Promise<heartbeats.IPayload> {
-        const notebook_name = this.notebook.get(doc.box)?.name;
-        const hpath = await this.client.getHPathByPath({
-            path: doc.path,
-            notebook: doc.box,
-        });
+    ): Promise<Heartbeats.IAction> {
+        const branch = this.config.wakatime.hide_branch_names
+            ? doc.box
+            : this.notebook.get(doc.box)?.name;
+        const entity = this.config.wakatime.hide_file_names
+            ? `${branch}${doc.path}`
+            : `${branch}${(await this.client.getHPathByPath({
+                path: doc.path,
+                notebook: doc.box,
+            })).data}.sy`;
+
         return {
-            type: "file",
-            category: "learning",
+            type: Type.File,
+            category: is_write
+                ? this.config.wakatime.edit.category
+                : this.config.wakatime.view.category,
 
             project: this.context.project,
-            branch: notebook_name,
-            entity: `${notebook_name}${hpath.data}.sy`,
-            language: "Siyuan",
+            branch,
+            entity,
+            language: this.context.language,
             time,
             is_write,
         };
@@ -298,7 +399,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
      * 发送心跳连接
      * REF: https://wakatime.com/developers#heartbeats
      */
-    public async sentHeartbeats(payload: heartbeats.IPayload | heartbeats.IPayload[]) {
+    public async sentHeartbeats(payload: Heartbeats.IAction | Heartbeats.IAction[]) {
         return this.client.forwardProxy({
             url: Array.isArray(payload)
                 ? `${this.context.url}.bulk`
@@ -307,6 +408,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             headers: [
                 this.context.headers,
             ],
+            timeout: this.config.wakatime.timeout,
             payload,
         });
     }
@@ -320,6 +422,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
                 headers: [
                     this.context.headers,
                 ],
+                timeout: this.config.wakatime.timeout,
             });
             if (200 <= response.data.status && response.data.status < 300) return true;
             else return false;
@@ -328,14 +431,39 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         }
     }
 
+    /* 获取时间戳 */
+    public time(date: Date = new Date()): number {
+        return date.getTime() / 1_000;
+    }
+
+    /* 获取当前时间戳 */
+    public get now(): number {
+        return this.time();
+    }
+
+    /* default project name */
+    public get wakatimeDefaultProject(): string {
+        return `siyuan-workspace:${parse(normalize(globalThis.siyuan.config.system.workspaceDir)).base}`;
+    }
+
+    /* default language name */
+    public get wakatimeDefaultLanguage(): string {
+        return "Siyuan";
+    }
+
     /* wakatime project */
     public get wakatimeProject(): string {
         return this.config?.wakatime?.project
-            || `siyuan-workspace:${parse(normalize(globalThis.siyuan.config.system.workspaceDir)).base}`;
+            || this.wakatimeDefaultProject;
     }
 
+    /* wakatime language */
+    public get wakatimeLanguage(): string {
+        return this.config?.wakatime?.language
+            || this.wakatimeDefaultLanguage;
+    }
 
-    public get wakatimeHeaders(): IHeaders {
+    public get wakatimeHeaders(): Context.IHeaders {
         return {
             "Authorization": this.wakatimeAuthorization,
             "User-Agent": this.wakatimeUserAgent,

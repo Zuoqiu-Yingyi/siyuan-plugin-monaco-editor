@@ -15,21 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import type { BlockID } from "@workspace/types/siyuan";
+import type { Category, Type } from "@/wakatime/heartbeats";
+
 /**
  * 心跳连接
  * REF: https://wakatime.com/developers#heartbeats
  * REF: https://github.com/wakatime/browser-wakatime/blob/master/src/types/heartbeats.ts
  */
-export namespace heartbeats {
-    export interface IPayload {
+export namespace Heartbeats {
+    export interface IAction {
         // <string: entity heartbeat is logging time against, such as an absolute file path or domain>,
         entity: string;
 
         // <string: type of entity; can be file, app, or domain>,
-        type: "file" | "app" | "domain";
+        type: Type;
 
         // <string: category for this activity (optional); normally this is inferred automatically from type; can be coding, building, indexing, debugging, browsing, running tests, writing tests, manual testing, writing docs, code reviewing, researching, learning, or designing>,
-        category?: "coding" | "building" | "indexing" | "debugging" | "browsing" | "running tests" | "writing tests" | "manual testing" | "writing docs" | "code reviewing" | "researching" | "learning" | "designing";
+        category?: Category;
 
         // <float: UNIX epoch timestamp; numbers after decimal point are fractions of a second>,
         time: number;
@@ -63,16 +66,35 @@ export namespace heartbeats {
     }
 }
 
-export interface IHeaders {
-    "Authorization": string; // API KEY
-    "User-Agent": string; // System + Version + Editor
-    "X-Machine-Name": string; // Machine Name
-    [key: string]: string;
+export namespace Context {
+    export interface IHeaders {
+        "Authorization": string; // API KEY
+        "User-Agent": string; // System + Version + Editor
+        "X-Machine-Name": string; // Machine Name
+        [key: string]: string;
+    }
+    
+    export interface IEvent {
+        time: number; // UNIX 时间戳 (单位: s)
+        is_write: boolean; // 是否写入
+    }
+    
+    export interface IRoot {
+        id: BlockID; // 文档 ID
+        box: BlockID; // 笔记本 ID
+        path: string; // 文档路径
+        events: IEvent[]; // 事件
+    }
+    
+    export interface IContext {
+        url: string;
+        method: "POST";
+        project: string;
+        language: string;
+        headers: IHeaders;
+        blocks: Map<BlockID, BlockID>; // block -> root
+        roots: Map<BlockID, IRoot>; // root -> { box, path }
+        actions: Heartbeats.IAction[]; // 待提交的活动
+    }
 }
 
-export interface IContext {
-    url: string;
-    method: "POST";
-    project: string;
-    headers: IHeaders;
-}
