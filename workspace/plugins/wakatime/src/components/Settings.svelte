@@ -351,6 +351,24 @@
                     />
                 </Item>
 
+                <!-- 主机名称 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.hostname.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.hostname.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="hostname"
+                        settingValue={config.wakatime.hostname}
+                        placeholder={plugin.wakatimeDefaultHostname}
+                        on:changed={async e => {
+                            config.wakatime.hostname = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
                 <!-- 超时时间 -->
                 <Item
                     title={i18n.settings.wakatimeSettings.serviceTab.timeout.title}

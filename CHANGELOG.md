@@ -5,6 +5,7 @@
 - 实现 `wakatime` 插件基础功能 | Implement the basic functions of the `wakatime` plugin.
 - 调整打开 `siyuan://plugins` 链接事件的名称 | Adjust the name of the event to open the `siyuan://plugins` link.
 - 调整心跳活动推送策略 | Adjust the heartbeat activity push strategy.
+- 添加 `hostname` 设置项 | Add `hostname` setting item.
 
 ## 2023-08-14
 

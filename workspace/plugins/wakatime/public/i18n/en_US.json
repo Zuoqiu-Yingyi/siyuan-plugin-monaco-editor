@@ -28,7 +28,7 @@
                     "title": "Language name"
                 },
                 "project": {
-                    "description": "Custom current workspace name<br/>Corresponds to <code class='fn__code'>Projects</code> item in Wakapi/WakaTime statistics",
+                    "description": "Custom current workspace name<br/>Corresponds to <code class='fn__code'>Projects</code> in Wakapi/WakaTime statistics",
                     "title": "Project name"
                 },
                 "title": "General",
@@ -53,6 +53,10 @@
                 "hide_file_names": {
                     "description": "Whether to hide document titles. If enabled, the document title is replaced with the document block ID<br/>Corresponds to <code class='fn__code'>hide_file_names</code> in Wakapi/WakaTime configuration",
                     "title": "Hide document titles"
+                },
+                "hostname": {
+                    "description": "Custom current host name<br/>Corresponds to <code class='fn__code'>hostname</code> in Wakapi/WakaTime configuration",
+                    "title": "Hostname"
                 },
                 "test": {
                     "description": "Test if connected to Wakapi/WakaTime service correctly",

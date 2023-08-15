@@ -32,6 +32,7 @@ export interface IWakaTime {
     heartbeats: boolean; // 是否开启心跳连接
     project: string; // 项目名称
     language: string; // 语言名称
+    hostname: string; // 设备名
     interval: number; // 推送时间间隔 (单位: s)
 
     view: IActivity; // 查看活动
