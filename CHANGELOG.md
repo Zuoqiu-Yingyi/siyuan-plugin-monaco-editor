@@ -6,6 +6,7 @@
 - 调整打开 `siyuan://plugins` 链接事件的名称 | Adjust the name of the event to open the `siyuan://plugins` link.
 - 调整心跳活动推送策略 | Adjust the heartbeat activity push strategy.
 - 添加 `hostname` 设置项 | Add `hostname` setting item.
+- 重新添加附属仓库 `wakatime` | Re-add sub-repository `wakatime`.
 
 ## 2023-08-14
 
