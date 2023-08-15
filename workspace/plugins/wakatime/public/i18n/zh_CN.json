@@ -29,7 +29,7 @@
                 },
                 "project": {
                     "description": "自定义当前工作空间名称<br/>对应 Wakapi/WakaTime 统计中的 <code class='fn__code'>Projects</code> 项",
-                    "title": "工作空间名称"
+                    "title": "项目名称"
                 },
                 "title": "常规设置",
                 "viewCategory": {
@@ -47,11 +47,11 @@
                     "title": "API URL"
                 },
                 "hide_branch_names": {
-                    "description": "是否隐藏笔记本名称，开启后将使用笔记本 ID 替代<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_branch_names</code>",
+                    "description": "是否隐藏笔记本名称，开启后将使用笔记本 ID 替换笔记本名称<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_branch_names</code>",
                     "title": "隐藏笔记本名称"
                 },
                 "hide_file_names": {
-                    "description": "是否隐藏文档标题，开启后将使用文档块 ID 替代<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
+                    "description": "是否隐藏文档标题，开启后将使用文档块 ID 替换文档标题<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
                     "title": "隐藏文档标题"
                 },
                 "test": {
