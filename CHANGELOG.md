@@ -4,6 +4,7 @@
 
 - 添加文件/文件夹更新时间 | Add file/folder update time.
 - 添加 `复制导出超链接` 菜单项 | Add `Copy export hyperlink` menu item.
+- 添加附属仓库 `template` 的管理脚本 | Add management scripts for sub-repository `template`.
 
 ## 2023-08-15
 

@@ -28,8 +28,8 @@ importers:
         specifier: ^2.8.8
         version: 2.8.8
       siyuan:
-        specifier: ^0.7.9
-        version: 0.7.9
+        specifier: ^0.8.0
+        version: 0.8.0
       turbo:
         specifier: ^1.10.12
         version: 1.10.12
@@ -4474,6 +4474,15 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
+  /postcss@8.4.28:
+    resolution: {integrity: sha512-Z7V5j0cq8oEKyejIKfpD8b4eBy9cwW2JWPk0+fB1HOAMsfHbnAXLLS+PfVWlzMSLQaWttKDt607I0XHmpE67Vw==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.6
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -4702,8 +4711,8 @@ packages:
       is-arrayish: 0.3.2
     dev: true
 
-  /siyuan@0.7.9:
-    resolution: {integrity: sha512-X5olBQhfkgyPRF+d8agpcbAaFnCSvSkN3LWX7XU9jApmCfpJ/4PAmK7mKPfR1YGBpjFLRa/xTrv11BQ3hxN15Q==}
+  /siyuan@0.8.0:
+    resolution: {integrity: sha512-QbT/6YKetvmJ/1D7OaqF/zIK+TUXI6eUPJ48qlbqdJtN8/aN809+hsMz+2xUO5pxq5nc3+hSGomia5sBoXQRwQ==}
     dev: true
 
   /slash@3.0.0:
@@ -5733,7 +5742,7 @@ packages:
       '@types/node': 20.5.0
       esbuild: 0.18.20
       less: 4.2.0
-      postcss: 8.4.27
+      postcss: 8.4.28
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.2
