@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.1.1...v0.1.2) (2023-08-17)
+
+
+### Miscellaneous
+
+* **script:** 添加附属仓库 `template` 的管理脚本 | Add management scripts for sub-repository `template`. ([38b15a3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/38b15a33357bd124927f1f1ddf09e786786c830a))
+* **wakatime:** release v0.1.2 ([baf56c5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/baf56c53ca37e5b8c011afce9aa4cabf22bbb2d9))
+* 重新添加附属仓库 `template` | Re-add sub-repository `template`. ([84be39e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/84be39e2a5bd7c33d1ba5adbbfc05cb0dd1d17a3))
+
+
+### Features
+
+* **template:** 完善插件模板 | Improve plugin template. ([a33c8ee](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/a33c8ee2eb76f2a41a21941231b731fc433fad7c))
+* **template:** 完善插件模板 | Improve plugin template. ([3546a74](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/3546a74fd19e7d87db427d40061a508949aceb6e))
+
+
+### Bug Fixes
+
+* **wakatime:** fix(wakatime): 捕获删除块导致的异常 | Catch exceptions caused by deleted blocks. ([4393980](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/4393980ca5d495c025c94d6a1fe4b27d470beabd))
+* **wakatime:** 捕获删除块导致的异常 | Catch exceptions caused by deleted blocks. ([efc1c37](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/efc1c3744d780c76a38ca0d99be865bc9cbdfd45))
+
 ## [0.1.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.1.0...v0.1.1) (2023-08-15)
 
 
