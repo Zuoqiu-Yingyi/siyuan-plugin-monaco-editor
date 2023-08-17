@@ -23,6 +23,7 @@ import manifest from "~/public/plugin.json";
 
 import {
     Client,
+    KernelError,
     type types,
 } from "@siyuan-community/siyuan-sdk";
 
@@ -289,18 +290,26 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         let root_id = this.context.blocks.get(id);
         let root_info = this.context.roots.get(root_id);
         if (!root_info) {
-            const block_info = await this.client.getBlockInfo({ id });
+            try {
+                const block_info = await this.client.getBlockInfo({ id });
+                root_id = block_info.data.rootID;
+                root_info = {
+                    id: root_id,
+                    box: block_info.data.box,
+                    path: block_info.data.path,
+                    events: [],
+                };
 
-            root_id = block_info.data.rootID;
-            root_info = {
-                id: root_id,
-                box: block_info.data.box,
-                path: block_info.data.path,
-                events: [],
-            };
-
-            this.context.blocks.set(id, root_id);
-            this.context.roots.set(root_id, root_info);
+                this.context.blocks.set(id, root_id);
+                this.context.roots.set(root_id, root_info);
+            } catch (error) {
+                if (error instanceof KernelError) { // 块删除事件导致无法查询到对应的块
+                    // this.logger.warn(error);
+                }
+                else {
+                    throw error;
+                }
+            }
         }
 
         /* 添加编辑事件 */
