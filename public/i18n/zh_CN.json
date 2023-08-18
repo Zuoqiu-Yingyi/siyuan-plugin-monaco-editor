@@ -2,6 +2,11 @@
     "displayName": "WakaTime",
     "settings": {
         "generalSettings": {
+            "cleanCache": {
+                "description": "删除所有离线缓存文件（删除后将刷新页面）",
+                "text": "清理",
+                "title": "清理离线缓存"
+            },
             "reset": {
                 "description": "重置所有设置选项为默认选项（重置后将刷新页面）",
                 "text": "重置",
@@ -77,6 +82,10 @@
                     "description": "仅提交 ID 路径中包含列表字段的文档<br/>每行一条记录，若为正则表达式则需要使用 <code class='fn__code'>/</code> 包裹",
                     "placeholder": "包含所有笔记本与文档",
                     "title": "ID 包含列表"
+                },
+                "offline": {
+                    "description": "是否开启离线缓存功能<br/>开启后当 Wakapi/WakaTime 服务访问异常或未开启心跳连接时会将活动信息缓存至 ${1} 目录<br/>对应 Wakapi/WakaTime 配置中的 <code class='fn__code'>offline</code>",
+                    "title": "离线缓存"
                 },
                 "test": {
                     "description": "测试是否正确连接到 Wakapi/WakaTime 服务",

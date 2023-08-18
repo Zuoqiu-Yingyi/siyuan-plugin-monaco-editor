@@ -23,11 +23,14 @@ export interface IActivity {
 }
 
 export interface IWakaTime {
+    // REF: https://github.com/wakatime/wakatime-cli/blob/develop/USAGE.md
     api_url: string; // API URL
     api_key: string; // API KEY
     timeout: number; // 请求超时时间 (单位: s)
     hide_branch_names: boolean; // 是否隐藏笔记本名 (使用笔记本 ID 代替)
     hide_file_names: boolean; // 是否隐藏文件路径 (使用文档 ID 代替)
+
+    offline: boolean; // 是否启用离线时缓存
 
     includeID: string[]; // ID 包含列表, 在 ID 中过滤, 为空则包含所有笔记本与文档
     excludeID: string[]; // ID 排除列表, 在 ID 中过滤, 为空则不排除任何笔记本与文档

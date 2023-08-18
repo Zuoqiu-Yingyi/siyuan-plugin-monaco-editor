@@ -2,58 +2,63 @@
     "displayName": "WakaTime",
     "settings": {
         "generalSettings": {
-            "reset": {
-                "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
-                "text": "重置",
-                "title": "重置設定選項"
+            "cleanCache": {
+                "description": "刪除所有離線緩存文件（刪除後將刷新頁面）",
+                "text": "清理",
+                "title": "清理離線緩存"
             },
-            "title": "常規設定"
+            "reset": {
+                "description": "重置所有設置選項為默認選項（重置後將刷新頁面）",
+                "text": "重置",
+                "title": "重置設置選項"
+            },
+            "title": "常規設置"
         },
         "wakatimeSettings": {
             "generalTab": {
                 "editCategory": {
-                    "description": "為編輯操作設定的活動型別標籤",
+                    "description": "為編輯操作設置的活動類型標籤",
                     "title": "編輯操作標籤"
                 },
                 "heartbeats": {
-                    "description": "開啟後將在檢視/編輯文件時向 Wakapi/WakaTime 服務提交活動資訊",
-                    "title": "心跳連線"
+                    "description": "開啟後將在查看/編輯文檔時向 Wakapi/WakaTime 服務提交活動信息",
+                    "title": "心跳連接"
                 },
                 "interval": {
-                    "description": "將編輯活動推送到 Wakapi/WakaTime 伺服器的時間間隔（單位：秒）",
+                    "description": "將編輯活動推送到 Wakapi/WakaTime 服務器的時間間隔（單位：秒）",
                     "title": "推送時間間隔"
                 },
                 "language": {
-                    "description": "自定義思原始檔語言名稱<br/>對應 Wakapi/WakaTime 統計中的 <code class='fn__code'>Languages</code> 項",
+                    "description": "自定義思源文件語言名稱<br/>對應 Wakapi/WakaTime 統計中的 <code class='fn__code'>Languages</code> 項",
                     "title": "語言名稱"
                 },
                 "project": {
                     "description": "自定義當前工作空間名稱<br/>對應 Wakapi/WakaTime 統計中的 <code class='fn__code'>Projects</code> 項",
-                    "title": "项目名稱"
+                    "title": "項目名稱"
                 },
-                "title": "常規設定",
+                "title": "常規設置",
                 "viewCategory": {
-                    "description": "為檢視操作設定的活動型別標籤",
-                    "title": "檢視操作標籤"
+                    "description": "為查看操作設置的活動類型標籤",
+                    "title": "查看操作標籤"
                 }
             },
             "serviceTab": {
                 "apiKey": {
-                    "description": "Wakapi/WakaTime API 金鑰<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_key</code>",
-                    "title": "API 金鑰"
+                    "description": "Wakapi/WakaTime API 密鑰<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_key</code>",
+                    "title": "API 密鑰"
                 },
                 "apiURL": {
                     "description": "Wakapi/WakaTime API URL<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>api_url</code>",
                     "title": "API URL"
                 },
                 "exclude": {
-                    "description": "提交時排除路徑中包含列表欄位的文件<br/>每行一條記錄，若為正則表示式則需要使用 <code class='fn__code'>/</code> 包裹<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>exclude</code>",
-                    "placeholder": "不排除任何筆記本與文件",
+                    "description": "提交時排除路徑中包含列表字段的文檔<br/>每行一條記錄，若為正則表達式則需要使用 <code class='fn__code'>/</code> 包裹<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>exclude</code>",
+                    "placeholder": "不排除任何筆記本與文檔",
                     "title": "排除列表"
                 },
                 "excludeID": {
-                    "description": "提交時排除 ID 路徑中包含列表欄位的文件<br/>每行一條記錄，若為正則表示式則需要使用 <code class='fn__code'>/</code> 包裹",
-                    "placeholder": "不排除任何筆記本與文件",
+                    "description": "提交時排除 ID 路徑中包含列表字段的文檔<br/>每行一條記錄，若為正則表達式則需要使用 <code class='fn__code'>/</code> 包裹",
+                    "placeholder": "不排除任何筆記本與文檔",
                     "title": "ID 排除列表"
                 },
                 "hide_branch_names": {
@@ -61,28 +66,32 @@
                     "title": "隱藏筆記本名稱"
                 },
                 "hide_file_names": {
-                    "description": "是否隱藏文件標題，開啟後將使用文件塊 ID 替換文件標題<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
-                    "title": "隱藏文件標題"
+                    "description": "是否隱藏文檔標題，開啟後將使用文檔塊 ID 替換文檔標題<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>hide_file_names</code>",
+                    "title": "隱藏文檔標題"
                 },
                 "hostname": {
                     "description": "自定義當前主機名稱<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>hostname</code>",
                     "title": "主機名稱"
                 },
                 "include": {
-                    "description": "僅提交路徑中包含列表欄位的文件<br/>每行一條記錄，若為正則表示式則需要使用 <code class='fn__code'>/</code> 包裹<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>include</code>",
-                    "placeholder": "包含所有筆記本與文件",
+                    "description": "僅提交路徑中包含列表字段的文檔<br/>每行一條記錄，若為正則表達式則需要使用 <code class='fn__code'>/</code> 包裹<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>include</code>",
+                    "placeholder": "包含所有筆記本與文檔",
                     "title": "包含列表"
                 },
                 "includeID": {
-                    "description": "僅提交 ID 路徑中包含列表欄位的文件<br/>每行一條記錄，若為正則表示式則需要使用 <code class='fn__code'>/</code> 包裹",
-                    "placeholder": "包含所有筆記本與文件",
+                    "description": "僅提交 ID 路徑中包含列表字段的文檔<br/>每行一條記錄，若為正則表達式則需要使用 <code class='fn__code'>/</code> 包裹",
+                    "placeholder": "包含所有筆記本與文檔",
                     "title": "ID 包含列表"
                 },
+                "offline": {
+                    "description": "是否開啟離線緩存功能<br/>開啟後當 Wakapi/WakaTime 服務訪問異常或未開啟心跳連接時會將活動信息緩存至 ${1} 目錄<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>offline</code>",
+                    "title": "離線緩存"
+                },
                 "test": {
-                    "description": "測試是否正確連線到 Wakapi/WakaTime 服務",
+                    "description": "測試是否正確連接到 Wakapi/WakaTime 服務",
                     "messages": {
-                        "error": "無法與 ${1} 服務建立連線",
-                        "success": "與 ${1} 服務的連線正常"
+                        "error": "無法與 ${1} 服務建立連接",
+                        "success": "與 ${1} 服務的連接正常"
                     },
                     "text": "測試",
                     "title": "測試 Wakapi/WakaTime 服務"
@@ -91,7 +100,7 @@
                     "description": "Wakapi/WakaTime API 請求超時時間<br/>對應 Wakapi/WakaTime 配置中的 <code class='fn__code'>timeout</code>",
                     "title": "超時時間"
                 },
-                "title": "服務設定"
+                "title": "服務設置"
             },
             "title": "Wakapi/WakaTime"
         }
