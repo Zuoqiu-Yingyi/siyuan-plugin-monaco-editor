@@ -36,6 +36,7 @@ import { Logger } from "@workspace/utils/logger";
 import { mergeIgnoreArray } from "@workspace/utils/misc/merge";
 import { parse } from "@workspace/utils/path/browserify";
 import { normalize } from "@workspace/utils/path/normalize";
+import { sleep } from "@workspace/utils/misc/sleep";
 import { DEFAULT_CONFIG } from "./configs/default";
 import { Type } from "./wakatime/heartbeats";
 import type { IConfig } from "./types/config";
@@ -51,34 +52,50 @@ import type {
 import type { ITransaction } from "@workspace/types/siyuan/transaction";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { IProtyle } from "@workspace/types/siyuan/protyle";
+import {
+    Cache,
+    type TCacheDatum,
+} from "./wakatime/cache";
 
 type INotebook = types.kernel.api.notebook.lsNotebooks.INotebook;
 
 export default class WakaTimePlugin extends siyuan.Plugin {
     static readonly GLOBAL_CONFIG_NAME = "global-config";
+    static readonly OFFLINE_CACHE_PATH = "temp/.wakatime/cache";
 
     static readonly WAKATIME_DEFAULT_API_URL = "https://wakatime.com/api/v1";
-    static readonly WAKATIME_HEARTBEATS_PATH = "users/current/heartbeats";
     static readonly WAKATIME_STATUS_BAR_PATH = "users/current/statusbar/today";
+    static readonly WAKATIME_HEARTBEATS_PATH = "users/current/heartbeats";
+    static readonly WAKATIME_HEARTBEATS_BULK = 25; // 每次提交数量限制
+
+    static readonly CACHE_CHECK_INTERVAL = 5 * 60 * 1_000; // 缓存检查时间间隔
+    static readonly CACHE_COMMIT_INTERVAL = 1 * 1_000; // 缓存每次提交时间间隔
 
     public readonly siyuan = siyuan;
     public readonly logger: InstanceType<typeof Logger>;
     public readonly client: InstanceType<typeof Client>;
+    public readonly cache: InstanceType<typeof Cache<TCacheDatum>>; // 缓存
+    public readonly caches: InstanceType<typeof Cache<TCacheDatum>>[]; // 历史缓存
     public readonly notebook = new Map<BlockID, INotebook>(); // 笔记本 ID => 笔记本信息
 
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly context: Context.IContext; // 心跳连接上下文
 
     public config: IConfig;
-    protected timer: number; // 定时器
+
+    protected heartbeatTimer: number; // 心跳定时器
+    protected cacheCheckTimer: number; // 缓存检查定时器
 
     constructor(options: any) {
         super(options);
 
         this.logger = new Logger(this.name);
         this.client = new Client(undefined, "fetch");
+        this.cache = new Cache(this.client, WakaTimePlugin.OFFLINE_CACHE_PATH);
+        this.caches = [];
 
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
+
         this.context = {
             url: this.wakatimeHeartbeatsUrl,
             method: "POST",
@@ -107,6 +124,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             icon_wakatime_wakapi,
         ].join(""));
 
+        /* 加载配置文件 */
         this.loadData(WakaTimePlugin.GLOBAL_CONFIG_NAME)
             .then(config => {
                 this.config = mergeIgnoreArray(DEFAULT_CONFIG, config || {}) as IConfig;
@@ -125,8 +143,10 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
                 /* 编辑区点击 */
                 this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
-
             });
+
+        /* 加载缓存数据 */
+        this.cache.load();
     }
 
     onLayoutReady(): void {
@@ -137,7 +157,8 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.eventBus.off("loaded-protyle", this.loadedProtyleEventListener);
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
-        clearInterval(this.timer);
+        clearInterval(this.heartbeatTimer);
+        clearInterval(this.cacheCheckTimer);
         this.commit();
     }
 
@@ -163,6 +184,16 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         return this.updateConfig(mergeIgnoreArray(DEFAULT_CONFIG) as IConfig);
     }
 
+    /* 清理缓存 */
+    public async clearCache(directory: string = WakaTimePlugin.OFFLINE_CACHE_PATH): Promise<boolean> {
+        try {
+            await this.client.removeFile({ path: directory });
+            return true;
+        } catch (error) {
+            return false
+        }
+    }
+
     /* 更新插件配置 */
     public async updateConfig(config?: IConfig): Promise<void> {
         if (config && config !== this.config) {
@@ -175,10 +206,13 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* 更新定时器 */
     public updateTimer(interval: number = this.config.wakatime.interval) {
-        if (this.timer) {
-            clearInterval(this.timer);
-        }
-        this.timer = setInterval(this.commit, interval * 1_000);
+        /* 心跳定时器 */
+        clearInterval(this.heartbeatTimer);
+        this.heartbeatTimer = setInterval(this.commit, interval * 1_000);
+
+        /* 缓存检查定时器 */
+        clearInterval(this.cacheCheckTimer);
+        this.cacheCheckTimer = setInterval(this.checkCache, WakaTimePlugin.CACHE_CHECK_INTERVAL);
     }
 
     /* 更新 wakatime 请求上下文 */
@@ -236,15 +270,104 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.context.actions.push(...valid_actions);
 
         if (this.context.actions.length > 0) {
-            if (this.config.wakatime.heartbeats) { // 是否发送心跳连接
+            const actions = this.context.actions.slice(); // 数组浅拷贝
+            this.context.actions.length = 0;
+
+            /* 构造心跳连接请求 */
+            const requests: Heartbeats.IRequest[] = [];
+            for (let i = 0; i < actions.length; i += WakaTimePlugin.WAKATIME_HEARTBEATS_BULK) {
                 // WakaTime 限制一次最多提交 25 条记录
-                for (let i = 0; i < this.context.actions.length; i += 25) {
-                    this.sentHeartbeats(this.context.actions.slice(i, i + 25));
+                requests.push(this.buildHeartbeatsRequest(actions.slice(i, i + WakaTimePlugin.WAKATIME_HEARTBEATS_BULK)))
+            }
+
+            if (this.config.wakatime.heartbeats) { // 提交数据
+                for (const request of requests) {
+                    await this.sentHeartbeats(
+                        request,
+                        request => {
+                            if (this.config.wakatime.offline) {
+                                this.cache.push(request.payload);
+                            }
+                        }
+                    ); // 发送载荷
                 }
             }
-            this.context.actions.length = 0;
+            else { // 不提交数据
+                if (this.config.wakatime.offline) { // 若开启离线缓存
+                    this.cache.push(...requests.map(request => request.payload)); // 写入缓存
+                }
+            }
+            await this.cache.save(); // 缓存持久化
         }
     };
+
+    /* 检查缓存 */
+    protected readonly checkCache = async () => {
+        const cache_files_name = await this.cache.getAllCacheFileName(); // 所有缓存文件名称
+
+        /* 初始化历史缓存对象列表 */
+        this.caches.length = 0;
+        this.caches.push(...cache_files_name.map(filename => new Cache(
+            this.client,
+            WakaTimePlugin.OFFLINE_CACHE_PATH,
+            filename,
+        )));
+
+        /* 定时提交缓存 */
+        if (this.caches.length > 0) {
+            for (const cache of this.caches) {
+                if (this.config.wakatime.heartbeats) { // 提交
+                    await cache.load(); // 加载缓存文件
+
+                    const exceptions: TCacheDatum[] = []; // 提交缓存时发生异常
+
+                    /* 依次提交缓存内容 */
+                    for (let index = 0; index < cache.length; ++index) {
+                        const payload = cache.at(index);
+
+                        /* 提交缓存 */
+                        await this.sentHeartbeats(
+                            this.buildHeartbeatsRequest(payload),
+                            request => exceptions.push(request.payload),
+                        );
+
+                        if (index === 0 && exceptions.length > 0) {
+                            /**
+                             * 第一次提交出现问题
+                             * 可能用户处于离线状态
+                             * 本次不再进行提交
+                             */
+                            return;
+                        }
+
+                        /* 休眠 */
+                        await sleep(WakaTimePlugin.CACHE_COMMIT_INTERVAL);
+                    }
+
+                    if (exceptions.length > 0) {
+                        /* 存在异常, 保存异常提交到缓存文件 */
+                        cache.clear();
+                        cache.push(...exceptions);
+                        await cache.save();
+
+                        /**
+                         * 本轮提交存在异常
+                         * 可能用户网络状态可能不稳定
+                         * 本次不再进行提交
+                         */
+                        return;
+                    }
+                    else {
+                        /* 不存在异常, 删除缓存文件 */
+                        await cache.remove();
+                    }
+                }
+                else { // 不提交
+                    return;
+                }
+            }
+        }
+    }
 
     /* 总线事件监听器 */
     protected readonly webSocketMainEventListener = (e: IWebSocketMainEvent) => {
@@ -259,7 +382,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
                         this.addEditEvent(operation.id);
                     }
                 });
-                transaction.doOperations?.forEach(operation => {
+                transaction.undoOperations?.forEach(operation => {
                     if (operation.id) {
                         this.addEditEvent(operation.id);
                     }
@@ -461,11 +584,12 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     }
 
     /**
-     * 发送心跳连接
-     * REF: https://wakatime.com/developers#heartbeats
+     * 构造心跳连接请求
+     * @param payload 心跳连接载荷
+     * @returns 心跳连接请求
      */
-    public async sentHeartbeats(payload: Heartbeats.IAction | Heartbeats.IAction[]) {
-        return this.client.forwardProxy({
+    public buildHeartbeatsRequest(payload: Heartbeats.IAction | Heartbeats.IAction[]): Heartbeats.IRequest {
+        const request: Heartbeats.IRequest = {
             url: Array.isArray(payload)
                 ? `${this.context.url}.bulk`
                 : this.context.url,
@@ -475,7 +599,31 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             ],
             timeout: this.config.wakatime.timeout * 1_000,
             payload,
-        });
+        };
+        return request;
+    }
+
+    /**
+     * 发送心跳连接
+     * REF: https://wakatime.com/developers#heartbeats
+     * @param request 心跳连接请求
+     * @param reject 心跳连接失败时的回调
+     */
+    public async sentHeartbeats(
+        request: Heartbeats.IRequest,
+        reject: (request: Heartbeats.IRequest) => void,
+    ) {
+        try {
+            const response = await this.client.forwardProxy(request);
+            if (200 <= response.data.status && response.data.status < 300) {
+            }
+            else {
+                reject(request);
+            }
+            return response;
+        } catch (error) {
+            reject(request);
+        }
     }
 
     /* 测试服务状态 */

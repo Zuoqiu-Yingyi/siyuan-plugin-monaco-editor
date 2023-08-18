@@ -37,6 +37,14 @@
 
     * `Wakapi/WakaTime > 服务设置 > 隐藏笔记本名称`
     * `Wakapi/WakaTime > 服务设置 > 隐藏文档标题`
+  * 自定义包含列表以设置白名单
+
+    * `Wakapi/WakaTime > 服务设置 > ID 包含列表`
+    * `Wakapi/WakaTime > 服务设置 > 包含列表`
+  * 自定义排除列表以设置黑名单
+
+    * `Wakapi/WakaTime > 服务设置 > ID 排除列表`
+    * `Wakapi/WakaTime > 服务设置 > 排除列表`
 
 ## 介绍
 
@@ -56,6 +64,13 @@
     * 点击该按钮后会弹出确认对话框
 
       * 点击对话框确认按钮后会重置本插件所有选项为默认选项, 之后会自动刷新当前界面
+  * `清理离线缓存`
+
+    * 删除所有的离线缓存文件
+    * 缓存文件目录: `工作空间/temp/.wakatime/cache`
+    * 点击该按钮后会弹出确认对话框
+
+      * 点击对话框确认按钮后会删除缓存文件目录, 之后会自动刷新当前界面
 * `Wakapi/WakaTime`: 配置 `Wakapi` 或 `WakaTime` 功能与服务
 
   * `常规设置`
@@ -166,6 +181,15 @@
       * 在提交的操作活动信息中是否隐藏文档标题
       * 对应 `Wakapi/WakaTime` 配置文件 `.wakatime.cfg` 中的 `hide_file_names` 配置项
       * 若开启, 则提交的信息中所有 <kbd>文档标题</kbd> 都替换为 <kbd>文档块 ID</kbd>
+    * `离线缓存`
+
+      * 是否将活动信息缓存在本地文件中
+      * 触发离线缓存的条件
+
+        * 关闭 `Wakapi/WakaTime > 常规设置 > 心跳连接`
+        * 或无法访问 `Wakapi/WakaTime` 服务
+      * 缓存文件目录: `工作空间/temp/.wakatime/cache`
+      * 对应 `Wakapi/WakaTime` 配置文件 `.wakatime.cfg` 中的 `offline` 配置项
     * `ID 包含列表`
 
       * 仅提交 ID 路径中包含列表字段的文档
@@ -245,7 +269,7 @@
         ```javascript
         path.includes("请从这里开始") && /^思源笔记用户指南\/请从这里开始/.test(path)
         ```
-    * 排除列表
+    * `排除列表`
 
       * 提交时排除路径中包含列表字段的文档
       * 对应 `Wakapi/WakaTime` 配置文件 `.wakatime.cfg` 中的 `exclude` 配置项
