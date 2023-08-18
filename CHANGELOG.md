@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.1.2...v0.2.0) (2023-08-18)
+
+
+### Miscellaneous
+
+* **wakatime:** release v0.2.0 ([0f7790e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/0f7790e5668ba695cb41470393a6df265789ebdc))
+
+
+### Features
+
+* **wakatime:** 添加离线缓存功能 | Add offline cache function. ([52b08c3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/52b08c3c8a9b32ff410f01520445ec3023d6d9d2))
+
 ## [0.1.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.1.1...v0.1.2) (2023-08-17)
 
 
