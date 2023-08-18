@@ -13,8 +13,8 @@ permissions:
   pull-requests: write
 
 env:
-  PACKAGE_NAME: custom-fonts
-  PACKAGE_VERSION: 0.1.2
+  PACKAGE_NAME: wakatime
+  PACKAGE_VERSION: 0.2.0
 
 jobs:
   release-please:
