@@ -17,6 +17,7 @@
 
 import type { BlockID } from "@workspace/types/siyuan";
 import type { Category, Type } from "@/wakatime/heartbeats";
+import type { types } from "@siyuan-community/siyuan-sdk";
 
 /**
  * 心跳连接
@@ -64,6 +65,14 @@ export namespace Heartbeats {
         // <boolean: whether this heartbeat was triggered from writing to a file (optional)>,
         is_write?: boolean;
     }
+
+    export interface IRequest extends types.kernel.api.network.forwardProxy.IPayload {
+        headers: [
+            Context.IHeaders,
+        ],
+        timeout: number;
+        payload: IAction | IAction[],
+    }
 }
 
 export namespace Context {
@@ -104,4 +113,3 @@ export namespace Context {
         actions: Heartbeats.IAction[]; // 待提交的活动
     }
 }
-

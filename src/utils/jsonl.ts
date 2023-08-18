@@ -15,36 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IConfig } from "@/types/config";
-import { Category } from "@/wakatime/heartbeats";
+/**
+ * jsonlines 解析
+ * @param text 文本
+ * @returns 解析结果
+ */
+export function parse<T>(text: string): T[] {
+    return text.split("\n")
+        .filter(line => line.trim().length > 0)
+        .map(line => JSON.parse(line));
+}
 
-export const DEFAULT_CONFIG: IConfig = {
-    wakatime: {
-        api_url: "",
-        api_key: "",
-        timeout: 30,
-        hide_branch_names: true,
-        hide_file_names: true,
+/**
+ * jsonlines 序列化
+ * @param data 数据
+ * @returns 序列化结果
+ */
+export function stringify<T>(data: T[]): string {
+    return data.map((item) => JSON.stringify(item)).join("\n");
+}
 
-        offline: false,
-
-        includeID: [],
-        excludeID: [],
-
-        include: [],
-        exclude: [],
-
-        heartbeats: false,
-        project: "",
-        language: "",
-        hostname: "",
-        interval: 60,
-
-        view: {
-            category: Category.Browsing,
-        },
-        edit: {
-            category: Category.Learning,
-        },
-    },
-};
+export default {
+    parse,
+    stringify,
+}

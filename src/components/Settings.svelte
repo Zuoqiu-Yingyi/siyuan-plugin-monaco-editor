@@ -33,6 +33,7 @@
 
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
+    import WakaTimePlugin from "@/index";
 
     export let config: IConfig; // 传入的配置项
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
@@ -49,6 +50,17 @@
             i18n.settings.generalSettings.reset.description, // 文本
             async () => {
                 await plugin.resetConfig(); // 重置配置
+                globalThis.location.reload(); // 刷新页面
+            }, // 确认按钮回调
+        );
+    }
+
+    function cleanCache() {
+        plugin.siyuan.confirm(
+            i18n.settings.generalSettings.cleanCache.title, // 标题
+            i18n.settings.generalSettings.cleanCache.description, // 文本
+            async () => {
+                await plugin.clearCache(); // 重置配置
                 globalThis.location.reload(); // 刷新页面
             }, // 确认按钮回调
         );
@@ -155,6 +167,20 @@
 >
     <!-- 常规设置面板 -->
     <Panel display={panels[0].key === focusPanel}>
+        <!-- 清理离线缓存 -->
+        <Item
+            title={i18n.settings.generalSettings.cleanCache.title}
+            text={i18n.settings.generalSettings.cleanCache.description}
+        >
+            <Input
+                slot="input"
+                type={ItemType.button}
+                settingKey="cleanCache"
+                settingValue={i18n.settings.generalSettings.cleanCache.text}
+                on:clicked={cleanCache}
+            />
+        </Item>
+
         <!-- 重置设置 -->
         <Item
             title={i18n.settings.generalSettings.reset.title}
@@ -416,6 +442,26 @@
                         settingValue={config.wakatime.hide_file_names}
                         on:changed={async e => {
                             config.wakatime.hide_file_names = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 离线缓存 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.serviceTab.offline.title}
+                    text={i18n.settings.wakatimeSettings.serviceTab.offline.description.replaceAll(
+                        "${1}", //
+                        fn__code(WakaTimePlugin.OFFLINE_CACHE_PATH), //
+                    )}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.checkbox}
+                        settingKey="offline"
+                        settingValue={config.wakatime.offline}
+                        on:changed={async e => {
+                            config.wakatime.offline = e.detail.value;
                             await updated();
                         }}
                     />

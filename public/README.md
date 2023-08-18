@@ -37,6 +37,14 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
 
     * `Wakapi/WakaTime > Service Settings > Hide Notebook Name`
     * `Wakapi/WakaTime > Service Settings > Hide Document Title`
+  * Customize the inclusion list to set a whitelist
+
+    * `Wakapi/WakaTime > Service Settings > ID Inclusion List`
+    * `Wakapi/WakaTime > Service Settings > Inclusion List`
+  * Customize the exclusion list to set a blacklist
+
+    * `Wakapi/WakaTime > Service Settings > ID Exclusion List`
+    * `Wakapi/WakaTime > Service Settings > Exclusion List`
 
 ## INTRODUCTION
 
@@ -56,6 +64,13 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
     * After clicking this button, a confirmation dialog will appear.
 
       * After clicking the confirmation button in the dialog, all options for this plugin will be reset to their default values, and the current interface will be automatically refreshed.
+  * `Clean offline cache`
+
+    * Delete all offline cache files
+    * Cache file directory: `workspace/temp/.wakatime/cache`
+    * After clicking this button, a confirmation dialog box will appear
+
+      * After clicking the confirm button on the dialog box, the cache file directory will be deleted and the current interface will be automatically refreshed.
 * `Wakapi/WakaTime`: Configure the functionality and service of `Wakapi` or `WakaTime`
 
   * `General`
@@ -158,7 +173,7 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
       * Unit: seconds
     * `Hide Notebook Name`
 
-      * Whether to hide the notebook name in the submitted activity information.
+      * Whether to hide the notebook name in the submitted action information.
       * Corresponds to the `hide_branch_names` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If enabled, all <kbd>Notebook Name</kbd> in the submitted information will be replaced with <kbd>Notebook ID</kbd>.
     * `Hide Document Title`
@@ -166,6 +181,15 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
       * Whether to hide the document title in the submitted activity information.
       * Corresponds to the `hide_file_names` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
       * If enabled, all <kbd>Document Title</kbd> in the submitted information will be replaced with <kbd>Block ID</kbd>.
+    * `Offline caching`
+
+      * Whether to cache action information in local files
+      * Conditions for triggering offline caching
+
+        * Disable `Wakapi/WakaTime > General > Heartbeat Connections`
+        * Or unable to access `Wakapi/WakaTime` service
+      * Cache file directory: `workspace/temp/.wakatime/cache`
+      * Corresponds to the `offline` configuration option in the `.wakatime.cfg` configuration file of `Wakapi/WakaTime`.
     * `ID Include List`
 
       * Only submit documents whose ID path includes the list field.
