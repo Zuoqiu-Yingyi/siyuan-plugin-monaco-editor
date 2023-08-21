@@ -29,14 +29,14 @@
     import { type ITab } from "@workspace/components/siyuan/setting/tab";
 
     import { Category } from "@/wakatime/heartbeats";
-    import type MonacoEditorPlugin from "@/index";
 
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
     import WakaTimePlugin from "@/index";
+    import CONSTANTS from "@/constants";
 
     export let config: IConfig; // 传入的配置项
-    export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
+    export let plugin: InstanceType<typeof WakaTimePlugin>; // 插件实例
 
     const i18n = plugin.i18n as unknown as I18N;
 
@@ -452,7 +452,7 @@
                     title={i18n.settings.wakatimeSettings.serviceTab.offline.title}
                     text={i18n.settings.wakatimeSettings.serviceTab.offline.description.replaceAll(
                         "${1}", //
-                        fn__code(WakaTimePlugin.OFFLINE_CACHE_PATH), //
+                        fn__code(CONSTANTS.OFFLINE_CACHE_PATH), //
                     )}
                 >
                     <Input

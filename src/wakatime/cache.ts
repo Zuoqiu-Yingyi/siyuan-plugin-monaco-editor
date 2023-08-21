@@ -27,7 +27,7 @@ export type TCache<T> = {
     [P in keyof Array<T>]?: Array<T>[P];
 }
 
-export class Cache<T extends Object = TCacheDatum> implements TCache<T> {
+export class WakaTimeCache<T extends Object = TCacheDatum> implements TCache<T> {
     /**
      * 构造缓存文件名
      * @param date 时间日期
@@ -61,7 +61,7 @@ export class Cache<T extends Object = TCacheDatum> implements TCache<T> {
 
     /* 初始化 */
     protected init(
-        filename: string = Cache.buildCacheFileName(),
+        filename: string = WakaTimeCache.buildCacheFileName(),
     ): void {
         this.filename = filename;
         this.filepath = this.buildCacheFilePath();
@@ -249,7 +249,7 @@ export class Cache<T extends Object = TCacheDatum> implements TCache<T> {
             const result = await this._save(filepath);
 
             if (update) {
-                const cache_file_name = Cache.buildCacheFileName();
+                const cache_file_name = WakaTimeCache.buildCacheFileName();
                 if (cache_file_name !== this.filename) { // 需要初始化缓存
                     /* 初始化缓存 */
                     this.init();

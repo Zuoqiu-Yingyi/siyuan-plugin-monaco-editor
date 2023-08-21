@@ -112,4 +112,12 @@ export namespace Context {
         roots: Map<BlockID, IRoot>; // root -> { box, path }
         actions: Heartbeats.IAction[]; // 待提交的活动
     }
+
+    export interface ISystem {
+        os: string, // 操作系统名称
+        arch: string, // 处理器名称
+        name: string, // 主机名
+        workspaceDir: string, // 工作空间路径
+        kernelVersion: string, // 思源内核版本
+    }
 }

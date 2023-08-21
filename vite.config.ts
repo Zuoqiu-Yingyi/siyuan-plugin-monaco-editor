@@ -15,13 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { defineConfig } from "vite";
+import {
+    defineConfig,
+    BuildOptions,
+} from "vite";
 import { resolve } from "path"
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { less } from "svelte-preprocess-less";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(async env => ({
     base: `./`,
     plugins: [
         svelte({
@@ -36,14 +39,12 @@ export default defineConfig({
             "@": resolve(__dirname, "./src"),
         }
     },
-    build: {
+    build: build(env.mode),
+}));
+
+function build(mode: string): BuildOptions {
+    const build: BuildOptions = {
         minify: true,
-        // sourcemap: "inline",
-        lib: {
-            entry: resolve(__dirname, "src/index.ts"),
-            fileName: "index",
-            formats: ["cjs"],
-        },
         rollupOptions: {
             external: [
                 "siyuan",
@@ -55,6 +56,8 @@ export default defineConfig({
                     switch (chunkInfo.name) {
                         case "index":
                             return "[name].js";
+                        case "wakatime":
+                            return "workers/[name].js";
 
                         default:
                             return "assets/[name]-[hash].js";
@@ -73,5 +76,28 @@ export default defineConfig({
                 },
             },
         },
-    },
-});
+    };
+
+    switch (mode) {
+        case "plugin":
+        default:
+            build.lib = {
+                entry: resolve(__dirname, "src/index.ts"),
+                fileName: "index",
+                formats: ["cjs"],
+            };
+            build.emptyOutDir = true;
+            break;
+
+        case "workers":
+            build.lib = {
+                entry: resolve(__dirname, "src/workers/wakatime.ts"),
+                fileName: "wakatime",
+                formats: ["es"],
+            };
+            build.emptyOutDir = false;
+            break;
+    }
+
+    return build;
+}
