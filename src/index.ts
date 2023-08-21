@@ -94,8 +94,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     protected readonly EDITOR_URL: URL;
     protected readonly SETTINGS_DIALOG_ID: string;
+    protected readonly CUSTOM_TAB_ID_EDITOR: string;
+    protected readonly CUSTOM_TAB_ID_PREVIEW: string;
+
     protected readonly editorTab: ReturnType<siyuan.Plugin["addTab"]>;
     protected readonly previewTab: ReturnType<siyuan.Plugin["addTab"]>;
+
     protected editorDock: {
         // editor: InstanceType<typeof Editor>,
         dock: ReturnType<siyuan.Plugin["addDock"]>,
@@ -119,6 +123,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
         this.EDITOR_URL = new URL(`${globalThis.document.baseURI}plugins/${this.name}/editor`);
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
+        this.CUSTOM_TAB_ID_EDITOR = `${this.name}${MonacoEditorPlugin.CUSTOM_TAB_TYPE_EDITOR}`;
+        this.CUSTOM_TAB_ID_PREVIEW = `${this.name}${MonacoEditorPlugin.CUSTOM_TAB_TYPE_PREVIEW}`;
 
         const plugin = this;
         this.editorTab = this.addTab({
@@ -926,7 +932,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     const custom = {
                         icon: "iconCode",
                         title: relative,
-                        fn: this.editorTab,
+                        id: this.CUSTOM_TAB_ID_EDITOR,
                         data: {
                             options: this.config.editor.options,
                             facadeOptions: {
@@ -1000,7 +1006,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                         const custom = {
                             icon: "iconPreview",
                             title: relative,
-                            fn: this.previewTab,
+                            id: this.CUSTOM_TAB_ID_PREVIEW,
                             data: {
                                 pathname,
                                 title: relative,
@@ -1102,7 +1108,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const custom = {
             icon,
             title,
-            fn: this.editorTab,
+            id: this.CUSTOM_TAB_ID_EDITOR,
             data: {
                 options,
                 facadeOptions,
@@ -1215,7 +1221,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         const custom = {
             icon,
             title,
-            fn: this.previewTab,
+            id: this.CUSTOM_TAB_ID_PREVIEW,
             data: {
                 pathname,
                 title,
@@ -1315,7 +1321,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             custom: {
                 icon,
                 title,
-                fn: this.editorTab,
+                id: this.CUSTOM_TAB_ID_EDITOR,
                 data: {
                     options: this.config.editor.options,
                     facadeOptions: {
