@@ -46,5 +46,7 @@ export const DEFAULT_CONFIG: IConfig = {
         edit: {
             category: Category.Learning,
         },
+
+        useragent: "",
     },
 };

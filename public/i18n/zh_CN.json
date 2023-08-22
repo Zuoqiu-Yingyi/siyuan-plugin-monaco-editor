@@ -37,6 +37,10 @@
                     "title": "项目名称"
                 },
                 "title": "常规设置",
+                "userAgent": {
+                    "description": "用于将操作信息推送到 Wakapi/WakaTime 服务时标识当前所使用的编辑器<br/>强烈建议留空以使用默认选项<br/>自定义该字段可能导致 Wakapi/WakaTime 服务无法识别该插件",
+                    "title": "用户代理字段 <a href='https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/User-Agent'>User-Agent</a>"
+                },
                 "viewCategory": {
                     "description": "为查看操作设置的活动类型标签",
                     "title": "查看操作标签"

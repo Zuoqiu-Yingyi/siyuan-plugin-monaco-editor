@@ -40,9 +40,6 @@ import type {
 import type { BlockID } from "@workspace/types/siyuan";
 import { Type } from "@/wakatime/heartbeats";
 import { sleep } from "@workspace/utils/misc/sleep";
-import { parse } from "@workspace/utils/path/browserify";
-import { normalize } from "@workspace/utils/path/normalize";
-import type { IProtyle } from "@workspace/types/siyuan/protyle";
 
 type INotebook = types.kernel.api.notebook.lsNotebooks.INotebook;
 
@@ -61,20 +58,17 @@ const timer = {
     heartbeat: 0, // 心跳定时器
     cacheCheck: 0, // 缓存检查定时器
 };
-const system: Context.ISystem = {
-    os: "",
-    arch: "",
-    name: "",
-    workspaceDir: "",
-    kernelVersion: "",
-};
 const context: Context.IContext = {
-    url: wakatimeHeartbeatsUrl(),
+    url: "",
     method: "POST",
-    headers: wakatimeHeaders(),
+    headers: {
+        "Authorization": "",
+        "User-Agent": "",
+        "X-Machine-Name": "",
+    },
 
-    project: wakatimeProject(),
-    language: wakatimeLanguage(),
+    project: "",
+    language: "",
 
     includeID: [],
     excludeID: [],
@@ -99,12 +93,6 @@ function updateTimer(interval: number = config.wakatime.interval) {
 
 /* 更新 wakatime 请求上下文 */
 function updateContext(): void {
-    context.url = wakatimeHeartbeatsUrl();
-    context.headers = wakatimeHeaders();
-
-    context.project = wakatimeProject();
-    context.language = wakatimeLanguage();
-
     context.includeID = wakatimeIncludeID();
     context.excludeID = wakatimeExcludeID();
 
@@ -446,75 +434,6 @@ function now(): number {
     return time();
 }
 
-/* default project name */
-function wakatimeDefaultProject(): string {
-    return `siyuan-workspace:${parse(normalize(system.workspaceDir)).base}`;
-}
-
-/* default language name */
-function wakatimeDefaultLanguage(): string {
-    return "Siyuan";
-}
-
-/* default API URL */
-function wakatimeDefaultApiUrl(): string {
-    return CONSTANTS.WAKATIME_DEFAULT_API_URL;
-}
-
-/* default hostname */
-function wakatimeDefaultHostname(): string {
-    return system.name;
-}
-
-/* wakatime project */
-function wakatimeProject(): string {
-    return config.wakatime.project
-        || wakatimeDefaultProject();
-}
-
-/* wakatime language */
-function wakatimeLanguage(): string {
-    return config.wakatime.language
-        || wakatimeDefaultLanguage();
-}
-
-function wakatimeHeaders(): Context.IHeaders {
-    return {
-        "Authorization": wakatimeAuthorization(),
-        "User-Agent": wakatimeUserAgent(),
-        "X-Machine-Name": wakatimeHostname(),
-    };
-}
-
-/* wakatime user agent */
-function wakatimeUserAgent(): string {
-    return `wakatime/v${system.kernelVersion
-        } ${system.os
-        }-${system.arch || "unknown"
-        } siyuan-wakatime/${manifest.version
-        }`;
-}
-
-/* wakatime API URL */
-function wakatimeApiUrl(): string {
-    return config?.wakatime?.api_url || wakatimeDefaultApiUrl();
-}
-
-/* wakatime url */
-function wakatimeHeartbeatsUrl(): string {
-    return `${wakatimeApiUrl()}/${CONSTANTS.WAKATIME_HEARTBEATS_PATH}`;
-}
-
-/* wakatime Authorization */
-function wakatimeAuthorization(): string {
-    return `Basic ${btoa(config?.wakatime?.api_key)}`;
-}
-
-/* wakatime Hostname */
-function wakatimeHostname(): string {
-    return config.wakatime.hostname || wakatimeDefaultHostname();
-}
-
 /* wakatime include */
 function wakatimeIncludeID(): (string | RegExp)[] {
     return washList(config.wakatime.includeID);
@@ -530,7 +449,6 @@ function wakatimeExcludeID(): (string | RegExp)[] {
 function wakatimeExclude(): (string | RegExp)[] {
     return washList(config.wakatime.exclude);
 }
-
 
 /* 清洗列表 */
 function washList(list: string[]): (string | RegExp)[] {
@@ -617,9 +535,12 @@ export function restart(): void {
 }
 
 /* 更新设置选项 */
-export function updateConfig(c: IConfig, s: Context.ISystem): void {
-    Object.assign(config, c);
-    Object.assign(system, s);
+export function updateConfig(
+    config_: IConfig,
+    context_: Pick<Context.IContext, "url" | "headers" | "project" | "language">,
+): void {
+    Object.assign(config, config_);
+    Object.assign(context, context_);
 }
 
 /* 添加查看事件 */

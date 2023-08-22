@@ -46,6 +46,8 @@ export interface IWakaTime {
 
     view: IActivity; // 查看活动
     edit: IActivity; // 编辑活动
+
+    useragent: string; // 用户代理字段
 }
 
 export interface IConfig {

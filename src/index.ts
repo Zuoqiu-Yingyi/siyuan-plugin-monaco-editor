@@ -167,11 +167,10 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             "updateConfig",
             this.config,
             {
-                os: globalThis.siyuan.config.system.os,
-                arch: globalThis.process?.arch || "",
-                name: globalThis.siyuan.config.system.name,
-                workspaceDir: globalThis.siyuan.config.system.workspaceDir,
-                kernelVersion: globalThis.siyuan.config.system.kernelVersion,
+                url: this.wakatimeHeartbeatsApiUrl,
+                headers: this.wakatimeHeaders,
+                project: this.wakatimeProject,
+                language: this.wakatimeLanguage,
             },
         );
         await this.bridge.call<IHandlers["restart"]>("restart");
@@ -243,7 +242,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     public async testService(): Promise<boolean> {
         try {
             const response = await this.client.forwardProxy({
-                url: this.wakatimeStatusBarUrl,
+                url: this.wakatimeStatusBarApiUrl,
                 method: "GET",
                 headers: [this.wakatimeHeaders],
                 timeout: this.config.wakatime.timeout * 1_000,
@@ -265,12 +264,12 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* default project name */
     public get wakatimeDefaultProject(): string {
-        return `siyuan-workspace:${parse(normalize(globalThis.siyuan.config.system.workspaceDir)).base}`;
+        return `siyuan-workspace:${this.wakatimeWorkspaceName}`;
     }
 
     /* default language name */
     public get wakatimeDefaultLanguage(): string {
-        return "Siyuan";
+        return CONSTANTS.WAKATIME_DEFAULT_LANGUAGE;
     }
 
     /* default API URL */
@@ -280,7 +279,24 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* default hostname */
     public get wakatimeDefaultHostname(): string {
-        return globalThis.siyuan.config.system.name;
+        return globalThis.siyuan?.config?.system?.name
+            || globalThis.process?.env?.COMPUTERNAME
+            || globalThis.process?.env?.USERDOMAIN
+            || "unknown";
+    }
+
+    /* wakatime user agent */
+    public get wakatimeDefaultUserAgent(): string {
+        return `${CONSTANTS.WAKATIME_CLIENT_NAME // 客户端名称
+            }/${"v0.0.0" // 客户端版本
+            } (${this.wakatimeOperatingSystemName // 操作系统名称
+            }-${this.wakatimeOperatingSystemVersion // 操作系统版本
+            }-${this.wakatimeArch // 内核 CPU 架构
+            }-unknown) ${CONSTANTS.WAKATIME_EDITOR_NAME // 编辑器名称
+            }/${this.wakatimeKernelVersion // 编辑器版本
+            } ${CONSTANTS.WAKATIME_PLUGIN_NAME // 插件名称
+            }/${manifest.version // 插件版本
+            }`;
     }
 
     public get wakatimeHeaders(): Context.IHeaders {
@@ -291,23 +307,52 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         };
     }
 
-    /* wakatime user agent */
-    public get wakatimeUserAgent(): string {
-        return `wakatime/v${globalThis.siyuan.config.system.kernelVersion
-            } ${globalThis.siyuan.config.system.os
-            }-${globalThis.process?.arch || "unknown"
-            } siyuan-wakatime/${manifest.version
-            }`;
+    public get wakatimeArch(): string {
+        return globalThis.process?.arch
+            || "unknown";
     }
 
-    /* wakatime API URL */
-    public get wakatimeApiUrl(): string {
+    public get wakatimeOperatingSystemName(): string {
+        return globalThis.siyuan?.config?.system?.os
+            || globalThis.process?.platform
+            // @ts-ignore userAgentData 为实验性特性
+            || globalThis.navigator.userAgentData?.platform
+            || globalThis.navigator.platform
+            || "unknown";
+    }
+
+    public get wakatimeOperatingSystemVersion(): string {
+        return globalThis.require?.("os")?.release?.()
+            || "unknown";
+    }
+
+    public get wakatimeWorkspaceDirectory(): string {
+        return globalThis.siyuan?.config?.system?.workspaceDir
+            || "unknown";
+    }
+
+    public get wakatimeWorkspaceName(): string {
+        return parse(normalize(this.wakatimeWorkspaceDirectory)).base;
+    }
+
+    public get wakatimeKernelVersion(): string {
+        return globalThis.siyuan?.config?.system?.kernelVersion
+            || "0.0.0";
+    }
+
+    /* wakatime API base URL */
+    public get wakatimeApiBaseUrl(): string {
         return this.config?.wakatime?.api_url || this.wakatimeDefaultApiUrl;
     }
 
-    /* wakatime url */
-    public get wakatimeStatusBarUrl(): string {
-        return `${this.wakatimeApiUrl}/${CONSTANTS.WAKATIME_STATUS_BAR_PATH}`;
+    /* wakatime statusbar url */
+    public get wakatimeStatusBarApiUrl(): string {
+        return `${this.wakatimeApiBaseUrl}/${CONSTANTS.WAKATIME_STATUS_BAR_PATHNAME}`;
+    }
+
+    /* wakatime statusbar url */
+    public get wakatimeHeartbeatsApiUrl(): string {
+        return `${this.wakatimeApiBaseUrl}/${CONSTANTS.WAKATIME_HEARTBEATS_PATHNAME}`;
     }
 
     /* wakatime Authorization */
@@ -317,6 +362,25 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* wakatime Hostname */
     public get wakatimeHostname(): string {
-        return this.config?.wakatime.hostname || this.wakatimeDefaultHostname;
+        return this.config?.wakatime?.hostname
+            || this.wakatimeDefaultHostname;
+    }
+
+    /* wakatime User Agent */
+    public get wakatimeUserAgent(): string {
+        return this.config?.wakatime?.useragent
+            || this.wakatimeDefaultUserAgent;
+    }
+
+    /* wakatime User Agent */
+    public get wakatimeProject(): string {
+        return this.config?.wakatime?.project
+            || this.wakatimeDefaultProject;
+    }
+
+    /* wakatime User Agent */
+    public get wakatimeLanguage(): string {
+        return this.config?.wakatime?.language
+            || this.wakatimeDefaultLanguage;
     }
 };

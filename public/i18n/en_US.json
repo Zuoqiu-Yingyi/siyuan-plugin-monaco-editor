@@ -37,6 +37,10 @@
                     "title": "Project name"
                 },
                 "title": "General",
+                "userAgent": {
+                    "description": "Used to identify the editor currently used when pushing action information to the Wakapi/WakaTime service<br/>It is highly recommended to leave blank to use the default options<br/>Customizing this field may cause the Wakapi/WakaTime service to not recognize this plug-in",
+                    "title": "<a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent'>User-Agent</a>"
+                },
                 "viewCategory": {
                     "description": "Action type tags for viewing operations",
                     "title": "View operation tags"

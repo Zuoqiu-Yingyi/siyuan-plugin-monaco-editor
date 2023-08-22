@@ -38,10 +38,13 @@
     export let config: IConfig; // 传入的配置项
     export let plugin: InstanceType<typeof WakaTimePlugin>; // 插件实例
 
+    let useragent_placeholder = plugin.wakatimeDefaultUserAgent;
+
     const i18n = plugin.i18n as unknown as I18N;
 
     async function updated() {
         await plugin.updateConfig(config);
+        useragent_placeholder = plugin.wakatimeDefaultUserAgent;
     }
 
     function resetOptions() {
@@ -73,7 +76,7 @@
             plugin.siyuan.showMessage(
                 i18n.settings.wakatimeSettings.serviceTab.test.messages.success.replaceAll(
                     "${1}", //
-                    fn__code(plugin.wakatimeApiUrl), //
+                    fn__code(plugin.wakatimeApiBaseUrl), //
                 ), //
                 undefined, //
                 "info", //
@@ -82,7 +85,7 @@
             plugin.siyuan.showMessage(
                 i18n.settings.wakatimeSettings.serviceTab.test.messages.error.replaceAll(
                     "${1}", //
-                    fn__code(plugin.wakatimeApiUrl), //
+                    fn__code(plugin.wakatimeApiBaseUrl), //
                 ), //
                 undefined, //
                 "error", //
@@ -311,6 +314,27 @@
                         on:changed={async e => {
                             config.wakatime.edit.category = e.detail.value;
                             await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- UserAgent -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.userAgent.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.userAgent.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="useragent"
+                        settingValue={config.wakatime.useragent}
+                        placeholder={useragent_placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.useragent = e.detail.value;
+                            await updated();
+                            await testService();
                         }}
                     />
                 </Item>
