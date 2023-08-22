@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.3.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.2.0...v0.3.0) (2023-08-22)
+
+
+### Miscellaneous
+
+* **wakatime:** release v0.3.0 ([930f35d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/930f35d95ffc4b75aa1784c0cfdec6ee7834fa26))
+
+
+### Features
+
+* **wakatime:** 添加设置项 `User-Agent` | Add setting item `User-Agent`. ([8da8f2a](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/8da8f2a7f1a9067c145fe89b5d13843d36e64d12))
+* **wakatime:** 添加设置项 `操作系统名称`, `操作系统版本`, `操作系统架构` | Add setting items `OS name`, `OS version`, `OS architecture`. ([99ac59e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/99ac59e246bf2bfa59c665a01f9c1d32a08a1ce2))
+
+
+### Code Refactoring
+
+* **wakatime:** 使用 `worker` 重构 | Refactor with `worker`. ([93bec3d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/commit/93bec3dc525cdd4679d91b719a87611c15a9e110))
+
 ## [0.2.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime/compare/v0.1.2...v0.2.0) (2023-08-18)
 
 
