@@ -87,11 +87,17 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(async () => {
-                this.bridge = new WorkerBridgeMaster(
-                    this,
-                    this.logger,
-                    () => this.newId,
+                const worker = new Worker(
                     `${globalThis.document.baseURI}plugins/${this.name}/workers/wakatime.js?v=${manifest.version}`,
+                    {
+                        type: "module",
+                        name: this.name,
+                        credentials: "same-origin",
+                    },
+                );
+                this.bridge = new WorkerBridgeMaster(
+                    worker,
+                    this.logger,
                 );
 
                 await this.bridge.call<IHandlers["onload"]>("onload");

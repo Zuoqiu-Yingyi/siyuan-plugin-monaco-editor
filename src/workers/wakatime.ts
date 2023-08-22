@@ -612,29 +612,43 @@ export async function addEditEvent(id: BlockID): Promise<void> {
 }
 
 const handlers = {
-    onload,
-    unload,
-    restart,
-    updateConfig,
-    addViewEvent,
-    addEditEvent,
+    onload: {
+        this: self,
+        func: onload,
+    },
+    unload: {
+        this: self,
+        func: unload,
+    },
+    restart: {
+        this: self,
+        func: restart,
+    },
+    updateConfig: {
+        this: self,
+        func: updateConfig,
+    },
+    addViewEvent: {
+        this: self,
+        func: addViewEvent,
+    },
+    addEditEvent: {
+        this: self,
+        func: addEditEvent,
+    },
 } as const;
 
 type THandlers = typeof handlers;
 
-type IThisHandlers = {
-    [K in keyof THandlers]: (
-        this: WindowOrWorkerGlobalScope,
-        ...args: Parameters<THandlers[K]>
-    ) => ReturnType<THandlers[K]>;
-}
-
 export type IHandlers = {
-    [K in keyof THandlers]: (...args: Parameters<THandlers[K]>) => ReturnType<THandlers[K]>;
+    [K in keyof THandlers]: {
+        this: WindowOrWorkerGlobalScope,
+        func: (...args: Parameters<THandlers[K]["func"]>) => ReturnType<THandlers[K]["func"]>,
+    };
 }
 
-const bridge = new WorkerBridgeSlave<IThisHandlers>(
-    handlers,
-    logger,
+const bridge = new WorkerBridgeSlave(
     self,
+    logger,
+    handlers,
 );
