@@ -287,32 +287,20 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* wakatime user agent */
     public get wakatimeDefaultUserAgent(): string {
-        return `${CONSTANTS.WAKATIME_CLIENT_NAME // 客户端名称
-            }/${"v0.0.0" // 客户端版本
-            } (${this.wakatimeOperatingSystemName // 操作系统名称
-            }-${this.wakatimeOperatingSystemVersion // 操作系统版本
-            }-${this.wakatimeArch // 内核 CPU 架构
-            }-unknown) ${CONSTANTS.WAKATIME_EDITOR_NAME // 编辑器名称
+        return `${CONSTANTS.WAKATIME_CLIENT_NAME // wakatime 客户端名称
+            }/${CONSTANTS.WAKATIME_CLIENT_VERSION // wakatime 客户端版本
+            } (${this.wakatimeSystemName // 操作系统名称
+            }-${this.wakatimeSystemVersion // 操作系统版本
+            }-${this.wakatimeSystemArch // 内核 CPU 架构
+            }) ${CONSTANTS.WAKATIME_EDITOR_NAME // 编辑器名称
             }/${this.wakatimeKernelVersion // 编辑器版本
             } ${CONSTANTS.WAKATIME_PLUGIN_NAME // 插件名称
             }/${manifest.version // 插件版本
             }`;
     }
 
-    public get wakatimeHeaders(): Context.IHeaders {
-        return {
-            "Authorization": this.wakatimeAuthorization,
-            "User-Agent": this.wakatimeUserAgent,
-            "X-Machine-Name": this.wakatimeHostname,
-        };
-    }
-
-    public get wakatimeArch(): string {
-        return globalThis.process?.arch
-            || "unknown";
-    }
-
-    public get wakatimeOperatingSystemName(): string {
+    /* 操作系统名称 */
+    public get wakatimeDefaultSystemName(): string {
         return globalThis.siyuan?.config?.system?.os
             || globalThis.process?.platform
             // @ts-ignore userAgentData 为实验性特性
@@ -321,9 +309,24 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             || "unknown";
     }
 
-    public get wakatimeOperatingSystemVersion(): string {
+    /* 操作系统版本 */
+    public get wakatimeDefaultSystemVersion(): string {
         return globalThis.require?.("os")?.release?.()
             || "unknown";
+    }
+
+    /* 内核名称 */
+    public get wakatimeDefaultSystemArch(): string {
+        return globalThis.process?.arch
+            || "unknown";
+    }
+
+    public get wakatimeHeaders(): Context.IHeaders {
+        return {
+            "Authorization": this.wakatimeAuthorization,
+            "User-Agent": this.wakatimeUserAgent,
+            "X-Machine-Name": this.wakatimeHostname,
+        };
     }
 
     public get wakatimeWorkspaceDirectory(): string {
@@ -382,5 +385,23 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     public get wakatimeLanguage(): string {
         return this.config?.wakatime?.language
             || this.wakatimeDefaultLanguage;
+    }
+
+    /* 操作系统名称 */
+    public get wakatimeSystemName(): string {
+        return this.config?.wakatime?.system_name
+            || this.wakatimeDefaultSystemName;
+    }
+
+    /* 操作系统版本 */
+    public get wakatimeSystemVersion(): string {
+        return this.config?.wakatime?.system_version
+            || this.wakatimeDefaultSystemVersion;
+    }
+
+    /* 内核名称 */
+    public get wakatimeSystemArch(): string {
+        return this.config?.wakatime?.system_arch
+            || this.wakatimeDefaultSystemArch;
     }
 };

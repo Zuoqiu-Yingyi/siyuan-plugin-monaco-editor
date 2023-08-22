@@ -43,10 +43,13 @@ export interface IWakaTime {
     language: string; // 语言名称
     hostname: string; // 设备名
     interval: number; // 推送时间间隔 (单位: s)
-
+    
     view: IActivity; // 查看活动
     edit: IActivity; // 编辑活动
-
+    
+    system_name: string; // 操作系统名称
+    system_version: string; // 操作系统版本
+    system_arch: string; // 操作系统内核架构
     useragent: string; // 用户代理字段
 }
 

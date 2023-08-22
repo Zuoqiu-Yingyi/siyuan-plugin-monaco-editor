@@ -318,6 +318,60 @@
                     />
                 </Item>
 
+                <!-- 系统名称 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemName.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemName.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_name"
+                        settingValue={config.wakatime.system_name}
+                        placeholder={plugin.wakatimeDefaultSystemName}
+                        on:changed={async e => {
+                            config.wakatime.system_name = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 系统版本 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemVersion.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemVersion.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_version"
+                        settingValue={config.wakatime.system_version}
+                        placeholder={plugin.wakatimeDefaultSystemVersion}
+                        on:changed={async e => {
+                            config.wakatime.system_version = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 系统内核 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemArch.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemArch.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_arch"
+                        settingValue={config.wakatime.system_arch}
+                        placeholder={plugin.wakatimeDefaultSystemArch}
+                        on:changed={async e => {
+                            config.wakatime.system_arch = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
                 <!-- UserAgent -->
                 <Item
                     title={i18n.settings.wakatimeSettings.generalTab.userAgent.title}
@@ -326,7 +380,7 @@
                 >
                     <Input
                         slot="input"
-                        type={ItemType.text}
+                        type={ItemType.textarea}
                         settingKey="useragent"
                         settingValue={config.wakatime.useragent}
                         placeholder={useragent_placeholder}
@@ -334,7 +388,6 @@
                         on:changed={async e => {
                             config.wakatime.useragent = e.detail.value;
                             await updated();
-                            await testService();
                         }}
                     />
                 </Item>

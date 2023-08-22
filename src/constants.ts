@@ -21,6 +21,7 @@ export default {
     WAKATIME_HEARTBEATS_PATHNAME: "users/current/heartbeats", // 心跳数据 API 路径地址
     WAKATIME_HEARTBEATS_BULK: 25, // 每次提交数量限制
     WAKATIME_CLIENT_NAME: "wakatime", // 客户端名称
+    WAKATIME_CLIENT_VERSION: "1.76.0", // 客户端名称
     WAKATIME_EDITOR_NAME: "siyuan", // 编辑器名称
     WAKATIME_PLUGIN_NAME: "siyuan-wakatime", // 插件名称
     WAKATIME_DEFAULT_LANGUAGE: "Siyuan", // 默认语言名称

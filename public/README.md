@@ -136,6 +136,37 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
         * Document content is modified
         * Document attributes are modified
       * Corresponds to the `Category` in the WakaTime statistics results.
+    * `Operating System Name`
+
+      * The name of the operating system where the kernel is located
+      * Corresponds to the "Operating Systems" category in WakaTime statistics
+    * `Operating System Version`
+
+      * The version number of the current operating system
+      * Default is "unknown" to protect privacy
+      * Leave empty to use the retrieved version number
+    * `Operating System Architecture`
+
+      * The processor architecture of the current operating system
+      * Default is "unknown" to protect privacy
+      * Leave empty to use the retrieved architecture
+    * `User Agent`
+
+      * For more details, please refer to [User-Agent - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)
+      * Leave empty to use the automatically generated field
+
+        * It is highly recommended to leave it empty to automatically generate this field
+        * Customizing this field may cause the Wakapi/WakaTime service to be unable to recognize the plugin
+      * The agent contains the following information
+
+        * Version number of `wakatime-cli`
+
+          * Not used by this plugin
+        * Operating System Name
+        * Operating System Version
+        * Operating System Architecture
+        * Source app version
+        * Plugin version
   * `Service Settings`
 
     * `Test`
