@@ -80,6 +80,14 @@ const context: Context.IContext = {
     actions: new Array<Heartbeats.IAction>(),
 };
 
+/* 创建缓存目录 */
+async function createCacheDirectory(directory: string = CONSTANTS.OFFLINE_CACHE_PATH) {
+    return client.putFile({
+        isDir: true,
+        path: directory,
+    });
+}
+
 /* 更新定时器 */
 function updateTimer(interval: number = config.wakatime.interval) {
     /* 心跳定时器 */
@@ -514,6 +522,9 @@ function addEvent(options: Omit<Context.IRoot, "events"> & Context.IEvent): Cont
 
 /* 加载 */
 export async function onload(): Promise<void> {
+    /* 创建缓存目录 */
+    await createCacheDirectory();
+
     /* 加载缓存数据 */
     await cache.load();
 
