@@ -46,5 +46,10 @@ export const DEFAULT_CONFIG: IConfig = {
         edit: {
             category: Category.Learning,
         },
+
+        system_name: "",
+        system_version: "unknown",
+        system_arch: "unknown",
+        useragent: "",
     },
 };

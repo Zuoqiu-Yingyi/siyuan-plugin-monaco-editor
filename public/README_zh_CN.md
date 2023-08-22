@@ -136,6 +136,37 @@
         * 文档内容发生更改
         * 文档属性发生更改
       * 对应 `WakaTime` 统计结果中的 `Category`
+    * `操作系统名称`
+
+      * 内核所在操作系统的名称
+      * 对应 `WakaTime` 统计结果中的 `Operating Systems`
+    * `操作系统版本`
+
+      * 当前操作系统的版本号
+      * 默认为 `unknown` 以保护隐私
+      * 置空则使用查询到的版本号
+    * `操作系统架构`
+
+      * 当前操作系统的处理器架构
+      * 默认为 `unknown` 以保护隐私
+      * 置空则使用查询到的架构
+    * `用户代理字段 User-Agent`
+
+      * 详情请参考 [User-Agent - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/User-Agent)
+      * 置空则使用自动生成的字段
+
+        * 强烈建议置空以自动生成该字段
+        * 自定义该字段可能导致 `Wakapi/WakaTime` 服务无法识别该插件
+      * 代理中存在如下信息
+
+        * `wakatime-cli` 版本号
+
+          * 本插件未使用
+        * 操作系统名称
+        * 操作系统版本
+        * 操作系统架构
+        * 思源应用版本
+        * 本插件版本
   * `服务设置`
 
     * `测试`

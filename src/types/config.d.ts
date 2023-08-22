@@ -46,6 +46,11 @@ export interface IWakaTime {
 
     view: IActivity; // 查看活动
     edit: IActivity; // 编辑活动
+
+    system_name: string; // 操作系统名称
+    system_version: string; // 操作系统版本
+    system_arch: string; // 操作系统内核架构
+    useragent: string; // 用户代理字段
 }
 
 export interface IConfig {

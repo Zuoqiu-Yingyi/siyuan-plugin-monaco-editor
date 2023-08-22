@@ -1,12 +1,14 @@
 {
     "name": "wakatime",
     "private": true,
-    "version": "0.2.0",
+    "version": "0.3.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "build:dev": "vite build --sourcemap inline",
+        "build": "npm run build:plugin && npm run build:workers",
+        "build:dev": "vite build --mode plugin --sourcemap inline && vite build --mode workers --sourcemap inline",
+        "build:plugin": "vite build --mode plugin",
+        "build:workers": "vite build --mode workers",
         "preview": "vite preview",
         "check": "svelte-check --tsconfig ./tsconfig.json"
     },

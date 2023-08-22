@@ -29,19 +29,23 @@
     import { type ITab } from "@workspace/components/siyuan/setting/tab";
 
     import { Category } from "@/wakatime/heartbeats";
-    import type MonacoEditorPlugin from "@/index";
 
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
-    import WakaTimePlugin from "@/index";
+    import type WakaTimePlugin from "@/index";
+
+    import CONSTANTS from "@/constants";
 
     export let config: IConfig; // 传入的配置项
-    export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
+    export let plugin: InstanceType<typeof WakaTimePlugin>; // 插件实例
+
+    let useragent_placeholder = plugin.wakatimeDefaultUserAgent;
 
     const i18n = plugin.i18n as unknown as I18N;
 
     async function updated() {
         await plugin.updateConfig(config);
+        useragent_placeholder = plugin.wakatimeDefaultUserAgent;
     }
 
     function resetOptions() {
@@ -73,7 +77,7 @@
             plugin.siyuan.showMessage(
                 i18n.settings.wakatimeSettings.serviceTab.test.messages.success.replaceAll(
                     "${1}", //
-                    fn__code(plugin.wakatimeApiUrl), //
+                    fn__code(plugin.wakatimeApiBaseUrl), //
                 ), //
                 undefined, //
                 "info", //
@@ -82,7 +86,7 @@
             plugin.siyuan.showMessage(
                 i18n.settings.wakatimeSettings.serviceTab.test.messages.error.replaceAll(
                     "${1}", //
-                    fn__code(plugin.wakatimeApiUrl), //
+                    fn__code(plugin.wakatimeApiBaseUrl), //
                 ), //
                 undefined, //
                 "error", //
@@ -314,6 +318,80 @@
                         }}
                     />
                 </Item>
+
+                <!-- 系统名称 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemName.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemName.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_name"
+                        settingValue={config.wakatime.system_name}
+                        placeholder={plugin.wakatimeDefaultSystemName}
+                        on:changed={async e => {
+                            config.wakatime.system_name = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 系统版本 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemVersion.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemVersion.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_version"
+                        settingValue={config.wakatime.system_version}
+                        placeholder={plugin.wakatimeDefaultSystemVersion}
+                        on:changed={async e => {
+                            config.wakatime.system_version = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 系统内核 -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.systemArch.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.systemArch.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="system_arch"
+                        settingValue={config.wakatime.system_arch}
+                        placeholder={plugin.wakatimeDefaultSystemArch}
+                        on:changed={async e => {
+                            config.wakatime.system_arch = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- UserAgent -->
+                <Item
+                    title={i18n.settings.wakatimeSettings.generalTab.userAgent.title}
+                    text={i18n.settings.wakatimeSettings.generalTab.userAgent.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.textarea}
+                        settingKey="useragent"
+                        settingValue={config.wakatime.useragent}
+                        placeholder={useragent_placeholder}
+                        block={true}
+                        on:changed={async e => {
+                            config.wakatime.useragent = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
             </div>
 
             <!-- 标签页 2 - 服务设置 -->
@@ -452,7 +530,7 @@
                     title={i18n.settings.wakatimeSettings.serviceTab.offline.title}
                     text={i18n.settings.wakatimeSettings.serviceTab.offline.description.replaceAll(
                         "${1}", //
-                        fn__code(WakaTimePlugin.OFFLINE_CACHE_PATH), //
+                        fn__code(CONSTANTS.OFFLINE_CACHE_PATH), //
                     )}
                 >
                     <Input

@@ -36,7 +36,23 @@
                     "description": "Custom current workspace name<br/>Corresponds to <code class='fn__code'>Projects</code> in Wakapi/WakaTime statistics",
                     "title": "Project name"
                 },
+                "systemArch": {
+                    "description": "The kernel architecture of the current operating system",
+                    "title": "Operating System Architecture"
+                },
+                "systemName": {
+                    "description": "The name of the operating system on which the kernel resides",
+                    "title": "Operating System Name"
+                },
+                "systemVersion": {
+                    "description": "The version of the current operating system",
+                    "title": "Operating System Version"
+                },
                 "title": "General",
+                "userAgent": {
+                    "description": "Used to identify the editor currently used when pushing action information to the Wakapi/WakaTime service<br/>It is highly recommended to leave blank to use the default options<br/>Customizing this field may cause the Wakapi/WakaTime service to not recognize this plug-in",
+                    "title": "<a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent'>User-Agent</a>"
+                },
                 "viewCategory": {
                     "description": "Action type tags for viewing operations",
                     "title": "View operation tags"

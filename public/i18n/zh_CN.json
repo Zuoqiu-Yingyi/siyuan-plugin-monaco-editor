@@ -36,7 +36,23 @@
                     "description": "自定义当前工作空间名称<br/>对应 Wakapi/WakaTime 统计中的 <code class='fn__code'>Projects</code> 项",
                     "title": "项目名称"
                 },
+                "systemArch": {
+                    "description": "当前操作系统的内核架构",
+                    "title": "操作系统架构"
+                },
+                "systemName": {
+                    "description": "思源内核所在操作系统的名称",
+                    "title": "操作系统名称"
+                },
+                "systemVersion": {
+                    "description": "当前操作系统的版本",
+                    "title": "操作系统版本"
+                },
                 "title": "常规设置",
+                "userAgent": {
+                    "description": "用于将操作信息推送到 Wakapi/WakaTime 服务时标识当前所使用的编辑器<br/>强烈建议留空以使用默认选项<br/>自定义该字段可能导致 Wakapi/WakaTime 服务无法识别该插件",
+                    "title": "用户代理字段 <a href='https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/User-Agent'>User-Agent</a>"
+                },
                 "viewCategory": {
                     "description": "为查看操作设置的活动类型标签",
                     "title": "查看操作标签"
