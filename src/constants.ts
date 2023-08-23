@@ -25,6 +25,7 @@ export default {
     WAKATIME_EDITOR_NAME: "siyuan", // 编辑器名称
     WAKATIME_PLUGIN_NAME: "siyuan-wakatime", // 插件名称
     WAKATIME_DEFAULT_LANGUAGE: "Siyuan", // 默认语言名称
+    WAKATIME_WORKER_BROADCAST_CHANNEL_NAME: "wakatime-worker", // web worker 广播通道名称
     CACHE_CHECK_INTERVAL: 5 * 60 * 1_000, // 缓存检查时间间隔
     CACHE_COMMIT_INTERVAL: 1 * 1_000, // 缓存每次提交时间间隔
 };

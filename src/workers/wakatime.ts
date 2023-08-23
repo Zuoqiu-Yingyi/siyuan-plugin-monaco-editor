@@ -470,7 +470,7 @@ function washList(list: string[]): (string | RegExp)[] {
                         new RegExp(entry.slice(1, -1));
                         return true;
                     } catch (error) {
-                        client.pushErrMsg(error);
+                        client.pushErrMsg({ msg: error as string });
                         return false;
                     }
                 }
@@ -577,7 +577,7 @@ export async function addEditEvent(id: BlockID): Promise<void> {
 
         /* 获取块对应的文档信息 */
         let root_id = context.blocks.get(id);
-        let root_info = context.roots.get(root_id);
+        let root_info = root_id && context.roots.get(root_id);
         if (!root_info) {
             const block_info = await client.getBlockInfo({ id });
             root_id = block_info.data.rootID;
@@ -613,27 +613,27 @@ export async function addEditEvent(id: BlockID): Promise<void> {
 
 const handlers = {
     onload: {
-        this: self,
+        this: globalThis,
         func: onload,
     },
     unload: {
-        this: self,
+        this: globalThis,
         func: unload,
     },
     restart: {
-        this: self,
+        this: globalThis,
         func: restart,
     },
     updateConfig: {
-        this: self,
+        this: globalThis,
         func: updateConfig,
     },
     addViewEvent: {
-        this: self,
+        this: globalThis,
         func: addViewEvent,
     },
     addEditEvent: {
-        this: self,
+        this: globalThis,
         func: addEditEvent,
     },
 } as const;
@@ -647,8 +647,9 @@ export type IHandlers = {
     };
 }
 
+const channel = new BroadcastChannel(CONSTANTS.WAKATIME_WORKER_BROADCAST_CHANNEL_NAME);
 const bridge = new WorkerBridgeSlave(
-    self,
+    channel,
     logger,
     handlers,
 );
