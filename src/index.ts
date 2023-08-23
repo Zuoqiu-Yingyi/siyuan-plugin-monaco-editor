@@ -185,7 +185,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     /* 初始化 worker */
     protected initWorker(): void {
-        if (this.worker) this.worker.terminate();
+        this.worker?.terminate();
         this.worker = new Worker(
             `${globalThis.document.baseURI}plugins/${this.name}/workers/wakatime.js?v=${manifest.version}`,
             {
@@ -199,7 +199,9 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     /* web worker 是否正在运行 */
     protected async isWorkerRunning(): Promise<boolean> {
         try {
-            if (this.bridge) this.initBridge();
+            /* 若 bridge 未初始化, 需要初始化 */
+            if (!this.bridge) this.initBridge();
+
             /* 检测 Worker 是否已加载完成 */
             await this.bridge!.ping();
             return true;
