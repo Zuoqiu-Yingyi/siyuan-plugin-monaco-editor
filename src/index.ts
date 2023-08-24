@@ -37,7 +37,7 @@ import { WorkerBridgeMaster } from "@workspace/utils/worker/bridge/master";
 import CONSTANTS from "./constants";
 import { DEFAULT_CONFIG } from "./configs/default";
 import type { IConfig } from "./types/config";
-import type { IHandlers } from "./workers/wakatime";
+import type { THandlers } from "./workers/wakatime";
 import type {
     Context,
 } from "./types/wakatime";
@@ -60,7 +60,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
 
     protected readonly SETTINGS_DIALOG_ID: string;
 
-    public config!: IConfig;
+    public config: IConfig = DEFAULT_CONFIG;
     protected worker?: InstanceType<typeof Worker>; // worker 桥
     protected bridge?: InstanceType<typeof WorkerBridgeMaster>; // worker 桥
 
@@ -92,19 +92,23 @@ export default class WakaTimePlugin extends siyuan.Plugin {
             })
             .catch(error => this.logger.error(error))
             .finally(async () => {
-                /* 初始化 channel 与 worker */
+                /* 初始化 channel */
                 this.initBridge();
                 const runing = await this.isWorkerRunning();
-                if (!runing) this.initWorker();
 
-                /* 等待 worker 正常运行 */
-                while (await this.isWorkerRunning()) {
-                    await sleep(1_000)
+                if (!runing) { // worker 未正常运行
+                    /* 初始化 worker */
+                    this.initWorker();
+
+                    /* 等待 worker 正常运行 */
+                    while (await this.isWorkerRunning()) {
+                        await sleep(1_000)
+                    }
+
+                    /* 初始化 worker 配置 */
+                    await this.bridge?.call<THandlers["onload"]>("onload");
+                    await this.updateWorkerConfig();
                 }
-
-                /* 初始化 worker 配置 */
-                await this.bridge?.call<IHandlers["onload"]>("onload");
-                await this.updateWorkConfig();
 
                 /* 总线 */
                 this.eventBus.on("ws-main", this.webSocketMainEventListener);
@@ -126,7 +130,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
         this.bridge
-            ?.call<IHandlers["unload"]>("unload")
+            ?.call<THandlers["unload"]>("unload")
             .then(() => {
                 this.bridge?.terminate();
                 this.worker?.terminate();
@@ -170,7 +174,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         if (config && config !== this.config) {
             this.config = config;
         }
-        await this.updateWorkConfig();
+        await this.updateWorkerConfig();
         return this.saveData(WakaTimePlugin.GLOBAL_CONFIG_NAME, this.config);
     }
 
@@ -187,7 +191,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     protected initWorker(): void {
         this.worker?.terminate();
         this.worker = new Worker(
-            `${globalThis.document.baseURI}plugins/${this.name}/workers/wakatime.js?v=${manifest.version}`,
+            `${globalThis.document.baseURI}plugins/${this.name}/workers/${CONSTANTS.WAKATIME_WORKER_FILE_NAME}.js?v=${manifest.version}`,
             {
                 type: "module",
                 name: this.name,
@@ -212,8 +216,8 @@ export default class WakaTimePlugin extends siyuan.Plugin {
     }
 
     /* 更新 worker 配置 */
-    public async updateWorkConfig(): Promise<void> {
-        await this.bridge?.call<IHandlers["updateConfig"]>(
+    public async updateWorkerConfig(): Promise<void> {
+        await this.bridge?.call<THandlers["updateConfig"]>(
             "updateConfig",
             this.config,
             {
@@ -223,7 +227,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
                 language: this.wakatimeLanguage,
             },
         );
-        await this.bridge?.call<IHandlers["restart"]>("restart");
+        await this.bridge?.call<THandlers["restart"]>("restart");
     }
 
     /* 总线事件监听器 */
@@ -243,7 +247,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
                     }
 
                     if (operation.id) {
-                        this.bridge?.call<IHandlers["addEditEvent"]>(
+                        this.bridge?.call<THandlers["addEditEvent"]>(
                             "addEditEvent",
                             operation.id,
                         );
@@ -261,7 +265,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         // this.logger.debug(e);
         const protyle = e.detail;
         if (protyle.notebookId && protyle.path && protyle.block.rootID) {
-            this.bridge?.call<IHandlers["addViewEvent"]>(
+            this.bridge?.call<THandlers["addViewEvent"]>(
                 "addViewEvent",
                 {
                     id: protyle.block.rootID,
@@ -277,7 +281,7 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         // this.logger.debug(e);
         const protyle = e.detail.protyle;
         if (protyle.notebookId && protyle.path && protyle.block.rootID) {
-            this.bridge?.call<IHandlers["addViewEvent"]>(
+            this.bridge?.call<THandlers["addViewEvent"]>(
                 "addViewEvent",
                 {
                     id: protyle.block.rootID,

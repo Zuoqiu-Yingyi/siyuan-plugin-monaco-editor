@@ -20,7 +20,6 @@ import {
     KernelError,
     type types,
 } from "@siyuan-community/siyuan-sdk";
-import manifest from "~/public/plugin.json";
 import { WorkerBridgeSlave } from "@workspace/utils/worker/bridge/slave";
 import { Logger } from "@workspace/utils/logger";
 import { trimSuffix } from "@workspace/utils/misc/string";
@@ -40,14 +39,18 @@ import type {
 import type { BlockID } from "@workspace/types/siyuan";
 import { Type } from "@/wakatime/heartbeats";
 import { sleep } from "@workspace/utils/misc/sleep";
+import type {
+    IHandlers,
+    THandlersWrapper,
+} from "@workspace/utils/worker/bridge";
 
 type INotebook = types.kernel.api.notebook.lsNotebooks.INotebook;
 
 const config: IConfig = DEFAULT_CONFIG;
-const logger = new Logger(`${self.name}-worker:wakatime`);
+const logger = new Logger(`${self.name}-worker:${CONSTANTS.WAKATIME_WORKER_FILE_NAME}`);
 const client = new Client(
     {
-        baseURL: trimSuffix(self.location.pathname, `plugins/${self.name}/workers/wakatime.js`),
+        baseURL: trimSuffix(self.location.pathname, `plugins/${self.name}/workers/${CONSTANTS.WAKATIME_WORKER_FILE_NAME}.js`),
     },
     "fetch",
 );
@@ -613,39 +616,32 @@ export async function addEditEvent(id: BlockID): Promise<void> {
 
 const handlers = {
     onload: {
-        this: globalThis,
+        this: self,
         func: onload,
     },
     unload: {
-        this: globalThis,
+        this: self,
         func: unload,
     },
     restart: {
-        this: globalThis,
+        this: self,
         func: restart,
     },
     updateConfig: {
-        this: globalThis,
+        this: self,
         func: updateConfig,
     },
     addViewEvent: {
-        this: globalThis,
+        this: self,
         func: addViewEvent,
     },
     addEditEvent: {
-        this: globalThis,
+        this: self,
         func: addEditEvent,
     },
 } as const;
 
-type THandlers = typeof handlers;
-
-export type IHandlers = {
-    [K in keyof THandlers]: {
-        this: WindowOrWorkerGlobalScope,
-        func: (...args: Parameters<THandlers[K]["func"]>) => ReturnType<THandlers[K]["func"]>,
-    };
-}
+export type THandlers = THandlersWrapper<typeof handlers>;
 
 const channel = new BroadcastChannel(CONSTANTS.WAKATIME_WORKER_BROADCAST_CHANNEL_NAME);
 const bridge = new WorkerBridgeSlave(
