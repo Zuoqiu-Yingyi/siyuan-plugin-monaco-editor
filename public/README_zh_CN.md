@@ -50,7 +50,7 @@
 
 ### 功能介绍
 
-[WakaTime](https://WakaTime.com/) 为其用户提供文本编辑活动的统计服务，用户可以通过在集成开发环境和文本编辑器中安装开源插件以提交自己的编辑活动供其统计、分析与可视化。
+[WakaTime](https://WakaTime.com/) 为其用户提供文本编辑活动的统计服务，用户可以通过在集成开发环境和文本编辑器中安装 [开源插件](https://wakatime.com/plugins) 以提交自己的编辑活动供其统计、分析与可视化。
 
 [Wakapi](https://github.com/muety/wakapi) 是 [WakaTime](https://github.com/wakatime) 项目的开源替代品，同样可以为其用户提供文本编辑活动的统计服务，并兼容大部分 [WakaTime 插件](https://wakatime.com/plugins)。
 

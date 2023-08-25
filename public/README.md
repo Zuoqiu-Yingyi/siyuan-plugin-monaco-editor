@@ -50,7 +50,7 @@ A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can use [
 
 ### Features Introduction
 
-[WakaTime](https://WakaTime.com/) provides its users with a tracking service for text editing activities. Users can install open-source plugins in their integrated development environments and text editors to submit their editing activities for tracking, analysis, and visualization.
+[WakaTime](https://WakaTime.com/) provides its users with a tracking service for text editing activities. Users can install [open-source plugins](https://wakatime.com/plugins) in their integrated development environments and text editors to submit their editing activities for tracking, analysis, and visualization.
 
 [Wakapi](https://github.com/muety/wakapi) is an open-source alternative to the [WakaTime](https://github.com/wakatime) project. It also provides its users with a tracking service for text editing activities and is compatible with most [WakaTime plugins](https://wakatime.com/plugins).
 
