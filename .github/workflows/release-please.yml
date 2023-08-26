@@ -14,7 +14,7 @@ permissions:
 
 env:
   PACKAGE_NAME: wakatime
-  PACKAGE_VERSION: 0.3.1
+  PACKAGE_VERSION: 0.3.2
 
 jobs:
   release-please:
