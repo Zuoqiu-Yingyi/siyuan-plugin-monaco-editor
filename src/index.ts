@@ -103,7 +103,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected editorDock: {
         // editor: InstanceType<typeof Editor>,
         dock: ReturnType<siyuan.Plugin["addDock"]>,
-        model?: siyuan.IModel,
+        model?: siyuan.ICustomModel,
         component?: InstanceType<typeof EditorDock>,
     }; // 编辑器面板
     protected explorerDock: {
