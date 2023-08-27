@@ -129,12 +129,17 @@ export default class WakaTimePlugin extends siyuan.Plugin {
         this.eventBus.off("loaded-protyle", this.loadedProtyleEventListener);
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
-        this.bridge
-            ?.call<THandlers["unload"]>("unload")
-            .then(() => {
-                this.bridge?.terminate();
-                this.worker?.terminate();
-            });
+        if (this.worker) {
+            this.bridge
+                ?.call<THandlers["unload"]>("unload")
+                .then(() => {
+                    this.bridge?.terminate();
+                    this.worker?.terminate();
+                });
+        }
+        else {
+            this.bridge?.terminate();
+        }
     }
 
     openSetting(): void {
