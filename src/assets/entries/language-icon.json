@@ -20,6 +20,22 @@
         "#icon-monaco-editor-material-yaml"
     ],
     [
+        "github-actions-workflow",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        "spring-boot-properties-yaml",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        "ansible",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        "ansible-jinja",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
         "xml",
         "#icon-monaco-editor-material-xml"
     ],
@@ -49,6 +65,10 @@
     ],
     [
         "properties",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        "spring-boot-properties",
         "#icon-monaco-editor-material-settings"
     ],
     [
@@ -389,6 +409,10 @@
     ],
     [
         "dockerfile",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "dockercompose",
         "#icon-monaco-editor-material-docker"
     ],
     [

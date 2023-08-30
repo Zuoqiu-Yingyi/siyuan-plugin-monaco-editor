@@ -560,6 +560,66 @@
         "#icon-monaco-editor-material-docker"
     ],
     [
+        "containerfile",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.prod",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.production",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.alpha",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.beta",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.stage",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.staging",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.dev",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.development",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.local",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.test",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.testing",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.ci",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.web",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "containerfile.worker",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
         "compose.yaml",
         "#icon-monaco-editor-material-docker"
     ],
@@ -2924,6 +2984,22 @@
         "#icon-monaco-editor-material-jest"
     ],
     [
+        "jest.preset.js",
+        "#icon-monaco-editor-material-jest"
+    ],
+    [
+        "jest.preset.mjs",
+        "#icon-monaco-editor-material-jest"
+    ],
+    [
+        "jest.preset.cjs",
+        "#icon-monaco-editor-material-jest"
+    ],
+    [
+        "jest.preset.json",
+        "#icon-monaco-editor-material-jest"
+    ],
+    [
         "fastfile",
         "#icon-monaco-editor-material-fastlane"
     ],
@@ -3049,6 +3125,22 @@
     ],
     [
         ".nycrc.json",
+        "#icon-monaco-editor-material-istanbul"
+    ],
+    [
+        ".nycrc.yaml",
+        "#icon-monaco-editor-material-istanbul"
+    ],
+    [
+        ".nycrc.yml",
+        "#icon-monaco-editor-material-istanbul"
+    ],
+    [
+        "nyc.config.js",
+        "#icon-monaco-editor-material-istanbul"
+    ],
+    [
+        ".istanbul.yml",
         "#icon-monaco-editor-material-istanbul"
     ],
     [
@@ -3692,6 +3784,10 @@
         "#icon-monaco-editor-material-tauri"
     ],
     [
+        ".taurignore",
+        "#icon-monaco-editor-material-tauri"
+    ],
+    [
         "jsconfig.json",
         "#icon-monaco-editor-material-jsconfig"
     ],
@@ -4082,5 +4178,13 @@
     [
         "werf-giterminism.yml",
         "#icon-monaco-editor-material-werf"
+    ],
+    [
+        "panda.config.ts",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "panda.config.js",
+        "#icon-monaco-editor-material-panda"
     ]
 ]

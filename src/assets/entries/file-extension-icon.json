@@ -116,14 +116,6 @@
         "#icon-monaco-editor-material-twine"
     ],
     [
-        ".yml",
-        "#icon-monaco-editor-material-yaml"
-    ],
-    [
-        ".yaml",
-        "#icon-monaco-editor-material-yaml"
-    ],
-    [
         ".yml.dist",
         "#icon-monaco-editor-material-yaml"
     ],
@@ -1164,6 +1156,14 @@
         "#icon-monaco-editor-material-docker"
     ],
     [
+        ".containerignore",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        ".containerfile",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
         ".compose.yaml",
         "#icon-monaco-editor-material-docker"
     ],
@@ -1937,6 +1937,10 @@
     ],
     [
         ".tfstate",
+        "#icon-monaco-editor-material-terraform"
+    ],
+    [
+        ".tfbackend",
         "#icon-monaco-editor-material-terraform"
     ],
     [
@@ -3174,5 +3178,21 @@
     [
         ".🔥",
         "#icon-monaco-editor-material-mojo"
+    ],
+    [
+        ".rbxl",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxlx",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxm",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxmx",
+        "#icon-monaco-editor-material-roblox"
     ]
 ]

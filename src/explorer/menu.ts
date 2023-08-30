@@ -17,17 +17,36 @@
 
 import type siyuan from "siyuan";
 import type MonacoEditorPlugin from "@/index";
-import Item from "@workspace/components/siyuan/menu/Item.svelte"
 import UploadDialog from "@/components/UploadDialog.svelte"
-import { FileTreeNodeType, type IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
+import {
+    FileTreeNodeType,
+    type IFileTreeNodeStores,
+} from "@workspace/components/siyuan/tree/file";
 import { get } from "svelte/store";
 import { HandlerType } from "@/facades/facade";
-import { FLAG_BROWSER, FLAG_ELECTRON } from "@workspace/utils/env/front-end";
+import {
+    FLAG_BROWSER,
+    FLAG_ELECTRON,
+} from "@workspace/utils/env/front-end";
+import {
+    directoryOpen,
+    fileOpen,
+} from "@workspace/utils/file/browser-fs-access";
 import { copyText } from "@workspace/utils/misc/copy";
-import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
+import {
+    isStaticWebFileServicePath,
+    workspacePath2StaticPathname,
+} from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
-import { Explorer, ProtectedResourceType } from ".";
-import { extname, join, parse } from "@workspace/utils/path/browserify";
+import {
+    Explorer,
+    ProtectedResourceType,
+} from ".";
+import {
+    extname,
+    join,
+    parse,
+} from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
@@ -36,7 +55,10 @@ import {
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
 import { escapeHTML } from "@workspace/utils/misc/html";
-import { ResourceOption, isResourceOperable } from "@/utils/permission";
+import {
+    ResourceOption,
+    isResourceOperable,
+} from "@/utils/permission";
 import {
     openPath,
     showItemInFolder,
@@ -790,28 +812,26 @@ export class ExplorerContextMenu {
                     {
                         type: MenuItemType.Action,
                         options: {
-                            element: globalThis.document.createElement("div"), // 避免生成其他内容
-                            bind: element => {
-                                /* 挂载一个 svelte 菜单项组件 */
-                                const item = new Item({
-                                    target: element,
-                                    props: {
-                                        file: true,
-                                        icon: "#iconFile",
-                                        label: this.i18n.menu.uploadFile.label,
-                                        multiple: true,
-                                        webkitdirectory: false,
-                                    },
+                            icon: "iconFile",
+                            label: this.i18n.menu.uploadFile.label,
+                            click: async () => {
+                                // REF: https://www.npmjs.com/package/browser-fs-access
+                                const files = await fileOpen({
+                                    // mimeTypes: ["*/*"],
+                                    // extensions: [""],
+                                    multiple: true,
+                                    description: this.i18n.menu.uploadFile.label,
+                                    startIn: "downloads",
+                                    id: "siyuan-upload-files",
+                                    // excludeAcceptAllOption: false,
                                 });
 
-                                item.$on("selected", async e => {
-                                    // this.plugin.logger.debug(e);
-                                    const finished = await this.upload(relative, e.detail.files);
-                                    if (finished) {
-                                        this.explorer.updateNode(node);
-                                    }
-                                });
-                            }
+                                // this.plugin.logger.debug(files);
+                                const finished = await this.upload(relative, files);
+                                if (finished) {
+                                    this.explorer.updateNode(node);
+                                }
+                            },
                         },
                         root: true,
                         folder: true,
@@ -821,28 +841,24 @@ export class ExplorerContextMenu {
                     {
                         type: MenuItemType.Action,
                         options: {
-                            element: globalThis.document.createElement("div"), // 避免生成其他内容
-                            bind: element => {
-                                /* 挂载一个 svelte 菜单项组件 */
-                                const item = new Item({
-                                    target: element,
-                                    props: {
-                                        file: true,
-                                        icon: "#iconFolder",
-                                        label: this.i18n.menu.uploadFolder.label,
-                                        multiple: true,
-                                        webkitdirectory: true,
-                                    },
-                                });
+                            icon: "iconFolder",
+                            label: this.i18n.menu.uploadFolder.label,
+                            click: async () => {
+                                // REF: https://www.npmjs.com/package/browser-fs-access
+                                const files = await directoryOpen({
+                                    recursive: true,
+                                    startIn: "downloads",
+                                    id: "siyuan-upload-folder",
+                                    // mode: "read" | "readwrite",
+                                    // skipDirectory: (entry) => boolean,
+                                }) as File[];
 
-                                item.$on("selected", async e => {
-                                    // this.plugin.logger.debug(e);
-                                    const finished = await this.upload(relative, e.detail.files);
-                                    if (finished) {
-                                        this.explorer.updateNode(node);
-                                    }
-                                });
-                            }
+                                // this.plugin.logger.debug(files);
+                                const finished = await this.upload(relative, files);
+                                if (finished) {
+                                    this.explorer.updateNode(node);
+                                }
+                            },
                         },
                         root: true,
                         folder: true,

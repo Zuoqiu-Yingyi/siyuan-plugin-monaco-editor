@@ -1,5 +1,29 @@
 [
     [
+        "bot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
+        "robot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
+        ".bot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
+        ".robot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
+        "_bot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
+        "_robot",
+        "#icon-monaco-editor-material-folder-robot-open"
+    ],
+    [
         "src",
         "#icon-monaco-editor-material-folder-src-open"
     ],
@@ -1268,6 +1292,10 @@
         "#icon-monaco-editor-material-folder-client-open"
     ],
     [
+        "frontends",
+        "#icon-monaco-editor-material-folder-client-open"
+    ],
+    [
         "pwa",
         "#icon-monaco-editor-material-folder-client-open"
     ],
@@ -1696,11 +1724,11 @@
         "#icon-monaco-editor-material-folder-job-open"
     ],
     [
-        "keys",
+        "key",
         "#icon-monaco-editor-material-folder-keys-open"
     ],
     [
-        "key",
+        "keys",
         "#icon-monaco-editor-material-folder-keys-open"
     ],
     [
@@ -1713,6 +1741,14 @@
     ],
     [
         "jwt",
+        "#icon-monaco-editor-material-folder-keys-open"
+    ],
+    [
+        "secret",
+        "#icon-monaco-editor-material-folder-keys-open"
+    ],
+    [
+        "secrets",
         "#icon-monaco-editor-material-folder-keys-open"
     ],
     [
@@ -2314,6 +2350,14 @@
     [
         ".netlify",
         "#icon-monaco-editor-material-folder-netlify-open"
+    ],
+    [
+        "enum",
+        "#icon-monaco-editor-material-folder-enum-open"
+    ],
+    [
+        "enums",
+        "#icon-monaco-editor-material-folder-enum-open"
     ],
     [
         "pact",
