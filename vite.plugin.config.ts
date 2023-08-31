@@ -16,9 +16,9 @@
  */
 
 import { UserConfig } from "vite";
-import { resolve } from "path"
+import { resolve } from "node:path";
 
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vitejs.dev/config/
 export default {
