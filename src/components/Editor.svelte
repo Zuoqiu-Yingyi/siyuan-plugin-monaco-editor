@@ -321,8 +321,8 @@
                 contextMenuOrder: 1, // 菜单分组内排序
                 run: () => {
                     // 点击后执行的操作
-                    // Editor.EditorOption.wordWrap === 128
-                    const word_wrap_status = editor.getOption(128) === "off" ? "on" : "off";
+                    // Editor.EditorOption.wordWrap === 129
+                    const word_wrap_status = editor.getOption(129) === "off" ? "on" : "off";
                     updateOptions({ wordWrap: word_wrap_status });
                 },
             });
