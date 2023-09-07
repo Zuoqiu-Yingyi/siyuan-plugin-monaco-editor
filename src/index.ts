@@ -78,6 +78,14 @@ import { showSaveDialog } from "@workspace/utils/electron/dialog";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
 import { showItemInFolder } from "@workspace/utils/electron/shell";
 
+export interface IEditorTab extends siyuan.ITabModel {
+    component?: InstanceType<typeof EditorTab>;
+}
+
+export interface IPreviewTab extends siyuan.ITabModel {
+    component?: InstanceType<typeof PreviewTab>;
+}
+
 export default class MonacoEditorPlugin extends siyuan.Plugin {
     public static readonly GLOBAL_CONFIG_NAME = "global-config";
     public static readonly CUSTOM_MENU_NAME = "plugin-monaco-editor-custom-menu";
@@ -141,8 +149,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             init() {
                 // plugin.logger.debug("tab-init");
                 // plugin.logger.debug(this);
-                const tab = this;
-                this.component = new EditorTab({
+
+                const tab: IEditorTab = this;
+                tab.component = new EditorTab({
                     // target,
                     target: tab.element,
                     props: {
@@ -153,16 +162,20 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             },
             destroy() {
                 // plugin.logger.debug("tab-destroy");
-                this.component?.$destroy();
+
+                const tab: IEditorTab = this;
+                tab.component?.$destroy();
             },
         });
+
         this.previewTab = this.addTab({
             type: MonacoEditorPlugin.CUSTOM_TAB_TYPE_PREVIEW,
             init() {
                 // plugin.logger.debug("tab-init");
                 // plugin.logger.debug(this);
-                const tab = this;
-                this.component = new PreviewTab({
+
+                const tab: IPreviewTab = this;
+                tab.component = new PreviewTab({
                     target: tab.element,
                     props: {
                         plugin,
@@ -172,7 +185,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             },
             destroy() {
                 // plugin.logger.debug("tab-destroy");
-                this.component?.$destroy();
+
+                const tab: IPreviewTab = this;
+                tab.component?.$destroy();
             },
         });
     }
@@ -1019,7 +1034,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                                 siyuan.openTab({
                                     app: this.app,
                                     custom,
-                                    keepCursor: false,
+                                    keepCursor: true,
                                     removeCurrentTab: false,
                                 });
                                 break;
