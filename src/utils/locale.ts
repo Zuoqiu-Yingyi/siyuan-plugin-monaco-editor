@@ -17,8 +17,19 @@
 
 import { mapLang } from "@workspace/utils/locale/language";
 
+export type TEditorLocale = "zh-cn"
+    | "zh-tw"
+    | "de"
+    | "es"
+    | "fr"
+    | "it"
+    | "ja"
+    | "ko"
+    | "ru"
+    | "en";
+
 // REF: https://www.npmjs.com/package/monaco-editor-nls
-export function mapLocale(locale: string): string {
+export function mapLocale(locale: string): TEditorLocale {
     switch (mapLang(locale)) {
         case "zh-Hans":
             return "zh-cn";
@@ -43,5 +54,42 @@ export function mapLocale(locale: string): string {
         case "en":
         default:
             return "en";
+    }
+}
+
+
+export type TVditorLocale = "zh_CN"
+    | "zh_TW"
+    | "fr_FR"
+    | "ja_JP"
+    | "ko_KR"
+    | "pt_BR"
+    | "ru_RU"
+    | "sv_SE"
+    | "en_US";
+
+export function mapLocaleVditor(locale: string): TVditorLocale {
+    switch (mapLang(locale)) {
+        case "zh-Hans":
+            return "zh_CN";
+        case "zh-Hant":
+            return "zh_TW";
+
+        case "fr":
+            return "fr_FR";
+        case "ja":
+            return "ja_JP";
+        case "ko":
+            return "ko_KR";
+        case "pt":
+            return "pt_BR";
+        case "ru":
+            return "ru_RU";
+        case "sv":
+            return "sv_SE";
+
+        case "en":
+        default:
+            return "en_US";
     }
 }

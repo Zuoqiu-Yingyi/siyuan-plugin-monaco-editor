@@ -26,7 +26,7 @@ import {
 import { Logger } from "@workspace/utils/logger";
 
 import Editor from "@/components/Editor.svelte";
-import { EditorBridgeSlave } from "../bridge/slave";
+import { EditorBridgeSlave } from "@/bridge/EditorSlave";
 
 var editor: InstanceType<typeof Editor>; // 编辑器组件
 
@@ -37,7 +37,7 @@ const bridge = new EditorBridgeSlave(
             "editor-init",
             e => {
                 const { data } = e.data;
-                const logger = new Logger(`${data.name}-${(() => {
+                const logger = new Logger(`${data.name}-editor-${(() => {
                     switch (true) {
                         case FLAG_ELECTRON:
                             return "window";
@@ -95,4 +95,3 @@ const bridge = new EditorBridgeSlave(
         bridge.ready();
     },
 );
-

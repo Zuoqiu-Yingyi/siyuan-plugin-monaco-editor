@@ -19,7 +19,7 @@
     import { createEventDispatcher } from "svelte";
     import type { Action } from "svelte/action";
 
-    import { EditorBridgeMaster } from "@/bridge/master";
+    import { EditorBridgeMaster } from "@/bridge/EditorMaster";
 
     import type MonacoEditorPlugin from "@/index";
     import type { IEditorEvent, IEditorProps } from "@/types/editor";

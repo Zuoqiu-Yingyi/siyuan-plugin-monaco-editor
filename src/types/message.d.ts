@@ -34,7 +34,7 @@ export interface IMessage {
 }
 
 /* 来自主机的消息 */
-export interface IMessageEditorMasterEventMap {
+export interface IMessageEditorMasterEventMap extends Record<string, MessageEvent> {
     "editor-init": MessageEvent<IMessageEditorInit>;
     "editor-set": MessageEvent<IMessageEditorSet>;
 }
@@ -70,7 +70,7 @@ export interface IMessageEditorSet extends IMessage {
 }
 
 /* 来自从机的消息 */
-export interface IMessageEditorSlaveEventMap {
+export interface IMessageEditorSlaveEventMap extends Record<string, MessageEvent> {
     "editor-ready": MessageEvent<IMessageEditorReady>;
     "editor-changed": MessageEvent<IMessageEditorChanged>;
     "editor-save": MessageEvent<IMessageEditorSave>;

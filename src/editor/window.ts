@@ -15,11 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { EditorBridgeMaster, type IWindowParams } from "@/bridge/master";
+import { EditorBridgeMaster } from "@/bridge/EditorMaster";
 import { Facade, type IFacadeWindowOptions } from "@/facades/facade";
 import { merge } from "@workspace/utils/misc/merge";
 
 import type MonacoEditorPlugin from "@/index";
+import type { IWindowParams } from "@/bridge";
 import type { IMonacoEditorOptions } from "@/types/config";
 import type { Electron } from "@workspace/types/electron";
 
