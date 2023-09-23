@@ -7,6 +7,7 @@
 [![GitHub License](https://img.shields.io/github/license/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/blob/main/LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commits/main)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)
+![GitHub code size](https://img.shields.io/github/languages/code-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg?style=flat-square)
 ![hits](https://hits.b3log.org/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg)
 [![GitHub all releases](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases)
 

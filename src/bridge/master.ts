@@ -21,28 +21,18 @@ import { merge } from "@workspace/utils/misc/merge";
 import { isDarkTheme } from "@workspace/utils/siyuan/theme";
 
 import type { Electron } from "@workspace/types/electron";
-
 import MonacoEditorPlugin from "@/index";
 import type {
-    IMessageEditorSlaveEventMap,
-    IMessageEditorInit,
-    IMessageEditorSet,
-} from "@/types/message";
+    IWindowParams,
+    TMessageEventMap,
+    TMessageEventListener,
+    TElectronMessageEventListener,
+} from ".";
 
-export type SlaveMessageEvent = IMessageEditorSlaveEventMap[keyof IMessageEditorSlaveEventMap];
-export type MessageEventListener<
-    K extends keyof IMessageEditorSlaveEventMap = keyof IMessageEditorSlaveEventMap,
-> = (messageEvent: IMessageEditorSlaveEventMap[K]) => void;
-export type ElectronMessageEventListener = (e: Electron.MessageEvent) => void;
-
-export interface IWindowParams extends Electron.BrowserWindowConstructorOptions {
-    x: number, // 窗口横坐标
-    y: number, // 窗口纵坐标
-    width: number, // 窗口宽度
-    height: number, // 窗口高度
-}
-
-export class EditorBridgeMaster {
+export class BridgeMaster<
+    MessageSlaveEventMap extends TMessageEventMap,
+    MessageEventListener extends TMessageEventListener<keyof MessageSlaveEventMap, MessageSlaveEventMap> = TMessageEventListener<keyof MessageSlaveEventMap, MessageSlaveEventMap>,
+> {
     /* 创建消息通道 */
     public static createChannel(iframe: boolean = false) {
         if (FLAG_ELECTRON && !iframe) {
@@ -71,13 +61,13 @@ export class EditorBridgeMaster {
 
     protected readonly _listeners: Map<
         MessageEventListener,
-        MessageEventListener | ElectronMessageEventListener
+        MessageEventListener | TElectronMessageEventListener
     > = new Map(); // 监听器 映射到 包装后的监听器
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
         public channel: MessageChannel | Electron.MessageChannelMain, // 消息通道
-        public readonly url: URL = new URL(`${globalThis.document.baseURI}plugins/${plugin.name}/iframes/editor.html`), // 编辑器 URL
+        public readonly url: URL, // 编辑器 URL
     ) {
         /* 错误消息/关闭消息 */
         if (this.channel instanceof MessageChannel) {
@@ -110,7 +100,7 @@ export class EditorBridgeMaster {
         options: IWindowParams,
     ): Window | Electron.BrowserWindow {
         const params = merge(
-            EditorBridgeMaster.BROWSER_WINDOW_DEFAULT_OPTIONS,
+            BridgeMaster.BROWSER_WINDOW_DEFAULT_OPTIONS,
             options,
         );
         // this.plugin.logger.debug(params);
@@ -246,34 +236,10 @@ export class EditorBridgeMaster {
             for (const listener of this._listeners.values()) {
                 this.channel.port1.addListener(
                     constants.MESSAGE_EVENT_NAME,
-                    listener as ElectronMessageEventListener,
+                    listener as TElectronMessageEventListener,
                 );
             }
         }
-    }
-
-    /* 初始化 */
-    public init(data: IMessageEditorInit["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorInit = {
-            channel: "editor-init",
-            data,
-        };
-
-        /* 发送消息 */
-        this.channel.port1.postMessage(message);
-    }
-
-    /* 初始化 */
-    public set(data: IMessageEditorSet["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorSet = {
-            channel: "editor-set",
-            data,
-        };
-
-        /* 发送消息 */
-        this.channel.port1.postMessage(message);
     }
 
     /**
@@ -283,18 +249,18 @@ export class EditorBridgeMaster {
      * @return: 添加是否成功
      */
     public addEventListener<
-        K extends keyof IMessageEditorSlaveEventMap,
+        K extends keyof MessageSlaveEventMap,
     >(
         channel: K,
-        listener: MessageEventListener<K>,
+        listener: TMessageEventListener<K, MessageSlaveEventMap>,
         options?: Pick<AddEventListenerOptions, "once">,
     ): boolean {
-        if (this._listeners.has(listener)) { // 监听器已经添加
+        if (this._listeners.has(listener as MessageEventListener)) { // 监听器已经添加
             return false; // 监听器添加失败
         }
         else { // 添加新的监听器
             /* 包装监听器 (以实现 once 功能) */
-            const listenerWrapper: MessageEventListener<K> = e => {
+            const listenerWrapper: TMessageEventListener<K, MessageSlaveEventMap> = e => {
                 // this.plugin.logger.debug(e);
                 if (e?.data?.channel === channel) {
                     if (options?.once) {
@@ -305,7 +271,7 @@ export class EditorBridgeMaster {
             };
 
             /* 建立 原始监听器 到 包装后监听器 的映射 */
-            this._listeners.set(listener, listenerWrapper);
+            this._listeners.set(listener as MessageEventListener, listenerWrapper as MessageEventListener);
 
             /* 添加包装后的监听器 */
             if (this.channel instanceof MessageChannel) {
@@ -317,7 +283,7 @@ export class EditorBridgeMaster {
             else {
                 this.channel.port1.addListener(
                     constants.MESSAGE_EVENT_NAME,
-                    listenerWrapper as unknown as ElectronMessageEventListener,
+                    listenerWrapper as unknown as TElectronMessageEventListener,
                 );
             }
             return true; // 监听器添加成功
@@ -331,25 +297,25 @@ export class EditorBridgeMaster {
      * @return: 移除是否成功
      */
     public removeEventListener<
-        K extends keyof IMessageEditorSlaveEventMap = keyof IMessageEditorSlaveEventMap,
+        K extends keyof MessageSlaveEventMap = keyof MessageSlaveEventMap,
     >(
         _channel: K,
-        listener: MessageEventListener<K>,
+        listener: TMessageEventListener<K, MessageSlaveEventMap>,
     ): boolean {
-        if (this._listeners.has(listener)) { // 监听器存在
+        if (this._listeners.has(listener as MessageEventListener)) { // 监听器存在
             if (this.channel instanceof MessageChannel) {
                 this.channel.port1.removeEventListener(
                     constants.MESSAGE_EVENT_NAME,
-                    this._listeners.get(listener) as MessageEventListener,
+                    this._listeners.get(listener as MessageEventListener) as MessageEventListener,
                 );
             }
             else {
                 this.channel.port1.removeListener(
                     constants.MESSAGE_EVENT_NAME,
-                    this._listeners.get(listener) as ElectronMessageEventListener,
+                    this._listeners.get(listener as MessageEventListener) as TElectronMessageEventListener,
                 );
             }
-            this._listeners.delete(listener);
+            this._listeners.delete(listener as MessageEventListener);
             return true; // 监听器移除成功
         }
         else { // 无法移除不存在的监听器
