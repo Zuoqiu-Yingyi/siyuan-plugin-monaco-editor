@@ -18,8 +18,8 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from "svelte";
 
-    import Vditor from "vditor";
-    import "vditor/dist/index.css";
+    import Vditor from "@siyuan-community/vditor";
+    import "@siyuan-community/vditor/dist/index.css";
 
     import { merge } from "@workspace/utils/misc/merge";
     import { isLightTheme } from "@workspace/utils/siyuan/theme";
@@ -31,7 +31,7 @@
     export let baseURL: IVditorProps["baseURL"];
     export let rootURL: IVditorProps["rootURL"];
 
-    export let vditorID: IVditorProps["vditorID"] = `vditor-${new Date().toISOString()}`;
+    export let vditorID: IVditorProps["vditorID"] = `vditor-${Date.now()}`;
     export let options: IVditorProps["options"] = {};
     export let value: IVditorProps["value"] = "";
     export let theme: IVditorProps["theme"] = isLightTheme();
