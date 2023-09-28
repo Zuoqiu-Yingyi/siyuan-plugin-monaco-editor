@@ -26,10 +26,12 @@ import {
 } from "@workspace/utils/env/native-front-end";
 
 import Vditor from "@/components/Vditor.svelte";
+import { Client } from "@siyuan-community/siyuan-sdk";
 
 const name = manifest.name;
 const baseURL = "./../libs/vditor";
 const rootURL = trimSuffix(location.pathname, `/plugins/${name}/iframes/vditor.html`);
+const src2url = new Map<string, string>(); // 将 src 目标映射为 blob URL
 
 var editor: InstanceType<typeof Vditor>; // 编辑器组件
 
@@ -46,15 +48,20 @@ const logger = new Logger(`${name}-vditor-${(() => {
     }
 })()}`);
 
+const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
+
 /* 创建新的编辑器 */
 editor = new Vditor({
     target: globalThis.document.body,
     props: {
         plugin: {
-            name: name,
+            name,
+            // TODO: 初始化 i18n
             i18n: undefined,
-            logger: logger,
+            logger,
+            client,
         },
+        src2url,
         baseURL,
         rootURL,
         debug: false,
@@ -63,3 +70,11 @@ editor = new Vditor({
 editor.$on("open-link", e => {
     logger.debug(e.detail);
 })
+
+globalThis.addEventListener("beforeunload", () => {
+    editor.$destroy();
+
+    for (const url of src2url.values()) {
+        URL.revokeObjectURL(url);
+    }
+});

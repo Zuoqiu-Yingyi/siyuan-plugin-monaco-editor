@@ -22,15 +22,19 @@
     import "@siyuan-community/vditor/dist/index.css";
 
     import { merge } from "@workspace/utils/misc/merge";
+    import { base64ToBlob } from "@workspace/utils/misc/dataurl";
     import { isLightTheme } from "@workspace/utils/siyuan/theme";
     import { CODE_THEME_SET } from "@/vditor/theme";
     import { mapLocaleVditor } from "@/utils/locale";
     import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
+    import { isStaticPathname } from "@workspace/utils/siyuan/url";
 
     export let plugin: IVditorProps["plugin"];
+    export let src2url: IVditorProps["src2url"];
     export let baseURL: IVditorProps["baseURL"];
     export let rootURL: IVditorProps["rootURL"];
 
+    export let path: IVditorProps["path"] = "";
     export let vditorID: IVditorProps["vditorID"] = `vditor-${Date.now()}`;
     export let options: IVditorProps["options"] = {};
     export let value: IVditorProps["value"] = "";
@@ -77,6 +81,114 @@
 
     function updateContent(markdown: string): void {
         vditor?.setValue(markdown);
+    }
+
+    enum RequestMode {
+        none,
+        getFile,
+        forwardProxy,
+    }
+
+    async function onerror(e: ErrorEvent): Promise<void> {
+        // plugin.logger.debug(e);
+        const target = e.target;
+
+        /* 资源文件目标重定向 */
+        if (target instanceof HTMLElement && ["img", "video", "audio", "source", "track"].includes(target.localName)) {
+            const element = target as HTMLImageElement & HTMLVideoElement & HTMLAudioElement & HTMLSourceElement & HTMLTrackElement;
+            const src = element.getAttribute("src") || element.getAttribute("srcset");
+            if (!src) return;
+
+            const object_url = src2url.get(src);
+            let source = src;
+
+            if (object_url) {
+                source = object_url;
+            } else {
+                let mode: RequestMode = RequestMode.none;
+
+                switch (true) {
+                    /* 相对路径 */
+                    case src.startsWith("./"):
+                    case src.startsWith("../"):
+                        mode = RequestMode.getFile;
+                        break;
+
+                    /* HTTP */
+                    case src.startsWith("//"):
+                        source = `https:${src}`;
+                    case src.startsWith("http://"):
+                    case src.startsWith("https://"):
+                        mode = RequestMode.forwardProxy;
+                        break;
+
+                    /* 相对于根目录 */
+                    case src.startsWith("/"):
+                        return;
+
+                    /* 思源静态文件服务 */
+                    case isStaticPathname(src):
+                        source = `${rootURL}/${src}`;
+                        break;
+
+                    /* 其他 */
+                    default:
+                        return;
+                }
+
+                switch (mode) {
+                    case RequestMode.getFile:
+                        try {
+                            const blob = await plugin.client.getFile({ path: `${path}/${source}` }, "blob");
+                            const object_url = URL.createObjectURL(blob);
+                            src2url.set(src, object_url);
+                            source = object_url;
+                            break;
+                        } catch (error) {
+                            return;
+                        }
+                    case RequestMode.forwardProxy:
+                        try {
+                            const response = await plugin.client.forwardProxy({
+                                url: source,
+                                headers: [],
+                                responseEncoding: "base64",
+                            });
+                            const blob = base64ToBlob(response.data.body, response.data.contentType);
+                            const object_url = URL.createObjectURL(blob);
+                            src2url.set(src, object_url);
+                            source = object_url;
+                            break;
+                        } catch (error) {
+                            return;
+                        }
+
+                    case RequestMode.none:
+                    default:
+                        break;
+                }
+            }
+
+            if (element.src) {
+                element.src = source;
+            } else {
+                element.srcset = source;
+            }
+        }
+    }
+
+    function loadVditor(element?: HTMLElement, options?: IOptions): void {
+        if (element) {
+            try {
+                /**
+                 * 可能出现 `Uncaught TypeError: this.vditor is undefined`
+                 */
+                vditor?.destroy();
+            } catch (error) {
+            } finally {
+                vditor = new Vditor(element, options);
+            }
+        }
     }
 
     $: {
@@ -638,7 +750,7 @@
                  * @param elemeent <div class="vditor-preview">...</div>
                  */
                 parse(element: HTMLElement): void {
-                    plugin.logger.debug(element);
+                    // plugin.logger.debug(element);
                     // <div class="vditor-preview">...</div>
                 },
 
@@ -731,9 +843,10 @@
 
                 /**
                  * 图片预览处理
+                 * 双击图片进行预览模式
                  */
                 preview(bom: Element): void {
-                    // TODO: 将无法直接访问的路径转换为 dataURL
+                    plugin.logger.debug(bom);
                 },
             },
 
@@ -886,9 +999,13 @@
         },
         options,
     );
+
+    $: loadVditor(vditorElement, mergedOptions);
+
     onMount(() => {
         // vditor = new Vditor(vditorID);
-        vditor = new Vditor(vditorElement, mergedOptions);
+        vditorElement.addEventListener("error", onerror, true);
+        loadVditor(vditorElement, mergedOptions);
     });
 </script>
 

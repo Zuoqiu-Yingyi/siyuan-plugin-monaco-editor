@@ -35,7 +35,7 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
-import { getBlockID, getHistoryCreated, getHistoryPath, getShorthandID, getSnapshotIDs, getSnippetID } from "@workspace/utils/siyuan/dom";
+import { getNodeID, getHistoryCreated, getHistoryPath, getShorthandID, getSnapshotIDs, getSnippetID, isSiyuanProtyleWysiwyg } from "@workspace/utils/siyuan/dom";
 import { isStaticPathname, isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
 import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
@@ -720,7 +720,14 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected readonly clickEditorContentEventListener = (e: IClickEditorContentEvent) => {
         // this.logger.debug(e);
         // this.logger.debug(this.dock);
-        const block_id = getBlockID(e.detail.event);
+
+        var block_id: string | void;
+        if (isSiyuanProtyleWysiwyg(e.detail.event.target)) { // 文档块
+            block_id = e.detail.protyle.block.rootID;
+        }
+        else {
+            block_id = getNodeID(e.detail.event);
+        }
         if (block_id) {
             this.updateDockEditor(block_id);
         }

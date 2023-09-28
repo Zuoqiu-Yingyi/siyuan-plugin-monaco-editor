@@ -15,19 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/// <reference types="vditor/dist/types" />
-import type { IPlugin } from "./editor";
-
+/// <reference types="@siyuan-community/vditor/dist/types" />
+import type MonacoEditorPlugin from "@/index";
 export {
     IOptions,
 }
 
+export type IPlugin = Pick<
+    MonacoEditorPlugin,
+    "name" | "i18n" | "logger" | "client",
+>;
+
 /* Vditor 组件配置项 */
 export interface IVditorProps {
     plugin: IPlugin; // 插件接口
+    src2url: Map<string, string>; // src -> blob URL
     baseURL: string; // vditor 静态资源文件目录
     rootURL: string; // 思源服务根目录
 
+    path: string; // 当前文件相对于思源工作空间根目录的路径 (无末尾的 /)
     vditorID: string; // ID
     options: IOptions; // 配置选项
     value: string; // 编辑器内容
@@ -44,5 +50,8 @@ export interface IVditorEvents {
         title?: string; // 超链接标题
         target?: string; // 超链接打开方式
         anchor?: string; // 超链接锚文本
+    };
+    "update": {
+        markdown: string; // Markdown 文本
     };
 }
