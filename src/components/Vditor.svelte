@@ -17,6 +17,7 @@
 
 <script lang="ts">
     import { createEventDispatcher, onMount } from "svelte";
+    import type sdk from "@siyuan-community/siyuan-sdk";
 
     import Vditor from "@siyuan-community/vditor";
     import "@siyuan-community/vditor/dist/index.css";
@@ -24,10 +25,11 @@
     import { merge } from "@workspace/utils/misc/merge";
     import { base64ToBlob } from "@workspace/utils/misc/dataurl";
     import { isLightTheme } from "@workspace/utils/siyuan/theme";
+    import { isStaticPathname } from "@workspace/utils/siyuan/url";
+    import { extname } from "@workspace/utils/path/browserify";
     import { CODE_THEME_SET } from "@/vditor/theme";
     import { mapLocaleVditor } from "@/utils/locale";
     import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
-    import { isStaticPathname } from "@workspace/utils/siyuan/url";
 
     export let plugin: IVditorProps["plugin"];
     export let src2url: IVditorProps["src2url"];
@@ -36,6 +38,7 @@
 
     export let path: IVditorProps["path"] = "";
     export let vditorID: IVditorProps["vditorID"] = `vditor-${Date.now()}`;
+    export let assetsDirPath: IVditorProps["assetsDirPath"] = "/assets/vditor/";
     export let options: IVditorProps["options"] = {};
     export let value: IVditorProps["value"] = "";
     export let theme: IVditorProps["theme"] = isLightTheme();
@@ -953,7 +956,161 @@
              * 文件上传
              * TODO: 自定义文件上传
              */
-            upload: {},
+            upload: {
+                /**
+                 * 上传 url
+                 */
+                url: `${rootURL}/api/asset/upload`,
+
+                /**
+                 * 上传文件最大 Byte
+                 * @default 10 * 1024 * 1024
+                 */
+                max: Infinity,
+
+                /**
+                 * 剪切板中包含图片地址时，使用此 url 重新上传
+                 */
+                // linkToImgUrl: "",
+
+                /**
+                 * CORS 上传验证，头为 X-Upload-Token
+                 */
+                // token: "",
+
+                /**
+                 * 文件上传类型，同 [input accept](https://www.w3schools.com/tags/att_input_accept.asp)
+                 */
+                // accept: "",
+
+                /**
+                 * 跨站点访问控制
+                 * @default false
+                 */
+                // withCredentials: false,
+
+                /**
+                 * 请求头设置
+                 */
+                // headers: {},
+
+                /**
+                 * 额外请求参数
+                 */
+                extraData: {
+                    assetsDirPath,
+                },
+
+                /**
+                 * 是否允许多文件上传
+                 * @default true
+                 */
+                // multiple: true,
+
+                /**
+                 * 上传字段名
+                 * @default "file[]"
+                 */
+                // fieldName: "file[]",
+
+                /**
+                 * 每次上传前都会重新设置请求头
+                 */
+                // setHeaders() {},
+
+                /**
+                 * 第 1 步
+                 * 将上传的文件处理后再返回
+                 */
+                file(files: File[]): File[] | Promise<File[]> {
+                    plugin.logger.debugs("upload.file", files);
+                    return files;
+                },
+
+                /**
+                 * 第 2 步
+                 * 校验，成功时返回 true 否则返回错误信息
+                 */
+                validate(files: File[]): string | boolean {
+                    plugin.logger.debugs("upload.validate", files);
+                    return true;
+                },
+
+                /**
+                 * 第 3 步
+                 * 文件名安全处理。 默认值: name => name.replace(/\W/g, '')
+                 * @param name 不包含扩展名的文件名 (主文件名)
+                 */
+                filename(name: string): string {
+                    plugin.logger.debugs("upload.filename", name);
+                    return name;
+                },
+
+                /**
+                 * 第 4 步
+                 * 上传成功回调
+                 * @param msg 服务端返回的数据
+                 */
+                success(editor: HTMLPreElement, msg: string): void {
+                    plugin.logger.debugs("upload.success", editor, msg);
+                    try {
+                        const response = JSON.parse(msg) as sdk.types.kernel.api.asset.upload.IResponse;
+                        const succMap = response.data.succMap;
+                        const markdowns: string[] = [];
+                        for (const [name, path] of Object.entries(succMap)) {
+                            switch (extname(path)) {
+                                // TODO: 根据扩展名插入不同的 markdown (web 图片/web 视频/web 音频/HTML 文件/PDF 文件/其他文件)
+                                default:
+                                    break;
+                            }
+                        }
+                        vditor.insertValue(markdowns.join("\n"));
+                    } catch (error) {
+                        plugin.logger.warn(error);
+                    }
+                },
+
+                /**
+                 * 第 4 步
+                 * 上传失败回调
+                 * @param msg 服务端返回的数据
+                 */
+                error(msg: string): void {
+                    plugin.logger.debugs("upload.error", msg);
+                },
+
+                /**
+                 * 自定义上传，当发生错误时返回错误信息
+                 * 覆盖默认的上传行为
+                 */
+                // handler(files: File[]): string | null | Promise<string> | Promise<null> {
+                //     plugin.logger.debugs("upload.handler", files);
+                //     return null;
+                // },
+
+                /**
+                 * 对服务端返回的数据进行转换，以满足内置的数据结构
+                 */
+                format(files: File[], responseText: string): string {
+                    plugin.logger.debugs("upload.format", files, responseText);
+                    return responseText;
+                },
+
+                /**
+                 * 对服务端返回的数据进行转换(对应linkToImgUrl)，以满足内置的数据结构
+                 */
+                linkToImgFormat(responseText: string): string {
+                    plugin.logger.debugs("upload.linkToImgFormat", responseText);
+                    return responseText;
+                },
+
+                /**
+                 * 图片地址上传后的回调
+                 */
+                linkToImgCallback(responseText: string): void {
+                    plugin.logger.debugs("upload.linkToImgCallback", responseText);
+                },
+            },
 
             /**
              * 预览元素的 className
