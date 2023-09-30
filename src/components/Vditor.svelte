@@ -23,10 +23,12 @@
     import "@siyuan-community/vditor/dist/index.css";
 
     import { merge } from "@workspace/utils/misc/merge";
+    import { lookup } from "@workspace/utils/file/browserify-mime";
+    import { escapeHTML } from "@workspace/utils/misc/html";
+    import { escapeMark } from "@workspace/utils/markdown/mark";
     import { base64ToBlob } from "@workspace/utils/misc/dataurl";
     import { isLightTheme } from "@workspace/utils/siyuan/theme";
     import { isStaticPathname } from "@workspace/utils/siyuan/url";
-    import { extname } from "@workspace/utils/path/browserify";
     import { CODE_THEME_SET } from "@/vditor/theme";
     import { mapLocaleVditor } from "@/utils/locale";
     import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
@@ -1023,7 +1025,7 @@
                  * 将上传的文件处理后再返回
                  */
                 file(files: File[]): File[] | Promise<File[]> {
-                    plugin.logger.debugs("upload.file", files);
+                    // plugin.logger.debugs("upload.file", files);
                     return files;
                 },
 
@@ -1032,7 +1034,7 @@
                  * 校验，成功时返回 true 否则返回错误信息
                  */
                 validate(files: File[]): string | boolean {
-                    plugin.logger.debugs("upload.validate", files);
+                    // plugin.logger.debugs("upload.validate", files);
                     return true;
                 },
 
@@ -1042,7 +1044,7 @@
                  * @param name 不包含扩展名的文件名 (主文件名)
                  */
                 filename(name: string): string {
-                    plugin.logger.debugs("upload.filename", name);
+                    // plugin.logger.debugs("upload.filename", name);
                     return name;
                 },
 
@@ -1052,18 +1054,35 @@
                  * @param msg 服务端返回的数据
                  */
                 success(editor: HTMLPreElement, msg: string): void {
-                    plugin.logger.debugs("upload.success", editor, msg);
+                    // plugin.logger.debugs("upload.success", editor, msg);
                     try {
                         const response = JSON.parse(msg) as sdk.types.kernel.api.asset.upload.IResponse;
                         const succMap = response.data.succMap;
                         const markdowns: string[] = [];
                         for (const [name, path] of Object.entries(succMap)) {
-                            switch (extname(path)) {
-                                // TODO: 根据扩展名插入不同的 markdown (web 图片/web 视频/web 音频/HTML 文件/PDF 文件/其他文件)
-                                default:
-                                    break;
+                            const mime = lookup(name);
+                            const name_escaped_mark = escapeMark(name);
+                            const path_escaped_html = escapeHTML(path);
+                            const path_escaped_uri = encodeURI(path);
+
+                            if (mime) {
+                                switch (true) {
+                                    case mime.startsWith("image/"):
+                                        markdowns.push(`![${name_escaped_mark}](${path_escaped_uri})`);
+                                        continue;
+                                    case mime.startsWith("audio/"):
+                                        markdowns.push(`<audio controls="controls" src="${path_escaped_html}"/>`)
+                                        continue;
+                                    case mime.startsWith("video/"):
+                                        markdowns.push(`<video controls="controls" src="${path_escaped_html}"/>`)
+                                        continue;
+                                    default:
+                                        break;
+                                }
                             }
+                            markdowns.push(`[${name_escaped_mark}](${path_escaped_uri})`);
                         }
+                        // plugin.logger.debug(markdowns);
                         vditor.insertValue(markdowns.join("\n"));
                     } catch (error) {
                         plugin.logger.warn(error);
@@ -1076,7 +1095,7 @@
                  * @param msg 服务端返回的数据
                  */
                 error(msg: string): void {
-                    plugin.logger.debugs("upload.error", msg);
+                    plugin.logger.warns("upload.error", msg);
                 },
 
                 /**
@@ -1092,7 +1111,7 @@
                  * 对服务端返回的数据进行转换，以满足内置的数据结构
                  */
                 format(files: File[], responseText: string): string {
-                    plugin.logger.debugs("upload.format", files, responseText);
+                    // plugin.logger.debugs("upload.format", files, responseText);
                     return responseText;
                 },
 
@@ -1100,7 +1119,7 @@
                  * 对服务端返回的数据进行转换(对应linkToImgUrl)，以满足内置的数据结构
                  */
                 linkToImgFormat(responseText: string): string {
-                    plugin.logger.debugs("upload.linkToImgFormat", responseText);
+                    // plugin.logger.debugs("upload.linkToImgFormat", responseText);
                     return responseText;
                 },
 
@@ -1108,7 +1127,7 @@
                  * 图片地址上传后的回调
                  */
                 linkToImgCallback(responseText: string): void {
-                    plugin.logger.debugs("upload.linkToImgCallback", responseText);
+                    // plugin.logger.debugs("upload.linkToImgCallback", responseText);
                 },
             },
 

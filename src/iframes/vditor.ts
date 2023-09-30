@@ -64,7 +64,7 @@ editor = new Vditor({
         src2url,
         baseURL,
         rootURL,
-        debug: false,
+        debug: true,
     },
 });
 editor.$on("open-link", e => {
