@@ -16,7 +16,7 @@
 -->
 
 <script lang="ts">
-    import { createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import type sdk from "@siyuan-community/siyuan-sdk";
 
     import Vditor from "@siyuan-community/vditor";
@@ -25,6 +25,7 @@
 
     import { merge } from "@workspace/utils/misc/merge";
     import { lookup } from "@workspace/utils/file/browserify-mime";
+    import { join, parse } from "@workspace/utils/path/browserify";
     import { escapeHTML } from "@workspace/utils/misc/html";
     import { escapeMark } from "@workspace/utils/markdown/mark";
     import { base64ToBlob } from "@workspace/utils/misc/dataurl";
@@ -33,6 +34,9 @@
     import { CODE_THEME_SET } from "@/vditor/theme";
     import { mapLocaleVditor } from "@/utils/locale";
     import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
+    import { AssetsUploadMode } from "@/vditor/asset";
+    import { isValidName } from "@workspace/utils/file/filename";
+    import { trimPrefix } from "@workspace/utils/misc/string";
 
     export let plugin: IVditorProps["plugin"];
     export let src2url: IVditorProps["src2url"];
@@ -42,6 +46,7 @@
     export let path: IVditorProps["path"] = "/";
     export let vditorID: IVditorProps["vditorID"] = `vditor-${Date.now()}`;
     export let assetsDirPath: IVditorProps["assetsDirPath"] = "/assets/vditor/";
+    export let assetsUploadMode: IVditorProps["assetsUploadMode"] = AssetsUploadMode.assets;
     export let options: IVditorProps["options"] = {};
     export let value: IVditorProps["value"] = "";
     export let theme: IVditorProps["theme"] = isLightTheme();
@@ -54,6 +59,8 @@
     let contentTheme: "light" | "dark" | string;
     let codeTheme: string;
     let vditor: InstanceType<typeof Vditor>;
+
+    $: pathInfo = parse(path); // 当前文件路径信息
 
     const dispatcher = createEventDispatcher<IVditorEvents>();
 
@@ -89,6 +96,94 @@
         vditor?.setValue(markdown);
     }
 
+    function assetsUploadCallback(entries: [string, string][]): void {
+        if (entries.length <= 0) return;
+
+        const markdowns: string[] = [];
+        for (const [name, path] of entries) {
+            const mime = lookup(name);
+            const name_escaped_mark = escapeMark(name);
+            const path_escaped_html = escapeHTML(path);
+            const path_escaped_uri = encodeURI(path);
+
+            if (mime) {
+                switch (true) {
+                    case mime.startsWith("image/"):
+                        markdowns.push(`![${name_escaped_mark}](${path_escaped_uri})`);
+                        continue;
+                    case mime.startsWith("audio/"):
+                        markdowns.push(`<audio controls="controls" src="${path_escaped_html}"/>`);
+                        continue;
+                    case mime.startsWith("video/"):
+                        markdowns.push(`<video controls="controls" src="${path_escaped_html}"/>`);
+                        continue;
+                    default:
+                        break;
+                }
+            }
+            markdowns.push(`[${name_escaped_mark}](${path_escaped_uri})`);
+        }
+
+        if (vditor && markdowns.length > 0) {
+            // plugin.logger.debug(markdowns);
+            vditor.insertValue(markdowns.join("\n"));
+        }
+    }
+
+    async function assetsUploadHander(files: File[], relative: boolean): Promise<string | null> {
+        const asset_directory_path = relative //
+            ? join(pathInfo.dir, assetsDirPath) //
+            : assetsDirPath;
+        const entries: [string, string][] = [];
+        const assets = files
+            .filter(file => isValidName(file.name))
+            .map(file => ({
+                file,
+                name: file.name,
+                path: relative //
+                    ? `./${join(assetsDirPath, file.name)}` //
+                    : `/${join(trimPrefix(assetsDirPath, "/"), file.name)}`,
+                fullpath: join(asset_directory_path, file.name),
+            }));
+
+        const result = await Promise.allSettled(
+            assets.map(asset =>
+                plugin.client.putFile({
+                    path: asset.fullpath,
+                    file: asset.file,
+                }),
+            ),
+        );
+        result.forEach((promise, index) => {
+            if (promise.status === "fulfilled") {
+                const asset = assets[index];
+                entries.push([asset.name, asset.path]);
+            }
+        });
+        assetsUploadCallback(entries);
+        return null;
+    }
+
+    function updateAssetsUploadMode(assetsUploadMode_: AssetsUploadMode, options: IOptions | undefined = vditor?.vditor?.options): void {
+        if (options?.upload) {
+            switch (assetsUploadMode_) {
+                case AssetsUploadMode.assets:
+                    options.upload.handler = undefined;
+                    break;
+
+                case AssetsUploadMode.relative:
+                    options.upload.handler = (files: File[]) => assetsUploadHander(files, true);
+                    break;
+
+                case AssetsUploadMode.absolute:
+                    options.upload.handler = (files: File[]) => assetsUploadHander(files, false);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     enum RequestMode {
         none,
         getFile,
@@ -117,6 +212,7 @@
                     /* 相对路径 */
                     case src.startsWith("./"):
                     case src.startsWith("../"):
+                        source = join(pathInfo.dir, src);
                         mode = RequestMode.getFile;
                         break;
 
@@ -128,9 +224,10 @@
                         mode = RequestMode.forwardProxy;
                         break;
 
-                    /* 相对于根目录 */
+                    /* 相对于工作空间根目录 */
                     case src.startsWith("/"):
-                        return;
+                        mode = RequestMode.getFile;
+                        break;
 
                     /* 思源静态文件服务 */
                     case isStaticPathname(src):
@@ -145,7 +242,7 @@
                 switch (mode) {
                     case RequestMode.getFile:
                         try {
-                            const blob = await plugin.client.getFile({ path: `${path}/${source}` }, "blob");
+                            const blob = await plugin.client.getFile({ path: source }, "blob");
                             const object_url = URL.createObjectURL(blob);
                             src2url.set(src, object_url);
                             source = object_url;
@@ -192,6 +289,7 @@
                 vditor?.destroy();
             } catch (error) {
             } finally {
+                updateAssetsUploadMode(assetsUploadMode, options);
                 vditor = new Vditor(element, options);
             }
         }
@@ -206,6 +304,7 @@
     }
 
     $: updateContent(value);
+    $: updateAssetsUploadMode(assetsUploadMode);
     $: updateTheme(theme, true, codeBlockThemeLight, codeBlockThemeDark);
 
     $: mergedOptions = merge<IOptions>(
@@ -868,7 +967,7 @@
                  * 双击图片进行预览模式
                  */
                 preview(bom: Element): void {
-                    plugin.logger.debug(bom);
+                    // plugin.logger.debug(bom);
                 },
             },
 
@@ -1075,32 +1174,7 @@
                     try {
                         const response = JSON.parse(msg) as sdk.types.kernel.api.asset.upload.IResponse;
                         const succMap = response.data.succMap;
-                        const markdowns: string[] = [];
-                        for (const [name, path] of Object.entries(succMap)) {
-                            const mime = lookup(name);
-                            const name_escaped_mark = escapeMark(name);
-                            const path_escaped_html = escapeHTML(path);
-                            const path_escaped_uri = encodeURI(path);
-
-                            if (mime) {
-                                switch (true) {
-                                    case mime.startsWith("image/"):
-                                        markdowns.push(`![${name_escaped_mark}](${path_escaped_uri})`);
-                                        continue;
-                                    case mime.startsWith("audio/"):
-                                        markdowns.push(`<audio controls="controls" src="${path_escaped_html}"/>`);
-                                        continue;
-                                    case mime.startsWith("video/"):
-                                        markdowns.push(`<video controls="controls" src="${path_escaped_html}"/>`);
-                                        continue;
-                                    default:
-                                        break;
-                                }
-                            }
-                            markdowns.push(`[${name_escaped_mark}](${path_escaped_uri})`);
-                        }
-                        // plugin.logger.debug(markdowns);
-                        vditor.insertValue(markdowns.join("\n"));
+                        assetsUploadCallback(Object.entries(succMap));
                     } catch (error) {
                         plugin.logger.warn(error);
                     }

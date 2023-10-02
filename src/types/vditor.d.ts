@@ -17,6 +17,7 @@
 
 /// <reference types="@siyuan-community/vditor/dist/types" />
 import type MonacoEditorPlugin from "@/index";
+import type { AssetsUploadMode } from "@/vditor/asset";
 export {
     IOptions,
 }
@@ -36,6 +37,7 @@ export interface IVditorProps {
     path: string; // 当前文件相对于思源工作空间根目录的路径 (无末尾的 /)
     vditorID: string; // ID
     assetsDirPath: string; // 资源文件上传地址
+    assetsUploadMode: AssetsUploadMode; // 资源文件上传模式
     options: IOptions; // 配置选项
     value: string; // 编辑器内容
     theme: boolean; // 主题模式 (true: light; false: dark)

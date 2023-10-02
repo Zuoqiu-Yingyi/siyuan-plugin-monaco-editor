@@ -27,6 +27,7 @@ import {
 
 import Vditor from "@/components/Vditor.svelte";
 import { Client } from "@siyuan-community/siyuan-sdk";
+import { AssetsUploadMode } from "@/vditor/asset";
 
 const name = manifest.name;
 const baseURL = "./../libs/vditor";
@@ -61,9 +62,12 @@ vditor = new Vditor({
             logger,
             client,
         },
+        path: `/data${location.pathname}`,
         src2url,
         baseURL,
         rootURL,
+        assetsDirPath: "./../test/",
+        assetsUploadMode: AssetsUploadMode.relative,
         debug: true,
     },
 });
@@ -71,7 +75,7 @@ vditor.$on("open-link", e => {
     logger.debugs("open-link", e.detail);
 });
 vditor.$on("changed", e => {
-    logger.debugs("changed", e.detail);
+    // logger.debugs("changed", e.detail);
 });
 vditor.$on("save", e => {
     logger.debugs("save", e.detail);
