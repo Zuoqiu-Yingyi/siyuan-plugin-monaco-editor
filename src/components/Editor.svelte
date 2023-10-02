@@ -28,7 +28,7 @@
     import { mapLocale } from "@/utils/locale";
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
-    import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
+    import type { IEditorEvents, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
     import { Languages } from "@/editor/language";
 
     export let plugin: IEditorProps["plugin"];
@@ -59,7 +59,7 @@
     var inited = false; // 编辑器是否初始化完成
 
     const i18n = plugin.i18n;
-    const dispatch = createEventDispatcher<IEditorEvent>();
+    const dispatch = createEventDispatcher<IEditorEvents>();
 
     /* 设置保存功能 (闭包) */
     const setSaveAction = (() => {

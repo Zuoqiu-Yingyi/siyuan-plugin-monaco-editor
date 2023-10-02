@@ -52,7 +52,10 @@ export interface IVditorEvents {
         target?: string; // 超链接打开方式
         anchor?: string; // 超链接锚文本
     };
-    "update": {
+    "changed": {
+        markdown: string; // Markdown 文本
+    };
+    "save": {
         markdown: string; // Markdown 文本
     };
 }

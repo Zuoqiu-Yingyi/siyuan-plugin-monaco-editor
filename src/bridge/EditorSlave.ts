@@ -15,16 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-    FLAG_ELECTRON,
-    FLAG_IFRAME,
-    FLAG_POPUP,
-} from "@workspace/utils/env/native-front-end";
-
-import constants from "@/constants";
 import "@/styles/editor.less";
 
-import type { Electron } from "@workspace/types/electron";
 import type {
     IMessageEditorMasterEventMap,
     IMessageEditorReady,

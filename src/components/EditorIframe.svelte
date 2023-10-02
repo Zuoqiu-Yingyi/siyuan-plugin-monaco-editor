@@ -22,7 +22,7 @@
     import { EditorBridgeMaster } from "@/bridge/EditorMaster";
 
     import type MonacoEditorPlugin from "@/index";
-    import type { IEditorEvent, IEditorProps } from "@/types/editor";
+    import type { IEditorEvents, IEditorProps } from "@/types/editor";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
 
@@ -41,7 +41,7 @@
 
     var inited = false;
 
-    const dispatch = createEventDispatcher<IEditorEvent>();
+    const dispatch = createEventDispatcher<IEditorEvents>();
     const bridge = new EditorBridgeMaster(
         plugin, //
         EditorBridgeMaster.createChannel(true), //

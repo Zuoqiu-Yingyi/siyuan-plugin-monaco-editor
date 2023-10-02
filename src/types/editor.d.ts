@@ -72,7 +72,7 @@ export type IPlugin = Pick<
     "name" | "i18n" | "logger",
 >;
 
-export interface IEditorEvent {
+export interface IEditorEvents {
     changed: {
         value: string;
         event: Editor.IModelContentChangedEvent;

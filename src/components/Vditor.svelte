@@ -16,10 +16,11 @@
 -->
 
 <script lang="ts">
-    import { createEventDispatcher, onMount } from "svelte";
+    import { createEventDispatcher, onDestroy, onMount } from "svelte";
     import type sdk from "@siyuan-community/siyuan-sdk";
 
     import Vditor from "@siyuan-community/vditor";
+    import icon_save from "@/assets/icons/icon-save.svg?raw";
     import "@siyuan-community/vditor/dist/index.css";
 
     import { merge } from "@workspace/utils/misc/merge";
@@ -38,7 +39,7 @@
     export let baseURL: IVditorProps["baseURL"];
     export let rootURL: IVditorProps["rootURL"];
 
-    export let path: IVditorProps["path"] = "";
+    export let path: IVditorProps["path"] = "/";
     export let vditorID: IVditorProps["vditorID"] = `vditor-${Date.now()}`;
     export let assetsDirPath: IVditorProps["assetsDirPath"] = "/assets/vditor/";
     export let options: IVditorProps["options"] = {};
@@ -319,6 +320,19 @@
              */
             toolbar: [
                 {
+                    name: "save",
+                    // icon: "💾",
+                    icon: icon_save,
+                    hotkey: "⌘S",
+                    tip: plugin.i18n?.editor.action.save.label,
+                    tipPosition: "se",
+                    click(_e: Event, _vditor: IVditor): void {
+                        // plugin.logger.debugs("save.click", this, event, vditor);
+                        dispatcher("save", { markdown: vditor?.getValue() });
+                    },
+                },
+                "|",
+                {
                     name: "undo",
                     tipPosition: "se",
                 },
@@ -514,7 +528,7 @@
                  * - 绑定 HTMLElement 元素时必填
                  * - 绑定 HTMLElement ID 时选填
                  */
-                id: vditorID,
+                id: path,
 
                 /**
                  * 是否启用缓存
@@ -525,7 +539,10 @@
                 /**
                  * 缓存后的回调
                  */
-                // after(markdown: string): void { },
+                after(markdown: string): void {
+                    // plugin.logger.debugs("cache.after", markdown);
+                    dispatcher("changed", { markdown });
+                },
             },
 
             /**
@@ -1071,10 +1088,10 @@
                                         markdowns.push(`![${name_escaped_mark}](${path_escaped_uri})`);
                                         continue;
                                     case mime.startsWith("audio/"):
-                                        markdowns.push(`<audio controls="controls" src="${path_escaped_html}"/>`)
+                                        markdowns.push(`<audio controls="controls" src="${path_escaped_html}"/>`);
                                         continue;
                                     case mime.startsWith("video/"):
-                                        markdowns.push(`<video controls="controls" src="${path_escaped_html}"/>`)
+                                        markdowns.push(`<video controls="controls" src="${path_escaped_html}"/>`);
                                         continue;
                                     default:
                                         break;
