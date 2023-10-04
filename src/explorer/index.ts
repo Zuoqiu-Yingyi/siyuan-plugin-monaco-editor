@@ -313,7 +313,15 @@ export class Explorer implements ITree {
                         );
                     }
                     else {
-                        this.plugin.openWorkspaceFile(relative, text, icon, updatable);
+                        switch (true) {
+                            case relative.endsWith(".md"):
+                                this.plugin.openWorkspaceFile(relative, text, icon, updatable, this.plugin.config.open.markdown);
+                                break;
+
+                            default:
+                                this.plugin.openWorkspaceFile(relative, text, icon, updatable, this.plugin.config.open.default);
+                                break;
+                        }
                     }
                     break;
                 }

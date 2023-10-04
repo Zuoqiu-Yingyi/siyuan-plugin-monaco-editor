@@ -97,7 +97,7 @@
 
     /* 打开链接事件 */
     function openLink(e: ComponentEvents<VditorIframe>["open-link"]) {
-        plugin.openLink(e.detail.href);
+        plugin.openLinkEventHandler(e.detail);
     }
 </script>
 

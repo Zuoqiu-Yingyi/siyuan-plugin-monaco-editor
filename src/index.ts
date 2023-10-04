@@ -75,13 +75,14 @@ import type {
 import type { I18N } from "@/utils/i18n";
 import type { IDockData } from "./types/dock";
 import { trimPrefix } from "@workspace/utils/misc/string";
-import { OpenMode, OpenType } from "./utils/url";
+import { OpenMode, OpenScheme } from "./utils/url";
 import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
 import { basename, parse } from "@workspace/utils/path/browserify";
 import { showSaveDialog } from "@workspace/utils/electron/dialog";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
 import { showItemInFolder } from "@workspace/utils/electron/shell";
 import { VditorWindow } from "./vditor/window";
+import type { IVditorEvents } from "./types/vditor";
 
 declare var globalThis: ISiyuanGlobal;
 
@@ -488,6 +489,26 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     ): void {
         globalThis.open(url, target, features);
     }
+
+    /* 处理打开超链接事件 */
+    public openLinkEventHandler(data: IVditorEvents["open-link"]): void {
+        if (data.path.target) {
+            const title = data.title || data.anchor || data.href;
+            switch (true) {
+                case data.path.target.endsWith(".md"):
+                    this.openWorkspaceFile(data.path.target, title, "iconMarkdown", true, this.config.open.markdown);
+                    break;
+
+                default:
+                    this.openWorkspaceFile(data.path.target, title);
+                    break;
+            }
+        }
+        else {
+            this.openLink(data.href);
+        }
+    }
+
 
     /* 处理打开事件 */
     protected openEventHandler(e: MouseEvent) {
@@ -991,13 +1012,13 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         // this.logger.debug(e);
         const url = new URL(e.detail.url);
         if (url.pathname.startsWith(`//plugins/${this.name}/open/workspace/`)) { // 打开文件
-            const type = (url.searchParams.get("type") as OpenType | null);
+            const scheme = (url.searchParams.get("scheme") as OpenScheme | null);
             const mode = (url.searchParams.get("mode") as OpenMode | null);
             const relative = trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`);
 
-            switch (type) {
+            switch (scheme) {
                 default:
-                case OpenType.Editor: { // 文本编辑器
+                case OpenScheme.Editor: { // 文本编辑器
                     const custom = {
                         icon: "iconCode",
                         title: relative,
@@ -1069,7 +1090,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     }
                     break;
                 }
-                case OpenType.Vditor: { // Vditor 编辑器
+                case OpenScheme.Vditor: { // Vditor 编辑器
                     const custom = {
                         icon: "iconMarkdown",
                         title: relative,
@@ -1141,7 +1162,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     }
                     break;
                 }
-                case OpenType.Preview: { // 文件预览
+                case OpenScheme.Preview: { // 文件预览
                     if (isStaticWebFileServicePath(relative)) {
                         const pathname = workspacePath2StaticPathname(relative);
                         const custom = {
@@ -1559,17 +1580,19 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     /**
      * 打开工作空间目录下的文件
-     * @param path: 相对于工作空间目录的文件路径
-     * @param icon: 页签图标
-     * @param title: 页签标题
-     * @param updatable: 是否可更改
-     * @param options: 页签选项
+     * @param path 相对于工作空间目录的文件路径
+     * @param icon 页签图标
+     * @param title 页签标题
+     * @param updatable 是否可更改
+     * @param scheme 打开方案
+     * @param options 页签选项
      */
     public openWorkspaceFile(
         path: string,
         title: string,
         icon: string = "iconCode",
         updatable: boolean = true,
+        scheme: OpenScheme = this.config.open.default,
         options: {
             position?: "right" | "bottom",
             keepCursor?: boolean // 是否跳转到新 tab 上
@@ -1580,25 +1603,45 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             ? icon.substring(1)
             : icon; // 删除 # 前缀
 
+        const custom = (() => {
+            const facadeOptions = {
+                type: HandlerType.asset,
+                handler: {
+                    path,
+                    updatable,
+                },
+                breadcrumb: {
+                    path,
+                },
+            };
+            switch (scheme) {
+                default:
+                case OpenScheme.Editor:
+                    return {
+                        id: this.CUSTOM_TAB_ID_EDITOR,
+                        data: {
+                            options: this.config.editor.options,
+                            facadeOptions,
+                        },
+                    };
+
+                case OpenScheme.Vditor:
+                    return {
+                        id: this.CUSTOM_TAB_ID_VDITOR,
+                        data: {
+                            options: this.config.vditor.options,
+                            facadeOptions,
+                        },
+                    };
+            }
+        })()
+
         this.siyuan.openTab({
             app: this.app,
             custom: {
                 icon,
                 title,
-                id: this.CUSTOM_TAB_ID_EDITOR,
-                data: {
-                    options: this.config.editor.options,
-                    facadeOptions: {
-                        type: HandlerType.asset,
-                        handler: {
-                            path,
-                            updatable,
-                        },
-                        breadcrumb: {
-                            path,
-                        },
-                    },
-                },
+                ...custom,
             },
             ...options,
         });

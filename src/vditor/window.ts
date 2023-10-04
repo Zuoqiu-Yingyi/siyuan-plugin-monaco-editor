@@ -74,7 +74,7 @@ export class VditorWindow {
             handler.update?.(e.data.data.markdown);
         });
         this.bridge.addEventListener("vditor-open-link", e => {
-            this.plugin.openLink(e.data.data.href);
+            this.plugin.openLinkEventHandler(e.data.data);
         });
     }
 

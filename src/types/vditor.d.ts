@@ -51,6 +51,10 @@ export interface IVditorProps {
 /* Vditor 组件事件 */
 export interface IVditorEvents {
     "open-link": {
+        path: {
+            current: string; // 当前文件路径
+            target: string; // 目标文件路径
+        },
         href: string; // 超链接
         title?: string; // 超链接标题
         target?: string; // 超链接打开方式

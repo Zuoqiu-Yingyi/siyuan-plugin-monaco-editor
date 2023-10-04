@@ -66,7 +66,7 @@ import {
 import { showOpenDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
-import { OpenType } from "@/utils/url";
+import { OpenScheme } from "@/utils/url";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -565,9 +565,29 @@ export class ExplorerContextMenu {
                         folder: false,
                         file: true,
                     });
+                    
+                    if (isMarkdown) {
+                        url.searchParams.set("scheme", OpenScheme.Vditor);
+                        const href_vditor = url.href;
+                        /* 复制编辑超链接 */
+                        submenu.push({
+                            type: MenuItemType.Action,
+                            options: {
+                                icon: "iconEdit",
+                                label: `${this.i18n.menu.copyEditHyperlink.label} [Vditor]`,
+                                accelerator: escapeHTML(href_vditor),
+                                click: () => {
+                                    copyText(href_vditor);
+                                },
+                            },
+                            root: false,
+                            folder: false,
+                            file: true,
+                        });
+                    }
 
                     if (accessible) {
-                        url.searchParams.set("type", OpenType.Preview);
+                        url.searchParams.set("scheme", OpenScheme.Preview);
                         const href_preview = url.href;
 
                         /* 复制预览超链接 */

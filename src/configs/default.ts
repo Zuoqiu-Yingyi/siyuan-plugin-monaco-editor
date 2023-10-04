@@ -16,7 +16,7 @@
  */
 
 import type { IConfig, IMonacoEditorOptions } from "@/types/config";
-import { OpenType } from "@/utils/url";
+import { OpenScheme } from "@/utils/url";
 import { AssetsUploadMode } from "@/vditor/asset";
 import { MouseButton } from "@workspace/utils/shortcut";
 // import type { editor as Editor } from "monaco-editor";
@@ -128,10 +128,10 @@ export const DEFAULT_CONFIG: IConfig = {
                     delete: false,
                 },
             },
-            open: {
-                markdown: OpenType.Vditor,
-                default: OpenType.Editor,
-            },
         },
+    },
+    open: {
+        markdown: OpenScheme.Vditor,
+        default: OpenScheme.Editor,
     },
 };

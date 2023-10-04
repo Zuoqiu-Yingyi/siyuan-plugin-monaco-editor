@@ -29,7 +29,7 @@
     import { escapeHTML } from "@workspace/utils/misc/html";
     import { escapeMark } from "@workspace/utils/markdown/mark";
     import { base64ToBlob } from "@workspace/utils/misc/dataurl";
-    import { isStaticPathname } from "@workspace/utils/siyuan/url";
+    import { isStaticPathname, staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
     import { CODE_THEME_SET } from "@/vditor/theme";
     import { mapLocaleVditor } from "@/utils/locale";
     import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
@@ -37,6 +37,7 @@
     import { isValidName } from "@workspace/utils/file/filename";
     import { trimPrefix } from "@workspace/utils/misc/string";
     import { DEFAULT_VDITOR_PROPS } from "@/configs/vditor";
+    import { root } from "@workspace/components/siyuan/tree/file/Node.svelte";
 
     export let plugin: IVditorProps["plugin"];
     export let src2url: IVditorProps["src2url"];
@@ -210,6 +211,34 @@
         forwardProxy,
     }
 
+    /**
+     * 解析文件路径
+     * @param src 文件路径
+     * @returns 相对于工作空间根目录的文件路径
+     */
+    function parseFilePath(src: string): string {
+        switch (true) {
+            /* 相对路径 */
+            case src.startsWith("./"):
+            case src.startsWith("../"):
+                return join(pathInfo.dir, src);
+
+            case src.startsWith("//"):
+                return "";
+
+            /* 相对于工作空间根目录 */
+            case src.startsWith("/"):
+                return src;
+
+            /* 思源静态文件服务 */
+            case isStaticPathname(src):
+                return staticPathname2WorkspacePath(src);
+
+            default:
+                return "";
+        }
+    }
+
     async function onerror(e: ErrorEvent): Promise<void> {
         // plugin.logger.debug(e);
         const target = e.target;
@@ -229,13 +258,6 @@
                 let mode: RequestMode = RequestMode.none;
 
                 switch (true) {
-                    /* 相对路径 */
-                    case src.startsWith("./"):
-                    case src.startsWith("../"):
-                        source = join(pathInfo.dir, src);
-                        mode = RequestMode.getFile;
-                        break;
-
                     /* HTTP */
                     case src.startsWith("//"):
                         source = `https:${src}`;
@@ -244,14 +266,18 @@
                         mode = RequestMode.forwardProxy;
                         break;
 
+                    /* 相对路径 */
+                    case src.startsWith("./"):
+                    case src.startsWith("../"):
                     /* 相对于工作空间根目录 */
                     case src.startsWith("/"):
+                        source = parseFilePath(src);
                         mode = RequestMode.getFile;
                         break;
 
                     /* 思源静态文件服务 */
                     case isStaticPathname(src):
-                        source = `${rootURL}/${src}`;
+                        source = join(rootURL, src);
                         break;
 
                     /* 其他 */
@@ -667,7 +693,7 @@
                      * 缓存后的回调
                      */
                     after(markdown: string): void {
-                        plugin.logger.debugs("cache.after", markdown);
+                        // plugin.logger.debugs("cache.after", markdown);
 
                         if (changable) {
                             dispatcher("changed", { markdown });
@@ -954,6 +980,10 @@
                             case bom instanceof HTMLAnchorElement: {
                                 const link = bom as HTMLAnchorElement;
                                 dispatcher("open-link", {
+                                    path: {
+                                        current: path,
+                                        target: parseFilePath(link.href),
+                                    },
                                     href: link.href,
                                     title: link.title,
                                     anchor: link.textContent,
@@ -972,6 +1002,10 @@
                                     title = title.nextElementSibling as HTMLSpanElement;
                                 }
                                 dispatcher("open-link", {
+                                    path: {
+                                        current: path,
+                                        target: parseFilePath(link.textContent),
+                                    },
                                     href: link.textContent,
                                     title: title?.textContent,
                                     anchor: anchor?.textContent.slice(1, -1), // 移除首尾的 " 号

@@ -22,7 +22,7 @@ import type { IResourceOptionPermission } from "@/utils/permission";
 
 import type { IOptions as IVditorOptions } from "./vditor";
 import type { AssetsUploadMode } from "@/vditor/asset";
-import type { OpenType } from "@/utils/url";
+import type { OpenScheme } from "@/utils/url";
 
 
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
@@ -96,18 +96,11 @@ export interface IPermission {
     protected: IResourceOptionPermission; // 受保护的目录/文件权限
 }
 
-/* 文件资源管理器打开方案 */
-export interface IExplorerOpen {
-    markdown: OpenType;
-    default: OpenType;
-}
-
 /* 文件资源管理器面板设置项 */
 export interface IExplorerDock {
     enable: boolean; // 是否开启文件资源管理器
     safe: boolean; // 是否开启安全模式 (受保护模式)
     permission: IPermission; // 权限
-    open: IExplorerOpen; // 文件打开方案
 }
 
 /* 编辑器面板设置项 */
@@ -121,10 +114,17 @@ export interface IDock {
     editor: IEditorDock;
 }
 
+/* 文件打开方案 */
+export interface IOpen {
+    markdown: OpenScheme;
+    default: OpenScheme;
+}
+
 export interface IConfig {
     operates: IOperates;
     window: IWindow;
     editor: IEditor;
     vditor: IVditor,
     dock: IDock;
+    open: IOpen;
 }
