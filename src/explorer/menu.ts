@@ -214,6 +214,7 @@ export class ExplorerContextMenu {
             ? new Set(children.map(node => node.name))
             : null;
         const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
+        const isMarkdown = relative.endsWith(".md");
 
         const root = type === FileTreeNodeType.Root; // 是否为根目录
         const file = type === FileTreeNodeType.File; // 是否为文件
@@ -345,33 +346,54 @@ export class ExplorerContextMenu {
                     ResourceOption.edit,
                 );
 
-                const submenu: IMenuItem[] = [
-                    /* 在编辑器中打开 */
-                    {
+                const submenu: IMenuItem[] = [];
+
+                /* 在编辑器中打开 */
+                submenu.push({
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconCode",
+                        label: this.i18n.menu.openFileInEditor.label,
+                        accelerator: "Monaco Editor",
+                        submenu: this.plugin.buildOpenSubmenu(
+                            {
+                                type: HandlerType.asset,
+                                handler: {
+                                    path: relative,
+                                    updatable,
+                                },
+                                breadcrumb: {
+                                    path: relative,
+                                },
+                            },
+                            icon,
+                            text,
+                        ),
+                    },
+                    root: false,
+                    folder: false,
+                    file: true,
+                });
+
+                /* 在 Vditor 编辑器中打开 */
+                if (isMarkdown) {
+                    submenu.push({
                         type: MenuItemType.Action,
                         options: {
-                            icon: "iconCode",
+                            icon: "iconMarkdown",
                             label: this.i18n.menu.openFileInEditor.label,
-                            submenu: this.plugin.buildOpenSubmenu(
-                                {
-                                    type: HandlerType.asset,
-                                    handler: {
-                                        path: get(node.relative),
-                                        updatable,
-                                    },
-                                    breadcrumb: {
-                                        path: get(node.relative),
-                                    },
-                                },
+                            accelerator: "Vditor",
+                            submenu: this.plugin.buildOpenVditorSubmenu(
+                                relative,
                                 icon,
-                                text,
+                                name,
                             ),
                         },
                         root: false,
                         folder: false,
                         file: true,
-                    },
-                ];
+                    });
+                }
 
                 /**
                  * 在资源页签中打开

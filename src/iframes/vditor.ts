@@ -16,7 +16,6 @@
  */
 
 import "@/styles/vditor.less";
-import manifest from "~/public/plugin.json";
 import { Logger } from "@workspace/utils/logger";
 import { trimSuffix } from "@workspace/utils/misc/string";
 import {
@@ -26,65 +25,86 @@ import {
 } from "@workspace/utils/env/native-front-end";
 
 import Vditor from "@/components/Vditor.svelte";
+import { VditorBridgeSlave } from "@/bridge/VditorSlave";
 import { Client } from "@siyuan-community/siyuan-sdk";
-import { AssetsUploadMode } from "@/vditor/asset";
 
-const name = manifest.name;
 const baseURL = "./../libs/vditor";
-const rootURL = trimSuffix(location.pathname, `/plugins/${name}/iframes/vditor.html`);
 const src2url = new Map<string, string>(); // 将 src 目标映射为 blob URL
 
 var vditor: InstanceType<typeof Vditor>; // 编辑器组件
+const bridge = new VditorBridgeSlave(
+    () => {
+        /* 编辑器初始化 */
+        bridge.addEventListener(
+            "vditor-init",
+            e => {
+                const { data } = e.data;
+                const rootURL = trimSuffix(location.pathname, `/plugins/${data.name}/iframes/vditor.html`);
+                const logger = new Logger(`${data.name}-vditor-${(() => {
+                    switch (true) {
+                        case FLAG_ELECTRON:
+                            return "window";
+                        case FLAG_IFRAME:
+                            return "iframe";
+                        case FLAG_POPUP:
+                            return "popup";
+                        default:
+                            return "unknow";
+                    }
+                })()}`);
 
-const logger = new Logger(`${name}-vditor-${(() => {
-    switch (true) {
-        case FLAG_ELECTRON:
-            return "window";
-        case FLAG_IFRAME:
-            return "iframe";
-        case FLAG_POPUP:
-            return "popup";
-        default:
-            return "unknow";
-    }
-})()}`);
+                const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
 
-const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
+                /* 编辑器已存在则销毁原编辑器 */
+                if (vditor) {
+                    vditor.$destroy();
+                }
 
-/* 创建新的编辑器 */
-vditor = new Vditor({
-    target: globalThis.document.body,
-    props: {
-        plugin: {
-            name,
-            // TODO: 初始化 i18n
-            i18n: undefined,
-            logger,
-            client,
-        },
-        path: `/data${location.pathname}`,
-        src2url,
-        baseURL,
-        rootURL,
-        assetsDirPath: "./../test/",
-        assetsUploadMode: AssetsUploadMode.relative,
-        debug: true,
+                /* 创建新的编辑器 */
+                vditor = new Vditor({
+                    target: globalThis.document.body,
+                    props: {
+                        plugin: {
+                            name: data.name,
+                            i18n: data.i18n,
+                            logger,
+                            client,
+                        },
+                        src2url,
+                        baseURL,
+                        rootURL,
+
+                        path: data.path,
+                        vditorID: data.vditorID,
+                        assetsDirPath: data.assetsDirPath,
+                        assetsUploadMode: data.assetsUploadMode,
+                        options: data.options,
+                        value: data.value,
+                        theme: data.theme,
+                        codeBlockThemeLight: data.codeBlockThemeLight,
+                        codeBlockThemeDark: data.codeBlockThemeDark,
+                        debug: data.debug,
+                    },
+                });
+
+                /* 监听更改与保存事件 */
+                vditor.$on("changed", e => bridge.changed(e.detail));
+                vditor.$on("save", e => bridge.save(e.detail));
+                vditor.$on("open-link", e => bridge.openLink(e.detail));
+            },
+        );
+
+        /* 更改编辑器配置 */
+        bridge.addEventListener(
+            "vditor-set",
+            e => {
+                const { data } = e.data;
+
+                if (vditor) {
+                    vditor.$set(data);
+                }
+            },
+        );
+        bridge.ready();
     },
-});
-vditor.$on("open-link", e => {
-    logger.debugs("open-link", e.detail);
-});
-vditor.$on("changed", e => {
-    // logger.debugs("changed", e.detail);
-});
-vditor.$on("save", e => {
-    logger.debugs("save", e.detail);
-});
-
-globalThis.addEventListener("beforeunload", () => {
-    vditor.$destroy();
-
-    for (const url of src2url.values()) {
-        URL.revokeObjectURL(url);
-    }
-});
+);

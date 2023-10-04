@@ -79,12 +79,16 @@ export interface IMessageVditorInit extends IMessage {
         i18n: I18N; // 插件国际化字段
 
         path?: IVditorProps["path"];
+        vditorID?: IVditorProps["vditorID"];
         assetsDirPath?: IVditorProps["assetsDirPath"];
+        assetsUploadMode?: IVditorProps["assetsUploadMode"];
         options?: IVditorProps["options"];
         value?: IVditorProps["value"];
         theme?: IVditorProps["theme"];
         codeBlockThemeLight?: IVditorProps["codeBlockThemeLight"];
         codeBlockThemeDark?: IVditorProps["codeBlockThemeDark"];
+        updatable?: IVditorProps["updatable"];
+        changable?: IVditorProps["changable"];
         debug?: IVditorProps["debug"];
     };
 }

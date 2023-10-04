@@ -16,6 +16,8 @@
  */
 
 import type { IConfig, IMonacoEditorOptions } from "@/types/config";
+import { OpenType } from "@/utils/url";
+import { AssetsUploadMode } from "@/vditor/asset";
 import { MouseButton } from "@workspace/utils/shortcut";
 // import type { editor as Editor } from "monaco-editor";
 
@@ -98,6 +100,11 @@ export const DEFAULT_CONFIG: IConfig = {
             wordWrap: 'off', // 是否自动换行 "on" | "off" | "wordWrapColumn" | "bounded"
         },
     },
+    vditor: {
+        options: {},
+        assetsDirPath: "/assets/vditor/",
+        assetsUploadMode: AssetsUploadMode.assets,
+    },
     dock: {
         editor: {
             enable: true,
@@ -120,6 +127,10 @@ export const DEFAULT_CONFIG: IConfig = {
                     rename: false,
                     delete: false,
                 },
+            },
+            open: {
+                markdown: OpenType.Vditor,
+                default: OpenType.Editor,
             },
         },
     },

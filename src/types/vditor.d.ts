@@ -43,6 +43,8 @@ export interface IVditorProps {
     theme: boolean; // 主题模式 (true: light; false: dark)
     codeBlockThemeLight: string; // 代码主题模式 (明亮)
     codeBlockThemeDark: string; // 代码主题模式 (黑暗)
+    updatable: boolean; // 内容是否可更改
+    changable: boolean; // 是否在内容更改时派发 changed 事件
     debug: boolean; // 是否开启调试模式
 }
 

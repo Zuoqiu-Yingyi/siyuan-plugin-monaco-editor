@@ -20,6 +20,11 @@ import type { Electron } from "@workspace/types/electron";
 import type { IMouseStatus } from "@workspace/utils/shortcut";
 import type { IResourceOptionPermission } from "@/utils/permission";
 
+import type { IOptions as IVditorOptions } from "./vditor";
+import type { AssetsUploadMode } from "@/vditor/asset";
+import type { OpenType } from "@/utils/url";
+
+
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
 
 /* 鼠标操作 */
@@ -58,6 +63,12 @@ export interface IEditor {
     options: IEditorOptions;
 }
 
+export interface IVditor {
+    options: IVditorOptions;
+    assetsDirPath: string; // 资源文件路径
+    assetsUploadMode: AssetsUploadMode; // 资源上传模式
+}
+
 export interface IEditorOptions extends IMonacoEditorOptions {
     // autoClosingBrackets: 'languageDefined', // 是否自动添加后括号(包括中括号)
     // autoClosingDelete: 'languageDefined', // 是否自动删除后括号(包括中括号)
@@ -85,11 +96,18 @@ export interface IPermission {
     protected: IResourceOptionPermission; // 受保护的目录/文件权限
 }
 
+/* 文件资源管理器打开方案 */
+export interface IExplorerOpen {
+    markdown: OpenType;
+    default: OpenType;
+}
+
 /* 文件资源管理器面板设置项 */
 export interface IExplorerDock {
     enable: boolean; // 是否开启文件资源管理器
     safe: boolean; // 是否开启安全模式 (受保护模式)
     permission: IPermission; // 权限
+    open: IExplorerOpen; // 文件打开方案
 }
 
 /* 编辑器面板设置项 */
@@ -107,5 +125,6 @@ export interface IConfig {
     operates: IOperates;
     window: IWindow;
     editor: IEditor;
+    vditor: IVditor,
     dock: IDock;
 }

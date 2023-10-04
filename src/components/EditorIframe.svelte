@@ -112,7 +112,7 @@
  -->
 <iframe
     use:init
-    title={plugin.i18n.displayName}
+    title={plugin.displayName}
     class="fn__flex-1 editor"
 />
 

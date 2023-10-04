@@ -46,6 +46,7 @@ import { isBinaryPath } from "@workspace/utils/file/binary";
 
 /* 组件 */
 import EditorTab from "./components/EditorTab.svelte";
+import VditorTab from "./components/VditorTab.svelte";
 import PreviewTab from "./components/PreviewTab.svelte";
 import EditorDock from "./components/EditorDock.svelte";
 import ExplorerDock from "./components/ExplorerDock.svelte";
@@ -59,11 +60,14 @@ import {
 } from "./configs/default";
 import { Inline, Language } from "./handlers/block";
 import { EditorWindow } from "./editor/window";
-import { HandlerType, type IFacadeOptions } from "./facades/facade";
+import { HandlerType, type IFacadeAssetOptions, type IFacadeOptions } from "./facades/facade";
 
 /* 类型 */
 import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginEvent } from "@workspace/types/siyuan/events";
-import type { BlockID } from "@workspace/types/siyuan";
+import type {
+    BlockID,
+    ISiyuanGlobal,
+} from "@workspace/types/siyuan";
 
 import type {
     IConfig, IEditorOptions,
@@ -77,9 +81,16 @@ import { basename, parse } from "@workspace/utils/path/browserify";
 import { showSaveDialog } from "@workspace/utils/electron/dialog";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
 import { showItemInFolder } from "@workspace/utils/electron/shell";
+import { VditorWindow } from "./vditor/window";
+
+declare var globalThis: ISiyuanGlobal;
 
 export interface IEditorTab extends siyuan.ITabModel {
     component?: InstanceType<typeof EditorTab>;
+}
+
+export interface IVditorTab extends siyuan.ITabModel {
+    component?: InstanceType<typeof VditorTab>;
 }
 
 export interface IPreviewTab extends siyuan.ITabModel {
@@ -90,6 +101,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     public static readonly GLOBAL_CONFIG_NAME = "global-config";
     public static readonly CUSTOM_MENU_NAME = "plugin-monaco-editor-custom-menu";
     public static readonly CUSTOM_TAB_TYPE_EDITOR = "-editor-tab";
+    public static readonly CUSTOM_TAB_TYPE_VDITOR = "-vditor-tab";
     public static readonly CUSTOM_TAB_TYPE_PREVIEW = "-preview-tab";
 
     declare public readonly i18n: I18N;
@@ -103,9 +115,11 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     protected readonly EDITOR_URL: URL;
     protected readonly SETTINGS_DIALOG_ID: string;
     protected readonly CUSTOM_TAB_ID_EDITOR: string;
+    protected readonly CUSTOM_TAB_ID_VDITOR: string;
     protected readonly CUSTOM_TAB_ID_PREVIEW: string;
 
     protected readonly editorTab: ReturnType<siyuan.Plugin["addTab"]>;
+    protected readonly vditorTab: ReturnType<siyuan.Plugin["addTab"]>;
     protected readonly previewTab: ReturnType<siyuan.Plugin["addTab"]>;
 
     protected editorDock: {
@@ -132,6 +146,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.EDITOR_URL = new URL(`${globalThis.document.baseURI}plugins/${this.name}/editor`);
         this.SETTINGS_DIALOG_ID = `${this.name}-settings-dialog`;
         this.CUSTOM_TAB_ID_EDITOR = `${this.name}${MonacoEditorPlugin.CUSTOM_TAB_TYPE_EDITOR}`;
+        this.CUSTOM_TAB_ID_VDITOR = `${this.name}${MonacoEditorPlugin.CUSTOM_TAB_TYPE_VDITOR}`;
         this.CUSTOM_TAB_ID_PREVIEW = `${this.name}${MonacoEditorPlugin.CUSTOM_TAB_TYPE_PREVIEW}`;
 
         const plugin = this;
@@ -164,6 +179,29 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 // plugin.logger.debug("tab-destroy");
 
                 const tab: IEditorTab = this;
+                tab.component?.$destroy();
+            },
+        });
+
+        this.vditorTab = this.addTab({
+            type: MonacoEditorPlugin.CUSTOM_TAB_TYPE_VDITOR,
+            init() {
+                // plugin.logger.debug("tab-init");
+                // plugin.logger.debug(this);
+
+                const tab: IVditorTab = this;
+                tab.component = new VditorTab({
+                    target: tab.element,
+                    props: {
+                        plugin,
+                        ...tab.data,
+                    },
+                });
+            },
+            destroy() {
+                // plugin.logger.debug("tab-destroy");
+
+                const tab: IVditorTab = this;
                 tab.component?.$destroy();
             },
         });
@@ -363,7 +401,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
     openSetting(): void {
         const dialog = new siyuan.Dialog({
-            title: `${this.i18n.displayName} <code class="fn__code">${this.name}</code>`,
+            title: `${this.displayName} <code class="fn__code">${this.name}</code>`,
             content: `<div id="${this.SETTINGS_DIALOG_ID}" class="fn__flex-column" />`,
             width: "720px",
             height: "640px",
@@ -442,6 +480,15 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         });
     }
 
+    /* 打开超链接 */
+    public openLink(
+        url: string | URL,
+        target: string = "_blank",
+        features?: string,
+    ): void {
+        globalThis.open(url, target, features);
+    }
+
     /* 处理打开事件 */
     protected openEventHandler(e: MouseEvent) {
         // this.logger.debug(e);
@@ -455,7 +502,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             if (snippet_id) {
                 menu.addItem({
                     icon: "iconCode",
-                    label: this.i18n.displayName,
+                    label: this.displayName,
                     submenu: this.buildOpenSubmenu(
                         {
                             type: HandlerType.snippet,
@@ -483,7 +530,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             if (shorthand_id) {
                 menu.addItem({
                     icon: "iconCode",
-                    label: this.i18n.displayName,
+                    label: this.displayName,
                     submenu: this.buildOpenSubmenu(
                         {
                             type: HandlerType.inbox,
@@ -523,7 +570,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                     menu.addItem({
                         icon: "iconCode",
-                        label: this.i18n.displayName,
+                        label: this.displayName,
                         submenu: [
                             /* 添加查看 markdown 菜单项 */
                             {
@@ -589,7 +636,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                     menu.addItem({
                         icon: "iconCode",
-                        label: this.i18n.displayName,
+                        label: this.displayName,
                         submenu: [
                             /* 添加查看 markdown 菜单项 */
                             {
@@ -656,7 +703,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                 menu.addItem({
                     icon: "iconCode",
-                    label: this.i18n.displayName,
+                    label: this.displayName,
                     submenu: [
                         /* 添加查看 markdown 菜单项 */
                         {
@@ -840,7 +887,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             e.detail.menu.addItem({
                 // icon: "icon-monaco-editor",
                 icon: "iconCode",
-                label: this.i18n.displayName,
+                label: this.displayName,
                 submenu,
             });
         }
@@ -932,7 +979,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             if (submenu.length > 0) {
                 e.detail.menu.addItem({
                     icon: "iconCode",
-                    label: this.i18n.displayName,
+                    label: this.displayName,
                     submenu,
                 });
             }
@@ -1012,6 +1059,78 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             const editor = new EditorWindow(this);
                             await editor.init(custom.data);
                             editor.open({
+                                x,
+                                y,
+                                title: custom.title,
+                                ...this.config.window.options,
+                            });
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case OpenType.Vditor: { // Vditor 编辑器
+                    const custom = {
+                        icon: "iconMarkdown",
+                        title: relative,
+                        id: this.CUSTOM_TAB_ID_VDITOR,
+                        data: {
+                            vditor: this.config.vditor,
+                            facadeOptions: {
+                                type: HandlerType.asset,
+                                handler: {
+                                    path: relative,
+                                    updatable: true,
+                                },
+                                breadcrumb: {
+                                    path: relative,
+                                },
+                            } as IFacadeAssetOptions,
+                        },
+                    }; // 自定义页签参数
+
+                    switch (mode) {
+                        default:
+                        case OpenMode.Tab:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabBackground:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                keepCursor: true,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabRight:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                position: "right",
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.TabBottom:
+                            siyuan.openTab({
+                                app: this.app,
+                                custom,
+                                position: "bottom",
+                                keepCursor: false,
+                                removeCurrentTab: false,
+                            });
+                            break;
+                        case OpenMode.Window: {
+                            const { screenX: x, screenY: y } = globalThis.siyuan.coordinates;
+
+                            const vditor = new VditorWindow(this);
+                            await vditor.init(custom.data);
+                            vditor.open({
                                 x,
                                 y,
                                 title: custom.title,
@@ -1118,7 +1237,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         facadeOptions: IFacadeOptions,
         // icon: string = "icon-monaco-editor",
         icon: string = "iconCode",
-        title: string = this.i18n.displayName,
+        title: string = this.displayName,
         disabled: boolean = false,
         options: IEditorOptions = this.config.editor.options,
     ): siyuan.IMenuItemOption[] {
@@ -1223,6 +1342,129 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /**
+     * 构建 vditor 子菜单
+     * @param path: 资源路径
+     * @param icon: 页签图标
+     * @param title: 页签标题
+     * @param disabled: 是否禁用
+     */
+    public buildOpenVditorSubmenu(
+        path: string,
+        icon: string = "iconMarkdown",
+        title: string = "Vditor",
+        disabled: boolean = false,
+    ): siyuan.IMenuItemOption[] {
+        icon = icon.startsWith("#")
+            ? icon.substring(1)
+            : icon; // 删除 # 前缀
+
+        const submenu: siyuan.IMenuItemOption[] = [];
+        const custom = {
+            icon,
+            title,
+            id: this.CUSTOM_TAB_ID_VDITOR,
+            data: {
+                vditor: this.config.vditor,
+                facadeOptions: {
+                    type: HandlerType.asset,
+                    handler: {
+                        path,
+                        updatable: true,
+                    },
+                    breadcrumb: {
+                        path,
+                    },
+                } as IFacadeAssetOptions,
+            },
+        }; // 自定义页签参数
+
+        /* 在新页签中打开 */
+        submenu.push({
+            icon: "iconAdd",
+            label: this.i18n.menu.openInNewTab.label,
+            disabled,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在后台页签中打开 */
+        submenu.push({
+            icon: "iconMin",
+            label: this.i18n.menu.openTabBackground.label,
+            disabled,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    keepCursor: true,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在页签右侧打开 */
+        submenu.push({
+            icon: "iconLayoutRight",
+            label: this.i18n.menu.openTabRight.label,
+            disabled,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    position: "right",
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        /* 在页签下方打开 */
+        submenu.push({
+            icon: "iconLayoutBottom",
+            disabled,
+            label: this.i18n.menu.openTabBottom.label,
+            click: () => {
+                siyuan.openTab({
+                    app: this.app,
+                    custom,
+                    position: "bottom",
+                    keepCursor: false,
+                    removeCurrentTab: false,
+                });
+            },
+        });
+
+        submenu.push({ type: "separator" });
+
+        /* 在新窗口打开 */
+        submenu.push({
+            icon: "iconOpenWindow",
+            label: this.i18n.menu.openByNewWindow.label,
+            disabled,
+            click: async () => {
+                const { screenX: x, screenY: y } = globalThis.siyuan.coordinates;
+
+                const vditor = new VditorWindow(this);
+                await vditor.init(custom.data);
+                vditor.open({
+                    x,
+                    y,
+                    title,
+                    ...this.config.window.options,
+                });
+            },
+        });
+
+        return submenu;
+    }
+
+    /**
      * 构建资源预览子菜单
      * @param pathname: 资源路径
      * @param icon: 页签图标
@@ -1232,7 +1474,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     public buildOpenPreviewSubmenu(
         pathname: string,
         icon: string = "iconFile",
-        title: string = this.i18n.displayName,
+        title: string = this.displayName,
         disabled: boolean = false,
     ): siyuan.IMenuItemOption[] {
         icon = icon.startsWith("#")

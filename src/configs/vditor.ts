@@ -15,18 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 打开类型 */
-export enum OpenType {
-    Editor = "editor",
-    Vditor = "vditor",
-    Preview = "preview",
-}
+import { isLightTheme } from "@workspace/utils/siyuan/theme";
+import { AssetsUploadMode } from "@/vditor/asset";
+import type { IVditorProps } from "@/types/vditor";
 
-/* 打开方案 */
-export enum OpenMode {
-    Tab = "tab",
-    TabBackground = "tab-background",
-    TabRight = "tab-right",
-    TabBottom = "tab-bottom",
-    Window = "window",
-}
+export const DEFAULT_VDITOR_PROPS: Omit<
+    IVditorProps,
+    "plugin" |
+    "src2url" |
+    "baseURL" |
+    "rootURL"
+> = {
+    path: "/",
+    get vditorID() { return `vditor-${Date.now()}` },
+    assetsDirPath: "/assets/vditor/",
+    assetsUploadMode: AssetsUploadMode.assets,
+    options: {},
+    value: "",
+    get theme() { return isLightTheme() },
+    codeBlockThemeLight: "xcode",
+    codeBlockThemeDark: "dracula",
+    updatable: true,
+    changable: false,
+    debug: false,
+} as const;

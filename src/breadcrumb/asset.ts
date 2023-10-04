@@ -86,6 +86,19 @@ export class AssetBreadcrumb extends Breadcrumb {
         Breadcrumb.setLastBreadcrumbItemActive(breadcrumb);
 
         if (options.stores) {
+            /* 实时更新 */
+            breadcrumb.breadcrumbIcons.push({
+                icon: "#iconRefresh",
+                type: "refresh",
+                ariaLabel: this.i18n.button.realTime.ariaLabel,
+                tooltipsDirection: TooltipsDirection.sw,
+                onClick(_e, _element, props) {
+                    const changable = get(props.active);
+                    options.stores.changable.set(!changable);
+                    props.active.set(!changable);
+                },
+            });
+
             /* 全屏 */
             breadcrumb.breadcrumbIcons.push({
                 icon: "#iconFullscreen",
