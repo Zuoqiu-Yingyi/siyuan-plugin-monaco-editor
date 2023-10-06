@@ -20,6 +20,11 @@ import type { Electron } from "@workspace/types/electron";
 import type { IMouseStatus } from "@workspace/utils/shortcut";
 import type { IResourceOptionPermission } from "@/utils/permission";
 
+import type { IOptions as IVditorOptions } from "./vditor";
+import type { AssetsUploadMode } from "@/vditor/asset";
+import type { OpenScheme } from "@/utils/url";
+
+
 export type IMonacoEditorOptions = Editor.IStandaloneEditorConstructionOptions & Editor.IStandaloneDiffEditorConstructionOptions;
 
 /* 鼠标操作 */
@@ -56,6 +61,12 @@ export interface IWindowOptions extends Electron.BrowserWindowConstructorOptions
 
 export interface IEditor {
     options: IEditorOptions;
+}
+
+export interface IVditor {
+    options: IVditorOptions;
+    assetsDirPath: string; // 资源文件路径
+    assetsUploadMode: AssetsUploadMode; // 资源上传模式
 }
 
 export interface IEditorOptions extends IMonacoEditorOptions {
@@ -103,9 +114,17 @@ export interface IDock {
     editor: IEditorDock;
 }
 
+/* 文件打开方案 */
+export interface IOpen {
+    markdown: OpenScheme;
+    default: OpenScheme;
+}
+
 export interface IConfig {
     operates: IOperates;
     window: IWindow;
     editor: IEditor;
+    vditor: IVditor,
     dock: IDock;
+    open: IOpen;
 }

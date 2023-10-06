@@ -7,6 +7,7 @@
 [![GitHub 许可证](https://img.shields.io/github/license/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/blob/main/LICENSE)
 [![GitHub 最后一次提交时间](https://img.shields.io/github/last-commit/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commits/main)
 ![GitHub 仓库大小](https://img.shields.io/github/repo-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)
+![GitHub 代码大小](https://img.shields.io/github/languages/code-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg?style=flat-square)
 ![查看次数](https://hits.b3log.org/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg)
 [![GitHub 发行版本下载次数](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases)
 
@@ -107,6 +108,38 @@
     * 这是一个开关
     * 默认状态: *打开*
     * 该开关控制是否启用文件历史对话框中快照选项卡页签的右键菜单, 该菜单可以打开 Monaco Editor 以对比模式查看快照的更改
+* `编辑器设置`
+
+  * `全局设置`
+
+    * `Markdown 文件默认编辑器`
+
+      * 设置打开 `*.md` 文件的默认编辑器
+      * 默认使用 `Vditor` 编辑器打开 `*.md` 文件
+  * `Vditor 编辑器`
+
+    * `资源文件保存方案`
+
+      * 指定保存(图片等)资源文件的方案, 不同的方案会将资源文件文件保存至不同的目录, 具体的保存目录还会受到 <kbd>编辑器设置 &gt; Vditor 编辑器 &gt; 资源文件保存目录</kbd> 设置项的影响
+    * `资源文件保存目录`
+
+      * 指定资源文件具体的保存目录, 实际的保存目录还受到 <kbd>编辑器设置 &gt; Vditor 编辑器 &gt; 资源文件保存方案</kbd> 设置项的影响
+      * 示例
+
+        * `资源文件保存方案`: `上传至 data/assets 目录`
+
+          * `/assets/`: 将资源文件保存至 `工作空间/data/assets/` 目录下
+          * `/assets/vditor/`: 将资源文件保存至 `工作空间/data/assets/vditor/` 目录下
+        * `资源文件保存方案`: `使用相对路径指定目录`
+
+          * `./`: 将资源文件保存至当前文件所在目录下
+          * `./../`: 将资源文件保存至当前文件所在目录的上层目录下
+          * `./assets/`: 将资源文件保存至当前文件所在目录的 `assets` 文件夹下
+        * `资源文件保存方案`: `使用绝对路径指定目录`
+
+          * `/`: 将资源文件保存至 `工作空间/` 目录下
+          * `/assets/`: 将资源文件保存至 `工作空间/assets/` 目录下
+          * `/vditor/assets/`: 将资源文件保存至 `工作空间/vditor/assets/` 目录下
 
 ## 更改日志
 

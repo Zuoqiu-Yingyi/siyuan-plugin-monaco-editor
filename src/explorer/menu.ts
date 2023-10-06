@@ -17,17 +17,36 @@
 
 import type siyuan from "siyuan";
 import type MonacoEditorPlugin from "@/index";
-import Item from "@workspace/components/siyuan/menu/Item.svelte"
 import UploadDialog from "@/components/UploadDialog.svelte"
-import { FileTreeNodeType, type IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
+import {
+    FileTreeNodeType,
+    type IFileTreeNodeStores,
+} from "@workspace/components/siyuan/tree/file";
 import { get } from "svelte/store";
 import { HandlerType } from "@/facades/facade";
-import { FLAG_BROWSER, FLAG_ELECTRON } from "@workspace/utils/env/front-end";
+import {
+    FLAG_BROWSER,
+    FLAG_ELECTRON,
+} from "@workspace/utils/env/front-end";
+import {
+    directoryOpen,
+    fileOpen,
+} from "@workspace/utils/file/browser-fs-access";
 import { copyText } from "@workspace/utils/misc/copy";
-import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
+import {
+    isStaticWebFileServicePath,
+    workspacePath2StaticPathname,
+} from "@workspace/utils/siyuan/url";
 import { ExplorerIcon } from "./icon";
-import { Explorer, ProtectedResourceType } from ".";
-import { extname, join, parse } from "@workspace/utils/path/browserify";
+import {
+    Explorer,
+    ProtectedResourceType,
+} from ".";
+import {
+    extname,
+    join,
+    parse,
+} from "@workspace/utils/path/browserify";
 import {
     fn__code,
     ft__error,
@@ -36,7 +55,10 @@ import {
 import { prompt } from "@workspace/components/siyuan/dialog/prompt";
 import { isValidName } from "@workspace/utils/file/filename";
 import { escapeHTML } from "@workspace/utils/misc/html";
-import { ResourceOption, isResourceOperable } from "@/utils/permission";
+import {
+    ResourceOption,
+    isResourceOperable,
+} from "@/utils/permission";
 import {
     openPath,
     showItemInFolder,
@@ -44,7 +66,7 @@ import {
 import { showOpenDialog } from "@workspace/utils/electron/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
-import { OpenType } from "@/utils/url";
+import { OpenScheme } from "@/utils/url";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -192,6 +214,7 @@ export class ExplorerContextMenu {
             ? new Set(children.map(node => node.name))
             : null;
         const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
+        const isMarkdown = relative.endsWith(".md");
 
         const root = type === FileTreeNodeType.Root; // 是否为根目录
         const file = type === FileTreeNodeType.File; // 是否为文件
@@ -323,33 +346,54 @@ export class ExplorerContextMenu {
                     ResourceOption.edit,
                 );
 
-                const submenu: IMenuItem[] = [
-                    /* 在编辑器中打开 */
-                    {
+                const submenu: IMenuItem[] = [];
+
+                /* 在编辑器中打开 */
+                submenu.push({
+                    type: MenuItemType.Action,
+                    options: {
+                        icon: "iconCode",
+                        label: this.i18n.menu.openFileInEditor.label,
+                        accelerator: "Monaco Editor",
+                        submenu: this.plugin.buildOpenSubmenu(
+                            {
+                                type: HandlerType.asset,
+                                handler: {
+                                    path: relative,
+                                    updatable,
+                                },
+                                breadcrumb: {
+                                    path: relative,
+                                },
+                            },
+                            icon,
+                            text,
+                        ),
+                    },
+                    root: false,
+                    folder: false,
+                    file: true,
+                });
+
+                /* 在 Vditor 编辑器中打开 */
+                if (isMarkdown) {
+                    submenu.push({
                         type: MenuItemType.Action,
                         options: {
-                            icon: "iconCode",
+                            icon: "iconMarkdown",
                             label: this.i18n.menu.openFileInEditor.label,
-                            submenu: this.plugin.buildOpenSubmenu(
-                                {
-                                    type: HandlerType.asset,
-                                    handler: {
-                                        path: get(node.relative),
-                                        updatable,
-                                    },
-                                    breadcrumb: {
-                                        path: get(node.relative),
-                                    },
-                                },
+                            accelerator: "Vditor",
+                            submenu: this.plugin.buildOpenVditorSubmenu(
+                                relative,
                                 icon,
-                                text,
+                                name,
                             ),
                         },
                         root: false,
                         folder: false,
                         file: true,
-                    },
-                ];
+                    });
+                }
 
                 /**
                  * 在资源页签中打开
@@ -521,9 +565,29 @@ export class ExplorerContextMenu {
                         folder: false,
                         file: true,
                     });
+                    
+                    if (isMarkdown) {
+                        url.searchParams.set("scheme", OpenScheme.Vditor);
+                        const href_vditor = url.href;
+                        /* 复制编辑超链接 */
+                        submenu.push({
+                            type: MenuItemType.Action,
+                            options: {
+                                icon: "iconEdit",
+                                label: `${this.i18n.menu.copyEditHyperlink.label} [Vditor]`,
+                                accelerator: escapeHTML(href_vditor),
+                                click: () => {
+                                    copyText(href_vditor);
+                                },
+                            },
+                            root: false,
+                            folder: false,
+                            file: true,
+                        });
+                    }
 
                     if (accessible) {
-                        url.searchParams.set("type", OpenType.Preview);
+                        url.searchParams.set("scheme", OpenScheme.Preview);
                         const href_preview = url.href;
 
                         /* 复制预览超链接 */
@@ -790,28 +854,26 @@ export class ExplorerContextMenu {
                     {
                         type: MenuItemType.Action,
                         options: {
-                            element: globalThis.document.createElement("div"), // 避免生成其他内容
-                            bind: element => {
-                                /* 挂载一个 svelte 菜单项组件 */
-                                const item = new Item({
-                                    target: element,
-                                    props: {
-                                        file: true,
-                                        icon: "#iconFile",
-                                        label: this.i18n.menu.uploadFile.label,
-                                        multiple: true,
-                                        webkitdirectory: false,
-                                    },
+                            icon: "iconFile",
+                            label: this.i18n.menu.uploadFile.label,
+                            click: async () => {
+                                // REF: https://www.npmjs.com/package/browser-fs-access
+                                const files = await fileOpen({
+                                    // mimeTypes: ["*/*"],
+                                    // extensions: [""],
+                                    multiple: true,
+                                    description: this.i18n.menu.uploadFile.label,
+                                    startIn: "downloads",
+                                    id: "siyuan-upload-files",
+                                    // excludeAcceptAllOption: false,
                                 });
 
-                                item.$on("selected", async e => {
-                                    // this.plugin.logger.debug(e);
-                                    const finished = await this.upload(relative, e.detail.files);
-                                    if (finished) {
-                                        this.explorer.updateNode(node);
-                                    }
-                                });
-                            }
+                                // this.plugin.logger.debug(files);
+                                const finished = await this.upload(relative, files);
+                                if (finished) {
+                                    this.explorer.updateNode(node);
+                                }
+                            },
                         },
                         root: true,
                         folder: true,
@@ -821,28 +883,24 @@ export class ExplorerContextMenu {
                     {
                         type: MenuItemType.Action,
                         options: {
-                            element: globalThis.document.createElement("div"), // 避免生成其他内容
-                            bind: element => {
-                                /* 挂载一个 svelte 菜单项组件 */
-                                const item = new Item({
-                                    target: element,
-                                    props: {
-                                        file: true,
-                                        icon: "#iconFolder",
-                                        label: this.i18n.menu.uploadFolder.label,
-                                        multiple: true,
-                                        webkitdirectory: true,
-                                    },
-                                });
+                            icon: "iconFolder",
+                            label: this.i18n.menu.uploadFolder.label,
+                            click: async () => {
+                                // REF: https://www.npmjs.com/package/browser-fs-access
+                                const files = await directoryOpen({
+                                    recursive: true,
+                                    startIn: "downloads",
+                                    id: "siyuan-upload-folder",
+                                    // mode: "read" | "readwrite",
+                                    // skipDirectory: (entry) => boolean,
+                                }) as File[];
 
-                                item.$on("selected", async e => {
-                                    // this.plugin.logger.debug(e);
-                                    const finished = await this.upload(relative, e.detail.files);
-                                    if (finished) {
-                                        this.explorer.updateNode(node);
-                                    }
-                                });
-                            }
+                                // this.plugin.logger.debug(files);
+                                const finished = await this.upload(relative, files);
+                                if (finished) {
+                                    this.explorer.updateNode(node);
+                                }
+                            },
                         },
                         root: true,
                         folder: true,

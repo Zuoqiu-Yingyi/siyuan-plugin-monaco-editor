@@ -24,6 +24,7 @@ import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
 import { extname } from "@workspace/utils/path/browserify";
 
 export interface IAssetHandler extends IHandler {
+    path: string; // 相对于工作空间目录的路径
     modified: IEditorModel; // 编辑器模式
     options: IMonacoEditorOptions; // 编辑器选项
     update?: (value: string) => Promise<Blob>; // 处理并保存编辑器内容的方法 (若未定义则不能更新)
@@ -79,6 +80,7 @@ export class AssetHandler extends Handler {
         const path = options.path ?? staticPathname2WorkspacePath(options.pathname);
 
         const handler: IAssetHandler = {
+            path,
             modified: {
                 value: "",
                 language: extname(path),

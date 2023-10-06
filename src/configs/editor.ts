@@ -16,17 +16,20 @@
  */
 
 import type { IEditorProps } from "@/types/editor";
+import { isLightTheme } from "@workspace/utils/siyuan/theme";
 
 export const DEFAULT_EDITOR_PROPS: Omit<IEditorProps, "plugin"> = {
     embed: false,
     path: "",
     diff: false,
-    locale: "zh-Hans",
+    get locale(): string { return globalThis.navigator.language },
     savable: false,
     changable: false,
     original: { value: "" },
     modified: { value: "" },
-    options: {},
+    options: {
+        get theme(): string { return isLightTheme() ? "vs" : "vs-dark" },
+    },
     originalOptions: {},
     modifiedOptions: {},
     diffOptions: {},

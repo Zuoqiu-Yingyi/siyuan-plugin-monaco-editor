@@ -15,21 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 界面入口 */
-import "@/styles/editor.less";
+import "@/styles/vditor.less";
 import manifest from "~/public/plugin.json";
 import i18n from "~/public/i18n/en_US.json";
+import { Logger } from "@workspace/utils/logger";
+import { trimSuffix } from "@workspace/utils/misc/string";
 import {
     FLAG_ELECTRON,
     FLAG_IFRAME,
     FLAG_POPUP,
 } from "@workspace/utils/env/native-front-end";
-import { Logger } from "@workspace/utils/logger";
 
-import Editor from "@/components/Editor.svelte";
-import { EditorBridgeSlave } from "@/bridge/EditorSlave";
+import Vditor from "@/components/Vditor.svelte";
+import { VditorBridgeSlave } from "@/bridge/VditorSlave";
+import { Client } from "@siyuan-community/siyuan-sdk";
 
-const logger = new Logger(`${manifest.name}-editor-${(() => {
+const src2url = new Map<string, string>(); // 将 src 目标映射为 blob URL
+const baseURL = "./../libs/vditor";
+const rootURL = trimSuffix(location.pathname, `/plugins/${manifest.name}/iframes/vditor.html`);
+const logger = new Logger(`${manifest.name}-vditor-${(() => {
     switch (true) {
         case FLAG_ELECTRON:
             return "window";
@@ -41,66 +45,78 @@ const logger = new Logger(`${manifest.name}-editor-${(() => {
             return "unknow";
     }
 })()}`);
+const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
 
-var editor: InstanceType<typeof Editor> = new Editor({
+var vditor: InstanceType<typeof Vditor> = new Vditor({
     target: globalThis.document.body,
     props: {
         plugin: {
             name: manifest.name,
             i18n,
             logger,
+            client,
         },
+        src2url,
+        baseURL,
+        rootURL,
     },
 }); // 编辑器组件
 
-const bridge = new EditorBridgeSlave(
+const bridge = new VditorBridgeSlave(
     () => {
         /* 编辑器初始化 */
         bridge.addEventListener(
-            "editor-init",
+            "vditor-init",
             e => {
                 const { data } = e.data;
 
-
                 /* 编辑器已存在则销毁原编辑器 */
-                if (editor) {
-                    editor.$destroy();
+                if (vditor) {
+                    vditor.$destroy();
                 }
 
                 /* 创建新的编辑器 */
-                editor = new Editor({
+                vditor = new Vditor({
                     target: globalThis.document.body,
                     props: {
                         plugin: {
                             name: data.name,
                             i18n: data.i18n,
-                            logger: logger,
+                            logger,
+                            client,
                         },
+                        src2url,
+                        baseURL,
+                        rootURL,
+
                         path: data.path,
-                        diff: data.diff,
-                        locale: data.locale,
-                        savable: data.savable,
-                        changable: data.changable,
-                        original: data.original,
-                        modified: data.modified,
+                        vditorID: data.vditorID,
+                        assetsDirPath: data.assetsDirPath,
+                        assetsUploadMode: data.assetsUploadMode,
                         options: data.options,
+                        value: data.value,
+                        theme: data.theme,
+                        codeBlockThemeLight: data.codeBlockThemeLight,
+                        codeBlockThemeDark: data.codeBlockThemeDark,
+                        debug: data.debug,
                     },
                 });
+
                 /* 监听更改与保存事件 */
-                editor.$on("changed", e => bridge.changed(e.detail));
-                editor.$on("save", e => bridge.save(e.detail));
-                editor.$on("hover", e => bridge.hover(e.detail));
-                editor.$on("open", e => bridge.open(e.detail));
+                vditor.$on("changed", e => bridge.changed(e.detail));
+                vditor.$on("save", e => bridge.save(e.detail));
+                vditor.$on("open-link", e => bridge.openLink(e.detail));
             },
         );
+
         /* 更改编辑器配置 */
         bridge.addEventListener(
-            "editor-set",
+            "vditor-set",
             e => {
                 const { data } = e.data;
 
-                if (editor) {
-                    editor.$set(data);
+                if (vditor) {
+                    vditor.$set(data);
                 }
             },
         );

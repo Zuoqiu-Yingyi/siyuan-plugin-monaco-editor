@@ -506,6 +506,41 @@
         "openAnyway": "仍然打开？"
     },
     "settings": {
+        "editorSettings": {
+            "globalTab": {
+                "defaultEditor": {
+                    "markdown": {
+                        "description": "设置打开 <code class='fn__code'>*.md</code> 文件所使用的默认编辑器",
+                        "options": {
+                            "monaco": "Monaco 编辑器",
+                            "vditor": "Vditor 编辑器"
+                        },
+                        "title": "Markdown 文件默认编辑器"
+                    }
+                },
+                "title": "全局设置"
+            },
+            "monacoTab": {
+                "title": "Monaco 编辑器"
+            },
+            "title": "编辑器设置",
+            "vditorTab": {
+                "assetsDirPath": {
+                    "description": "设置保存资源文件的目录，具体的目录与设置项 <code class='fn__code'>资源文件保存方案</code> 有关",
+                    "title": "资源文件保存目录"
+                },
+                "assetsUploadMode": {
+                    "description": "将资源文件保存至指定目录，具体的目录与设置项 <code class='fn__code'>资源文件保存目录</code> 有关<br/><code class='fn__code'>上传至 data/assets 目录</code>：将文件上传至 <code class='fn__code'>工作空间/data/assets</code> 目录，具体的目录由 <code class='fn__code'>资源文件保存目录</code> 指定<br/><code class='fn__code'>使用相对路径指定目录</code>：将文件上传至由设置项 <code class='fn__code'>资源文件保存目录</code> 指定的目录，工作目录为当前文件所在目录<br/><code class='fn__code'>使用绝对路径指定目录</code>：将文件上传至由设置项 <code class='fn__code'>资源文件保存目录</code> 指定的目录，工作目录为工作空间目录",
+                    "options": {
+                        "absolute": "使用绝对路径指定目录",
+                        "assets": "上传至 data/assets 目录",
+                        "relative": "使用相对路径指定目录"
+                    },
+                    "title": "资源文件保存方案"
+                },
+                "title": "Vditor 编辑器"
+            }
+        },
         "generalSettings": {
             "editor": {
                 "description": "是否启用文本编辑器侧边面板",

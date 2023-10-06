@@ -16,8 +16,9 @@
  */
 
 import type { IConfig, IMonacoEditorOptions } from "@/types/config";
+import { OpenScheme } from "@/utils/url";
+import { AssetsUploadMode } from "@/vditor/asset";
 import { MouseButton } from "@workspace/utils/shortcut";
-// import type { editor as Editor } from "monaco-editor";
 
 export function getCodeFontFamily(
     element: HTMLElement = document.documentElement,
@@ -98,6 +99,11 @@ export const DEFAULT_CONFIG: IConfig = {
             wordWrap: 'off', // 是否自动换行 "on" | "off" | "wordWrapColumn" | "bounded"
         },
     },
+    vditor: {
+        options: {},
+        assetsDirPath: "/assets/vditor/",
+        assetsUploadMode: AssetsUploadMode.assets,
+    },
     dock: {
         editor: {
             enable: true,
@@ -122,5 +128,9 @@ export const DEFAULT_CONFIG: IConfig = {
                 },
             },
         },
+    },
+    open: {
+        markdown: OpenScheme.Vditor,
+        default: OpenScheme.Editor,
     },
 };

@@ -28,7 +28,7 @@
     import { mapLocale } from "@/utils/locale";
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
-    import type { IEditorEvent, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
+    import type { IEditorEvents, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
     import { Languages } from "@/editor/language";
 
     export let plugin: IEditorProps["plugin"];
@@ -59,7 +59,7 @@
     var inited = false; // 编辑器是否初始化完成
 
     const i18n = plugin.i18n;
-    const dispatch = createEventDispatcher<IEditorEvent>();
+    const dispatch = createEventDispatcher<IEditorEvents>();
 
     /* 设置保存功能 (闭包) */
     const setSaveAction = (() => {
@@ -281,7 +281,7 @@
                 if (modified) {
                     editor = monaco.editor.create(
                         editorElement, //
-                        merge(options, modified, { language: languages.map(modified.language) }), //
+                        merge(options, modified, { language: languages.map(modified?.language ?? "") }), //
                     );
                 } else {
                     editor = monaco.editor.create(
@@ -321,8 +321,8 @@
                 contextMenuOrder: 1, // 菜单分组内排序
                 run: () => {
                     // 点击后执行的操作
-                    // Editor.EditorOption.wordWrap === 128
-                    const word_wrap_status = editor.getOption(128) === "off" ? "on" : "off";
+                    // Editor.EditorOption.wordWrap === 129
+                    const word_wrap_status = editor.getOption(129) === "off" ? "on" : "off";
                     updateOptions({ wordWrap: word_wrap_status });
                 },
             });

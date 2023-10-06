@@ -16,15 +16,55 @@
  */
 
 import { UserConfig } from "vite";
-import { resolve } from "path"
+import { resolve } from "node:path";
 
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vitejs.dev/config/
 export default {
     plugins: [
         viteStaticCopy({
             targets: [
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/css/content-theme",
+                    dest: "./libs/vditor/css",
+                    rename: "themes",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/index.css",
+                    dest: "./libs/vditor/css",
+                    rename: "index.css",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/i18n",
+                    dest: "./libs/vditor/js",
+                    rename: "i18n",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/icons",
+                    dest: "./libs/vditor/js",
+                    rename: "icons",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/images/logo.png",
+                    dest: "./libs/vditor/images",
+                    rename: "logo.png",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/mathjax",
+                    dest: "./libs/vditor/js",
+                    rename: "mathjax",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/highlight.js",
+                    dest: "./libs/vditor/js",
+                    rename: "highlight.js",
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/method.min.js",
+                    dest: "./libs/vditor/js",
+                    rename: "method.min.js",
+                },
                 {
                     src: "./node_modules/monaco-editor/min",
                     dest: "./libs/monaco-editor",

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import type { IEditorEvent, IPlugin } from "@/types/editor";
+import type { IEditorEvents, IPlugin } from "@/types/editor";
 import type { BlockID } from "@workspace/types/siyuan";
 import type { default as Monaco, languages } from "monaco-editor";
 import type { createEventDispatcher } from "svelte";
@@ -135,7 +135,7 @@ export class Languages {
     constructor(
         public readonly pluign: IPlugin,
         protected readonly _monaco: typeof Monaco,
-        protected readonly _dispatch: ReturnType<typeof createEventDispatcher<IEditorEvent>>
+        protected readonly _dispatch: ReturnType<typeof createEventDispatcher<IEditorEvents>>
     ) {
         this._langs = this._monaco.languages.getLanguages();
         this._langs.forEach(lang => {

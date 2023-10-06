@@ -21,6 +21,7 @@
     import Panels from "@workspace/components/siyuan/setting/panel/Panels.svelte";
     import Panel from "@workspace/components/siyuan/setting/panel/Panel.svelte";
     import Item from "@workspace/components/siyuan/setting/item/Item.svelte";
+    import Tabs from "@workspace/components/siyuan/setting/tab/Tabs.svelte";
     import Input from "@workspace/components/siyuan/setting/item/Input.svelte";
 
     import { ItemType } from "@workspace/components/siyuan/setting/item/item";
@@ -30,6 +31,8 @@
 
     import type { IConfig } from "@/types/config";
     import type { I18N } from "@/utils/i18n";
+    import { OpenScheme } from "@/utils/url";
+    import { AssetsUploadMode } from "@/vditor/asset";
 
     export let config: IConfig; // 传入的配置项
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
@@ -54,6 +57,7 @@
     enum PanelKey {
         general, // 常规设置
         menu, // 菜单设置
+        editor, // 编辑器设置
     }
 
     let panels_focus_key = PanelKey.general;
@@ -70,6 +74,51 @@
             name: i18n.settings.menuSettings.title,
             icon: "#iconMenu",
         },
+        {
+            key: PanelKey.editor,
+            text: i18n.settings.editorSettings.title,
+            name: i18n.settings.editorSettings.title,
+            icon: "#icon-monaco-editor",
+        },
+    ];
+
+    enum TabKey {
+        global, // 全局设置
+        monaco, // Monaco 编辑器设置
+        vditor, // Vditor 编辑器设置
+    }
+
+    let editor_settings_tabs_focus_key = TabKey.global;
+    const tabs = {
+        editor: [
+            {
+                key: TabKey.global,
+                text: i18n.settings.editorSettings.globalTab.title,
+                name: i18n.settings.editorSettings.globalTab.title,
+                icon: "⚙",
+            },
+            {
+                key: TabKey.monaco,
+                text: i18n.settings.editorSettings.monacoTab.title,
+                name: i18n.settings.editorSettings.monacoTab.title,
+            },
+            {
+                key: TabKey.vditor,
+                text: i18n.settings.editorSettings.vditorTab.title,
+                name: i18n.settings.editorSettings.vditorTab.title,
+            },
+        ] as ITab[],
+    };
+
+    const default_editor_markdown_options = [
+        { key: OpenScheme.Editor, text: i18n.settings.editorSettings.globalTab.defaultEditor.markdown.options.monaco },
+        { key: OpenScheme.Vditor, text: i18n.settings.editorSettings.globalTab.defaultEditor.markdown.options.vditor },
+    ];
+
+    const assets_upload_mode_options = [
+        { key: AssetsUploadMode.assets, text: i18n.settings.editorSettings.vditorTab.assetsUploadMode.options.assets },
+        { key: AssetsUploadMode.relative, text: i18n.settings.editorSettings.vditorTab.assetsUploadMode.options.relative },
+        { key: AssetsUploadMode.absolute, text: i18n.settings.editorSettings.vditorTab.assetsUploadMode.options.absolute },
     ];
 </script>
 
@@ -234,6 +283,90 @@
                 }}
             />
         </Item>
+    </Panel>
+
+    <!-- 编辑器面板 -->
+    <Panel display={panels[2].key === focusPanel}>
+        <Tabs
+            focus={editor_settings_tabs_focus_key}
+            tabs={tabs.editor}
+            let:focus={focusTab}
+        >
+            <!-- 标签页 1 - 全局设置 -->
+            <div
+                data-type={tabs.editor[0].name}
+                class:fn__none={tabs.editor[0].key !== focusTab}
+            >
+                <!-- Markdown 文件默认编辑器 -->
+                <Item
+                    title={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.title}
+                    text={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.description}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.select}
+                        settingKey="open.markdown"
+                        settingValue={config.open.markdown}
+                        options={default_editor_markdown_options}
+                        on:changed={async e => {
+                            config.open.markdown = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+            </div>
+
+            <!-- 标签页 2 - Monaco 编辑器设置 -->
+            <div
+                data-type={tabs.editor[1].name}
+                class:fn__none={tabs.editor[1].key !== focusTab}
+            />
+
+            <!-- 标签页 3 - Vditor 编辑器设置 -->
+            <div
+                data-type={tabs.editor[2].name}
+                class:fn__none={tabs.editor[2].key !== focusTab}
+            >
+                <!-- 资源文件保存方案 -->
+                <Item
+                    title={i18n.settings.editorSettings.vditorTab.assetsUploadMode.title}
+                    text={i18n.settings.editorSettings.vditorTab.assetsUploadMode.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.select}
+                        settingKey="vditor.assetsUploadMode"
+                        settingValue={config.vditor.assetsUploadMode}
+                        block={true}
+                        options={assets_upload_mode_options}
+                        on:changed={async e => {
+                            config.vditor.assetsUploadMode = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+
+                <!-- 资源文件保存目录 -->
+                <Item
+                    title={i18n.settings.editorSettings.vditorTab.assetsDirPath.title}
+                    text={i18n.settings.editorSettings.vditorTab.assetsDirPath.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.text}
+                        settingKey="vditor.assetsDirPath"
+                        settingValue={config.vditor.assetsDirPath}
+                        block={true}
+                        on:changed={async e => {
+                            config.vditor.assetsDirPath = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+            </div>
+        </Tabs>
     </Panel>
 </Panels>
 

@@ -19,10 +19,10 @@
     import { createEventDispatcher } from "svelte";
     import type { Action } from "svelte/action";
 
-    import { EditorBridgeMaster } from "@/bridge/master";
+    import { EditorBridgeMaster } from "@/bridge/EditorMaster";
 
     import type MonacoEditorPlugin from "@/index";
-    import type { IEditorEvent, IEditorProps } from "@/types/editor";
+    import type { IEditorEvents, IEditorProps } from "@/types/editor";
 
     export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
 
@@ -41,7 +41,7 @@
 
     var inited = false;
 
-    const dispatch = createEventDispatcher<IEditorEvent>();
+    const dispatch = createEventDispatcher<IEditorEvents>();
     const bridge = new EditorBridgeMaster(
         plugin, //
         EditorBridgeMaster.createChannel(true), //
@@ -112,7 +112,7 @@
  -->
 <iframe
     use:init
-    title={plugin.i18n.displayName}
+    title={plugin.displayName}
     class="fn__flex-1 editor"
 />
 

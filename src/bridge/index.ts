@@ -15,17 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { UserConfig } from "vite";
-import { resolve } from "node:path";
+import type { Electron } from "@workspace/types/electron";
 
-// https://vitejs.dev/config/
-export default {
-    build: {
-        rollupOptions: {
-            input: {
-                editor: resolve(__dirname, "./iframes/editor.html"),
-                vditor: resolve(__dirname, "./iframes/vditor.html"),
-            },
-        },
-    },
-} as UserConfig;
+export interface IWindowParams extends Electron.BrowserWindowConstructorOptions {
+    x: number, // 窗口横坐标
+    y: number, // 窗口纵坐标
+    width: number, // 窗口宽度
+    height: number, // 窗口高度
+}
+
+export type TMessageEventMap = Record<string, MessageEvent>;
+export type TMessageEventListener<
+    K extends keyof EventMap,
+    EventMap extends TMessageEventMap,
+> = (messageEvent: EventMap[K]) => void;
+export type TElectronMessageEventListener = (e: Electron.MessageEvent) => void;

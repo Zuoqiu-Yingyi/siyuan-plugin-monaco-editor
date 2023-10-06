@@ -116,14 +116,6 @@
         "#icon-monaco-editor-material-twine"
     ],
     [
-        ".yml",
-        "#icon-monaco-editor-material-yaml"
-    ],
-    [
-        ".yaml",
-        "#icon-monaco-editor-material-yaml"
-    ],
-    [
         ".yml.dist",
         "#icon-monaco-editor-material-yaml"
     ],
@@ -700,6 +692,10 @@
         "#icon-monaco-editor-material-csharp"
     ],
     [
+        ".csharp",
+        "#icon-monaco-editor-material-csharp"
+    ],
+    [
         ".qs",
         "#icon-monaco-editor-material-qsharp"
     ],
@@ -765,6 +761,10 @@
     ],
     [
         ".tgz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".zst",
         "#icon-monaco-editor-material-zip"
     ],
     [
@@ -1161,6 +1161,14 @@
     ],
     [
         ".docker-compose.yaml",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        ".containerignore",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        ".containerfile",
         "#icon-monaco-editor-material-docker"
     ],
     [
@@ -1940,6 +1948,10 @@
         "#icon-monaco-editor-material-terraform"
     ],
     [
+        ".tfbackend",
+        "#icon-monaco-editor-material-terraform"
+    ],
+    [
         ".blade.php",
         "#icon-monaco-editor-material-laravel"
     ],
@@ -2420,11 +2432,19 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".o",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".ac",
         "#icon-monaco-editor-material-3d"
     ],
     [
         ".blend",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".dxf",
         "#icon-monaco-editor-material-3d"
     ],
     [
@@ -2517,6 +2537,30 @@
     ],
     [
         ".iso",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".vmdk",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".hdd",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qcow",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qcow2",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qed",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".dmg",
         "#icon-monaco-editor-material-disc"
     ],
     [
@@ -3174,5 +3218,33 @@
     [
         ".🔥",
         "#icon-monaco-editor-material-mojo"
+    ],
+    [
+        ".rbxl",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxlx",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxm",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".rbxmx",
+        "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".spwn",
+        "#icon-monaco-editor-material-spwn"
+    ],
+    [
+        ".templ",
+        "#icon-monaco-editor-material-templ"
+    ],
+    [
+        ".stan",
+        "#icon-monaco-editor-material-stan"
     ]
 ]

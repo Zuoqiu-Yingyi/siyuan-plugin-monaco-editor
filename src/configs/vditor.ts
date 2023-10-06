@@ -15,17 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { UserConfig } from "vite";
-import { resolve } from "node:path";
+import { isLightTheme } from "@workspace/utils/siyuan/theme";
+import { AssetsUploadMode } from "@/vditor/asset";
+import type { IVditorProps } from "@/types/vditor";
 
-// https://vitejs.dev/config/
-export default {
-    build: {
-        rollupOptions: {
-            input: {
-                editor: resolve(__dirname, "./iframes/editor.html"),
-                vditor: resolve(__dirname, "./iframes/vditor.html"),
-            },
-        },
-    },
-} as UserConfig;
+export const DEFAULT_VDITOR_PROPS: Omit<
+    IVditorProps,
+    "plugin" |
+    "src2url" |
+    "baseURL" |
+    "rootURL"
+> = {
+    path: "/",
+    get vditorID() { return `vditor-${Date.now()}` },
+    assetsDirPath: "/assets/vditor/",
+    assetsUploadMode: AssetsUploadMode.assets,
+    options: {},
+    value: "",
+    get theme() { return isLightTheme() },
+    codeBlockThemeLight: "xcode",
+    codeBlockThemeDark: "dracula",
+    updatable: true,
+    changable: false,
+    debug: false,
+} as const;

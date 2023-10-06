@@ -189,7 +189,7 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = response.data[0].markdown;
                                     break;
                                 }
                             }
@@ -212,7 +212,7 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = response.data[0].markdown;
                                     break;
                                 }
                             }
@@ -230,7 +230,7 @@ export class BlockHandler extends Handler {
                             case Inline.mark: { // 使用 markdown 标志符
                                 const response = await this.queryBlock(id);
                                 if (response.data.length > 0) {
-                                    handler.modified.value = this.lute.BlockDOM2StdMd(response.data[0].markdown);
+                                    handler.modified.value = response.data[0].markdown;
                                     break;
                                 }
                             }
@@ -257,6 +257,22 @@ export class BlockHandler extends Handler {
                             }
                             case Inline.span: { // 使用 <span> 标签
                                 handler.modified.value = this.lute.BlockDOM2Md(response_getDoc.data.content);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    /* 标题块 */
+                    case NodeType.NodeHeading: {
+                        switch (inline) {
+                            case Inline.mark: { // 使用 markdown 标志符
+                                const response = await this.client.getBlockKramdown({ id });
+                                handler.modified.value = response.data.kramdown;
+                                break;
+                            }
+                            case Inline.span: { // 使用 <span> 标签
+                                const response = await this.client.getBlockDOM({ id });
+                                handler.modified.value = this.lute.BlockDOM2Md(response.data.dom);
                                 break;
                             }
                         }

@@ -82,6 +82,7 @@
 * **custom-font:** 优化字体列表样式 | Optimize font list style. ([bcb99eb](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/bcb99eb4ef253ad4b2c301866caac5d544fb215a))
 * **monaco-editor:** 调整菜单文本 | Adjust menu text. ([46d702c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/46d702c542387b8bd4c8f6192c91abc8ccc36c89))
 
+
 ## 0.1.0 (2023-08-01)
 
 

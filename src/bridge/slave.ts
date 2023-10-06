@@ -26,20 +26,20 @@ import "@/styles/editor.less";
 
 import type { Electron } from "@workspace/types/electron";
 import type {
-    IMessageEditorMasterEventMap,
-    IMessageEditorReady,
-    IMessageEditorChanged,
-    IMessageEditorSave,
-    IMessageEditorHoverSiyuan,
-    IMessageEditorOpenSiyuan,
-} from "@/types/message";
+    TMessageEventMap,
+    TMessageEventListener,
+} from ".";
 
-export type MasterMessageEvent = IMessageEditorMasterEventMap[keyof IMessageEditorMasterEventMap];
-export type MessageEventListener<
-    K extends keyof IMessageEditorMasterEventMap = keyof IMessageEditorMasterEventMap,
-> = (messageEvent: IMessageEditorMasterEventMap[K]) => void;
+type TInitMessageEventListener<M> = (e: MessageEvent<M>) => void;
+type TInitEventMessageEventListener<M> = (e: Electron.IpcRendererEvent, message: M) => void;
+type TInitEventListener<M> = TInitMessageEventListener<M>
+    | TInitEventMessageEventListener<M>;
 
-export class EditorBridgeSlave {
+export class BridgeSlave<
+    M,
+    MessageMasterEventMap extends TMessageEventMap,
+    MessageEventListener extends TMessageEventListener<keyof MessageMasterEventMap, MessageMasterEventMap> = TMessageEventListener<keyof MessageMasterEventMap, MessageMasterEventMap>,
+> {
     public port: MessagePort; // 消息通道端口
     protected readonly _listeners: Map<
         MessageEventListener,
@@ -47,7 +47,7 @@ export class EditorBridgeSlave {
     > = new Map(); // 监听器 映射到 包装后的监听器
 
     constructor(
-        protected oninited: (this: InstanceType<typeof EditorBridgeSlave>) => void = () => { },
+        protected oninited: (msg: M) => any = () => { },
     ) {
         switch (true) {
             case FLAG_ELECTRON: {
@@ -58,7 +58,10 @@ export class EditorBridgeSlave {
                  * REF: https://www.electronjs.org/zh/docs/latest/api/message-channel-main
                  */
                 const { ipcRenderer } = globalThis.require("electron") as { ipcRenderer: Electron.IpcRenderer };
-                ipcRenderer.once(constants.INIT_CHANNEL_NAME, this.initEventListener);
+                ipcRenderer.once(
+                    constants.INIT_CHANNEL_NAME,
+                    this.initEventListener as TInitEventMessageEventListener<M>,
+                );
                 break;
             }
             case FLAG_IFRAME:
@@ -70,88 +73,28 @@ export class EditorBridgeSlave {
                  * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/MessagePort
                  * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/page2.html
                  */
-                globalThis.addEventListener("message", this.initEventListener, { once: true });
+                globalThis.addEventListener(
+                    "message",
+                    this.initEventListener as TInitMessageEventListener<M>,
+                    { once: true },
+                );
                 break;
         }
     }
 
     /* 初始化事件 */
-    protected readonly initEventListener = (e: MessageEvent | Electron.IpcRendererEvent, dark?: boolean) => {
+    protected readonly initEventListener: TInitEventListener<M> = (e, msg) => {
         // console.debug(e);
-        // this.port.postMessage("editor-message");
-
-        /* 设置回退的主题颜色 */
-        if (e instanceof MessageEvent) {
-            dark = e.data;
-        }
-        globalThis.document.documentElement.style.setProperty(
-            "--vscode-editor-background",
-            dark ? "#1f1f1f" : "#ffffff",
-        );
 
         this.port = e.ports[0];
         this.port.start(); // 开始接受消息
-        this.oninited();
-    }
 
-    /* 就绪 */
-    public ready(data: IMessageEditorReady["data"] = { status: true }) {
-        /* 组装消息 */
-        const message: IMessageEditorReady = {
-            channel: "editor-ready",
-            data,
-        };
-
-        /* 发送消息 */
-        this.port.postMessage(message);
-    }
-
-    /* 编辑器内容更改 */
-    public changed(data: IMessageEditorChanged["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorChanged = {
-            channel: "editor-changed",
-            data,
-        };
-
-        /* 发送消息 */
-        this.port.postMessage(message);
-    }
-
-    /* 编辑器保存 */
-    public save(data: IMessageEditorSave["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorSave = {
-            channel: "editor-save",
-            data,
-        };
-
-        /* 发送消息 */
-        this.port.postMessage(message);
-    }
-
-    /* 编辑器悬浮思源字段 */
-    public hover(data: IMessageEditorHoverSiyuan["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorHoverSiyuan = {
-            channel: "editor-hover-siyuan",
-            data,
-        };
-
-        /* 发送消息 */
-        this.port.postMessage(message);
-    }
-
-    /* 编辑器打开思源字段 */
-    public open(data: IMessageEditorOpenSiyuan["data"]) {
-        /* 组装消息 */
-        const message: IMessageEditorOpenSiyuan = {
-            channel: "editor-open-siyuan",
-            data,
-        };
-
-        /* 发送消息 */
-        this.port.postMessage(message);
+        if (e instanceof MessageEvent) {
+            this.oninited(e.data);
+        }
+        else {
+            this.oninited(msg);
+        }
     }
 
     /**
@@ -161,17 +104,17 @@ export class EditorBridgeSlave {
      * @return: 添加是否成功
      */
     public addEventListener<
-        K extends keyof IMessageEditorMasterEventMap,
+        K extends keyof MessageMasterEventMap,
     >(
         channel: K,
-        listener: MessageEventListener<K>,
+        listener: TMessageEventListener<K, MessageMasterEventMap>,
         options?: Pick<AddEventListenerOptions, "once">,
     ): boolean {
-        if (this._listeners.has(listener)) { // 监听器已经添加
+        if (this._listeners.has(listener as MessageEventListener)) { // 监听器已经添加
             return false; // 监听器添加失败
         }
         else { // 添加新的监听器
-            const listenerWrapper: MessageEventListener<K> = e => {
+            const listenerWrapper: TMessageEventListener<K, MessageMasterEventMap> = e => {
                 if (e?.data?.channel === channel) {
                     if (options?.once) {
                         this.removeEventListener(
@@ -182,7 +125,7 @@ export class EditorBridgeSlave {
                     listener(e);
                 }
             };
-            this._listeners.set(listener, listenerWrapper);
+            this._listeners.set(listener as MessageEventListener, listenerWrapper as MessageEventListener);
             this.port.addEventListener(
                 constants.MESSAGE_EVENT_NAME,
                 listenerWrapper,
@@ -198,17 +141,17 @@ export class EditorBridgeSlave {
      * @return: 移除是否成功
      */
     public removeEventListener<
-        K extends keyof IMessageEditorMasterEventMap = keyof IMessageEditorMasterEventMap,
+        K extends keyof MessageMasterEventMap = keyof MessageMasterEventMap,
     >(
         _channel: K,
-        listener: MessageEventListener<K>,
+        listener: TMessageEventListener<K, MessageMasterEventMap>,
     ): boolean {
-        if (this._listeners.has(listener)) { // 监听器存在
+        if (this._listeners.has(listener as MessageEventListener)) { // 监听器存在
             this.port.removeEventListener(
                 constants.MESSAGE_EVENT_NAME,
-                this._listeners.get(listener),
+                this._listeners.get(listener as MessageEventListener),
             );
-            this._listeners.delete(listener);
+            this._listeners.delete(listener as MessageEventListener);
             return true; // 监听器移除成功
         }
         else { // 无法移除不存在的监听器

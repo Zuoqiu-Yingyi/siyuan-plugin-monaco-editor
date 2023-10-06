@@ -16,8 +16,9 @@
  */
 
 /* 打开类型 */
-export enum OpenType {
+export enum OpenScheme {
     Editor = "editor",
+    Vditor = "vditor",
     Preview = "preview",
 }
 

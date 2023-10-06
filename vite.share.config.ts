@@ -16,7 +16,7 @@
  */
 
 import { UserConfig } from "vite";
-import { resolve } from "path"
+import { resolve } from "node:path";
 
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { less } from "svelte-preprocess-less";

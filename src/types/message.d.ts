@@ -19,12 +19,16 @@ import type { default as Monaco, editor as Editor } from "monaco-editor";
 
 import type { I18N } from "@/utils/i18n";
 import type {
-    IEditorEvent,
+    IEditorEvents,
     IEditorModel,
     IEditorProps,
     IEditorFunction,
     IEditorOptions,
 } from "./editor";
+import type {
+    IVditorProps,
+    IVditorEvents,
+} from "./vditor";
 import type { IMonacoEditorOptions } from "./config";
 
 /* 传输的消息 */
@@ -34,9 +38,14 @@ export interface IMessage {
 }
 
 /* 来自主机的消息 */
-export interface IMessageEditorMasterEventMap {
+export interface IMessageEditorMasterEventMap extends Record<string, MessageEvent> {
     "editor-init": MessageEvent<IMessageEditorInit>;
     "editor-set": MessageEvent<IMessageEditorSet>;
+}
+
+export interface IMessageVditorMasterEventMap extends Record<string, MessageEvent> {
+    "vditor-init": MessageEvent<IMessageVditorInit>;
+    "vditor-set": MessageEvent<IMessageVditorSet>;
 }
 
 /* 初始化编辑器 */
@@ -63,19 +72,53 @@ export interface IMessageEditorInit extends IMessage {
     };
 }
 
+export interface IMessageVditorInit extends IMessage {
+    channel: "vditor-init";
+    data: {
+        name: string; // 插件名称
+        i18n: I18N; // 插件国际化字段
+
+        path?: IVditorProps["path"];
+        vditorID?: IVditorProps["vditorID"];
+        assetsDirPath?: IVditorProps["assetsDirPath"];
+        assetsUploadMode?: IVditorProps["assetsUploadMode"];
+        options?: IVditorProps["options"];
+        value?: IVditorProps["value"];
+        theme?: IVditorProps["theme"];
+        codeBlockThemeLight?: IVditorProps["codeBlockThemeLight"];
+        codeBlockThemeDark?: IVditorProps["codeBlockThemeDark"];
+        updatable?: IVditorProps["updatable"];
+        changable?: IVditorProps["changable"];
+        debug?: IVditorProps["debug"];
+    };
+}
+
 /* 设置编辑器设置项 */
 export interface IMessageEditorSet extends IMessage {
     channel: "editor-set";
     data: Partial<IEditorFunction> & Partial<IEditorOptions>;
 }
 
+export interface IMessageVditorSet extends IMessage {
+    channel: "vditor-set";
+    data: Partial<IVditorProps>;
+}
+
 /* 来自从机的消息 */
-export interface IMessageEditorSlaveEventMap {
+export interface IMessageEditorSlaveEventMap extends Record<string, MessageEvent> {
     "editor-ready": MessageEvent<IMessageEditorReady>;
     "editor-changed": MessageEvent<IMessageEditorChanged>;
     "editor-save": MessageEvent<IMessageEditorSave>;
     "editor-hover-siyuan": MessageEvent<IMessageEditorHoverSiyuan>;
     "editor-open-siyuan": MessageEvent<IMessageEditorOpenSiyuan>;
+    // [key: string]: MessageEvent<IMessage>;
+}
+
+export interface IMessageVditorSlaveEventMap extends Record<string, MessageEvent> {
+    "vditor-ready": MessageEvent<IMessageVditorReady>;
+    "vditor-changed": MessageEvent<IMessageVditorChanged>;
+    "vditor-save": MessageEvent<IMessageVditorSave>;
+    "vditor-open-link": MessageEvent<IMessageVditorOpenLink>;
     // [key: string]: MessageEvent<IMessage>;
 }
 
@@ -86,27 +129,48 @@ export interface IMessageEditorReady extends IMessage {
         status: boolean;
     };
 }
+export interface IMessageVditorReady extends IMessage {
+    channel: "vditor-ready";
+    data: {
+        status: boolean;
+    };
+}
 
 /* 编辑器内容更改事件 */
 export interface IMessageEditorChanged extends IMessage {
     channel: "editor-changed";
-    data: IEditorEvent["changed"];
+    data: IEditorEvents["changed"];
+}
+
+export interface IMessageVditorChanged extends IMessage {
+    channel: "vditor-changed";
+    data: IVditorEvents["changed"];
 }
 
 /* 保存事件 */
 export interface IMessageEditorSave extends IMessage {
     channel: "editor-save";
-    data: IEditorEvent["save"];
+    data: IEditorEvents["save"];
+}
+
+export interface IMessageVditorSave extends IMessage {
+    channel: "vditor-save";
+    data: IVditorEvents["save"];
 }
 
 /* 鼠标悬浮事件 */
 export interface IMessageEditorHoverSiyuan extends IMessage {
     channel: "editor-hover-siyuan";
-    data: IEditorEvent["hover"];
+    data: IEditorEvents["hover"];
 }
 
 /* 打开链接事件 */
 export interface IMessageEditorOpenSiyuan extends IMessage {
     channel: "editor-open-siyuan";
-    data: IEditorEvent["open"];
+    data: IEditorEvents["open"];
+}
+
+export interface IMessageVditorOpenLink extends IMessage {
+    channel: "vditor-open-link";
+    data: IVditorEvents["open-link"];
 }

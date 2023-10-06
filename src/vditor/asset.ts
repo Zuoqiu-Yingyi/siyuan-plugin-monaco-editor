@@ -15,17 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { UserConfig } from "vite";
-import { resolve } from "node:path";
-
-// https://vitejs.dev/config/
-export default {
-    build: {
-        rollupOptions: {
-            input: {
-                editor: resolve(__dirname, "./iframes/editor.html"),
-                vditor: resolve(__dirname, "./iframes/vditor.html"),
-            },
-        },
-    },
-} as UserConfig;
+/* 资源上传模式 */
+export enum AssetsUploadMode {
+    assets, // 上传至 /workspace/data/assets 目录
+    relative, // 上传至相对路径目录 (相对于当前目录)
+    absolute, // 上传至绝对路径目录 (相对于工作空间根目录)
+}
