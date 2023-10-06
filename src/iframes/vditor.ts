@@ -16,6 +16,8 @@
  */
 
 import "@/styles/vditor.less";
+import manifest from "~/public/plugin.json";
+import i18n from "~/public/i18n/en_US.json";
 import { Logger } from "@workspace/utils/logger";
 import { trimSuffix } from "@workspace/utils/misc/string";
 import {
@@ -28,10 +30,38 @@ import Vditor from "@/components/Vditor.svelte";
 import { VditorBridgeSlave } from "@/bridge/VditorSlave";
 import { Client } from "@siyuan-community/siyuan-sdk";
 
-const baseURL = "./../libs/vditor";
 const src2url = new Map<string, string>(); // 将 src 目标映射为 blob URL
+const baseURL = "./../libs/vditor";
+const rootURL = trimSuffix(location.pathname, `/plugins/${manifest.name}/iframes/vditor.html`);
+const logger = new Logger(`${manifest.name}-vditor-${(() => {
+    switch (true) {
+        case FLAG_ELECTRON:
+            return "window";
+        case FLAG_IFRAME:
+            return "iframe";
+        case FLAG_POPUP:
+            return "popup";
+        default:
+            return "unknow";
+    }
+})()}`);
+const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
 
-var vditor: InstanceType<typeof Vditor>; // 编辑器组件
+var vditor: InstanceType<typeof Vditor> = new Vditor({
+    target: globalThis.document.body,
+    props: {
+        plugin: {
+            name: manifest.name,
+            i18n,
+            logger,
+            client,
+        },
+        src2url,
+        baseURL,
+        rootURL,
+    },
+}); // 编辑器组件
+
 const bridge = new VditorBridgeSlave(
     () => {
         /* 编辑器初始化 */
@@ -39,21 +69,6 @@ const bridge = new VditorBridgeSlave(
             "vditor-init",
             e => {
                 const { data } = e.data;
-                const rootURL = trimSuffix(location.pathname, `/plugins/${data.name}/iframes/vditor.html`);
-                const logger = new Logger(`${data.name}-vditor-${(() => {
-                    switch (true) {
-                        case FLAG_ELECTRON:
-                            return "window";
-                        case FLAG_IFRAME:
-                            return "iframe";
-                        case FLAG_POPUP:
-                            return "popup";
-                        default:
-                            return "unknow";
-                    }
-                })()}`);
-
-                const client = new Client({ baseURL: `${globalThis.location.origin}${rootURL}/` });
 
                 /* 编辑器已存在则销毁原编辑器 */
                 if (vditor) {

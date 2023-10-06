@@ -19,7 +19,6 @@ import type { IConfig, IMonacoEditorOptions } from "@/types/config";
 import { OpenScheme } from "@/utils/url";
 import { AssetsUploadMode } from "@/vditor/asset";
 import { MouseButton } from "@workspace/utils/shortcut";
-// import type { editor as Editor } from "monaco-editor";
 
 export function getCodeFontFamily(
     element: HTMLElement = document.documentElement,

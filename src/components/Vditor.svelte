@@ -37,7 +37,6 @@
     import { isValidName } from "@workspace/utils/file/filename";
     import { trimPrefix } from "@workspace/utils/misc/string";
     import { DEFAULT_VDITOR_PROPS } from "@/configs/vditor";
-    import { root } from "@workspace/components/siyuan/tree/file/Node.svelte";
 
     export let plugin: IVditorProps["plugin"];
     export let src2url: IVditorProps["src2url"];
@@ -476,7 +475,9 @@
                         tipPosition: "se",
                         click(_e: Event, _vditor: IVditor): void {
                             // plugin.logger.debugs("save.click", this, event, vditor);
-                            dispatcher("save", { markdown: vditor?.getValue() });
+                            if (updatable) {
+                                dispatcher("save", { markdown: vditor?.getValue() });
+                            }
                         },
                     },
                     "|",

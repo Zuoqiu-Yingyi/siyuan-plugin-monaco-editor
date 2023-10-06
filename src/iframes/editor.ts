@@ -17,7 +17,8 @@
 
 /* 界面入口 */
 import "@/styles/editor.less";
-
+import manifest from "~/public/plugin.json";
+import i18n from "~/public/i18n/en_US.json";
 import {
     FLAG_ELECTRON,
     FLAG_IFRAME,
@@ -28,7 +29,29 @@ import { Logger } from "@workspace/utils/logger";
 import Editor from "@/components/Editor.svelte";
 import { EditorBridgeSlave } from "@/bridge/EditorSlave";
 
-var editor: InstanceType<typeof Editor>; // 编辑器组件
+const logger = new Logger(`${manifest.name}-editor-${(() => {
+    switch (true) {
+        case FLAG_ELECTRON:
+            return "window";
+        case FLAG_IFRAME:
+            return "iframe";
+        case FLAG_POPUP:
+            return "popup";
+        default:
+            return "unknow";
+    }
+})()}`);
+
+var editor: InstanceType<typeof Editor> = new Editor({
+    target: globalThis.document.body,
+    props: {
+        plugin: {
+            name: manifest.name,
+            i18n,
+            logger,
+        },
+    },
+}); // 编辑器组件
 
 const bridge = new EditorBridgeSlave(
     () => {
@@ -37,18 +60,7 @@ const bridge = new EditorBridgeSlave(
             "editor-init",
             e => {
                 const { data } = e.data;
-                const logger = new Logger(`${data.name}-editor-${(() => {
-                    switch (true) {
-                        case FLAG_ELECTRON:
-                            return "window";
-                        case FLAG_IFRAME:
-                            return "iframe";
-                        case FLAG_POPUP:
-                            return "popup";
-                        default:
-                            return "unknow";
-                    }
-                })()}`);
+
 
                 /* 编辑器已存在则销毁原编辑器 */
                 if (editor) {

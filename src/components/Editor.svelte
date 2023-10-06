@@ -281,7 +281,7 @@
                 if (modified) {
                     editor = monaco.editor.create(
                         editorElement, //
-                        merge(options, modified, { language: languages.map(modified.language) }), //
+                        merge(options, modified, { language: languages.map(modified?.language ?? "") }), //
                     );
                 } else {
                     editor = monaco.editor.create(
