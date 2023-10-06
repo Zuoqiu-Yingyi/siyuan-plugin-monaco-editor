@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.2.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.2...v0.2.0) (2023-10-06)
+
+
+### Build System
+
+* 更新依赖项 | Update dependencies. ([8230ba0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/8230ba0983b86d815a723453200dae90c365b4bf))
+
+
+### Miscellaneous
+
+* **monaco-editor:** release v0.2.0 ([22c4114](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/22c4114cf9e7190473f2fafac82c2027545f3e9f))
+
+
+### Features
+
+* **jupyter-client:** 为代码单元格添加运行按钮 | Add run button to code cell. ([899e4ac](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/899e4ac545ac77287d3d3c9f86088f988e8935e4))
+* **jupyter-client:** 添加打开文档菜单项 | Add open document menu items. ([6720a48](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/6720a48021925aef5c7776c581f6dbe96dc6486f))
+* **monaco-editor:** 处理 Vditor 中超链接点击事件 | Handle hyperlink click event in Vditor. ([c04ece9](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c04ece9ee08b49673209a6c34c198e42e0896069))
+* **monaco-editor:** 完善 Vditor 设置面板 | Improve Vditor settings panel. ([f5ecbc4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f5ecbc4f6e253e707e9db83ecc8cc893b587575d))
+* **monaco-editor:** 实现 `Vditor` 编辑器组件 | Implement `Vditor` editor component. ([5e98608](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/5e98608647d56bf91364532023b73a800ad32f44))
+* **monaco-editor:** 实现资源文件目标重定向 | Implement resource file target redirection. ([b8207f0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/b8207f01dd625c4443ac6f60ad963058bf5258a2))
+* **monaco-editor:** 插入上传的文件 | Insert uploaded file. ([4316d84](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/4316d84c0f40e115fcb581234f146d84db6b379a))
+* **monaco-editor:** 新增文件上传至相对路径目录与绝对路径目录功能 | Add the function of uploading files to relative path directory and absolute path directory. ([3c7221f](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/3c7221faecb05a21fbb6597d7ed2cef322ae3c0e))
+* **monaco-editor:** 派遣内容更改用保存事件 | Dispatch content change with save event. ([5f76a37](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/5f76a37a93530e6188533a355c0788f7ece74db7))
+* **monaco-editor:** 添加 Vditor 菜单项 | Add Vditor menu items ([c0102d5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c0102d5639f2682c70aa9e952040460e59042ced))
+* **monaco-editor:** 添加文件上传功能 | Add file upload function. ([f7e8f25](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f7e8f25e0df6799e99f9a6b959e245e7086e89f5))
+* **open-api:** 添加 `client` 与 `fs` 属性 | Add `client` and `fs` properties. ([752bac2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/752bac22f36efb48ec8cc0d6dedaf00729e835ff))
+
+
+### Bug Fixes
+
+* **monaco-editor:** 修复无法正确解析子标题块问题 | Fix the issue that the subheading block cannot be parsed correctly. ([efa9bb4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/efa9bb4bd4c468235263dbbaae163c3de38fca4c))
+* **monaco-editor:** 修复自动换行功能失效问题 | Fix the issue that the automatic line break function is invalid. ([ef6b01d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/ef6b01d6fd0be42d71f32960d7cff268a68ba941))
+
+
+### Code Refactoring
+
+* **monaco-editor:** 使用 `browser-fs-access` 重构文件/文件夹上传功能 | Refactor files/folder upload function with `browser-fs-access`. ([a93340e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/a93340e39c24ea7c517e8247a73121aac4d5f484))
+* **monaco-editor:** 解耦 `monaco-editor` 与 `BridgeMaster` / `BridgeSlave` | Decouple `monaco-editor` and `BridgeMaster` / `BridgeSlave`. ([1175e57](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/1175e577a9beb8f2e39e10798df59650f53a333e))
+
 ## [0.1.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.1...v0.1.2) (2023-08-15)
 
 
