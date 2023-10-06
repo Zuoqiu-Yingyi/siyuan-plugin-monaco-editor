@@ -506,6 +506,41 @@
         "openAnyway": "繼續開啟？"
     },
     "settings": {
+        "editorSettings": {
+            "globalTab": {
+                "defaultEditor": {
+                    "markdown": {
+                        "description": "設置打開 <code class='fn__code'>*.md</code> 文件所使用的默認編輯器",
+                        "options": {
+                            "monaco": "Monaco 編輯器",
+                            "vditor": "Vditor 編輯器"
+                        },
+                        "title": "Markdown 文件默認編輯器"
+                    }
+                },
+                "title": "全局設置"
+            },
+            "monacoTab": {
+                "title": "Monaco 編輯器"
+            },
+            "title": "編輯器設置",
+            "vditorTab": {
+                "assetsDirPath": {
+                    "description": "設置保存資源文件的目錄，具體的目錄與設置項 <code class='fn__code'>資源文件保存方案</code> 有關",
+                    "title": "資源文件保存目錄"
+                },
+                "assetsUploadMode": {
+                    "description": "將資源文件保存至指定目錄，具體的目錄與設置項 <code class='fn__code'>資源文件保存目錄</code> 有關<br/><code class='fn__code'>上傳至 data/assets 目錄</code>：將文件上傳至 <code class='fn__code'>工作空間/data/assets</code> 目錄，具體的目錄由 <code class='fn__code'>資源文件保存目錄</code> 指定<br/><code class='fn__code'>使用相對路徑指定目錄</code>：將文件上傳至由設置項 <code class='fn__code'>資源文件保存目錄</code> 指定的目錄，工作目錄為當前文件所在目錄<br/><code class='fn__code'>使用絕對路徑指定目錄</code>：將文件上傳至由設置項 <code class='fn__code'>資源文件保存目錄</code> 指定的目錄，工作目錄為工作空間目錄",
+                    "options": {
+                        "absolute": "使用絕對路徑指定目錄",
+                        "assets": "上傳至 data/assets 目錄",
+                        "relative": "使用相對路徑指定目錄"
+                    },
+                    "title": "資源文件保存方案"
+                },
+                "title": "Vditor 編輯器"
+            }
+        },
         "generalSettings": {
             "editor": {
                 "description": "是否啟用文字編輯器側邊面板",

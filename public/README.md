@@ -108,6 +108,38 @@ This panel displays the markdown/kramdown source code of the currently edited bl
     * This is a switch
     * Default state: *enabled*
     * This switch controls whether the right-click menu in the snapshot tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view changes in snapshots
+* `Editor Settings`
+
+  * `Global Settings`
+
+    * `Default Editor for Markdown Files`
+
+      * Set the default editor for opening `*.md` files
+      * Default is to open `*.md` files with the Vditor editor
+  * `Vditor Editor`
+
+    * `Resource File Saving Scheme`
+
+      * Specify the scheme for saving (image, etc.) resource files. Different schemes will save resource files in different directories. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Directory</kbd> option.
+    * `Resource File Saving Directory`
+
+      * Specify the exact directory for saving resource files. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Scheme</kbd> option.
+      * Examples
+
+        * `Resource File Saving Scheme`: `Upload to data/assets directory`
+
+          * `/assets/`: Save the resource files in the `workspace/data/assets/` directory
+          * `/assets/vditor/`: Save the resource files in the `workspace/data/assets/vditor/` directory
+        * `Resource File Saving Scheme`: `Specify directory using relative path`
+
+          * `./`: Save the resource files in the same directory as the current file
+          * `./../`: Save the resource files in the parent directory of the current file
+          * `./assets/`: Save the resource files in the `assets` folder of the current file's directory
+        * `Resource File Saving Scheme`: `Specify directory using absolute path`
+
+          * `/`: Save the resource files in the `workspace/` directory
+          * `/assets/`: Save the resource files in the `workspace/assets/` directory
+          * `/vditor/assets/`: Save the resource files in the `workspace/vditor/assets/` directory
 
 ## CHANGELOG
 

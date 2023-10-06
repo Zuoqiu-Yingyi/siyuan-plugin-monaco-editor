@@ -506,6 +506,41 @@
         "openAnyway": "Open Anyway?"
     },
     "settings": {
+        "editorSettings": {
+            "globalTab": {
+                "defaultEditor": {
+                    "markdown": {
+                        "description": "Set the default editor for opening <code class='fn__code'>*.md</code> files",
+                        "options": {
+                            "monaco": "Monaco Editor",
+                            "vditor": "Vditor Editor"
+                        },
+                        "title": "Default Editor for Markdown Files"
+                    }
+                },
+                "title": "Global Settings"
+            },
+            "monacoTab": {
+                "title": "Monaco Editor"
+            },
+            "title": "Editor Settings",
+            "vditorTab": {
+                "assetsDirPath": {
+                    "description": "Set the directory for saving resource files, the specific directory depends on the <code class='fn__code'>Resource File Saving Scheme</code> setting",
+                    "title": "Resource File Saving Directory"
+                },
+                "assetsUploadMode": {
+                    "description": "Save resource files to a specific directory, the specific directory depends on the <code class='fn__code'>Resource File Saving Directory</code> setting.<br/><code class='fn__code'>Upload to data/assets directory</code>: Upload files to the <code class='fn__code'>workspace/data/assets</code> directory, the specific directory is specified by the <code class='fn__code'>Resource File Saving Directory</code> setting.<br/><code class='fn__code'>Use relative path to specify directory</code>: Upload files to the directory specified by the <code class='fn__code'>Resource File Saving Directory</code> setting, with the working directory being the current file directory.<br/><code class='fn__code'>Use absolute path to specify directory</code>: Upload files to the directory specified by the <code class='fn__code'>Resource File Saving Directory</code> setting, with the working directory being the workspace directory.",
+                    "options": {
+                        "absolute": "Use absolute path to specify directory",
+                        "assets": "Upload to data/assets directory",
+                        "relative": "Use relative path to specify directory"
+                    },
+                    "title": "Resource File Saving Scheme"
+                },
+                "title": "Vditor Editor"
+            }
+        },
         "generalSettings": {
             "editor": {
                 "description": "Enable text editor sidebar panel",

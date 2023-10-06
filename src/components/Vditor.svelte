@@ -350,7 +350,7 @@
     }
 
     $: updateContent(value);
-    $: updateUpdatable(changable);
+    $: updateUpdatable(updatable);
     $: updateChangable(changable);
     $: updateAssetsUploadMode(assetsUploadMode);
     $: updateTheme(theme, true, codeBlockThemeLight, codeBlockThemeDark);
@@ -1008,7 +1008,7 @@
                                     },
                                     href: link.textContent,
                                     title: title?.textContent,
-                                    anchor: anchor?.textContent.slice(1, -1), // 移除首尾的 " 号
+                                    anchor: anchor?.textContent,
                                 });
                             }
                             default:

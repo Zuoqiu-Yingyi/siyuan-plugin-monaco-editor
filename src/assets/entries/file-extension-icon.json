@@ -692,6 +692,10 @@
         "#icon-monaco-editor-material-csharp"
     ],
     [
+        ".csharp",
+        "#icon-monaco-editor-material-csharp"
+    ],
+    [
         ".qs",
         "#icon-monaco-editor-material-qsharp"
     ],
@@ -757,6 +761,10 @@
     ],
     [
         ".tgz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".zst",
         "#icon-monaco-editor-material-zip"
     ],
     [
@@ -2424,11 +2432,19 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".o",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".ac",
         "#icon-monaco-editor-material-3d"
     ],
     [
         ".blend",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".dxf",
         "#icon-monaco-editor-material-3d"
     ],
     [
@@ -2521,6 +2537,30 @@
     ],
     [
         ".iso",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".vmdk",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".hdd",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qcow",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qcow2",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".qed",
+        "#icon-monaco-editor-material-disc"
+    ],
+    [
+        ".dmg",
         "#icon-monaco-editor-material-disc"
     ],
     [
@@ -3194,5 +3234,17 @@
     [
         ".rbxmx",
         "#icon-monaco-editor-material-roblox"
+    ],
+    [
+        ".spwn",
+        "#icon-monaco-editor-material-spwn"
+    ],
+    [
+        ".templ",
+        "#icon-monaco-editor-material-templ"
+    ],
+    [
+        ".stan",
+        "#icon-monaco-editor-material-stan"
     ]
 ]

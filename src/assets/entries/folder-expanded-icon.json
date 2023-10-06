@@ -1896,6 +1896,22 @@
         "#icon-monaco-editor-material-folder-private-open"
     ],
     [
+        "linux",
+        "#icon-monaco-editor-material-folder-linux-open"
+    ],
+    [
+        "windows",
+        "#icon-monaco-editor-material-folder-windows-open"
+    ],
+    [
+        "macos",
+        "#icon-monaco-editor-material-folder-macos-open"
+    ],
+    [
+        ".DS_Store",
+        "#icon-monaco-editor-material-folder-macos-open"
+    ],
+    [
         "error",
         "#icon-monaco-editor-material-folder-error-open"
     ],
@@ -2208,11 +2224,23 @@
         "#icon-monaco-editor-material-folder-admin-open"
     ],
     [
+        "admins",
+        "#icon-monaco-editor-material-folder-admin-open"
+    ],
+    [
         "manager",
         "#icon-monaco-editor-material-folder-admin-open"
     ],
     [
+        "managers",
+        "#icon-monaco-editor-material-folder-admin-open"
+    ],
+    [
         "moderator",
+        "#icon-monaco-editor-material-folder-admin-open"
+    ],
+    [
+        "moderators",
         "#icon-monaco-editor-material-folder-admin-open"
     ],
     [

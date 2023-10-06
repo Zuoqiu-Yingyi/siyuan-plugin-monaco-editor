@@ -3228,6 +3228,10 @@
         "#icon-monaco-editor-material-codeowners"
     ],
     [
+        "OWNERS",
+        "#icon-monaco-editor-material-codeowners"
+    ],
+    [
         ".gcloudignore",
         "#icon-monaco-editor-material-gcp"
     ],
@@ -4186,5 +4190,53 @@
     [
         "panda.config.js",
         "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "panda.config.mjs",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "panda.config.mts",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "panda.config.cjs",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "biome.json",
+        "#icon-monaco-editor-material-biome"
+    ],
+    [
+        "esbuild.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.mjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.mjs",
+        "#icon-monaco-editor-material-esbuild"
     ]
 ]
