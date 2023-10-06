@@ -3,11 +3,9 @@
         "composite": true,
         "skipLibCheck": true,
         "module": "ESNext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "bundler"
     },
     "include": [
-        "scripts/**/*.ts",
-        "vite.config.ts",
-        "vite.*.config.ts",
-    ],
+        "vite.config.ts"
+    ]
 }

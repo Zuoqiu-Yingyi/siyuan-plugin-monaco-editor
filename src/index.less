@@ -1,0 +1,66 @@
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+:root {
+    --custom-focus-shadow-blur: 0.25em; // 焦点阴影模糊半径
+    --custom-focus-shadow-color: var(--b3-theme-secondary); // 焦点阴影的颜色
+
+    --custom-focus-unique-shadow-color: var(--b3-theme-primary); // 全局唯一焦点阴影的颜色
+
+    --custom-focus-table-row-outline-width: 1px; // 焦点所在表格行的轮廓宽度
+    --custom-focus-table-row-outline-color: var(--b3-theme-on-surface); // 焦点所在表格行的轮廓颜色
+
+    --custom-focus-table-cell-shadow-blur: 0.25em; // 焦点所在表格单元格的阴影模糊半径
+}
+
+.protyle-wysiwyg {
+    [data-node-id] {
+        &[data-plugin-focus=true] {
+            // 焦点所在块
+            box-shadow: 0 0 var(--custom-focus-shadow-blur) 0 var(--custom-focus-shadow-color) inset;
+        }
+
+        &#plugin-focus-unique-id {
+            // 全局唯一焦点所在块
+            box-shadow: 0 0 var(--custom-focus-shadow-blur) 0 var(--custom-focus-unique-shadow-color) inset;
+        }
+
+        &.table {
+            table {
+                tr {
+
+                    &:has(th[data-plugin-focus=true]),
+                    &:has(td[data-plugin-focus=true]) {
+                        // 焦点所在表格行
+                        outline: var(--custom-focus-table-row-outline-width) solid var(--custom-focus-table-row-outline-color);
+                    }
+
+                    th,
+                    td {
+                        &[data-plugin-focus=true] {
+                            // 焦点所在单元格
+                            box-shadow: 0 0 var(--custom-focus-table-cell-shadow-blur) 0 var(--custom-focus-shadow-color) inset;
+                        }
+
+                        &#plugin-focus-unique-id {
+                            // 全局唯一焦点所在单元格
+                            box-shadow: 0 0 var(--custom-focus-table-cell-shadow-blur) 0 var(--custom-focus-unique-shadow-color) inset;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

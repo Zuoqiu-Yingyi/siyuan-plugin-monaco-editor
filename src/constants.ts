@@ -16,8 +16,7 @@
  */
 
 export default {
-    INIT_CHANNEL_NAME: "monaco-editor-init", // 初始化通道名称
-    MESSAGE_EVENT_NAME: "message", // 消息事件名称
-    ID_PREFIX_MATERIAL: "#icon-monaco-editor-material", // 图标 symbol 的 ID 前缀
-    ID_PREFIX_MATERIAL_LIGHT: "#icon-monaco-editor-material-light", // 明亮主题图标 symbol 的 ID 前缀
-} as const;
+    FOCUS_ELEMENT_UNIQUE_ID: "plugin-focus-unique-id", // 整个界面中焦点所在元素的 id 名称
+    FOCUS_ELEMENT_ATTR_NAME: "data-plugin-focus", // 每个编辑器中焦点所在元素的属性名称
+    FOCUS_ELEMENT_DATA_NAME: "pluginFocus", // 每个编辑器中焦点所在元素的数据名称
+};

@@ -13,8 +13,8 @@ permissions:
   pull-requests: write
 
 env:
-  PACKAGE_NAME: monaco-editor
-  PACKAGE_VERSION: 0.2.0
+  PACKAGE_NAME: typewriter
+  PACKAGE_VERSION: 0.1.1
 
 jobs:
   release-please:

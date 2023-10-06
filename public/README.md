@@ -1,15 +1,15 @@
 <div align="center">
-<img alt="icon" src="https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/public/icon.png" style="width: 8em; height: 8em;">
+<img alt="icon" src="https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-typewriter/public/icon.png" style="width: 8em; height: 8em;">
 
 ---
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?include_prereleases&style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases/latest)
-[![GitHub Release Date](https://img.shields.io/github/release-date/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/blob/main/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commits/main)
-![GitHub repo size](https://img.shields.io/github/repo-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor?style=flat-square)
-![GitHub code size](https://img.shields.io/github/languages/code-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg?style=flat-square)
-![hits](https://hits.b3log.org/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg)
-[![GitHub all releases](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Zuoqiu-Yingyi/siyuan-plugin-typewriter?include_prereleases&style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/releases/latest)
+[![GitHub Release Date](https://img.shields.io/github/release-date/Zuoqiu-Yingyi/siyuan-plugin-typewriter?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/releases/latest)
+[![GitHub License](https://img.shields.io/github/license/Zuoqiu-Yingyi/siyuan-plugin-typewriter?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/blob/main/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Zuoqiu-Yingyi/siyuan-plugin-typewriter?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/commits/main)
+![GitHub repo size](https://img.shields.io/github/repo-size/Zuoqiu-Yingyi/siyuan-plugin-typewriter?style=flat-square)
+![hits](https://hits.b3log.org/Zuoqiu-Yingyi/siyuan-plugin-typewriter.svg)
+<!-- ![jsDelivr hits (GitHub)](https://img.shields.io/jsdelivr/gh/hy/Zuoqiu-Yingyi/siyuan-packages-typewriter?style=flat-square) -->
+[![GitHub all releases](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-typewriter/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/releases)
 
 ---
 [简体中文](./README_zh_CN.md) \| English
@@ -17,130 +17,97 @@
 ---
 </div>
 
-# Integrated Edit Environment (IEE)
+# Typewriter Mode Plugin for SiYuan
 
-A plugin for [SiYuan Note](https://github.com/siyuan-note/siyuan) that not only manage files and folders in the workspace directory but you can also edit files using text editor [Monaco Editor](https://github.com/Microsoft/monaco-editor).
+This is a plug-in for [SiYuan Note](https://github.com/siyuan-note/siyuan) that can highlight the currently edited block and automatically scroll it to the center of the editing area.
 
-## PREVIEW
+## Preview
 
-![preview image](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/public/preview.png)
+![Preview Image](https://cdn.jsdelivr.net/gh/Zuoqiu-Yingyi/siyuan-plugin-typewriter/public/preview.png)
 
-## Feature Introduction
+## Frequently Asked Questions
 
-### File Explorer Panel
+## Introduction
 
-This panel allows you to manage all files and folders in the workspace directory.
+### Features
 
-| Function                  | Operation                                                                              | Applicable Objects             | Remarks                                                                                                           |
-| ------------------------- | -------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| Context Menu              | Right-click on a file/folder/root directory with the mouse                             | File & Folder & Root directory | The menu can also be opened by clicking the menu button                                                           |
-| Move File/Folder          | Drag and drop files/folders                                                            | File & Folder                  | The target location cannot have files/folders with the same name                                                  |
-| Bulk Upload Files/Folders | Drag and drop files/folders from the system file explorer to the desired upload folder | Folder                         | After dragging and dropping, the list of files to be uploaded is displayed. Once confirmed, the upload will start |
-| Download File/Folder      | Drag and drop the file/folder outside the window                                       | File & Folder                  | The folder will be packaged as a compressed file and downloaded                                                   |
+* `Focus Display`
 
-### Editor Panel
+  * Show the currently edited block (block where the cursor is located) in the editor
 
-This panel displays the markdown/kramdown source code of the currently edited block, allowing you to edit and save the kramdown code of all blocks and the markdown code of leaf blocks.
+    * Each currently edited block (cell in a table) in the editor will have the attribute `data-plugin-focus="true"`
+    * The currently edited block (cell where the cursor is located) will have the `id` attribute `plugin-focus-unique-id`
+  * `CSS` style variables can be modified in <kbd>SiYuan Settings &gt; Appearance &gt; Code Snippet</kbd>
 
-| Function              | Operation           | Remarks                                                                                                                                                                                                                                                                                                      |
-| --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Code Auto Wrapping    | <kbd>Alt + Z</kbd>  | Turn on/off the auto wrapping feature<br />Default is the option in the SiYuan settings <kbd>Editor</kbd>><kbd>Code block wrapping</kbd>                                                                                                                                                                     |
-| Save                  | <kbd>Ctrl + S</kbd> | If the currently edited block can be saved (editing markdown of a leaf block or kramdown source code of any block),<br />it saves the current changes                                                                                                                                                        |
-| Auto Save             | Panel button        | When enabled, if the currently edited block can be saved,<br />the corresponding block will be updated in the editor whenever there is a change in its content                                                                                                                                               |
-| Kramdown Mode         | Panel button        | Turn on/off the kramdown mode<br />When turned on, the editor displays the kramdown source code of the currently edited block<br />When turned off, the editor displays the markdown source code of the currently edited block                                                                               |
-| Switch Editing Scheme | Panel button        | In kramdown mode:<br />When turned off, inline elements use markdown notation<br />When turned on, inline elements use `<span>` tags<br />In markdown mode:<br />When turned off, inline elements use extended markdown notation<br />When turned on, inline elements only use basic markdown notation<br /> |
+    * ```css
+      :root {
+          /* Focus shadow blur radius */
+          --custom-focus-shadow-blur: 0.25em;
+          /* Focus shadow color */
+          --custom-focus-shadow-color: var(--b3-theme-secondary);
 
-## Settings Introduction
+          /* Global unique focus shadow color */
+          --custom-focus-unique-shadow-color: var(--b3-theme-primary);
 
-* `General Settings`
+          /* Outline width of the table row with focus */
+          --custom-focus-table-row-outline-width: 1px;
+          /* Outline color of the table row with focus */
+          --custom-focus-table-row-outline-color: var(--b3-theme-on-surface);
 
-  * `Text Editor`
+          /* Shadow blur radius of the table cell with focus */
+          --custom-focus-table-cell-shadow-blur: 0.25em;
+      }
+      ```
+* `Typewriter Mode`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the text editor side panel is enabled
+  * Keep the currently edited block (block where the cursor is located) in the middle of the editor
 
-      * This panel displays the markdown/kramdown source code of the currently edited content block
-    * After changing the state of this switch, the interface will refresh to close the text editor panel
-  * `Explorer`
+    * If the cursor is in a table block, the cell where the cursor is located can be kept in the middle of the editor
+    * If the cursor is in a code block, the line where the cursor is located can be kept in the middle of the editor
+  * This mode can be enabled/disabled in the following ways
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the file explorer side panel is enabled
-    * After changing the state of this switch, the interface will refresh to close the file explorer panel
-  * `Safe Mode`
+    * <kbd>This Plugin Settings Panel &gt; Typewriter Settings &gt; Enable Typewriter Mode</kbd>
+    * `Typewriter Mode` button in the top-right corner of the menu bar
+    * Shortcut key <kbd>Shift + Alt + T</kbd>
+    * Command Palette option `Toggle Typewriter Mode`
 
-    * This is a switch
-    * Default state: *disabled*
-    * When enabled, it disables certain dangerous operations in important directories
-    * When disabled, there will be three confirmations before performing dangerous operations in important directories
+### Settings
+
+* General Settings
+
   * `Reset Settings`
 
-    * This is a button
-    * Resets all settings to their default values
-    * Clicking this button will display a confirmation dialog
+    * This button will reset all settings to their default values
+    * The page will be refreshed after resetting
+* Focus Settings
 
-      * After clicking the confirmation button in the dialog, all options of this plugin will be reset to the default values, and the current interface will be automatically refreshed
-* `Menu Settings`
+  * `Display Current Focus`
 
-  * `Code Snippet Menu`
+    * When enabled, the currently edited block will be highlighted in the editor (outline will be added to the currently edited block)
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in Settings → Appearance → Code Snippets is enabled. This menu allows you to open Monaco Editor to view/edit code snippets
-  * `Inbox Menu`
+      * The element of the currently edited block will have attributes `data-plugin-focus="true"` and `id="plugin-focus-unique-id"`
+    * When disabled, the currently edited block will no longer be highlighted
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu of the vault is enabled. This menu allows you to open Monaco Editor to view the contents of the inbox
-  * `File History Menu`
+      * All attributes `data-plugin-focus="true"` and `id="plugin-focus-unique-id"` will be removed
+    * This option does not apply the features of Typewriter Mode
+* Typewriter Settings
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the file history tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit the change history of files
-  * `Document History Menu`
+  * `Enable Typewriter Mode`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the document history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit document version history and the current version
-  * `Snapshot Menu`
+    * When enabled, the block where the cursor is located will automatically scroll to the middle of the editor while editing
+  * `Code Block Focus Follows Line`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the snapshot tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view changes in snapshots
-* `Editor Settings`
+    * When enabled, the line of code where the cursor is located will be scrolled to the middle of the editor while editing a code block
+    * When disabled, the code block will be scrolled to the middle of the editor while editing a code block
+  * `Table Block Focus Follows Cell`
 
-  * `Global Settings`
+    * When enabled, the table cell where the cursor is located will be scrolled to the middle of the editor while editing a table block
+    * When disabled, the table block will be scrolled to the middle of the editor while editing a table block
+  * `Scroll Delay`
 
-    * `Default Editor for Markdown Files`
+    * After the cursor moves to another block, the block where the cursor is located will scroll to the middle of the editor after a certain delay
+    * Unit: Milliseconds
 
-      * Set the default editor for opening `*.md` files
-      * Default is to open `*.md` files with the Vditor editor
-  * `Vditor Editor`
+## Changelog
 
-    * `Resource File Saving Scheme`
-
-      * Specify the scheme for saving (image, etc.) resource files. Different schemes will save resource files in different directories. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Directory</kbd> option.
-    * `Resource File Saving Directory`
-
-      * Specify the exact directory for saving resource files. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Scheme</kbd> option.
-      * Examples
-
-        * `Resource File Saving Scheme`: `Upload to data/assets directory`
-
-          * `/assets/`: Save the resource files in the `workspace/data/assets/` directory
-          * `/assets/vditor/`: Save the resource files in the `workspace/data/assets/vditor/` directory
-        * `Resource File Saving Scheme`: `Specify directory using relative path`
-
-          * `./`: Save the resource files in the same directory as the current file
-          * `./../`: Save the resource files in the parent directory of the current file
-          * `./assets/`: Save the resource files in the `assets` folder of the current file's directory
-        * `Resource File Saving Scheme`: `Specify directory using absolute path`
-
-          * `/`: Save the resource files in the `workspace/` directory
-          * `/assets/`: Save the resource files in the `workspace/assets/` directory
-          * `/vditor/assets/`: Save the resource files in the `workspace/vditor/assets/` directory
-
-## CHANGELOG
-
-[CHANGELOG.md](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/blob/main/CHANGELOG.md)
+[CHANGELOG.md](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter/blob/main/CHANGELOG.md)

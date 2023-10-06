@@ -15,37 +15,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { defineConfig, UserConfig } from "vite";
-import viteShareConfig from "./vite.share.config";
-import vitePluginConfig from "./vite.plugin.config";
-import viteIframesConfig from "./vite.iframes.config";
+import { defineConfig } from "vite";
+import { resolve } from "node:path";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { less } from "svelte-preprocess-less";
 
-import deepmerge from "deepmerge";
+// https://vitejs.dev/config/
+export default defineConfig({
+    base: `./`,
+    plugins: [
+        svelte({
+            preprocess: {
+                style: less(),
+            },
+        }),
+    ],
+    resolve: {
+        alias: {
+            "~": resolve(__dirname, "./"),
+            "@": resolve(__dirname, "./src"),
+        }
+    },
+    build: {
+        minify: true,
+        // sourcemap: "inline",
+        lib: {
+            entry: resolve(__dirname, "src/index.ts"),
+            fileName: "index",
+            formats: ["cjs"],
+        },
+        rollupOptions: {
+            external: [
+                "siyuan",
+                /^@electron\/.*$/,
+            ],
+            output: {
+                entryFileNames: chunkInfo => {
+                    // console.log(chunkInfo);
+                    switch (chunkInfo.name) {
+                        case "index":
+                            return "[name].js";
 
-/**
- * 依赖更新时进行处理
- * monaco-editor: 移除 node_modules/monaco-editor/min/vs/*.js 中的 //# sourceMappingURL
- * streamsaver: public/libs/streamsaver/mitm.html
- *   - `const swReg = swRegs.find(sw => sw.scope.endsWith("/libs/streamsaver/"))`
- *   - 避免与 service-worker.js 冲突
- */
+                        default:
+                            return "assets/[name]-[hash].js";
+                    }
+                },
+                assetFileNames: assetInfo => {
+                    // console.log(chunkInfo);
+                    switch (assetInfo.name) {
+                        case "style.css":
+                        case "index.css":
+                            return "index.css";
 
-// REF: https://cn.vitejs.dev/config/#conditional-config
-export default defineConfig(async env => {
-    var config: UserConfig;
-    // console.log(env);
-
-    switch (env.mode) {
-        case "iframes":
-            config = deepmerge.all([viteShareConfig, viteIframesConfig]);
-            break;
-
-        case "plugin":
-        default:
-            config = deepmerge.all([viteShareConfig, vitePluginConfig]);
-            break;
-    }
-
-    // console.log(config);
-    return config;
+                        default:
+                            return "assets/[name]-[hash][extname]";
+                    }
+                },
+            },
+        },
+    },
 });
