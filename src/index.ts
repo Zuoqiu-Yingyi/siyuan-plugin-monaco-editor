@@ -302,7 +302,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 }
 
                 /* 添加文件资源管理器侧边面板 */
-                if (this.config.dock.explorer) {
+                if (this.config.dock.explorer.enable) {
                     this.explorerDock = {
                         dock: this.addDock({
                             config: {
