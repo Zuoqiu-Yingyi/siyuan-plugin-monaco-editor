@@ -20,7 +20,7 @@
         "@siyuan-community/vditor": "^3.9.5",
         "@sveltejs/vite-plugin-svelte": "^2.4.6",
         "@tsconfig/svelte": "^4.0.1",
-        "@types/node": "^20.8.2",
+        "@types/node": "^20.8.4",
         "@types/streamsaver": "^2.0.2",
         "deepmerge": "^4.3.1",
         "less": "^4.2.0",
