@@ -850,20 +850,68 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 const id = e.detail.elements.item(0)?.dataset?.nodeId;
 
                 if (id) {
-                    submenu.push({
-                        icon: "iconUpload",
-                        label: "Markdown",
-                        accelerator: this.i18n.menu.export.accelerator,
-                        submenu: this.buildOpenSubmenu({
-                            type: HandlerType.block,
-                            breadcrumb: { id },
-                            handler: {
-                                id,
-                                inline: Inline.mark,
-                                language: Language.markdown,
-                            },
-                        }),
-                    });
+                    submenu.push(
+                        {
+                            /* 文档导出预览 */
+                            icon: "iconUpload",
+                            label: "Markdown",
+                            accelerator: this.i18n.menu.export.accelerator,
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.mark,
+                                    language: Language.markdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 标准 markdown */
+                            icon: "iconMarkdown",
+                            label: "Markdown",
+                            accelerator: this.i18n.menu.standard.accelerator,
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.span,
+                                    language: Language.markdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 使用 <span> 标签的 kramdown */
+                            icon: "iconInlineCode",
+                            label: "kramdown",
+                            accelerator: "&lt;span&gt;",
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.mark,
+                                    language: Language.kramdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 使用标识符的 kramdown */
+                            icon: "iconMarkdown",
+                            label: "kramdown",
+                            accelerator: "*mark*",
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.span,
+                                    language: Language.kramdown,
+                                },
+                            }),
+                        },
+                    );
                 }
                 break;
             }
