@@ -3,7 +3,7 @@
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-wakatime",
     "version": "0.3.4",
-    "minAppVersion": "2.10.2",
+    "minAppVersion": "2.10.12",
     "backends": [
         "all"
     ],
