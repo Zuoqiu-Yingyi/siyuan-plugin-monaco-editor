@@ -46,7 +46,7 @@ import constants from "./constants";
 
 import type {
     IClickEditorContentEvent,
-    ILoadedProtyleEvent,
+    ILoadedProtyleStaticEvent,
     IDestroyProtyleEvent,
 } from "@workspace/types/siyuan/events";
 import type { IProtyle } from "siyuan/types/protyle";
@@ -237,12 +237,12 @@ export default class TypewriterPlugin extends siyuan.Plugin {
         }
 
         if (enable) {
-            this.eventBus.on("loaded-protyle", this.loadedProtyleEventListener);
+            this.eventBus.on("loaded-protyle-static", this.loadedProtyleStaticEventListener);
             this.eventBus.on("destroy-protyle", this.destroyProtyleEventListener);
             this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
         }
         else {
-            this.eventBus.off("loaded-protyle", this.loadedProtyleEventListener);
+            this.eventBus.off("loaded-protyle-static", this.loadedProtyleStaticEventListener);
             this.eventBus.off("destroy-protyle", this.destroyProtyleEventListener);
             this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
         }
@@ -299,12 +299,12 @@ export default class TypewriterPlugin extends siyuan.Plugin {
     };
 
     /* 编辑器加载事件 */
-    protected readonly loadedProtyleEventListener = (e: ILoadedProtyleEvent) => {
+    protected readonly loadedProtyleStaticEventListener = (e: ILoadedProtyleStaticEvent) => {
         // this.logger.debug(e);
 
         /* 若开启打字机模式, 添加编辑事件监听器 */
         if (this.enable) {
-            const protyle = e.detail;
+            const protyle = e.detail.protyle;
             this.toggleEventListener(protyle, true);
         }
     };
