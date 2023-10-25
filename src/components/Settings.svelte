@@ -176,6 +176,23 @@
             />
         </Item>
 
+        <!-- 属性表焦点跟随单元格 -->
+        <Item
+            title={i18n.settings.typewriterSettings.view.title}
+            text={i18n.settings.typewriterSettings.view.description}
+        >
+            <Input
+                slot="input"
+                type={ItemType.checkbox}
+                settingKey="view"
+                settingValue={config.typewriter.view.row}
+                on:changed={async e => {
+                    config.typewriter.view.row = e.detail.value;
+                    await updated();
+                }}
+            />
+        </Item>
+
         <!-- 滚动延时时间 -->
         <Item
             title={i18n.settings.typewriterSettings.timeout.title}

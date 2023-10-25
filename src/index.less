@@ -23,6 +23,11 @@
     --custom-focus-table-row-outline-color: var(--b3-theme-on-surface); // 焦点所在表格行的轮廓颜色
 
     --custom-focus-table-cell-shadow-blur: 0.25em; // 焦点所在表格单元格的阴影模糊半径
+
+    --custom-focus-view-row-outline-width: 1px; // 焦点所在属性视图行的轮廓宽度
+    --custom-focus-view-row-outline-color: var(--b3-theme-on-surface); // 焦点所在属性视图行的轮廓颜色
+
+    --custom-focus-view-cell-shadow-blur: 0.25em; // 焦点所在属性视图单元格的阴影模糊半径
 }
 
 .protyle-wysiwyg {
@@ -58,6 +63,27 @@
                             // 全局唯一焦点所在单元格
                             box-shadow: 0 0 var(--custom-focus-table-cell-shadow-blur) 0 var(--custom-focus-unique-shadow-color) inset;
                         }
+                    }
+                }
+            }
+        }
+
+        &.av {
+            .av__row {
+                &:has(.av__cell[data-plugin-focus=true]) {
+                    // 焦点所在属性视图行
+                    outline: var(--custom-focus-view-row-outline-width) solid var(--custom-focus-table-row-outline-color);
+                }
+
+                .av__cell {
+                    &[data-plugin-focus=true] {
+                        // 焦点所在属性视图单元格
+                        box-shadow: 0 0 var(--custom-focus-view-cell-shadow-blur) 0 var(--custom-focus-shadow-color) inset;
+                    }
+
+                    &#plugin-focus-unique-id {
+                        // 全局唯一焦点所在属性视图单元格
+                        box-shadow: 0 0 var(--custom-focus-view-cell-shadow-blur) 0 var(--custom-focus-unique-shadow-color) inset;
                     }
                 }
             }

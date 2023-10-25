@@ -27,22 +27,26 @@
         },
         "typewriterSettings": {
             "code": {
-                "description": "Scroll line by line when focus is inside a code block",
-                "title": "Code Block Line Focus"
+                "description": "Scroll in lines when focus is inside a code block",
+                "title": "Code Block Line Focus Follow"
             },
             "enable": {
                 "description": "When Typewriter Mode is enabled, the block with focus will automatically scroll to the middle of the editing area",
                 "title": "Enable Typewriter Mode"
             },
             "table": {
-                "description": "Scroll cell by cell when focus is inside a table block",
-                "title": "Table Block Cell Focus"
+                "description": "Scroll in cells when focus is inside a table block",
+                "title": "Table Block Cell Focus Follow"
             },
             "timeout": {
                 "description": "Set the time interval between edit actions and the start of scrolling.<br/>Unit: milliseconds",
                 "title": "Scroll Delay Time"
             },
-            "title": "Typewriter"
+            "title": "Typewriter",
+            "view": {
+                "description": "Scroll in cells when the focus is inside the database block",
+                "title": "Database Block Cell Focus"
+            }
         }
     }
 }

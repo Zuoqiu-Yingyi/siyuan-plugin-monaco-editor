@@ -358,6 +358,11 @@ export default class TypewriterPlugin extends siyuan.Plugin {
                         element = cell ?? block;
                         break;
                     }
+                    case "NodeAttributeView": {
+                        const cell = block.querySelector<HTMLElement>(".av__cell--select");
+                        element = cell ?? block;
+                        break;
+                    }
                     default:
                         element = block;
                         break;
@@ -426,7 +431,7 @@ export default class TypewriterPlugin extends siyuan.Plugin {
                         }
                         break;
                     case "NodeTable":
-                        if (this.config.typewriter.table.row) { // 定位到行
+                        if (this.config.typewriter.view.row) { // 定位到行
                             let focus = globalThis.getSelection()?.focusNode;
                             while (true) {
                                 if (!focus) { // 元素不存在
@@ -441,6 +446,12 @@ export default class TypewriterPlugin extends siyuan.Plugin {
                                 }
                                 focus = focus.parentElement;
                             }
+                            element = focus ?? block;
+                        }
+                        break;
+                    case "NodeAttributeView":
+                        if (this.config.typewriter.table.row) { // 定位到行
+                            const focus = block.querySelector<HTMLElement>(".av__cell--select");
                             element = focus ?? block;
                         }
                         break;

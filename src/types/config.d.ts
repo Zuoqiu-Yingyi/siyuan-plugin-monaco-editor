@@ -24,6 +24,7 @@ export interface ITypewriter {
     timeout: number; // 延时 (ms)
     code: IBlockConfig; // 代码块
     table: IBlockConfig; // 表格块
+    view: IBlockConfig; // 属性视图块
 }
 
 export interface IFocus {

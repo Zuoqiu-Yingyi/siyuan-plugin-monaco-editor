@@ -27,6 +27,9 @@ export const DEFAULT_CONFIG: IConfig = {
         table: {
             row: true,
         },
+        view: {
+            row: true,
+        },
     },
     focus: {
         enable: true,

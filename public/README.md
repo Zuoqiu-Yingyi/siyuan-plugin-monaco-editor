@@ -95,14 +95,18 @@ This is a plug-in for [SiYuan Note](https://github.com/siyuan-note/siyuan) that 
   * `Enable Typewriter Mode`
 
     * When enabled, the block where the cursor is located will automatically scroll to the middle of the editor while editing
-  * `Code Block Focus Follows Line`
+  * `Code Block Line Focus Follow`
 
     * When enabled, the line of code where the cursor is located will be scrolled to the middle of the editor while editing a code block
     * When disabled, the code block will be scrolled to the middle of the editor while editing a code block
-  * `Table Block Focus Follows Cell`
+  * `Table Block Cell Focus Follow`
 
     * When enabled, the table cell where the cursor is located will be scrolled to the middle of the editor while editing a table block
     * When disabled, the table block will be scrolled to the middle of the editor while editing a table block
+  * `Database Block Cell Focus Follow`
+
+    * When enabled, the cell where the cursor is located will be scrolled to the middle of the editor while editing a database block (property view).
+    * When disabled, the entire database block will be scrolled to the middle of the editor while editing a database block (property view).
   * `Scroll Delay`
 
     * After the cursor moves to another block, the block where the cursor is located will scroll to the middle of the editor after a certain delay
