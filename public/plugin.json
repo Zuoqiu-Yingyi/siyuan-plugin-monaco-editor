@@ -2,8 +2,18 @@
     "name": "typewriter",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-typewriter",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "minAppVersion": "2.10.12",
+    "keywords": [
+        "打字机",
+        "打字機",
+        "typewriter",
+        "焦点",
+        "焦點",
+        "focus",
+        "聚焦",
+        "focalize"
+    ],
     "backends": [
         "all"
     ],
