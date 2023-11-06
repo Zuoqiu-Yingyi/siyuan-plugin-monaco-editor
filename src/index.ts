@@ -1143,7 +1143,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         if (url.pathname.startsWith(`//plugins/${this.name}/open/workspace/`)) { // 打开文件
             const scheme = (url.searchParams.get("scheme") as OpenScheme | null);
             const mode = (url.searchParams.get("mode") as OpenMode | null);
-            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`);
+            const relative = globalThis.decodeURI(trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`));
 
             switch (scheme) {
                 default:

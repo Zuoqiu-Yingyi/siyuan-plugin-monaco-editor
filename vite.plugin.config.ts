@@ -73,7 +73,7 @@ export default {
                 {
                     src: "./node_modules/streamsaver/sw.js",
                     dest: "./libs/streamsaver",
-                    rename: "sw.js",
+                    rename: "streamsaver-service-worker.js",
                 },
             ],
         }),
