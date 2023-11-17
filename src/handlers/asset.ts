@@ -22,7 +22,7 @@ import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
 import { extname } from "@workspace/utils/path/browserify";
-import { UTF8_CHAR_SET, type TLabel } from "@workspace/utils/coder/text";
+import { UTF8_CHAR_SET, type TLabel, CHAR_SET_LIST, CHAR_SET } from "@workspace/utils/coder/text";
 import { detect } from "@workspace/utils/coder/text/charset";
 import { TextTranscoder } from "@workspace/utils/coder/text/transcoder";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
@@ -97,7 +97,7 @@ export class AssetHandler extends Handler {
         handler: IAssetHandler,
     ): Promise<void> {
         try {
-            this.plugin.siyuan.showMessage(`charset: ${fn__code(charset)}`);
+            this.plugin.siyuan.showMessage(`${this.plugin.i18n.menu.charset.label}: ${fn__code(charset)}`);
 
             const buffer = await blob.arrayBuffer();
             const transcoder = new TextTranscoder(charset);
@@ -152,8 +152,12 @@ export class AssetHandler extends Handler {
 
         if (flag_trans) {
             const input = await asyncPrompt(this.plugin.siyuan.Dialog, {
-                title: "charset",
-                value: charset,
+                title: `${fn__code(this.plugin.name)}: ${this.plugin.i18n.menu.charset.label}`,
+                text: this.plugin.i18n.menu.charset.text,
+                placeholder: this.plugin.i18n.menu.charset.placeholder,
+                value: charset || "utf-8",
+                datalist: CHAR_SET_LIST,
+                confirm: value => CHAR_SET.has(value as TLabel),
             }) as TLabel;
             await this.updateHandlerWithCharset(input, response, options, handler);
         }

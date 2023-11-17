@@ -284,6 +284,11 @@
         }
     },
     "menu": {
+        "charset": {
+            "label": "Character set",
+            "placeholder": "The name of the character set",
+            "text": "Open the file with encoding"
+        },
         "confirm": {
             "placeholder": "The full path to the resource",
             "text": "Warning: You are operating on a protected resource ${1} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource ${2} in the text box below",
