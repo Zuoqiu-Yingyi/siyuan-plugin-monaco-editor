@@ -276,7 +276,7 @@
 
                     /* 思源静态文件服务 */
                     case isStaticPathname(src):
-                        source = join(rootURL, src);
+                        source = `${rootURL}/${src}`;
                         break;
 
                     /* 其他 */
@@ -317,10 +317,12 @@
                 }
             }
 
-            if (element.src) {
-                element.src = source;
-            } else {
-                element.srcset = source;
+            if (src !== source) {
+                if (element.src) {
+                    element.src = source;
+                } else {
+                    element.srcset = source;
+                }
             }
         }
     }
