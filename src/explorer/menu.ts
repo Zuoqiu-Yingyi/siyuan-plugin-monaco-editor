@@ -565,7 +565,7 @@ export class ExplorerContextMenu {
                         folder: false,
                         file: true,
                     });
-                    
+
                     if (isMarkdown) {
                         url.searchParams.set("scheme", OpenScheme.Vditor);
                         const href_vditor = url.href;
@@ -607,7 +607,8 @@ export class ExplorerContextMenu {
                         });
                     }
 
-                    const href_export = `siyuan://plugins/${this.plugin.name}/export/workspace/${relative}`;
+                    const url_export = new URL(`siyuan://plugins/${this.plugin.name}/export/workspace/${relative}`);
+                    const href_export = url_export.href;
 
                     /* 复制导出超链接 */
                     submenu.push({
@@ -644,8 +645,9 @@ export class ExplorerContextMenu {
                 if (accessible) {
                     const pathname = workspacePath2StaticPathname(relative);
                     const url = new URL(`${globalThis.document.baseURI}${pathname}`);
+                    const href = url.href;
                     const link1 = `[${name}](<${pathname}>)`;
-                    const link2 = `[${name}](<${url.href}>)`;
+                    const link2 = `[${name}](<${href}>)`;
 
                     submenu.push(
                         /* 复制引用路径 */
@@ -669,9 +671,9 @@ export class ExplorerContextMenu {
                             options: {
                                 icon: "iconLink",
                                 label: this.i18n.menu.copyURL.label,
-                                accelerator: escapeHTML(url.href),
+                                accelerator: escapeHTML(href),
                                 click: () => {
-                                    copyText(url.href);
+                                    copyText(href);
                                 },
                             },
                             root: true,

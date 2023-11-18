@@ -41,7 +41,7 @@ function registerWorker() {
     /* 👇避免与 service-worker.js 冲突👇 */
     const swReg = swRegs.find(sw => globalThis.location.href.startsWith(sw.scope))
     /* 👆避免与 service-worker.js 冲突👆 */
-    return swReg || navigator.serviceWorker.register('sw.js', { scope: './' })
+    return swReg || navigator.serviceWorker.register('streamsaver-service-worker.js', { scope: './' })
   }).then(swReg => {
     const swRegTmp = swReg.installing || swReg.waiting
 

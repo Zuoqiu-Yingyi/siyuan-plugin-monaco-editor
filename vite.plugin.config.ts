@@ -25,6 +25,7 @@ export default {
     plugins: [
         viteStaticCopy({
             targets: [
+                /* @siyuan-community/vditor */
                 {
                     src: "./node_modules/@siyuan-community/vditor/dist/css/content-theme",
                     dest: "./libs/vditor/css",
@@ -65,15 +66,22 @@ export default {
                     dest: "./libs/vditor/js",
                     rename: "method.min.js",
                 },
+                /* monaco-editor */
                 {
                     src: "./node_modules/monaco-editor/min",
                     dest: "./libs/monaco-editor",
                     rename: "min",
                 },
                 {
+                    src: "./node_modules/monaco-editor/min-maps",
+                    dest: "./libs/monaco-editor",
+                    rename: "min-maps",
+                },
+                /* streamsaver */
+                {
                     src: "./node_modules/streamsaver/sw.js",
                     dest: "./libs/streamsaver",
-                    rename: "sw.js",
+                    rename: "streamsaver-service-worker.js",
                 },
             ],
         }),

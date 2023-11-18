@@ -35,10 +35,25 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 
 /* 工作空间资源 */
 import { Logger } from "@workspace/utils/logger";
-import { getNodeID, getHistoryCreated, getHistoryPath, getShorthandID, getSnapshotIDs, getSnippetID, isSiyuanProtyleWysiwyg } from "@workspace/utils/siyuan/dom";
-import { isStaticPathname, isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
+import {
+    getNodeID,
+    getHistoryCreated,
+    getHistoryPath,
+    getShorthandID,
+    getSnapshotIDs,
+    getSnippetID,
+    isSiyuanProtyleWysiwyg,
+} from "@workspace/utils/siyuan/dom";
+import {
+    isStaticPathname,
+    isStaticWebFileServicePath,
+    workspacePath2StaticPathname,
+} from "@workspace/utils/siyuan/url";
 import { merge } from "@workspace/utils/misc/merge";
-import { getBlockMenuContext } from "@workspace/utils/siyuan/menu/block";
+import {
+    getBlockMenuContext,
+    type BlockMenuDetail,
+} from "@workspace/utils/siyuan/menu/block";
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { isMatchedMouseEvent } from "@workspace/utils/shortcut/match";
 import { normalize } from "@workspace/utils/path/normalize";
@@ -58,12 +73,24 @@ import {
     getCodeFontFamily,
     siyuanConfig2EditorOptions,
 } from "./configs/default";
-import { Inline, Language } from "./handlers/block";
+import {
+    Inline,
+    Language,
+} from "./handlers/block";
 import { EditorWindow } from "./editor/window";
-import { HandlerType, type IFacadeAssetOptions, type IFacadeOptions } from "./facades/facade";
+import {
+    HandlerType,
+    type IFacadeAssetOptions,
+    type IFacadeOptions,
+} from "./facades/facade";
 
 /* 类型 */
-import type { IClickBlockIconEvent, IClickEditorContentEvent, IOpenMenuLinkEvent, IOpenSiyuanUrlPluginEvent } from "@workspace/types/siyuan/events";
+import type {
+    IClickEditorContentEvent,
+    IOpenMenuDocTreeEvent,
+    IOpenMenuLinkEvent,
+    IOpenSiyuanUrlPluginEvent,
+} from "@workspace/types/siyuan/events";
 import type {
     BlockID,
     ISiyuanGlobal,
@@ -75,9 +102,15 @@ import type {
 import type { I18N } from "@/utils/i18n";
 import type { IDockData } from "./types/dock";
 import { trimPrefix } from "@workspace/utils/misc/string";
-import { OpenMode, OpenScheme } from "./utils/url";
+import {
+    OpenMode,
+    OpenScheme,
+} from "./utils/url";
 import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
-import { basename, parse } from "@workspace/utils/path/browserify";
+import {
+    basename,
+    parse,
+} from "@workspace/utils/path/browserify";
 import { showSaveDialog } from "@workspace/utils/electron/dialog";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
 import { showItemInFolder } from "@workspace/utils/electron/shell";
@@ -302,7 +335,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 }
 
                 /* 添加文件资源管理器侧边面板 */
-                if (this.config.dock.explorer) {
+                if (this.config.dock.explorer.enable) {
                     this.explorerDock = {
                         dock: this.addDock({
                             config: {
@@ -344,6 +377,9 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                 /* 编辑区点击 */
                 this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
+
+                /* 文档树菜单 */
+                this.eventBus.on("open-menu-doctree", this.doctreeMenuEventListener);
 
                 /* 其他块菜单 */
                 this.eventBus.on("click-blockicon", this.blockMenuEventListener);
@@ -393,8 +429,11 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
+        this.eventBus.off("open-menu-doctree", this.doctreeMenuEventListener);
+
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
+
         // this.eventBus.off("open-menu-blockref", this.blockRefMenuEventListener);
         this.eventBus.off("open-menu-link", this.linkMenuEventListener);
         this.eventBus.off("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
@@ -801,8 +840,97 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         }
     }
 
+    /* 文档树菜单弹出事件监听器 */
+    protected readonly doctreeMenuEventListener = (e: IOpenMenuDocTreeEvent) => {
+        // this.logger.debug(e);
+
+        const submenu: siyuan.IMenuItemOption[] = [];
+        switch (e.detail.type) {
+            case "doc": { // 单文档
+                const id = e.detail.elements.item(0)?.dataset?.nodeId;
+
+                if (id) {
+                    submenu.push(
+                        {
+                            /* 文档导出预览 */
+                            icon: "iconUpload",
+                            label: "Markdown",
+                            accelerator: this.i18n.menu.export.accelerator,
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.mark,
+                                    language: Language.markdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 标准 markdown */
+                            icon: "iconMarkdown",
+                            label: "Markdown",
+                            accelerator: this.i18n.menu.standard.accelerator,
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.span,
+                                    language: Language.markdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 使用 <span> 标签的 kramdown */
+                            icon: "iconInlineCode",
+                            label: "kramdown",
+                            accelerator: "&lt;span&gt;",
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.mark,
+                                    language: Language.kramdown,
+                                },
+                            }),
+                        },
+                        {
+                            /* 使用标识符的 kramdown */
+                            icon: "iconMarkdown",
+                            label: "kramdown",
+                            accelerator: "*mark*",
+                            submenu: this.buildOpenSubmenu({
+                                type: HandlerType.block,
+                                breadcrumb: { id },
+                                handler: {
+                                    id,
+                                    inline: Inline.span,
+                                    language: Language.kramdown,
+                                },
+                            }),
+                        },
+                    );
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        if (submenu.length > 0) {
+            e.detail.menu.addItem({
+                // icon: "iconCode",
+                icon: "icon-monaco-editor",
+                label: this.displayName,
+                submenu,
+            });
+        }
+    }
+
     /* 块菜单弹出事件监听器 */
-    protected readonly blockMenuEventListener = (e: IClickBlockIconEvent) => {
+    protected readonly blockMenuEventListener = (e: CustomEvent<BlockMenuDetail>) => {
         const context = getBlockMenuContext(e.detail);
 
         if (!context.isMultiBlock) { // 非多个块
@@ -906,8 +1034,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             });
 
             e.detail.menu.addItem({
-                // icon: "icon-monaco-editor",
-                icon: "iconCode",
+                // icon: "iconCode",
+                icon: "icon-monaco-editor",
                 label: this.displayName,
                 submenu,
             });
@@ -999,7 +1127,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         finally {
             if (submenu.length > 0) {
                 e.detail.menu.addItem({
-                    icon: "iconCode",
+                    // icon: "iconCode",
+                    icon: "icon-monaco-editor",
                     label: this.displayName,
                     submenu,
                 });
@@ -1014,7 +1143,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         if (url.pathname.startsWith(`//plugins/${this.name}/open/workspace/`)) { // 打开文件
             const scheme = (url.searchParams.get("scheme") as OpenScheme | null);
             const mode = (url.searchParams.get("mode") as OpenMode | null);
-            const relative = trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`);
+            const relative = globalThis.decodeURI(trimPrefix(url.pathname, `//plugins/${this.name}/open/workspace/`));
 
             switch (scheme) {
                 default:

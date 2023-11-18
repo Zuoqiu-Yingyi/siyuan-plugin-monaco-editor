@@ -32,7 +32,7 @@ import { Client } from "@siyuan-community/siyuan-sdk";
 
 const src2url = new Map<string, string>(); // 将 src 目标映射为 blob URL
 const baseURL = "./../libs/vditor";
-const rootURL = trimSuffix(location.pathname, `/plugins/${manifest.name}/iframes/vditor.html`);
+const rootURL = trimSuffix(globalThis.location.pathname, `/plugins/${manifest.name}/iframes/vditor.html`);
 const logger = new Logger(`${manifest.name}-vditor-${(() => {
     switch (true) {
         case FLAG_ELECTRON:

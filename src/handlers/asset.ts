@@ -22,6 +22,12 @@ import type { IEditorModel } from "@/types/editor";
 import type { IMonacoEditorOptions } from "@/types/config";
 import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
 import { extname } from "@workspace/utils/path/browserify";
+import { UTF8_CHAR_SET, type TLabel, CHAR_SET_LIST, CHAR_SET } from "@workspace/utils/coder/text";
+import { detect } from "@workspace/utils/coder/text/charset";
+import { TextTranscoder } from "@workspace/utils/coder/text/transcoder";
+import { fn__code } from "@workspace/utils/siyuan/text/span";
+import type { IBlob } from "@siyuan-community/siyuan-sdk";
+import { asyncPrompt } from "@workspace/components/siyuan/dialog/prompt";
 
 export interface IAssetHandler extends IHandler {
     path: string; // 相对于工作空间目录的路径
@@ -73,6 +79,52 @@ export class AssetHandler extends Handler {
         };
     }
 
+    protected async updateHandler(
+        blob: IBlob,
+        options: IAssetHandlerOptions,
+        handler: IAssetHandler,
+    ): Promise<void> {
+        handler.modified.value = await blob.text();
+        if (options.updatable) {
+            handler.update = this.createUpdateFunction(handler.path);
+        }
+    }
+
+    protected async updateHandlerWithCharset(
+        charset: TLabel,
+        blob: IBlob,
+        options: IAssetHandlerOptions,
+        handler: IAssetHandler,
+    ): Promise<void> {
+        try {
+            this.plugin.siyuan.showMessage(`${this.plugin.i18n.menu.charset.label}: ${fn__code(charset)}`);
+
+            const buffer = await blob.arrayBuffer();
+            const transcoder = new TextTranscoder(charset);
+            handler.modified.value = transcoder.decode(buffer);
+
+            if (options.updatable) {
+                handler.update = this.createUpdateFunction(
+                    handler.path,
+                    value => {
+                        try {
+                            const buffer = transcoder.encode(value);
+                            return new Blob([buffer]);
+                        } catch (error) {
+                            this.plugin.siyuan.showMessage(error, -1, "error");
+                            throw error;
+                        }
+                    },
+                );
+            }
+        } catch (error) {
+            new Error();
+            this.plugin.siyuan.showMessage(error, -1, "error");
+            this.plugin.logger.warn(error);
+            await this.updateHandler(blob, options, handler);
+        }
+    }
+
     /**
      * 生产一个块处理器
      */
@@ -92,11 +144,25 @@ export class AssetHandler extends Handler {
 
         const response = await this.client.getFile(
             { path },
-            "text",
+            "blob",
         );
-        handler.modified.value = response as string;
-        if (options.updatable) {
-            handler.update = this.createUpdateFunction(path);
+        const buffer = await response.arrayBuffer();
+        const charset = detect(response.contentType, buffer);
+        const flag_trans = !!charset && !UTF8_CHAR_SET.has(charset);
+
+        if (flag_trans) {
+            const input = await asyncPrompt(this.plugin.siyuan.Dialog, {
+                title: `${fn__code(this.plugin.name)}: ${this.plugin.i18n.menu.charset.label}`,
+                text: this.plugin.i18n.menu.charset.text,
+                placeholder: this.plugin.i18n.menu.charset.placeholder,
+                value: charset || "utf-8",
+                datalist: CHAR_SET_LIST,
+                confirm: value => CHAR_SET.has(value as TLabel),
+            }) as TLabel;
+            await this.updateHandlerWithCharset(input, response, options, handler);
+        }
+        else {
+            await this.updateHandler(response, options, handler);
         }
 
         return handler;

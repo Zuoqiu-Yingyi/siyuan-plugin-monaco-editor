@@ -28,7 +28,6 @@ import {
 } from "svelte/store";
 import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
 import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
-import { uri2path } from "@workspace/utils/misc/url";
 
 export interface INetworkStore extends IBaseStore {
     fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
