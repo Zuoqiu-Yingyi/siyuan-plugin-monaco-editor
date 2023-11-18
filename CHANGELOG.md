@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.2.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.0...v0.2.1) (2023-11-18)
+
+
+### Miscellaneous
+
+* **manaco-editor:** release v0.2.1 ([857a36f](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/857a36fefeed1ea4c8391c199da97870e4bca059))
+* **typewriter:** release v0.1.2 ([9ca5f07](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/9ca5f072f5b186d502984323ded116ecc73aaa12))
+
+
+### Features
+
+* **keepass:** 添加打开 KeeWeb 的方案 | Add the scheme of opening KeeWeb. ([c35df21](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c35df213c553874ab9fdf94807820db30c8e7b9b))
+* **monaco-editor:** 优化使用指定字符集打开文件功能 | Optimize the function of opening files using the specified character set. ([f65cb9e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/f65cb9e33ab8435d65fcfb5872e63202399f4853))
+* **monaco-editor:** 完善文档树菜单 | Improve document tree menu. ([3616cb9](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/3616cb997cbd783a48b6a6122e14f9915242f56f))
+* **monaco-editor:** 支持使用自定义字符集打开文件 | Support opening files using custom character sets. ([b6ebe15](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/b6ebe15a558e9513c3e41b009ccf4c13ffc59e12))
+* **monaco-editor:** 添加文档树菜单 | Add document tree menu. ([ecc3f62](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/ecc3f6270eb53eecd1847ae2066df0bb37e06ee5))
+* **monaco-editor:** 添加文档树菜单 | Add document tree menu. ([1bfe2c7](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/1bfe2c7fcf6b52d162847e563efce28dd19a9e93))
+* **typewriter:** 适配属性视图 | Adapt to the attribute view. ([7b61343](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/7b613437c760097daf5c6360627ea57547a83116))
+
+
+### Bug Fixes
+
+* **monaco-editor:** 修复 `Vditor` 编辑器重复加载资源文件问题 | Fix the issue of `Vditor` editor repeatedly loading resource files. ([11b77c5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/11b77c5980c270ff54c796c3a6e10503ff36d46e))
+* **monaco-editor:** 修复资源管理器侧边面板开关失效问题 | Fix the issue that the resource manager side panel switch is invalid. ([bfcc49b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/bfcc49b78eec53dad79b2ca1a5ef33c46559d66d))
+* **monaco-editor:** 修复超链接转义问题 | Fix hyperlink escape issue. ([b62da9c](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/b62da9cbcb745c6c4e0eec649ac01c1456647c58))
+
+
+### Performance Improvements
+
+* 兼容事件总线 `loaded-protyle-static` | Compatible with event bus `loaded-protyle-static`. ([1144a24](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/1144a245dd3a9bbe0c366c523887786cd09ab93d))
+
 ## [0.2.0](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.1.2...v0.2.0) (2023-10-06)
 
 
