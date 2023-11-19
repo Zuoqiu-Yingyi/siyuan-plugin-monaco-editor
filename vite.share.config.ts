@@ -52,9 +52,9 @@ export default {
                 // manualChunks: (id: string, { getModuleInfo, getModuleIds }) => {
                 //     console.log(id);
                 // },
-                entryFileNames: chunkInfo => {
-                    // console.log(chunkInfo);
-                    switch (chunkInfo.name) {
+                entryFileNames: entryInfo => {
+                    // console.log(entryInfo);
+                    switch (entryInfo.name) {
                         default:
                             return "assets/[name]-[hash].js";
                     }
