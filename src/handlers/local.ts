@@ -51,7 +51,7 @@ export class LocalHandler extends Handler {
         path: string, // 文件绝对路径
     ): (value: string) => Promise<void> {
         return async (value: string) => {
-            const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
+            const fs = globalThis.require("node:fs/promises") as typeof import("fs/promises");
             await fs.writeFile(path, value);
         };
     }
@@ -73,7 +73,7 @@ export class LocalHandler extends Handler {
         }; // 生成的处理器
 
         // this.logger.debug(uri, path);
-        const fs = globalThis.require("fs/promises") as typeof import("fs/promises");
+        const fs = globalThis.require("node:fs/promises") as typeof import("fs/promises");
         const stats = await fs.stat(path);
         if (stats?.isFile()) {
             const content = await fs.readFile(path, "utf-8");

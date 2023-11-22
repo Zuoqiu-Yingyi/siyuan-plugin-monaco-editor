@@ -40,6 +40,10 @@
         "#icon-monaco-editor-material-json"
     ],
     [
+        ".whitesource",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
         "playwright.config.js",
         "#icon-monaco-editor-material-playwright"
     ],
@@ -2624,6 +2628,10 @@
         "#icon-monaco-editor-material-stylelint"
     ],
     [
+        "stylelint.config.mjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
         ".stylelintrc.json",
         "#icon-monaco-editor-material-stylelint"
     ],
@@ -3160,11 +3168,19 @@
         "#icon-monaco-editor-material-tailwindcss"
     ],
     [
+        "tailwind.config.mjs",
+        "#icon-monaco-editor-material-tailwindcss"
+    ],
+    [
         "tailwind.config.ts",
         "#icon-monaco-editor-material-tailwindcss"
     ],
     [
         "tailwind.config.cts",
+        "#icon-monaco-editor-material-tailwindcss"
+    ],
+    [
+        "tailwind.config.mts",
         "#icon-monaco-editor-material-tailwindcss"
     ],
     [
@@ -3605,6 +3621,22 @@
     ],
     [
         ".textlintrc",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
+        ".textlintrc.js",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
+        ".textlintrc.json",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
+        ".textlintrc.yml",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
+        ".textlintrc.yaml",
         "#icon-monaco-editor-material-textlint"
     ],
     [
@@ -4050,6 +4082,22 @@
     [
         ".nanostagedrc",
         "#icon-monaco-editor-material-nano-staged"
+    ],
+    [
+        "taskfile.yml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        "taskfile.yaml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        "taskfile.dist.yml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        "taskfile.dist.yaml",
+        "#icon-monaco-editor-material-taskfile"
     ],
     [
         "craco.config.ts",

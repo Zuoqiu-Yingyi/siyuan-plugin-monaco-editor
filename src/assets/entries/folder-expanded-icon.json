@@ -1456,6 +1456,14 @@
         "#icon-monaco-editor-material-folder-archive-open"
     ],
     [
+        "history",
+        "#icon-monaco-editor-material-folder-archive-open"
+    ],
+    [
+        "histories",
+        "#icon-monaco-editor-material-folder-archive-open"
+    ],
+    [
         "batch",
         "#icon-monaco-editor-material-folder-batch-open"
     ],
@@ -2554,5 +2562,33 @@
     [
         ".godot-cpp",
         "#icon-monaco-editor-material-folder-godot-open"
+    ],
+    [
+        "lottie",
+        "#icon-monaco-editor-material-folder-lottie-open"
+    ],
+    [
+        "lotties",
+        "#icon-monaco-editor-material-folder-lottie-open"
+    ],
+    [
+        "lottiefiles",
+        "#icon-monaco-editor-material-folder-lottie-open"
+    ],
+    [
+        "taskfile",
+        "#icon-monaco-editor-material-folder-taskfile-open"
+    ],
+    [
+        "taskfiles",
+        "#icon-monaco-editor-material-folder-taskfile-open"
+    ],
+    [
+        ".taskfile",
+        "#icon-monaco-editor-material-folder-taskfile-open"
+    ],
+    [
+        ".taskfiles",
+        "#icon-monaco-editor-material-folder-taskfile-open"
     ]
 ]

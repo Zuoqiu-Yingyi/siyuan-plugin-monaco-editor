@@ -80,6 +80,10 @@
         "#icon-monaco-editor-material-json"
     ],
     [
+        ".hjson",
+        "#icon-monaco-editor-material-hjson"
+    ],
+    [
         ".jinja",
         "#icon-monaco-editor-material-jinja"
     ],
@@ -3180,6 +3184,14 @@
         "#icon-monaco-editor-material-pinejs"
     ],
     [
+        ".taskfile.yml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        ".taskfile.yaml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
         ".gml",
         "#icon-monaco-editor-material-gamemaker"
     ],
@@ -3246,5 +3258,25 @@
     [
         ".stan",
         "#icon-monaco-editor-material-stan"
+    ],
+    [
+        ".abap",
+        "#icon-monaco-editor-material-abap"
+    ],
+    [
+        ".acds",
+        "#icon-monaco-editor-material-abap"
+    ],
+    [
+        ".asddls",
+        "#icon-monaco-editor-material-abap"
+    ],
+    [
+        ".lottie",
+        "#icon-monaco-editor-material-lottie"
+    ],
+    [
+        ".gs",
+        "#icon-monaco-editor-material-apps-script"
     ]
 ]

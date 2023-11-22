@@ -674,5 +674,9 @@
     [
         "stylable",
         "#icon-monaco-editor-material-stylable"
+    ],
+    [
+        "hjson",
+        "#icon-monaco-editor-material-hjson"
     ]
 ]
