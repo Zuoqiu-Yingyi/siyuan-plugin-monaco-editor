@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.1...v0.2.2) (2023-11-22)
+
+
+### Miscellaneous
+
+* **monaco-editor:** release v0.2.2 ([b1d4ff6](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/b1d4ff67f884e42b0888793901cd7cbafa3cfce0))
+
+
+### Features
+
+* **inbox:** 添加收集箱客户端 | Add inbox client. ([63d943e](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/63d943e31825ce2e891c277024113cb2247ad04f))
+
+
+### Bug Fixes
+
+* **monaco-editor:** 修复无法在浏览器环境中正确加载的问题 | Fix the issue that cannot be loaded correctly in the browser environment. ([da13865](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/da1386562cf1cfeaaea95409b74f75a82b146f8f))
+
 ## [0.2.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.0...v0.2.1) (2023-11-18)
 
 
