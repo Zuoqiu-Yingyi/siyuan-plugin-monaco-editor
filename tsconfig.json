@@ -51,7 +51,6 @@
     },
     "include": [
         "public/i18n/*.json",
-        "scripts",
         "src/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.js",
