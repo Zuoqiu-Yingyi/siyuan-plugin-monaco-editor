@@ -217,7 +217,7 @@
                     switch (true) {
                         case FLAG_ELECTRON: {
                             // Electron 环境
-                            return globalThis.require("path").resolve(globalThis.siyuan.config.system.workspaceDir, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
+                            return globalThis.require("node:path").resolve(globalThis.siyuan.config.system.workspaceDir, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
                             // return `${globalThis.siyuan.system.workspaceDir}/data/plugins/${plugin.name}/libs/monaco-editor/min/vs`;
                         }
                         default: {
@@ -230,7 +230,7 @@
                     // 通过 iframe/BrowserWindow 加载
                     switch (true) {
                         case FLAG_ELECTRON: // Electron BrowserWindow 环境
-                            return globalThis.require("path").resolve(path, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
+                            return globalThis.require("node:path").resolve(path, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
                         case FLAG_IFRAME: // iframe 环境
                         default:
                             return "./../libs/monaco-editor/min/vs";

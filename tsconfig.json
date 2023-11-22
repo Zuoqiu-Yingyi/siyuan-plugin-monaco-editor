@@ -1,10 +1,22 @@
 {
-    "extends": "@tsconfig/svelte/tsconfig.json",
+    "$schema": "https://json.schemastore.org/tsconfig.json",
+    // "extends": "@tsconfig/svelte/tsconfig.json",
     "compilerOptions": {
-        "target": "ESNext",
-        "useDefineForClassFields": true,
-        "module": "ESNext",
-        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        /**
+         * Svelte Preprocess cannot figure out whether you have a value or a type, so tell TypeScript
+         * to enforce using `import type` instead of `import` for Types.
+         */
+        "verbatimModuleSyntax": true,
+        /**
+         * To have warnings/errors of the Svelte compiler at the correct position,
+         * enable source maps by default.
+         */
+        "sourceMap": true,
+        "strict": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
         /**
          * Typecheck JS in `.svelte` and `.js` files by default.
          * Disable checkJs if you'd like to use dynamic types in JS.
@@ -13,7 +25,11 @@
          */
         "allowJs": true,
         "checkJs": true,
+
+        "target": "ESNext",
+        "module": "ESNext",
         "isolatedModules": true,
+        "resolveJsonModule": true,
         "lib": [
             "ESNext",
             "DOM",
@@ -28,8 +44,14 @@
             ],
         },
     },
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node",
+        "compilerOptions": {},
+    },
     "include": [
         "public/i18n/*.json",
+        "scripts",
         "src/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.js",

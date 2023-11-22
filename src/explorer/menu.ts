@@ -63,7 +63,7 @@ import {
     openPath,
     showItemInFolder,
 } from "@workspace/utils/electron/shell";
-import { showOpenDialog } from "@workspace/utils/electron/dialog";
+import { showOpenDialog } from "@workspace/utils/electron/remote/dialog";
 import { cp } from "@workspace/utils/node/fs/promises";
 import { normalize } from "@workspace/utils/path/normalize";
 import { OpenScheme } from "@/utils/url";

@@ -100,6 +100,10 @@
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
+        "stylelint.config.mjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
         ".stylelintrc.json",
         "#icon-monaco-editor-material-stylelint_light"
     ],

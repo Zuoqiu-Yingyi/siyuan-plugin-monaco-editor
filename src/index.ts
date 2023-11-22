@@ -111,7 +111,7 @@ import {
     basename,
     parse,
 } from "@workspace/utils/path/browserify";
-import { showSaveDialog } from "@workspace/utils/electron/dialog";
+import { showSaveDialog } from "@workspace/utils/electron/remote/dialog";
 import { fn__code } from "@workspace/utils/siyuan/text/span";
 import { showItemInFolder } from "@workspace/utils/electron/shell";
 import { VditorWindow } from "./vditor/window";
@@ -1827,7 +1827,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             ? this.i18n.menu.exportFile
             : this.i18n.menu.exportFolder;
 
-        const asyncFs = globalThis.require("fs/promises") as typeof import("fs/promises");
+        const asyncFs = globalThis.require("node:fs/promises") as typeof import("fs/promises");
         const result = await showSaveDialog({
             title: i10n_save_as.title.replaceAll("${1}", path),
             defaultPath: name,
@@ -1840,7 +1840,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         });
         if (!result.canceled && result.filePath) {
             // this.logger.debugs(path, result.filePath);
-            const { join } = globalThis.require("path") as typeof import("path");
+            const { join } = globalThis.require("node:path") as typeof import("path");
             const source = join(
                 globalThis.siyuan.config.system.workspaceDir,
                 path,
