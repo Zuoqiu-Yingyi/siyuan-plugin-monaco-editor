@@ -324,9 +324,33 @@
                     /**
                      * {@link Editor.EditorOption.wordWrap}
                      * Editor.EditorOption.wordWrap === 130
+                     * {@link Editor.EditorOption.wordWrapOverride1}
+                     * Editor.EditorOption.wordWrap === 134
                      */
-                    const word_wrap_status = editor.getOption(130) === "off" ? "on" : "off";
-                    updateOptions({ wordWrap: word_wrap_status });
+                    let word_wrap_status: boolean;
+                    switch (editor.getOption(134)) {
+                        case "off":
+                            word_wrap_status = true;
+                            break;
+                        case "on":
+                            word_wrap_status = false;
+                            break;
+                        default:
+                            switch (editor.getOption(130)) {
+                                case "off":
+                                    word_wrap_status = true;
+                                    break;
+
+                                case "on":
+                                case "wordWrapColumn":
+                                case "bounded":
+                                default:
+                                    word_wrap_status = false;
+                                    break;
+                            }
+                            break;
+                    }
+                    updateOptions({ wordWrapOverride1: word_wrap_status ? "on" : "off" });
                 },
             });
 

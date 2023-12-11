@@ -526,7 +526,17 @@
                 "title": "Global Settings"
             },
             "monacoTab": {
-                "title": "Monaco Editor"
+                "title": "Monaco Editor",
+                "wordWrap": {
+                    "description": "The word wrapping solution used in the editor",
+                    "options": {
+                        "bounded": "[bounded] Wrap at the minimum of custom column width and viewport width",
+                        "off": "[off] Do not wrap",
+                        "on": "[on] Wrap at the visible viewport",
+                        "wordWrapColumn": "[wordWrapColumn] Wrap at the custom column width"
+                    },
+                    "title": "Editor Word Wrapping Solution <span data-type='fn__code'>wordWrap</span>"
+                }
             },
             "title": "Editor Settings",
             "vditorTab": {

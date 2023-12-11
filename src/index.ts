@@ -509,7 +509,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     }
 
     /* 在新页签打开块 */
-    public openDocTab(options: { id: BlockID, focus?: number }): siyuan.ITab {
+    public async openDocTab(options: { id: BlockID, focus?: number }): Promise<siyuan.ITab> {
         return siyuan.openTab({
             app: this.app,
             doc: {

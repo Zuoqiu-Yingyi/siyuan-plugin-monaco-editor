@@ -116,6 +116,17 @@ This panel displays the markdown/kramdown source code of the currently edited bl
 
       * Set the default editor for opening `*.md` files
       * Default is to open `*.md` files with the Vditor editor
+  * `Monaco Editor`
+
+    * `Editor Word Wrapping Solution`
+
+      * Set the word wrapping solution used in the editor
+      * options
+
+        * `off`: Do not wrap
+        * `on`: Wrap at the visible viewport
+        * `wordWrapColumn`: Wrap at the custom column width
+        * `bounded`: Wrap at the minimum of custom column width and viewport width
   * `Vditor Editor`
 
     * `Resource File Saving Scheme`
