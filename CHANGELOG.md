@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.2...v0.2.3) (2023-12-26)
+
+
+### Build System
+
+* 提取部分依赖至工作空间 | Extract some dependencies to workspace. ([3f8a33d](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/3f8a33d5b966e5ced51706e72e886cd27fae3af4))
+
+
+### Features
+
+* **monaco-editor:** 优化云收集箱面板内容查看功能 | Optimize cloud inbox panel content viewing function. ([9dd0c7b](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/9dd0c7b49e707ad997a27db5f1e7dd4cfd9df32e))
+* **monaco-editor:** 支持自定义编辑器折行方案 | Support custom editor word wrap scheme. ([95aa1cb](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/95aa1cbe3b0f808a031ae9771525a601271ca79a))
+
+
+### Bug Fixes
+
+* **monaco-editor:** 修复在 `BrowserWindow` 中编辑器无法加载问题 | Fix the issue that the editor cannot be loaded in `BrowserWindow`. ([c8d6c68](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c8d6c68a6bb2b873512cee28a7ac7e9283a583e7))
+
 ## [0.2.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.1...v0.2.2) (2023-11-22)
 
 
