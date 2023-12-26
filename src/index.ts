@@ -88,6 +88,7 @@ import {
 import type {
     IClickEditorContentEvent,
     IOpenMenuDocTreeEvent,
+    IOpenMenuInboxEvent,
     IOpenMenuLinkEvent,
     IOpenSiyuanUrlPluginEvent,
 } from "@workspace/types/siyuan/events";
@@ -380,6 +381,8 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
 
                 /* 文档树菜单 */
                 this.eventBus.on("open-menu-doctree", this.doctreeMenuEventListener);
+                /* 收集箱菜单 */
+                this.eventBus.on("open-menu-inbox", this.inobxMenuEventListener);
 
                 /* 其他块菜单 */
                 this.eventBus.on("click-blockicon", this.blockMenuEventListener);
@@ -430,6 +433,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         this.eventBus.off("click-editorcontent", this.clickEditorContentEventListener);
 
         this.eventBus.off("open-menu-doctree", this.doctreeMenuEventListener);
+        this.eventBus.off("open-menu-inbox", this.inobxMenuEventListener);
 
         this.eventBus.off("click-blockicon", this.blockMenuEventListener);
         this.eventBus.off("click-editortitleicon", this.blockMenuEventListener);
@@ -571,34 +575,6 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             },
                             breadcrumb: {
                                 id: snippet_id,
-                            },
-                        },
-                    ),
-                });
-                menu.open({
-                    x: globalThis.siyuan.coordinates.clientX,
-                    y: globalThis.siyuan.coordinates.clientY,
-                });
-                return;
-            }
-        }
-
-        /* 收集箱速记 */
-        if (this.config.operates.menu.shorthand) {
-            const shorthand_id = getShorthandID(e); // 获取收集箱 ID
-            // this.logger.debug(shorthand_id);
-            if (shorthand_id) {
-                menu.addItem({
-                    icon: "iconCode",
-                    label: this.displayName,
-                    submenu: this.buildOpenSubmenu(
-                        {
-                            type: HandlerType.inbox,
-                            handler: {
-                                id: shorthand_id,
-                            },
-                            breadcrumb: {
-                                id: shorthand_id,
                             },
                         },
                     ),
@@ -917,6 +893,61 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             }
             default:
                 break;
+        }
+
+        if (submenu.length > 0) {
+            e.detail.menu.addItem({
+                // icon: "iconCode",
+                icon: "icon-monaco-editor",
+                label: this.displayName,
+                submenu,
+            });
+        }
+    }
+
+    /* 收集箱菜单弹出事件监听器 */
+    protected readonly inobxMenuEventListener = (e: IOpenMenuInboxEvent) => {
+        // this.logger.debug(e);
+
+        const submenu: siyuan.IMenuItemOption[] = [];
+
+        /* 收集箱速记 */
+        if (this.config.operates.menu.shorthand) {
+            const shorthand_id = e.detail.ids.find(id => id === e.detail.element.dataset.id);
+            if (shorthand_id) {
+                submenu.push({
+                    icon: "iconMarkdown",
+                    label: "Markdown",
+                    submenu: this.buildOpenSubmenu(
+                        {
+                            type: HandlerType.inbox,
+                            handler: {
+                                id: shorthand_id,
+                                format: "markdown",
+                            },
+                            breadcrumb: {
+                                id: shorthand_id,
+                            },
+                        },
+                    ),
+                });
+                submenu.push({
+                    icon: "iconHTML5",
+                    label: "HTML",
+                    submenu: this.buildOpenSubmenu(
+                        {
+                            type: HandlerType.inbox,
+                            handler: {
+                                id: shorthand_id,
+                                format: "html",
+                            },
+                            breadcrumb: {
+                                id: shorthand_id,
+                            },
+                        },
+                    ),
+                });
+            }
         }
 
         if (submenu.length > 0) {
