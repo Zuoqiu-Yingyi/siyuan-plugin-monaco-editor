@@ -42,16 +42,18 @@ const logger = new Logger(`${manifest.name}-editor-${(() => {
     }
 })()}`);
 
-var editor: InstanceType<typeof Editor> = new Editor({
-    target: globalThis.document.body,
-    props: {
-        plugin: {
-            name: manifest.name,
-            i18n,
-            logger,
+var editor: InstanceType<typeof Editor> = !FLAG_ELECTRON
+    ? new Editor({
+        target: globalThis.document.body,
+        props: {
+            plugin: {
+                name: manifest.name,
+                i18n,
+                logger,
+            },
         },
-    },
-}); // 编辑器组件
+    })
+    : null; // 编辑器组件
 
 const bridge = new EditorBridgeSlave(
     () => {
@@ -60,7 +62,7 @@ const bridge = new EditorBridgeSlave(
             "editor-init",
             e => {
                 const { data } = e.data;
-
+                // logger.debug(data);
 
                 /* 编辑器已存在则销毁原编辑器 */
                 if (editor) {

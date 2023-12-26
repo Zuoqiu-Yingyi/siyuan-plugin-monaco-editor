@@ -120,6 +120,13 @@
         { key: AssetsUploadMode.relative, text: i18n.settings.editorSettings.vditorTab.assetsUploadMode.options.relative },
         { key: AssetsUploadMode.absolute, text: i18n.settings.editorSettings.vditorTab.assetsUploadMode.options.absolute },
     ];
+
+    const word_wrap_options = [
+        { key: "off", text: i18n.settings.editorSettings.monacoTab.wordWrap.options.off },
+        { key: "on", text: i18n.settings.editorSettings.monacoTab.wordWrap.options.on },
+        { key: "wordWrapColumn", text: i18n.settings.editorSettings.monacoTab.wordWrap.options.wordWrapColumn },
+        { key: "bounded", text: i18n.settings.editorSettings.monacoTab.wordWrap.options.bounded },
+    ];
 </script>
 
 <Panels
@@ -320,7 +327,27 @@
             <div
                 data-type={tabs.editor[1].name}
                 class:fn__none={tabs.editor[1].key !== focusTab}
-            />
+            >
+                <!-- 自动折行方案 -->
+                <Item
+                    title={i18n.settings.editorSettings.monacoTab.wordWrap.title}
+                    text={i18n.settings.editorSettings.monacoTab.wordWrap.description}
+                    block={true}
+                >
+                    <Input
+                        slot="input"
+                        type={ItemType.select}
+                        settingKey="editor.wordWrap"
+                        settingValue={config.editor.options.wordWrap}
+                        block={true}
+                        options={word_wrap_options}
+                        on:changed={async e => {
+                            config.editor.options.wordWrap = e.detail.value;
+                            await updated();
+                        }}
+                    />
+                </Item>
+            </div>
 
             <!-- 标签页 3 - Vditor 编辑器设置 -->
             <div

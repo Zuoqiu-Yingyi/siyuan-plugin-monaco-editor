@@ -41,7 +41,6 @@ export function siyuanConfig2EditorOptions(config = globalThis.siyuan.config): I
         mouseWheelZoom: config.editor.fontSizeScrollZoom,
         readOnly: config.editor.readOnly,
         tabSize: config.editor.codeTabSpaces,
-        wordWrap: config.editor.wordWrap ? "on" : "off",
         theme: config.appearance.mode === 0 ? "vs" : "vs-dark",
     };
 }

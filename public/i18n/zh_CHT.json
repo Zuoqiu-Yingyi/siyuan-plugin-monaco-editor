@@ -526,7 +526,17 @@
                 "title": "全局設置"
             },
             "monacoTab": {
-                "title": "Monaco 編輯器"
+                "title": "Monaco 編輯器",
+                "wordWrap": {
+                    "description": "編輯器中所使用的自動折行方案",
+                    "options": {
+                        "bounded": "[bounded] 在自定義列寬和視區寬度中較小的值處換行",
+                        "off": "[off] 不換行",
+                        "on": "[on] 在可視區域處換行",
+                        "wordWrapColumn": "[wordWrapColumn] 在自定義列寬處換行"
+                    },
+                    "title": "編輯器折行方案 <code class='fn__code'>wordWrap</code>"
+                }
             },
             "title": "編輯器設置",
             "vditorTab": {

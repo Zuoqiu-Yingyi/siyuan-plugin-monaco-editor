@@ -17,6 +17,7 @@
 
 * **monaco-editor:** 修复无法在浏览器环境中正确加载的问题 | Fix the issue that cannot be loaded correctly in the browser environment. ([da13865](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/da1386562cf1cfeaaea95409b74f75a82b146f8f))
 
+
 ## [0.2.1](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.0...v0.2.1) (2023-11-18)
 
 

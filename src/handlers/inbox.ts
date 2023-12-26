@@ -28,6 +28,7 @@ export interface IInboxHandler extends IHandler {
 
 export interface IInboxHandlerOptions extends IBaseHandlerOptions {
     id: string; // 收集箱 ID
+    format: "markdown" | "html"; // 收集箱内容格式
 }
 
 export class InboxHandler extends Handler {
@@ -50,11 +51,23 @@ export class InboxHandler extends Handler {
         });
 
         /* 生成的处理器 */
+        const modified: IEditorModel = (() => {
+            switch (options.format) {
+                default:
+                case "markdown":
+                    return {
+                        value: response.data.shorthandMd,
+                        language: "markdown",
+                    };
+                case "html":
+                    return {
+                        value: response.data.shorthandContent,
+                        language: "html",
+                    };
+            }
+        })();
         const handler: IInboxHandler = {
-            modified: {
-                value: response.data.shorthandContent,
-                language: "markdown",
-            },
+            modified,
             options: {
                 tabSize: this.customTabSize,
             },
