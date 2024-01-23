@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.2.4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.3...v0.2.4) (2024-01-23)
+
+
+### Miscellaneous
+
+* **monaco-editor:** release v0.2.4 ([077fc65](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/077fc65a1817c95a9ec9cb08d915eabfc4966ec2))
+
 ## [0.2.3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.2...v0.2.3) (2023-12-26)
 
 
