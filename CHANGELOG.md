@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## [0.2.3](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.2...v0.2.3) (2023-12-26)
 
 
@@ -17,6 +18,7 @@
 ### Bug Fixes
 
 * **monaco-editor:** 修复在 `BrowserWindow` 中编辑器无法加载问题 | Fix the issue that the editor cannot be loaded in `BrowserWindow`. ([c8d6c68](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/c8d6c68a6bb2b873512cee28a7ac7e9283a583e7))
+
 
 ## [0.2.2](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.1...v0.2.2) (2023-11-22)
 
