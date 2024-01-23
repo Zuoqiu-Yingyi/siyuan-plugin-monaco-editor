@@ -1,0 +1,603 @@
+{
+    "button": {
+        "fullscreen": {
+            "ariaLabel": "全屏"
+        },
+        "realTime": {
+            "ariaLabel": "實時保存更改"
+        },
+        "workspace": {
+            "text": "工作空間"
+        }
+    },
+    "displayName": "集成編輯環境",
+    "dock": {
+        "collapse": {
+            "ariaLabel": "摺疊所有文件夾"
+        },
+        "inline": {
+            "ariaLabel": "markdown: 編輯標準 markdown\nkramdown: 行內元素使用 <span> 標籤"
+        },
+        "kramdown": {
+            "ariaLabel": "使用 kramdown 編輯"
+        },
+        "refresh": {
+            "ariaLabel": "實時保存更改"
+        },
+        "title": "程式碼編輯"
+    },
+    "editor": {
+        "action": {
+            "save": {
+                "label": "保存"
+            },
+            "saveAs": {
+                "label": "另存為"
+            },
+            "setModelLanguage": {
+                "label": "設定編輯器語言模式"
+            },
+            "toggleWordWrap": {
+                "label": "切換自動換行"
+            }
+        },
+        "tooltip": {
+            "siyuanBlockHyperlink": {
+                "label": "思源塊超連結"
+            },
+            "siyuanBlockID": {
+                "label": "思源塊 ID"
+            },
+            "siyuanBlockReference": {
+                "label": "思源塊引用"
+            }
+        }
+    },
+    "explorer": {
+        "count": {
+            "ariaLabel": "資源數量"
+        },
+        "file": {
+            "ariaLabel": "檔案"
+        },
+        "fold": {
+            "ariaLabel": "摺疊"
+        },
+        "folder": {
+            "ariaLabel": "資料夾"
+        },
+        "lastUpdated": {
+            "text": "更新時間"
+        },
+        "menu": {
+            "ariaLabel": "菜單"
+        },
+        "refresh": {
+            "ariaLabel": "刷新資源管理器"
+        },
+        "symlink": {
+            "ariaLabel": "符號連結"
+        },
+        "title": "檔案資源管理器",
+        "toggle": {
+            "ariaLabel": "摺疊/展開"
+        },
+        "tooltips": {
+            "paths": [
+                [
+                    "conf",
+                    "配置目錄"
+                ],
+                [
+                    "conf/appearance",
+                    "外觀目錄"
+                ],
+                [
+                    "conf/appearance/boot",
+                    "啟動視窗目錄"
+                ],
+                [
+                    "conf/appearance/emojis",
+                    "表情符號目錄"
+                ],
+                [
+                    "conf/appearance/icons",
+                    "介面圖示目錄"
+                ],
+                [
+                    "conf/appearance/langs",
+                    "本地化目錄"
+                ],
+                [
+                    "conf/appearance/themes",
+                    "主題目錄"
+                ],
+                [
+                    "conf/conf.json",
+                    "配置檔案"
+                ],
+                [
+                    "conf/windowState.json",
+                    "視窗狀態檔案"
+                ],
+                [
+                    "data",
+                    "資料目錄"
+                ],
+                [
+                    "data/.siyuan",
+                    "元資料目錄"
+                ],
+                [
+                    "data/.siyuan/filesys_status_check",
+                    "檔案系統狀態檢查臨時檔案目錄"
+                ],
+                [
+                    "data/.siyuan/conf.json",
+                    "資料目錄狀態檔案"
+                ],
+                [
+                    "data/.siyuan/syncignore",
+                    "資料快照忽略配置檔案"
+                ],
+                [
+                    "data/assets",
+                    "資原始檔目錄"
+                ],
+                [
+                    "data/assets/ocr-texts.json",
+                    "圖片 OCR 結果"
+                ],
+                [
+                    "data/emojis",
+                    "自定義表情檔案目錄"
+                ],
+                [
+                    "data/plugins",
+                    "外掛目錄"
+                ],
+                [
+                    "data/public",
+                    "公共檔案目錄"
+                ],
+                [
+                    "data/snippets",
+                    "程式碼片段目錄"
+                ],
+                [
+                    "data/snippets/conf.json",
+                    "程式碼片段列表"
+                ],
+                [
+                    "data/storage",
+                    "資料儲存目錄"
+                ],
+                [
+                    "data/storage/av",
+                    "屬性檢視目錄"
+                ],
+                [
+                    "data/storage/petal",
+                    "外掛資料目錄"
+                ],
+                [
+                    "data/storage/petal/petals.json",
+                    "外掛狀態目錄"
+                ],
+                [
+                    "data/storage/riff",
+                    "閃卡資料目錄"
+                ],
+                [
+                    "data/storage/criteria.json",
+                    "搜尋配置"
+                ],
+                [
+                    "data/storage/local.json",
+                    "本地介面配置"
+                ],
+                [
+                    "data/storage/recent-doc.json",
+                    "最近開啟的文件"
+                ],
+                [
+                    "data/templates",
+                    "範本目錄"
+                ],
+                [
+                    "data/widgets",
+                    "小組件目錄"
+                ],
+                [
+                    "history",
+                    "歷史資料目錄"
+                ],
+                [
+                    "repo",
+                    "資料快照目錄"
+                ],
+                [
+                    "temp",
+                    "臨時檔案目錄"
+                ],
+                [
+                    "temp/blocktree",
+                    "內容塊結構索引目錄"
+                ],
+                [
+                    "temp/os",
+                    "系統資訊目錄"
+                ],
+                [
+                    "temp/pandoc",
+                    "Pandoc 目錄"
+                ],
+                [
+                    "temp/pandoc/bin",
+                    "Pandoc 可執行檔案目錄"
+                ],
+                [
+                    "temp/history.db",
+                    "歷史文件索引資料庫檔案"
+                ],
+                [
+                    "temp/history.db-shm",
+                    "歷史文件索引資料庫共享記憶體檔案"
+                ],
+                [
+                    "temp/history.db-wal",
+                    "歷史文件索引資料庫預寫日誌檔案"
+                ],
+                [
+                    "temp/siyuan.db",
+                    "內容塊索引資料庫檔案"
+                ],
+                [
+                    "temp/siyuan.db-shm",
+                    "內容塊索引資料庫共享記憶體檔案"
+                ],
+                [
+                    "temp/siyuan.db-wal",
+                    "內容塊索引資料庫預寫日誌檔案"
+                ],
+                [
+                    "temp/siyuan.log",
+                    "核心日誌檔案"
+                ],
+                [
+                    ".lock",
+                    "工作區佔用標誌"
+                ]
+            ],
+            "siyuanDoc": "文件檔案",
+            "siyuanDocCustomSort": "文件自定義排序檔案",
+            "siyuanDocDir": "文件目錄",
+            "siyuanNotebook": "筆記本目錄",
+            "siyuanNotebookConfig": "筆記本配置檔案",
+            "siyuanNotebookMetadataDir": "筆記本元資料目錄"
+        },
+        "unfold": {
+            "ariaLabel": "展開"
+        },
+        "workspace": {
+            "name": "工作空間"
+        }
+    },
+    "menu": {
+        "charset": {
+            "label": "字符集",
+            "placeholder": "字符集名稱",
+            "text": "使用編碼打開文件"
+        },
+        "confirm": {
+            "placeholder": "資源完整路徑",
+            "text": "警告：您正在操作受保護的資源 ${1} ！<br/>您之後的活動可能導致資料丟失或損壞！<br/><br/>若繼續操作，請在下方文字框中輸入該資源的完整路徑 ${2}",
+            "tips": {
+                "pleaseEnter": "請輸入資源的完整路徑",
+                "warn": "您確定要繼續操作資源 ${1} ？"
+            },
+            "title": "⚠️ 高風險操作確認"
+        },
+        "copy": {
+            "label": "複製"
+        },
+        "copyDownloadHyperlink": {
+            "label": "複製下載超連結"
+        },
+        "copyEditHyperlink": {
+            "label": "複製編輯超連結"
+        },
+        "copyExportHyperlink": {
+            "label": "複製匯出超連結"
+        },
+        "copyFullPath": {
+            "label": "複製完整路徑"
+        },
+        "copyMarkdownHyperlink": {
+            "label": "複製 Markdown 超連結"
+        },
+        "copyName": {
+            "label": "複製名稱"
+        },
+        "copyPreviewHyperlink": {
+            "label": "複製預覽超連結"
+        },
+        "copyReferencePath": {
+            "label": "複製引用路徑"
+        },
+        "copyRelativePath": {
+            "label": "複製相對路徑"
+        },
+        "copyURL": {
+            "label": "複製 URL"
+        },
+        "delete": {
+            "label": "刪除"
+        },
+        "deleteFile": {
+            "label": "刪除檔案",
+            "text": "確定要刪除檔案 ${1} ？<br/>該檔案的完整路徑為 ${2}"
+        },
+        "deleteFolder": {
+            "label": "刪除資料夾",
+            "text": "確定要刪除資料夾 ${1} ？<br/>該資料夾的完整路徑為 ${2}"
+        },
+        "diffEdit": {
+            "label": "對比編輯"
+        },
+        "diffView": {
+            "label": "對比查看"
+        },
+        "download": {
+            "label": "下載"
+        },
+        "editAssetFile": {
+            "label": "編輯資料文檔"
+        },
+        "editLocalFile": {
+            "label": "編輯本地文檔"
+        },
+        "export": {
+            "accelerator": "導出",
+            "label": "導出..."
+        },
+        "exportFile": {
+            "label": "導出檔案",
+            "message": "檔案 ${1} 已導出至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "導出檔案 ${1}"
+        },
+        "exportFolder": {
+            "label": "導出資料夾",
+            "message": "資料夾 ${1} 已導出至 ${2}，是否在檔案資源管理器中查看？",
+            "title": "導出資料夾 ${1}"
+        },
+        "import": {
+            "label": "導入"
+        },
+        "importFile": {
+            "label": "導入文件...",
+            "title": "導入文件至 ${1}"
+        },
+        "importFolder": {
+            "label": "導入文件夾...",
+            "title": "導入文件夾至 ${1}"
+        },
+        "move": {
+            "text": "是否將 ${1}<br/>從&emsp;&emsp; ${2}<br/>移動至 ${3}？",
+            "title": "移動 ${1}"
+        },
+        "new": {
+            "label": "新增"
+        },
+        "newFile": {
+            "label": "新建檔案...",
+            "placeholder": "檔名",
+            "text": "在資料夾 ${1} 下新建一個檔案",
+            "tips": {
+                "empty": "檔名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱",
+                "info": "新建檔案 ${1} ？",
+                "invalid": "名稱 ${1} 為無效檔名，請輸入其他名稱",
+                "pleaseEnter": "請輸入檔名"
+            }
+        },
+        "newFolder": {
+            "label": "新建資料夾...",
+            "placeholder": "資料夾名",
+            "text": "在資料夾 ${1} 下新建一個資料夾",
+            "tips": {
+                "empty": "資料夾名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱。",
+                "info": "新建資料夾 ${1} ？",
+                "invalid": "名稱 ${1} 為無效資料夾名，請輸入其他名稱。",
+                "pleaseEnter": "請輸入資料夾名"
+            }
+        },
+        "open": {
+            "label": "開啟"
+        },
+        "openByNewWindow": {
+            "label": "使用新窗口開啟"
+        },
+        "openFile": {
+            "label": "開啟文檔"
+        },
+        "openFileInEditor": {
+            "label": "在文字編輯器中開啟"
+        },
+        "openFileInPreviewer": {
+            "label": "在檔案預覽器中開啟"
+        },
+        "openInNewTab": {
+            "label": "在新分頁中開啟"
+        },
+        "openTabBackground": {
+            "label": "在後台分頁中開啟"
+        },
+        "openTabBottom": {
+            "label": "在分頁下側開啟"
+        },
+        "openTabRight": {
+            "label": "在分頁右側開啟"
+        },
+        "openWithDefaultProgram": {
+            "label": "使用預設程式開啟"
+        },
+        "refresh": {
+            "label": "重新整理"
+        },
+        "refreshDirectory": {
+            "label": "重新整理該目錄"
+        },
+        "refreshDirectoryDeeply": {
+            "label": "深度重新整理該目錄"
+        },
+        "rename": {
+            "label": "重新命名..."
+        },
+        "renameFile": {
+            "label": "重新命名檔案",
+            "placeholder": "新檔名",
+            "text": "重新命名檔案 ${1}",
+            "tips": {
+                "empty": "檔名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱",
+                "invalid": "名稱 ${1} 為無效檔名，請輸入其他名稱",
+                "normal": "重新命名檔案 ${1} 為 ${2} ？",
+                "pleaseEnter": "請輸入新檔名",
+                "same": "檔名未更改"
+            }
+        },
+        "renameFolder": {
+            "label": "重新命名資料夾",
+            "placeholder": "新資料夾名",
+            "text": "重新命名資料夾 ${1}",
+            "tips": {
+                "empty": "資料夾名不能為空",
+                "exist": "資料夾 ${1} 下已存在 ${2}，請輸入其他名稱",
+                "invalid": "名稱 ${1} 為無效資料夾名，請輸入其他名稱",
+                "normal": "重新命名資料夾 ${1} 為 ${2} ？",
+                "pleaseEnter": "請輸入新資料夾名",
+                "same": "資料夾名未更改"
+            }
+        },
+        "revealInExplorer": {
+            "label": "在檔案總管中顯示"
+        },
+        "standard": {
+            "accelerator": "標準"
+        },
+        "upload": {
+            "label": "上傳",
+            "tips": {
+                "confirm": "確認",
+                "reUpload": "重試",
+                "startUpload": "上傳",
+                "statusInfo": "已上傳檔案數: ${1}/${2} &emsp; 已上傳檔案大小: ${3}/${4} 字節"
+            }
+        },
+        "uploadFile": {
+            "label": "上傳檔案..."
+        },
+        "uploadFolder": {
+            "label": "上傳資料夾..."
+        },
+        "viewNetworkFile": {
+            "label": "查看網路文檔"
+        }
+    },
+    "message": {
+        "binaryError": "檔案未顯示在文字編輯器中，因為檔案是二進位檔案或使用了不支援的文字編碼。",
+        "openAnyway": "繼續開啟？"
+    },
+    "settings": {
+        "editorSettings": {
+            "globalTab": {
+                "defaultEditor": {
+                    "markdown": {
+                        "description": "設置打開 <code class='fn__code'>*.md</code> 文件所使用的默認編輯器",
+                        "options": {
+                            "monaco": "Monaco 編輯器",
+                            "vditor": "Vditor 編輯器"
+                        },
+                        "title": "Markdown 文件默認編輯器"
+                    }
+                },
+                "title": "全局設置"
+            },
+            "monacoTab": {
+                "title": "Monaco 編輯器",
+                "wordWrap": {
+                    "description": "編輯器中所使用的自動折行方案",
+                    "options": {
+                        "bounded": "[bounded] 在自定義列寬和視區寬度中較小的值處換行",
+                        "off": "[off] 不換行",
+                        "on": "[on] 在可視區域處換行",
+                        "wordWrapColumn": "[wordWrapColumn] 在自定義列寬處換行"
+                    },
+                    "title": "編輯器折行方案 <code class='fn__code'>wordWrap</code>"
+                }
+            },
+            "title": "編輯器設置",
+            "vditorTab": {
+                "assetsDirPath": {
+                    "description": "設置保存資源文件的目錄，具體的目錄與設置項 <code class='fn__code'>資源文件保存方案</code> 有關",
+                    "title": "資源文件保存目錄"
+                },
+                "assetsUploadMode": {
+                    "description": "將資源文件保存至指定目錄，具體的目錄與設置項 <code class='fn__code'>資源文件保存目錄</code> 有關<br/><code class='fn__code'>上傳至 data/assets 目錄</code>：將文件上傳至 <code class='fn__code'>工作空間/data/assets</code> 目錄，具體的目錄由 <code class='fn__code'>資源文件保存目錄</code> 指定<br/><code class='fn__code'>使用相對路徑指定目錄</code>：將文件上傳至由設置項 <code class='fn__code'>資源文件保存目錄</code> 指定的目錄，工作目錄為當前文件所在目錄<br/><code class='fn__code'>使用絕對路徑指定目錄</code>：將文件上傳至由設置項 <code class='fn__code'>資源文件保存目錄</code> 指定的目錄，工作目錄為工作空間目錄",
+                    "options": {
+                        "absolute": "使用絕對路徑指定目錄",
+                        "assets": "上傳至 data/assets 目錄",
+                        "relative": "使用相對路徑指定目錄"
+                    },
+                    "title": "資源文件保存方案"
+                },
+                "title": "Vditor 編輯器"
+            }
+        },
+        "generalSettings": {
+            "editor": {
+                "description": "是否啟用文字編輯器側邊面板",
+                "title": "文字編輯器"
+            },
+            "explorer": {
+                "description": "是否啟用資源管理器側邊面板",
+                "title": "資源管理器"
+            },
+            "reset": {
+                "description": "重置所有設定選項為預設選項（重置後將重新整理頁面）",
+                "text": "重置",
+                "title": "重置設定選項"
+            },
+            "safeMode": {
+                "description": "是否禁用重要目錄下的危險操作",
+                "title": "安全模式"
+            },
+            "title": "常規設定"
+        },
+        "menuSettings": {
+            "history1": {
+                "description": "檔案歷史面板的上下文選單（右鍵選單）",
+                "title": "檔案歷史選單"
+            },
+            "history2": {
+                "description": "文件歷史面板的上下文選單（右鍵選單）",
+                "title": "文件歷史選單"
+            },
+            "shorthand": {
+                "description": "收集箱的上下文選單（右鍵選單）",
+                "title": "收集箱選單"
+            },
+            "snapshot": {
+                "description": "快照面板的上下文選單（右鍵選單）",
+                "title": "快照面板選單"
+            },
+            "snippet": {
+                "description": "程式碼片段的上下文選單（右鍵選單）",
+                "title": "程式碼片段選單"
+            },
+            "title": "選單設定"
+        }
+    }
+}
