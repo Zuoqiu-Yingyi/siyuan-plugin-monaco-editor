@@ -18,7 +18,15 @@
 /* 块处理器 */
 import * as sdk from "@siyuan-community/siyuan-sdk";
 
-import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
+import {
+    Handler,
+    type IBaseHandlerOptions,
+    type IHandler,
+} from "./handler";
+import {
+    escapeHTML,
+    unescapeHTML,
+} from "@workspace/utils/misc/html";
 import { heightlight2monaco } from "@/editor/language";
 
 import type { BlockID } from "@workspace/types/siyuan";
@@ -53,6 +61,7 @@ export interface IBlockHandlerOptions extends IBaseHandlerOptions {
 }
 
 export class BlockHandler extends Handler {
+    protected readonly IAL_VALUE_ESCAPE_NEW_LINE = "_esc_newline_"; // 内联属性值换行符转义字符串
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
@@ -72,6 +81,29 @@ export class BlockHandler extends Handler {
     /* 移除末尾的 IAL */
     protected removeLastIAL(kramdown: string): string {
         return kramdown.substring(0, kramdown.lastIndexOf("\n{:"));
+    }
+
+    /* 获取末尾的 IAL */
+    protected getLastIAL(kramdown: string): string {
+        return kramdown.substring(kramdown.lastIndexOf("\n{:")).replaceAll(/^\s+/g, "");
+    }
+
+    /**
+     * 转义嵌入块的内容
+     * @param content 嵌入块的内容
+     * @returns 转义后的内容
+     */
+    protected escapeEmbedBlockContent(content: string): string {
+        return escapeHTML(content).replaceAll("\n", this.IAL_VALUE_ESCAPE_NEW_LINE);
+    }
+
+    /**
+     * 反转义嵌入块的内容
+     * @param content 嵌入块的内容
+     * @returns 反转义后的内容
+     */
+    protected unescapeEmbedBlockContent(content: string): string {
+        return unescapeHTML(content).replaceAll(this.IAL_VALUE_ESCAPE_NEW_LINE, "\n");
     }
 
     /* 构造一个更新函数 */
@@ -150,10 +182,10 @@ export class BlockHandler extends Handler {
                         const markdown = this.lute.BlockDOM2StdMd(response_getDoc.data.content);
                         const result = /^\s*\{\{(.*)\}\}\s*$/s.exec(markdown);
                         if (result && result.length === 2) { // 正确提取出 SQL 代码
-                            handler.modified.value = result[1];
+                            handler.modified.value = this.unescapeEmbedBlockContent(result[1]);
                             handler.modified.language = "sql";
                             handler.options.tabSize = this.customTabSize;
-                            handler.update = this.createUpdateFunction(id, value => `{{${value}}}`);
+                            handler.update = this.createUpdateFunction(id, value => `{{${this.escapeEmbedBlockContent(value)}}}`);
                         }
                         else { // 回退为 markdown 编辑
                             handler.modified.value = markdown;
