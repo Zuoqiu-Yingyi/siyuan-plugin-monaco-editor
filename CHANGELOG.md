@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [0.2.5](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.4...v0.2.5) (2024-05-03)
+
+
+### Build System
+
+* **monaco-editor:** update package.json ([a18bd46](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/a18bd466c001e2102702ef271b5ee9433df06d58))
+
+
+### Miscellaneous
+
+* **monaco-editor:** release v0.2.5 ([9590e87](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/9590e8729958125ba8800eef08b2f939b3f6b197))
+
+
+### Features
+
+* **monaco-editor:** 实现嵌入块内容反转义功能 | Implement embedded block content unescape function. ([595d7f4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/595d7f4907d2a573a2115c23aa229b3b9180d2ae))
+* 为插件页面添加浏览器标签页图标 | Add browser tab icon to the plugin page. ([4e778ba](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/commit/4e778ba2a1c5f999e6eb7a99db4987485ea5feb6))
+
 ## [0.2.4](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/compare/v0.2.3...v0.2.4) (2024-01-23)
 
 
