@@ -53,7 +53,7 @@ export function mapLocale(locale: string): TEditorLocale {
 
         case "en":
         default:
-            return "en";
+            return "";
     }
 }
 
