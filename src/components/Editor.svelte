@@ -18,17 +18,30 @@
 <script lang="ts">
     import { onMount, createEventDispatcher } from "svelte";
 
-    import type { default as Monaco, editor as Editor } from "monaco-editor";
+    import type {
+        //
+        default as Monaco,
+        editor as Editor,
+    } from "monaco-editor";
     import loader from "@monaco-editor/loader";
 
     import { merge } from "@workspace/utils/misc/merge";
     import { saveFileAs } from "@workspace/utils/misc/save";
-    import { FLAG_ELECTRON, FLAG_IFRAME } from "@workspace/utils/env/native-front-end";
+    import {
+        //
+        FLAG_ELECTRON,
+        FLAG_IFRAME,
+    } from "@workspace/utils/env/native-front-end";
 
     import { mapLocale } from "@/utils/locale";
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
 
-    import type { IEditorEvents, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
+    import type {
+        //
+        IEditorEvents,
+        IEditorProps,
+        IStandaloneEditorOptions,
+    } from "@/types/editor";
     import { Languages } from "@/editor/language";
 
     export let plugin: IEditorProps["plugin"];
@@ -321,14 +334,10 @@
                 contextMenuOrder: 1, // 菜单分组内排序
                 run: () => {
                     // 点击后执行的操作
-                    /**
-                     * {@link Editor.EditorOption.wordWrap}
-                     * Editor.EditorOption.wordWrap === 130
-                     * {@link Editor.EditorOption.wordWrapOverride1}
-                     * Editor.EditorOption.wordWrap === 134
-                     */
+                    const wordWrap: Editor.EditorOption.wordWrap = 132;
+                    const wordWrapOverride1: Editor.EditorOption.wordWrapOverride1 = 136;
                     let word_wrap_status: boolean;
-                    switch (editor.getOption(134)) {
+                    switch (editor.getOption(wordWrapOverride1)) {
                         case "off":
                             word_wrap_status = true;
                             break;
@@ -336,7 +345,7 @@
                             word_wrap_status = false;
                             break;
                         default:
-                            switch (editor.getOption(130)) {
+                            switch (editor.getOption(wordWrap)) {
                                 case "off":
                                     word_wrap_status = true;
                                     break;
