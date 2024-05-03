@@ -2,8 +2,8 @@
     "name": "monaco-editor",
     "author": "Zuoqiu Yingyi",
     "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor",
-    "version": "0.2.4",
-    "minAppVersion": "2.11.4",
+    "version": "0.2.5",
+    "minAppVersion": "3.0.12",
     "keywords": [
         "代码",
         "代碼",

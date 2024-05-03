@@ -14,7 +14,7 @@ permissions:
 
 env:
   PACKAGE_NAME: monaco-editor
-  PACKAGE_VERSION: 0.2.4
+  PACKAGE_VERSION: 0.2.5
 
 jobs:
   release-please:
