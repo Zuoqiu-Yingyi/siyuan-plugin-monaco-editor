@@ -1,0 +1,19 @@
+tsconfig.json
+  s_83eccd5207b131::t_a96bc5a5d03f05 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.28-trip",
+  "base_commit_sha": "99456184c82d57c62be4ad8145d03465923544c3",
+  "prompts": {},
+  "sessions": {
+    "s_83eccd5207b131": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb00540f-3107-4272-a99f-515e6f634386",
+        "model": "claude-qwen3.7-max"
+      },
+      "human_author": "Yingyi / 颖逸 <49649786+Zuoqiu-Yingyi@users.noreply.github.com>"
+    }
+  }
+}
