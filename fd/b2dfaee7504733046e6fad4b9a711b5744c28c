@@ -1,0 +1,24 @@
+src/components/Settings.svelte
+  s_4a1abc01610f9a::t_8e876f12426551 63-67,91-95
+src/components/Vditor.svelte
+  s_4a1abc01610f9a::t_5f652784768e96 28-32,34
+src/components/UploadDialog.svelte
+  s_4a1abc01610f9a::t_99afc86303421f 79-83
+  s_4a1abc01610f9a::t_f9a8b40af7a565 25,29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.35-trip",
+  "base_commit_sha": "fdb2dfaee7504733046e6fad4b9a711b5744c28c",
+  "prompts": {},
+  "sessions": {
+    "s_4a1abc01610f9a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f83c1-46cb-77f1-b117-e2f184ceea0d",
+        "model": "gpt-5.5-2026-04-24"
+      },
+      "human_author": "Yingyi / 颖逸 <49649786+Zuoqiu-Yingyi@users.noreply.github.com>"
+    }
+  }
+}
