@@ -91,6 +91,7 @@
 
     let inited = $state(false); // 编辑器是否初始化完成
 
+    // svelte-ignore state_referenced_locally
     const i18n = plugin.i18n;
 
     /* 设置保存功能 (闭包) */
@@ -298,6 +299,7 @@
     })();
     // plugin.logger.debug(vs);
 
+    // svelte-ignore state_referenced_locally
     loader.config({
         "paths": {
             vs,
@@ -313,7 +315,7 @@
 
     onMount(() => {
         init.then((instance) => {
-            monaco = instance;
+            monaco = instance as typeof Monaco;
             // plugin.logger.debug(monaco.languages.getLanguages());
             languages = new Languages(plugin, monaco, {
                 onChanged,
@@ -386,8 +388,8 @@
                 contextMenuOrder: 1, // 菜单分组内排序
                 run: () => {
                     // 点击后执行的操作
-                    const wordWrap: Editor.EditorOption.wordWrap = 133;
-                    const wordWrapOverride1: Editor.EditorOption.wordWrapOverride1 = 137;
+                    const wordWrap: Editor.EditorOption.wordWrap = 149;
+                    const wordWrapOverride1: Editor.EditorOption.wordWrapOverride1 = 153;
                     let word_wrap_status: boolean;
                     switch (editor!.getOption(wordWrapOverride1)) {
                         case "off":
