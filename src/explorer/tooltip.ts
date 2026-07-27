@@ -1,23 +1,22 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type MonacoEditorPlugin from "@/index";
 import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
 import { parse } from "@workspace/utils/path/browserify";
+
+import type MonacoEditorPlugin from "@/index";
 
 /* 提示信息管理 */
 export class ExplorerTooltip {
@@ -35,12 +34,14 @@ export class ExplorerTooltip {
     public make(type: FileTreeNodeType, path: string): string {
         /* 若映射表中存在对应的提示信息, 则直接使用 */
         const tooltip = this.map.get(path);
-        if (tooltip) return tooltip;
+        if (tooltip)
+            return tooltip;
 
         switch (type) {
             case FileTreeNodeType.Root:
                 return this.i18n.explorer.workspace.name;
             case FileTreeNodeType.Folder:
+                // eslint-disable-next-line no-labels
                 $default: switch (true) {
                     case path.startsWith("data/"): // 数据目录
                         switch (true) {
@@ -57,12 +58,15 @@ export class ExplorerTooltip {
                                     case path.endsWith(".siyuan/sort.json"): // 文档自定义排序序号
                                         return this.i18n.explorer.tooltips.siyuanDocCustomSort;
                                     default:
+                                        // eslint-disable-next-line no-labels
                                         break $default;
                                 }
                             default:
+                                // eslint-disable-next-line no-labels
                                 break $default;
                         }
                     default:
+                        // eslint-disable-next-line no-labels
                         break $default;
                 }
                 return this.i18n.explorer.folder.ariaLabel;

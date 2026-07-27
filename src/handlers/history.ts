@@ -1,26 +1,30 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* 历史项处理器 */
-import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
+import { Handler } from "./handler";
 
-import type { IEditorModel } from "@/types/editor";
-import type { IMonacoEditorOptions } from "@/types/config";
 import type { BlockID, HistoryCreated } from "@workspace/types/siyuan";
+
+import type MonacoEditorPlugin from "@/index";
+import type { IMonacoEditorOptions } from "@/types/config";
+import type { IEditorModel } from "@/types/editor";
+
+import type { IBaseHandlerOptions, IHandler } from "./handler";
+
+type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
 export interface IHistoryHandler extends IHandler {
     original: IEditorModel; // 原始编辑器模式
@@ -54,7 +58,7 @@ export interface IHistoryHandlerOptions2 extends IHistoryBaseHandlerOptions {
 
 export class HistoryHandler extends Handler {
     constructor(
-        plugin,
+        plugin: Plugin,
     ) {
         super(plugin);
     }
@@ -77,6 +81,7 @@ export class HistoryHandler extends Handler {
      * 生产一个块处理器
      */
     public async makeHandler(options: IHistoryHandlerOptions): Promise<IHistoryHandler> {
+        let options_path = options.path!;
         if (options.id && options.created) { // 查询历史文档文件
             const response = await this.client.getHistoryItems({
                 query: options.id,
@@ -84,20 +89,20 @@ export class HistoryHandler extends Handler {
                 type: 3,
             });
             if (response.data.items.length > 0) {
-                options.path = response.data.items[0].path;
+                options_path = response.data.items[0]!.path;
             }
             else {
                 throw new Error(`Can't find document history item with id ${options.id} and created time ${options.created}`);
             }
         }
         else { // 获取文档 ID
-            options.id = options.path.slice(-25, -3);
+            options.id = options_path.slice(-25, -3);
         }
 
         /* 获取该文档项 */
         const responses = await Promise.all([
             this.client.getDocHistoryContent({
-                historyPath: options.path,
+                historyPath: options_path!,
             }),
             this.client.getDoc({
                 id: options.id,
@@ -125,15 +130,15 @@ export class HistoryHandler extends Handler {
         }
         else { // 小文档, 内容为块 DOM
             // 清洗数据, 避免使用 BlockDOM2StdMd 时导致显示 <div contenteditable="false" spellcheck="false">
-            responses[0].data.content = responses[0].data.content.replaceAll(`contenteditable="false"`, `contenteditable="true"`);
+            const original_content = responses[0].data.content.replaceAll(`contenteditable="false"`, `contenteditable="true"`);
 
             if (options.kramdown) { // 编辑 kramdown 内容
-                handler.original.value = this.plugin.lute.BlockDOM2Md(responses[0].data.content);
+                handler.original.value = this.plugin.lute.BlockDOM2Md(original_content);
                 handler.modified.value = this.plugin.lute.BlockDOM2Md(responses[1].data.content);
                 handler.update = this.createUpdateFunction(options.id);
             }
             else { // 查看 markdow 内容
-                handler.original.value = this.plugin.lute.BlockDOM2StdMd(responses[0].data.content);
+                handler.original.value = this.plugin.lute.BlockDOM2StdMd(original_content);
                 handler.modified.value = this.plugin.lute.BlockDOM2StdMd(responses[1].data.content);
             }
         }

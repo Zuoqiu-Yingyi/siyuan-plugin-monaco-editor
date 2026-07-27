@@ -1,32 +1,33 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-import constants from "@/constants";
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { FLAG_ELECTRON } from "@workspace/utils/env/front-end";
 import { merge } from "@workspace/utils/misc/merge";
 import { isDarkTheme } from "@workspace/utils/siyuan/theme";
 
+import constants from "@/constants";
+
 import type { Electron } from "@workspace/types/electron";
-import MonacoEditorPlugin from "@/index";
+
+import type MonacoEditorPlugin from "@/index";
+
 import type {
     IWindowParams,
-    TMessageEventMap,
-    TMessageEventListener,
     TElectronMessageEventListener,
+    TMessageEventListener,
+    TMessageEventMap,
 } from ".";
 
 export class BridgeMaster<
@@ -37,7 +38,9 @@ export class BridgeMaster<
     public static createChannel(iframe: boolean = false) {
         if (FLAG_ELECTRON && !iframe) {
             // REF: https://www.electronjs.org/zh/docs/latest/api/message-channel-main#class-messagechannelmain
-            const { MessageChannelMain } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
+            const { MessageChannelMain } = globalThis.require("@electron/remote") as {
+                MessageChannelMain: typeof Electron.MessageChannelMain;
+            };
             return new MessageChannelMain();
         }
         else {
@@ -66,20 +69,20 @@ export class BridgeMaster<
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
-        public channel: MessageChannel | Electron.MessageChannelMain, // 消息通道
+        public channel: Electron.MessageChannelMain | MessageChannel, // 消息通道
         public readonly url: URL, // 编辑器 URL
     ) {
         /* 错误消息/关闭消息 */
         if (this.channel instanceof MessageChannel) {
             this.channel.port1.addEventListener(
                 "messageerror",
-                e => this.plugin.logger.warn("message error", e),
+                (e) => this.plugin.logger.warn("message error", e),
             );
         }
         else {
             this.channel.port1.addListener(
                 "close",
-                _e => {
+                (_e: Electron.MessageEvent) => {
                     // this.plugin.logger.info("browser window close");
                     // this.destroy();
                 },
@@ -98,7 +101,7 @@ export class BridgeMaster<
      */
     public createEditorWindow(
         options: IWindowParams,
-    ): Window | Electron.BrowserWindow {
+    ): Electron.BrowserWindow | null | undefined | Window {
         const params = merge(
             BridgeMaster.BROWSER_WINDOW_DEFAULT_OPTIONS,
             options,
@@ -107,14 +110,16 @@ export class BridgeMaster<
 
         if (FLAG_ELECTRON) {
             try {
-                const { BrowserWindow } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
+                const { BrowserWindow } = globalThis.require("@electron/remote") as {
+                    BrowserWindow: typeof Electron.BrowserWindow;
+                };
                 const browser = new BrowserWindow(params);
                 // browser.removeMenu();
 
                 /* 启用 Electron 环境 */
                 globalThis
-                    .require('@electron/remote')
-                    .require('@electron/remote/main')
+                    .require("@electron/remote")
+                    .require("@electron/remote/main")
                     .enable(browser.webContents);
 
                 /* 加载 URL */
@@ -124,7 +129,7 @@ export class BridgeMaster<
                  * 编辑器加载完成
                  * REF: https://www.electronjs.org/zh/docs/latest/api/web-contents#event-did-finish-load
                  */
-                browser.webContents.once("did-finish-load", _e => {
+                browser.webContents.once("did-finish-load", (_e: Electron.Event) => {
                     // this.plugin.logger.debug(_e);
                     this.channel.port1.start(); // 开始接受消息
 
@@ -141,7 +146,8 @@ export class BridgeMaster<
                 });
 
                 return browser;
-            } catch (err) {
+            }
+            catch (err) {
                 this.plugin.logger.warn(err);
             }
         }
@@ -158,7 +164,7 @@ export class BridgeMaster<
                 ].join(","),
             );
             // 可能会被浏览器阻止弹窗
-            popup?.addEventListener("load", _e => {
+            popup?.addEventListener("load", (_e) => {
                 // this.plugin.logger.debug(_e);
                 this.channel.port1.start(); // 开始接受消息
 
@@ -175,6 +181,7 @@ export class BridgeMaster<
             });
             return popup;
         }
+        return undefined;
     }
 
     /**
@@ -184,7 +191,7 @@ export class BridgeMaster<
         iframe: HTMLIFrameElement = globalThis.document.createElement("iframe"),
     ): HTMLIFrameElement {
         iframe.src = this.url.href;
-        iframe.addEventListener("load", _e => {
+        iframe.addEventListener("load", (_e) => {
             // this.plugin.logger.debug(_e);
 
             try {
@@ -194,12 +201,15 @@ export class BridgeMaster<
                  * 向 iframe 发送消息以建立消息通道
                  * REF: https://github.com/mdn/dom-examples/blob/main/channel-messaging-basic/index.html
                  */
-                iframe.contentWindow.postMessage(
+                iframe.contentWindow?.postMessage(
                     isDarkTheme(),
                     "*",
                     [this.channel.port2 as MessagePort],
                 );
-            } catch (error) {
+            }
+            catch (error) {
+                void error;
+
                 /**
                  * Uncaught DOMException: Failed to execute 'postMessage' on 'Window': Port at index 0 is already neutered.
                  * 拖动页签分屏时出现
@@ -208,13 +218,12 @@ export class BridgeMaster<
                 this.destroy();
                 this.rebuildChannel();
                 this.channel.port1.start();
-                iframe.contentWindow.postMessage(
+                iframe.contentWindow?.postMessage(
                     isDarkTheme(),
                     "*",
                     [this.channel.port2 as MessagePort],
                 );
             }
-
         });
         return iframe;
     }
@@ -226,12 +235,14 @@ export class BridgeMaster<
             for (const listener of this._listeners.values()) {
                 this.channel.port1.addEventListener(
                     constants.MESSAGE_EVENT_NAME,
-                    listener as MessageEventListener,
+                    listener as unknown as EventListener,
                 );
             }
         }
         else {
-            const { MessageChannelMain } = globalThis.require("@electron/remote") as Electron.RemoteMainInterface;
+            const { MessageChannelMain } = globalThis.require("@electron/remote") as {
+                MessageChannelMain: typeof Electron.MessageChannelMain;
+            };
             this.channel = new MessageChannelMain();
             for (const listener of this._listeners.values()) {
                 this.channel.port1.addListener(
@@ -244,9 +255,9 @@ export class BridgeMaster<
 
     /**
      * 添加监听器
-     * @param _channel: 通道名称
-     * @param listener: 监听器回调函数
-     * @return: 添加是否成功
+     * @param channel - 通道名称
+     * @param listener - 监听器回调函数
+     * @returns 添加是否成功
      */
     public addEventListener<
         K extends keyof MessageSlaveEventMap,
@@ -260,7 +271,7 @@ export class BridgeMaster<
         }
         else { // 添加新的监听器
             /* 包装监听器 (以实现 once 功能) */
-            const listenerWrapper: TMessageEventListener<K, MessageSlaveEventMap> = e => {
+            const listenerWrapper: TMessageEventListener<K, MessageSlaveEventMap> = (e) => {
                 // this.plugin.logger.debug(e);
                 if (e?.data?.channel === channel) {
                     if (options?.once) {
@@ -277,7 +288,7 @@ export class BridgeMaster<
             if (this.channel instanceof MessageChannel) {
                 this.channel.port1.addEventListener(
                     constants.MESSAGE_EVENT_NAME,
-                    listenerWrapper,
+                    listenerWrapper as EventListener,
                 );
             }
             else {
@@ -292,9 +303,9 @@ export class BridgeMaster<
 
     /**
      * 移除监听器
-     * @param _channel: 通道名称
-     * @param listener: 监听器回调函数
-     * @return: 移除是否成功
+     * @param _channel - 通道名称
+     * @param listener - 监听器回调函数
+     * @returns 移除是否成功
      */
     public removeEventListener<
         K extends keyof MessageSlaveEventMap = keyof MessageSlaveEventMap,
@@ -302,17 +313,18 @@ export class BridgeMaster<
         _channel: K,
         listener: TMessageEventListener<K, MessageSlaveEventMap>,
     ): boolean {
-        if (this._listeners.has(listener as MessageEventListener)) { // 监听器存在
+        const listenerWrapper = this._listeners.get(listener as MessageEventListener);
+        if (listenerWrapper) { // 监听器存在
             if (this.channel instanceof MessageChannel) {
                 this.channel.port1.removeEventListener(
                     constants.MESSAGE_EVENT_NAME,
-                    this._listeners.get(listener as MessageEventListener) as MessageEventListener,
+                    listenerWrapper as unknown as EventListener,
                 );
             }
             else {
                 this.channel.port1.removeListener(
                     constants.MESSAGE_EVENT_NAME,
-                    this._listeners.get(listener as MessageEventListener) as TElectronMessageEventListener,
+                    listenerWrapper as TElectronMessageEventListener,
                 );
             }
             this._listeners.delete(listener as MessageEventListener);

@@ -1,26 +1,24 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import MonacoEditorPlugin from "@/index";
-
-import type { ComponentProps } from "svelte";
 import type { Writable } from "svelte/store";
 
-import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+import type { IBreadcrumbElement } from "@workspace/components/siyuan/breadcrumb";
+import type { IBlockIconProps } from "@workspace/components/siyuan/misc";
+
+import type MonacoEditorPlugin from "@/index";
 
 type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
@@ -33,16 +31,16 @@ export interface IBaseBreadcrumbOptions {
 }
 
 export interface IBreadcrumb {
-    breadcrumb: ComponentProps<Tab>["breadcrumb"]; // 是否显示面包屑
-    breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"]; // 面包屑项
-    breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"]; // 面包屑按钮
+    breadcrumb: boolean; // 是否显示面包屑
+    breadcrumbItems: IBreadcrumbElement[]; // 面包屑项
+    breadcrumbIcons: IBlockIconProps[]; // 面包屑按钮
 }
 
 export abstract class Breadcrumb {
     /**
      * 设置面包屑中最后一项的状态为激活
-     * @param breadcrumb 面包屑
-     * @param index 面包屑项索引
+     * @param breadcrumb - 面包屑
+     * @param index - 面包屑项索引
      * @returns 是否成功设置
      */
     public static setLastBreadcrumbItemActive(
@@ -56,7 +54,6 @@ export abstract class Breadcrumb {
         }
         return false;
     }
-
 
     public readonly client: Plugin["client"];
     public readonly logger: Plugin["logger"];

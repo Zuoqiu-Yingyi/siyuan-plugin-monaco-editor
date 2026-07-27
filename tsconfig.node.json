@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
         "composite": true,
-        "skipLibCheck": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
+        "skipLibCheck": true,
     },
     "include": [
+        "scripts/**/*.js",
         "scripts/**/*.ts",
-        "vite.config.ts",
         "vite.*.config.ts",
+        "vite.config.ts",
     ],
 }

@@ -1,19 +1,17 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import {
     FLAG_ELECTRON,
@@ -22,25 +20,27 @@ import {
 } from "@workspace/utils/env/native-front-end";
 
 import constants from "@/constants";
-import "@/styles/editor.less";
 
 import type { Electron } from "@workspace/types/electron";
+
 import type {
-    TMessageEventMap,
     TMessageEventListener,
+    TMessageEventMap,
 } from ".";
+
+import "@/styles/editor.less";
 
 type TInitMessageEventListener<M> = (e: MessageEvent<M>) => void;
 type TInitEventMessageEventListener<M> = (e: Electron.IpcRendererEvent, message: M) => void;
-type TInitEventListener<M> = TInitMessageEventListener<M>
-    | TInitEventMessageEventListener<M>;
+type TInitEventListener<M> = TInitEventMessageEventListener<M>
+    | TInitMessageEventListener<M>;
 
 export class BridgeSlave<
     M,
     MessageMasterEventMap extends TMessageEventMap,
     MessageEventListener extends TMessageEventListener<keyof MessageMasterEventMap, MessageMasterEventMap> = TMessageEventListener<keyof MessageMasterEventMap, MessageMasterEventMap>,
 > {
-    public port: MessagePort; // 消息通道端口
+    public port!: MessagePort; // 消息通道端口
     protected readonly _listeners: Map<
         MessageEventListener,
         MessageEventListener
@@ -86,7 +86,7 @@ export class BridgeSlave<
     protected readonly initEventListener: TInitEventListener<M> = (e, msg) => {
         // console.debug(e);
 
-        this.port = e.ports[0];
+        this.port = e.ports[0]!;
         this.port.start(); // 开始接受消息
 
         if (e instanceof MessageEvent) {
@@ -95,13 +95,13 @@ export class BridgeSlave<
         else {
             this.oninited(msg);
         }
-    }
+    };
 
     /**
      * 添加监听器
-     * @param _channel: 通道名称
-     * @param listener: 监听器回调函数
-     * @return: 添加是否成功
+     * @param channel - 通道名称
+     * @param listener - 监听器回调函数
+     * @returns 添加是否成功
      */
     public addEventListener<
         K extends keyof MessageMasterEventMap,
@@ -114,7 +114,7 @@ export class BridgeSlave<
             return false; // 监听器添加失败
         }
         else { // 添加新的监听器
-            const listenerWrapper: TMessageEventListener<K, MessageMasterEventMap> = e => {
+            const listenerWrapper: TMessageEventListener<K, MessageMasterEventMap> = (e) => {
                 if (e?.data?.channel === channel) {
                     if (options?.once) {
                         this.removeEventListener(
@@ -125,10 +125,13 @@ export class BridgeSlave<
                     listener(e);
                 }
             };
-            this._listeners.set(listener as MessageEventListener, listenerWrapper as MessageEventListener);
+            this._listeners.set(
+                listener as MessageEventListener,
+                listenerWrapper as MessageEventListener,
+            );
             this.port.addEventListener(
                 constants.MESSAGE_EVENT_NAME,
-                listenerWrapper,
+                listenerWrapper as EventListener,
             );
             return true; // 监听器添加成功
         }
@@ -136,9 +139,9 @@ export class BridgeSlave<
 
     /**
      * 移除监听器
-     * @param _channel: 通道名称
-     * @param listener: 监听器回调函数
-     * @return: 移除是否成功
+     * @param _channel - 通道名称
+     * @param listener - 监听器回调函数
+     * @returns 移除是否成功
      */
     public removeEventListener<
         K extends keyof MessageMasterEventMap = keyof MessageMasterEventMap,
@@ -146,10 +149,11 @@ export class BridgeSlave<
         _channel: K,
         listener: TMessageEventListener<K, MessageMasterEventMap>,
     ): boolean {
-        if (this._listeners.has(listener as MessageEventListener)) { // 监听器存在
+        const listenerWrapper = this._listeners.get(listener as MessageEventListener);
+        if (listenerWrapper) { // 监听器存在
             this.port.removeEventListener(
                 constants.MESSAGE_EVENT_NAME,
-                this._listeners.get(listener as MessageEventListener),
+                listenerWrapper as unknown as EventListener,
             );
             this._listeners.delete(listener as MessageEventListener);
             return true; // 监听器移除成功

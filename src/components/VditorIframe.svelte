@@ -1,66 +1,105 @@
 <!--
  Copyright (C) 2023 Zuoqiu Yingyi
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as
  published by the Free Software Foundation, either version 3 of the
  License, or (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<script
+    lang="ts"
+    module
+>
+    import type MonacoEditorPlugin from "@/index";
+    import type {
+        IVditorHandlers,
+        IVditorProps,
+    } from "@/types/vditor";
+
+    export interface IProps {
+        plugin: InstanceType<typeof MonacoEditorPlugin>;
+
+        path?: IVditorProps["path"];
+        vditorID?: IVditorProps["vditorID"];
+        assetsDirPath?: IVditorProps["assetsDirPath"];
+        assetsUploadMode?: IVditorProps["assetsUploadMode"];
+        options?: IVditorProps["options"];
+        value?: IVditorProps["value"];
+        theme?: IVditorProps["theme"];
+        codeBlockThemeLight?: IVditorProps["codeBlockThemeLight"];
+        codeBlockThemeDark?: IVditorProps["codeBlockThemeDark"];
+        updatable?: IVditorProps["updatable"];
+        changeable?: IVditorProps["changeable"];
+        debug?: IVditorProps["debug"];
+    }
+</script>
+
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
-    import type { Action } from "svelte/action";
 
     import { VditorBridgeMaster } from "@/bridge/VditorMaster";
 
-    import type MonacoEditorPlugin from "@/index";
-    import type { IVditorEvents, IVditorProps } from "@/types/vditor";
+    import { DEFAULT_VDITOR_PROPS } from "../configs/vditor";
 
-    export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件对象
+    import type { Action } from "svelte/action";
 
-    export let path: IVditorProps["path"] = undefined;
-    export let vditorID: IVditorProps["vditorID"] = undefined;
-    export let assetsDirPath: IVditorProps["assetsDirPath"] = undefined;
-    export let assetsUploadMode: IVditorProps["assetsUploadMode"] = undefined;
-    export let options: IVditorProps["options"] = undefined;
-    export let value: IVditorProps["value"] = undefined;
-    export let theme: IVditorProps["theme"] = undefined;
-    export let codeBlockThemeLight: IVditorProps["codeBlockThemeLight"] = undefined;
-    export let codeBlockThemeDark: IVditorProps["codeBlockThemeDark"] = undefined;
-    export let updatable: IVditorProps["updatable"] = undefined;
-    export let changable: IVditorProps["changable"] = undefined;
-    export let debug: IVditorProps["debug"] = undefined;
+    const {
+        plugin,
 
-    var inited = false;
+        path = DEFAULT_VDITOR_PROPS.path,
+        vditorID = DEFAULT_VDITOR_PROPS.vditorID,
+        assetsDirPath = DEFAULT_VDITOR_PROPS.assetsDirPath,
+        assetsUploadMode = DEFAULT_VDITOR_PROPS.assetsUploadMode,
+        options = DEFAULT_VDITOR_PROPS.options,
+        value = DEFAULT_VDITOR_PROPS.value,
+        theme = DEFAULT_VDITOR_PROPS.theme,
+        codeBlockThemeLight = DEFAULT_VDITOR_PROPS.codeBlockThemeLight,
+        codeBlockThemeDark = DEFAULT_VDITOR_PROPS.codeBlockThemeDark,
+        updatable = DEFAULT_VDITOR_PROPS.updatable,
+        changeable = DEFAULT_VDITOR_PROPS.changeable,
+        debug = DEFAULT_VDITOR_PROPS.debug,
 
-    const dispatch = createEventDispatcher<IVditorEvents>();
+        onOpenLink,
+        onChanged,
+        onSave,
+    }: IProps & IVditorHandlers = $props();
+
+    let inited = $state(false);
+
     const bridge = new VditorBridgeMaster(
         plugin, //
         VditorBridgeMaster.createChannel(true), //
     );
 
-    $: if (inited) bridge.set({ path });
-    $: if (inited) bridge.set({ vditorID });
-    $: if (inited) bridge.set({ assetsDirPath });
-    $: if (inited) bridge.set({ assetsUploadMode });
-    $: if (inited) bridge.set({ options });
-    $: if (inited) bridge.set({ value });
-    $: if (inited) bridge.set({ theme });
-    $: if (inited) bridge.set({ codeBlockThemeLight });
-    $: if (inited) bridge.set({ codeBlockThemeDark });
-    $: if (inited) bridge.set({ updatable });
-    $: if (inited) bridge.set({ changable });
-    $: if (inited) bridge.set({ debug });
+    $effect(() => {
+        if (inited) {
+            bridge.set({
+                path,
+                vditorID,
+                assetsDirPath,
+                assetsUploadMode,
+                // @ts-expect-error
+                options: $state.snapshot(options),
+                value,
+                theme,
+                codeBlockThemeLight,
+                codeBlockThemeDark,
+                updatable,
+                changeable,
+                debug,
+            });
+        }
+    });
 
-    bridge.addEventListener("vditor-ready", e => {
+    bridge.addEventListener("vditor-ready", (e) => {
         // plugin.logger.debug("vditor-ready");
 
         if (e.data.data.status) {
@@ -72,28 +111,30 @@
                 vditorID,
                 assetsDirPath,
                 assetsUploadMode,
-                options,
+                // @ts-expect-error
+                options: $state.snapshot(options),
                 value,
                 theme,
                 codeBlockThemeLight,
                 codeBlockThemeDark,
                 updatable,
-                changable,
+                changeable,
                 debug,
             });
             inited = true;
-        } else {
+        }
+        else {
             inited = false;
         }
     });
-    bridge.addEventListener("vditor-open-link", e => {
-        dispatch("open-link", e.data.data);
+    bridge.addEventListener("vditor-open-link", (e) => {
+        onOpenLink?.(e.data.data);
     });
-    bridge.addEventListener("vditor-changed", e => {
-        dispatch("changed", e.data.data);
+    bridge.addEventListener("vditor-changed", (e) => {
+        onChanged?.(e.data.data);
     });
-    bridge.addEventListener("vditor-save", e => {
-        dispatch("save", e.data.data);
+    bridge.addEventListener("vditor-save", (e) => {
+        onSave?.(e.data.data);
     });
 
     /* 挂载编辑器 */
@@ -107,15 +148,15 @@
     };
 </script>
 
-<!-- 
+<!--
     use:init: 挂载后调用 {@link init} 方法
     REF: https://svelte.dev/docs/svelte-action
  -->
 <iframe
-    use:init
-    title={plugin.displayName}
     class="fn__flex-1 vditor"
-/>
+    title={plugin.displayName}
+    use:init
+></iframe>
 
 <style>
     .vditor {

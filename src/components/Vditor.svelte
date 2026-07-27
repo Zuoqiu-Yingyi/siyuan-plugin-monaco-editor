@@ -1,70 +1,119 @@
 <!--
  Copyright (C) 2023 Zuoqiu Yingyi
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as
  published by the Free Software Foundation, either version 3 of the
  License, or (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<script
+    lang="ts"
+    module
+>
+    import type {
+        IOptions,
+        IVditorHandlers,
+        IVditorProps,
+    } from "@/types/vditor";
+
+    export const RequestMode = {
+        none: "none",
+        getFile: "getFile",
+        forwardProxy: "forwardProxy",
+    } as const;
+
+    export type RequestMode = typeof RequestMode[keyof typeof RequestMode];
+
+    export interface IProps {
+        plugin: IVditorProps["plugin"];
+        src2url: IVditorProps["src2url"];
+        baseURL: IVditorProps["baseURL"];
+        rootURL: IVditorProps["rootURL"];
+
+        path?: IVditorProps["path"];
+        vditorID?: IVditorProps["vditorID"];
+        assetsDirPath?: IVditorProps["assetsDirPath"];
+        assetsUploadMode?: IVditorProps["assetsUploadMode"];
+        options?: IVditorProps["options"];
+        value?: IVditorProps["value"];
+        theme?: IVditorProps["theme"];
+        codeBlockThemeLight?: IVditorProps["codeBlockThemeLight"];
+        codeBlockThemeDark?: IVditorProps["codeBlockThemeDark"];
+        updatable?: IVditorProps["updatable"];
+        changeable?: IVditorProps["changeable"];
+        debug?: IVditorProps["debug"];
+    }
+</script>
+
 <script lang="ts">
-    import { createEventDispatcher, onDestroy, onMount } from "svelte";
-    import type sdk from "@siyuan-community/siyuan-sdk";
-
     import Vditor from "@siyuan-community/vditor";
-    import icon_save from "@/assets/icons/icon-save.svg?raw";
-    import "@siyuan-community/vditor/dist/index.css";
+    import {
+        onDestroy,
+        onMount,
+    } from "svelte";
 
-    import { merge } from "@workspace/utils/misc/merge";
     import { lookup } from "@workspace/utils/file/browserify-mime";
-    import { join, parse } from "@workspace/utils/path/browserify";
-    import { escapeHTML } from "@workspace/utils/misc/html";
+    import { isValidName } from "@workspace/utils/file/filename";
     import { escapeMark } from "@workspace/utils/markdown/mark";
     import { base64ToBlob } from "@workspace/utils/misc/dataurl";
-    import { isStaticPathname, staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
-    import { CODE_THEME_SET } from "@/vditor/theme";
-    import { mapLocaleVditor } from "@/utils/locale";
-    import type { IVditorEvents, IVditorProps, IOptions } from "@/types/vditor";
-    import { AssetsUploadMode } from "@/vditor/asset";
-    import { isValidName } from "@workspace/utils/file/filename";
+    import { escapeHTML } from "@workspace/utils/misc/html";
+    import { merge } from "@workspace/utils/misc/merge";
     import { trimPrefix } from "@workspace/utils/misc/string";
+    import { join, parse } from "@workspace/utils/path/browserify";
+    import {
+        isStaticPathname,
+        staticPathname2WorkspacePath,
+    } from "@workspace/utils/siyuan/url";
+
+    import icon_save from "@/assets/icons/icon-save.svg?raw";
     import { DEFAULT_VDITOR_PROPS } from "@/configs/vditor";
+    import { mapLocaleVditor } from "@/utils/locale";
+    import { AssetsUploadMode } from "@/vditor/asset";
+    import { CODE_THEME_SET } from "@/vditor/theme";
 
-    export let plugin: IVditorProps["plugin"];
-    export let src2url: IVditorProps["src2url"];
-    export let baseURL: IVditorProps["baseURL"];
-    export let rootURL: IVditorProps["rootURL"];
+    import type * as sdk from "@siyuan-community/siyuan-sdk";
 
-    export let path: IVditorProps["path"] = DEFAULT_VDITOR_PROPS.path;
-    export let vditorID: IVditorProps["vditorID"] = DEFAULT_VDITOR_PROPS.vditorID;
-    export let assetsDirPath: IVditorProps["assetsDirPath"] = DEFAULT_VDITOR_PROPS.assetsDirPath;
-    export let assetsUploadMode: IVditorProps["assetsUploadMode"] = DEFAULT_VDITOR_PROPS.assetsUploadMode;
-    export let options: IVditorProps["options"] = DEFAULT_VDITOR_PROPS.options;
-    export let value: IVditorProps["value"] = DEFAULT_VDITOR_PROPS.value;
-    export let theme: IVditorProps["theme"] = DEFAULT_VDITOR_PROPS.theme;
-    export let codeBlockThemeLight: IVditorProps["codeBlockThemeLight"] = DEFAULT_VDITOR_PROPS.codeBlockThemeLight;
-    export let codeBlockThemeDark: IVditorProps["codeBlockThemeDark"] = DEFAULT_VDITOR_PROPS.codeBlockThemeDark;
-    export let updatable: IVditorProps["updatable"] = DEFAULT_VDITOR_PROPS.updatable;
-    export let changable: IVditorProps["changable"] = DEFAULT_VDITOR_PROPS.changable;
-    export let debug: IVditorProps["debug"] = DEFAULT_VDITOR_PROPS.debug;
+    import "@siyuan-community/vditor/dist/index.css";
 
-    let vditorElement: HTMLElement;
-    let globalTheme: "classic" | "dark";
-    let contentTheme: "light" | "dark" | string;
-    let codeTheme: string;
-    let vditor: InstanceType<typeof Vditor>;
+    const {
+        plugin,
+        src2url,
+        baseURL,
+        rootURL,
+        path = DEFAULT_VDITOR_PROPS.path,
+        vditorID = DEFAULT_VDITOR_PROPS.vditorID,
+        assetsDirPath = DEFAULT_VDITOR_PROPS.assetsDirPath,
+        assetsUploadMode = DEFAULT_VDITOR_PROPS.assetsUploadMode,
+        options = DEFAULT_VDITOR_PROPS.options,
+        value = DEFAULT_VDITOR_PROPS.value,
+        theme = DEFAULT_VDITOR_PROPS.theme,
+        codeBlockThemeLight = DEFAULT_VDITOR_PROPS.codeBlockThemeLight,
+        codeBlockThemeDark = DEFAULT_VDITOR_PROPS.codeBlockThemeDark,
+        updatable = DEFAULT_VDITOR_PROPS.updatable,
+        changeable = DEFAULT_VDITOR_PROPS.changeable,
+        debug = DEFAULT_VDITOR_PROPS.debug,
 
-    $: pathInfo = parse(path); // 当前文件路径信息
+        onOpenLink,
+        onChanged,
+        onSave,
+    }: IProps & IVditorHandlers = $props();
 
-    const dispatcher = createEventDispatcher<IVditorEvents>();
+    let vditorElement: HTMLElement | undefined = $state();
+    let globalTheme: "classic" | "dark" | undefined = $state();
+    let contentTheme: "dark" | "light" | string | undefined = $state();
+    let codeTheme: string | undefined = $state();
+    let vditor: InstanceType<typeof Vditor> | undefined = $state();
+
+    const pathInfo = $derived(parse(path)); // 当前文件路径信息
 
     function updateTheme(
         light: boolean, // 是否为明亮主题
@@ -89,7 +138,8 @@
                 : "dracula";
 
             vditor?.setTheme(globalTheme, contentTheme, codeTheme);
-        } else {
+        }
+        else {
             vditor?.setTheme(globalTheme, contentTheme);
         }
     }
@@ -102,22 +152,25 @@
         // plugin.logger.debug("updateUpdatable", enable);
         if (enable) {
             vditor?.enable();
-        } else {
+        }
+        else {
             vditor?.disabled();
         }
     }
 
-    function updateChangable(enable: boolean): void {
-        // plugin.logger.debug("updateChangable", enable);
+    function updatechangeable(enable: boolean): void {
+        // plugin.logger.debug("updatechangeable", enable);
         if (enable) {
             vditor?.enableCache();
-        } else {
+        }
+        else {
             vditor?.disabledCache();
         }
     }
 
     function assetsUploadCallback(entries: [string, string][]): void {
-        if (entries.length <= 0) return;
+        if (entries.length <= 0)
+            return;
 
         const markdowns: string[] = [];
         for (const [name, path] of entries) {
@@ -150,14 +203,14 @@
         }
     }
 
-    async function assetsUploadHander(files: File[], relative: boolean): Promise<string | null> {
+    async function assetsUploadHandler(files: File[], relative: boolean): Promise<null | string> {
         const asset_directory_path = relative //
             ? join(pathInfo.dir, assetsDirPath) //
             : assetsDirPath;
         const entries: [string, string][] = [];
         const assets = files
-            .filter(file => isValidName(file.name))
-            .map(file => ({
+            .filter((file) => isValidName(file.name))
+            .map((file) => ({
                 file,
                 name: file.name,
                 path: relative //
@@ -167,7 +220,7 @@
             }));
 
         const result = await Promise.allSettled(
-            assets.map(asset =>
+            assets.map((asset) =>
                 plugin.client.putFile({
                     path: asset.fullpath,
                     file: asset.file,
@@ -176,7 +229,7 @@
         );
         result.forEach((promise, index) => {
             if (promise.status === "fulfilled") {
-                const asset = assets[index];
+                const asset = assets[index]!;
                 entries.push([asset.name, asset.path]);
             }
         });
@@ -192,11 +245,13 @@
                     break;
 
                 case AssetsUploadMode.relative:
-                    options.upload.handler = (files: File[]) => assetsUploadHander(files, true);
+                    // @ts-expect-error
+                    options.upload.handler = (files: File[]) => assetsUploadHandler(files, true);
                     break;
 
                 case AssetsUploadMode.absolute:
-                    options.upload.handler = (files: File[]) => assetsUploadHander(files, false);
+                    // @ts-expect-error
+                    options.upload.handler = (files: File[]) => assetsUploadHandler(files, false);
                     break;
                 default:
                     break;
@@ -204,15 +259,9 @@
         }
     }
 
-    enum RequestMode {
-        none,
-        getFile,
-        forwardProxy,
-    }
-
     /**
      * 解析文件路径
-     * @param src 文件路径
+     * @param src - 文件路径
      * @returns 相对于工作空间根目录的文件路径
      */
     function parseFilePath(src: string): string {
@@ -243,23 +292,26 @@
         const target = e.target;
 
         /* 资源文件目标重定向 */
-        if (target instanceof HTMLElement && ["img", "video", "audio", "source", "track"].includes(target.localName)) {
+        if (target instanceof HTMLElement && ["audio", "img", "source", "track", "video"].includes(target.localName)) {
             const element = target as HTMLImageElement & HTMLVideoElement & HTMLAudioElement & HTMLSourceElement & HTMLTrackElement;
             const src = element.getAttribute("src") || element.getAttribute("srcset");
-            if (!src) return;
+            if (!src)
+                return;
 
             const object_url = src2url.get(src);
             let source = src;
 
             if (object_url) {
                 source = object_url;
-            } else {
+            }
+            else {
                 let mode: RequestMode = RequestMode.none;
 
                 switch (true) {
                     /* HTTP */
                     case src.startsWith("//"):
                         source = `https:${src}`;
+                    // fallthrough
                     case src.startsWith("http://"):
                     case src.startsWith("https://"):
                         mode = RequestMode.forwardProxy;
@@ -268,8 +320,8 @@
                     /* 相对路径 */
                     case src.startsWith("./"):
                     case src.startsWith("../"):
-                    /* 相对于工作空间根目录 */
-                    case src.startsWith("/"):
+                    // fallthrough
+                    case src.startsWith("/"): // 相对于工作空间根目录
                         source = parseFilePath(src);
                         mode = RequestMode.getFile;
                         break;
@@ -292,7 +344,9 @@
                             src2url.set(src, object_url);
                             source = object_url;
                             break;
-                        } catch (error) {
+                        }
+                        catch (error) {
+                            void error;
                             return;
                         }
                     case RequestMode.forwardProxy:
@@ -303,11 +357,13 @@
                                 responseEncoding: "base64",
                             });
                             const blob = base64ToBlob(response.data.body, response.data.contentType);
-                            const object_url = URL.createObjectURL(blob);
+                            const object_url = URL.createObjectURL(blob!);
                             src2url.set(src, object_url);
                             source = object_url;
                             break;
-                        } catch (error) {
+                        }
+                        catch (error) {
+                            void error;
                             return;
                         }
 
@@ -320,7 +376,8 @@
             if (src !== source) {
                 if (element.src) {
                     element.src = source;
-                } else {
+                }
+                else {
                     element.srcset = source;
                 }
             }
@@ -334,52 +391,68 @@
                  * 可能出现 `Uncaught TypeError: this.vditor is undefined`
                  */
                 vditor?.destroy();
-            } catch (error) {
-            } finally {
+            }
+            catch (error) {
+                void error;
+            }
+            finally {
                 updateAssetsUploadMode(assetsUploadMode, options);
                 vditor = new Vditor(element, options);
             }
         }
     }
 
-    $: {
+    $effect(() => {
         if (debug) {
+            // @ts-expect-error
             globalThis.vditor = vditor;
-        } else {
+        }
+        else {
+            // @ts-expect-error
             delete globalThis.vditor;
         }
-    }
+    });
 
-    $: updateContent(value);
-    $: updateUpdatable(updatable);
-    $: updateChangable(changable);
-    $: updateAssetsUploadMode(assetsUploadMode);
-    $: updateTheme(theme, true, codeBlockThemeLight, codeBlockThemeDark);
+    $effect(() => {
+        updateContent(value);
+    });
+    $effect(() => {
+        updateUpdatable(updatable);
+    });
+    $effect(() => {
+        updatechangeable(changeable);
+    });
+    $effect(() => {
+        updateAssetsUploadMode(assetsUploadMode);
+    });
+    $effect(() => {
+        updateTheme(theme, true, codeBlockThemeLight, codeBlockThemeDark);
+    });
 
     onMount(() => {
         const mergedOptions = merge<IOptions>(
             {
                 /**
                  * 从右向左书写
-                 * @default false
+                 * @defaultValue false
                  */
                 // rtl: false,
 
                 /**
                  * 历史记录间隔
-                 * @default 800
+                 * @defaultValue 800
                  */
                 // undoDelay: 800,
 
                 /**
                  * 自定义 lute.min.js URL
-                 * @default undefined
+                 * @defaultValue undefined
                  */
                 _lutePath: undefined,
 
                 /**
                  * 自定义静态资源基础路径
-                 * @default
+                 * @defaultValue
                  * `${cdn}/${dist}`
                  * `${cdn}/dist`
                  * `https://unpkg.com/vditor@${VDITOR_VERSION}/dist`
@@ -388,7 +461,7 @@
 
                 /**
                  * 自定义静态资源路径
-                 * @default undefined
+                 * @defaultValue undefined
                  */
                 _staticPath: {
                     i18n: `${baseURL}/js/i18n`,
@@ -403,62 +476,62 @@
 
                 /**
                  * 编辑器初始化值
-                 * @default ""
+                 * @defaultValue ""
                  */
                 value,
 
                 /**
                  * 是否显示日志
-                 * @default false
+                 * @defaultValue false
                  */
                 debugger: debug, // 是否显示日志
 
                 /**
                  * 是否启用打字机模式
-                 * @default false
+                 * @defaultValue false
                  */
                 // typewriterMode: false,
 
                 /**
                  * 编辑器总高度
-                 * @default "auto"
+                 * @defaultValue "auto"
                  */
                 height: "100%",
 
                 /**
                  * 编辑器最小高度
-                 * @default 63 + 工具栏高度
+                 * @defaultValue 63 + 工具栏高度
                  */
                 // minHeight: undefined,
 
                 /**
                  * 编辑器总宽度
-                 * @default "auto"
+                 * @defaultValue "auto"
                  */
                 // width: "auto",
 
                 /**
                  * 输入区域为空时的提示
-                 * @default ""
+                 * @defaultValue ""
                  */
                 // placeholder: "",
 
                 /**
                  * 本地化
-                 * @default "zh_CN"
+                 * @defaultValue "zh_CN"
                  */
                 lang: mapLocaleVditor("zh-Hans"),
 
                 /**
                  * 国际化 (自定义语言包)
                  * 优先级低于 `lang`
-                 * @default undefined
+                 * @defaultValue undefined
                  */
                 // i18n: undefined,
 
                 /**
                  * 全屏层级
-                 * @default 90
+                 * @defaultValue 90
                  */
                 // fullscreen: {
                 //     index: 90,
@@ -478,7 +551,7 @@
                         click(_e: Event, _vditor: IVditor): void {
                             // plugin.logger.debugs("save.click", this, event, vditor);
                             if (updatable) {
-                                dispatcher("save", { markdown: vditor?.getValue() });
+                                onSave?.({ markdown: vditor!.getValue() });
                             }
                         },
                     },
@@ -593,7 +666,7 @@
                     "|",
                     {
                         name: "style",
-                        icon: '<svg><use xlink:href="#vditor-icon-theme"></use></svg>',
+                        icon: "<svg><use xlink:href=\"#vditor-icon-theme\"></use></svg>",
                         tip: "🎨",
                         tipPosition: "w",
                         click(): void {},
@@ -601,7 +674,7 @@
                             {
                                 name: "theme",
                                 icon: "🔆 | 🌙",
-                                click(event, vditor_) {
+                                click(_event, vditor_) {
                                     switch (vditor_.options.theme) {
                                         case "dark": {
                                             updateTheme(true);
@@ -628,11 +701,11 @@
 
                 /**
                  * 是否支持拖拽调整大小
-                 * @param enable 是否启用拖拽调整大小
-                 * @param position 拖拽栏位置
+                 * @param enable - 是否启用拖拽调整大小
+                 * @param position - 拖拽栏位置
                  * - "top": 顶部
                  * - "bottom": 底部
-                 * @param after 拖拽完成回调函数
+                 * @param after - 拖拽完成回调函数
                  */
                 // resize: {
                 //     enable: false,
@@ -646,13 +719,13 @@
                 counter: {
                     /**
                      * 是否启用计数器
-                     * @default false
+                     * @defaultValue false
                      */
                     enable: true,
 
                     /**
                      * 输入内容最大值
-                     * @default Infinity
+                     * @defaultValue Infinity
                      */
                     // max: 0,
 
@@ -660,16 +733,16 @@
                      * 统计类型
                      * - "markdown": 文本数量
                      * - "text": 字符数量
-                     * @default "markdown"
+                     * @defaultValue "markdown"
                      */
                     type: "text",
 
                     /**
                      * 字数统计回调函数
                      */
-                    after(length: number, counter): void {
-                        // plugin.logger.debug("counter.after", length, counter);
-                        // if (changable) {
+                    after(_length, _counter): void {
+                    // plugin.logger.debug("counter.after", length, counter);
+                        // if (changeable) {
                         //     dispatcher("changed", { markdown: vditor?.getValue() });
                         // }
                     },
@@ -688,9 +761,9 @@
 
                     /**
                      * 是否启用缓存
-                     * @default true
+                     * @defaultValue true
                      */
-                    enable: changable,
+                    enable: changeable,
 
                     /**
                      * 缓存后的回调
@@ -698,8 +771,8 @@
                     after(markdown: string): void {
                         // plugin.logger.debugs("cache.after", markdown);
 
-                        if (changable) {
-                            dispatcher("changed", { markdown });
+                        if (changeable) {
+                            onChanged?.({ markdown });
                         }
                     },
                 },
@@ -714,18 +787,18 @@
 
                 /**
                  * 预览
-                 * @param hljs 代码块高亮设置
+                 * @param hljs - 代码块高亮设置
                  */
                 preview: {
                     /**
                      * 消除抖动延时 (ms)
-                     * @default 1000
+                     * @defaultValue 1000
                      */
                     // delay: 1000,
 
                     /**
                      * 预览区域最大宽度
-                     * @default 800
+                     * @defaultValue 800
                      */
                     // maxWidth: 800,
 
@@ -733,7 +806,7 @@
                      * 显示模式
                      * - "both"
                      * - "editor"
-                     * @default "both"
+                     * @defaultValue "both"
                      */
                     // mode: "both",
 
@@ -748,26 +821,26 @@
                     hljs: {
                         /**
                          * 是否启用代码高亮
-                         * @default true
+                         * @defaultValue true
                          */
                         // enable: true,
 
                         /**
                          * 是否启用行号
-                         * @default false
+                         * @defaultValue false
                          */
                         lineNumber: true,
 
                         /**
                          * 默认代码高亮风格
-                         * @default "github"
+                         * @defaultValue "github"
                          */
                         style: codeTheme,
 
-                        /**
-                         * 代码未设置语言时的默认值
-                         * @default ""
-                         */
+                    /**
+                     * 代码未设置语言时的默认值
+                     * @defaultValue ""
+                     */
                         // defaultLang: "",
 
                         /**
@@ -779,33 +852,33 @@
                     /**
                      * 数学公式设置
                      */
-                    math: {
-                        /**
-                         * 内联数学公式起始 $ 后是否允许数字
-                         * @default false
-                         */
-                        inlineDigit: false,
+                    // math: {
+                    //     /**
+                    //      * 内联数学公式起始 $ 后是否允许数字
+                    //      * @defaultValue false
+                    //      */
+                    //     inlineDigit: false,
 
-                        /**
-                         * 默认渲染引擎
-                         * - "KaTeX"
-                         * - "MathJax"
-                         * @default "KaTeX"
-                         */
-                        // engine: "KaTeX",
+                    //     /**
+                    //      * 默认渲染引擎
+                    //      * - "KaTeX"
+                    //      * - "MathJax"
+                    //      * @defaultValue "KaTeX"
+                    //      */
+                    //     engine: "KaTeX",
 
-                        /**
-                         * MathJax 宏定义
-                         * @default {}
-                         */
-                        // macros: {},
+                    //     /**
+                    //      * MathJax 宏定义
+                    //      * @defaultValue \{\}
+                    //      */
+                    //     macros: {},
 
-                        /**
-                         * MathJax 参数
-                         * @default undefined
-                         */
-                        // mathJaxOptions: undefined,
-                    },
+                    //     /**
+                    //      * MathJax 参数
+                    //      * @defaultValue undefined
+                    //      */
+                    //     mathJaxOptions: undefined,
+                    // },
 
                     /**
                      * markdown 渲染设置
@@ -813,79 +886,79 @@
                     markdown: {
                         /**
                          * 自动空格
-                         * @default false
+                         * @defaultValue false
                          */
                         autoSpace: true,
 
                         /**
                          * 段落开头是否空两格
-                         * @default false
+                         * @defaultValue false
                          */
                         // paragraphBeginningSpace: false,
 
                         /**
                          * 自动矫正术语
-                         * @default false
+                         * @defaultValue false
                          */
                         // fixTermTypo: false,
 
                         /**
                          * 插入目录
-                         * @default false
+                         * @defaultValue false
                          */
                         toc: true,
 
-                        /**
-                         * 启用脚注
-                         * @default true
-                         */
+                    /**
+                     * 启用脚注
+                     * @defaultValue true
+                     */
                         // footnotes: true,
 
                         /**
                          * wysiwyg & ir 模式下代码块是否渲染
-                         * @default true
+                         * @defaultValue true
                          */
                         // codeBlockPreview: true,
 
                         /**
                          * wysiwyg & ir 模式下公式块是否渲染
-                         * @default true
+                         * @defaultValue true
                          */
                         // mathBlockPreview: true,
 
                         /**
                          * 是否启用过滤 XSS
-                         * @default true
+                         * @defaultValue true
                          */
                         // sanitize: true,
 
                         /**
                          * 链接相对路径前缀
-                         * @default ""
+                         * @defaultValue ""
                          */
                         // linkBase: "",
 
                         /**
                          * 链接强制前缀
-                         * @default ""
+                         * @defaultValue ""
                          */
                         // linkPrefix: "",
 
                         /**
                          * 为列表添加标记，以便自定义列表样式
-                         * @default false
+                         * @defaultValue false
                          */
                         // listStyle: false,
 
                         /**
                          * 支持 mark 标记
-                         * @defalut false
+                         * @defaultValue false
                          */
                         // mark: true,
 
                         /**
                          * 支持自动探测链接
-                         * @default true
+                         * @defaultValue true
                          */
                         // gfmAutoLink: true,
                     },
@@ -896,27 +969,27 @@
                     theme: {
                         /**
                          * 当前主题
-                         * @default "light"
+                         * @defaultValue "light"
                          */
-                        current: contentTheme,
+                        current: contentTheme!,
 
                         /**
                          * 主题文件目录
-                         * @default `${cdn}/${dist}/css/content-theme`
+                         * @defaultValue `${cdn}/${dist}/css/content-theme`
                          */
                         path: `${baseURL}/css/themes`,
 
-                        /**
-                         * 主题列表
-                         * [key: 主文件名]: 主题名称
-                         */
+                    /**
+                     * 主题列表
+                     * [key: 主文件名]: 主题名称
+                     */
                         // list: {},
                     },
 
                     /**
                      * 可选预览模式列表
                      * 可自定义
-                     * @default ["desktop", "tablet", "mobile", "mp-wechat", "zhihu"]
+                     * @defaultValue ["desktop", "tablet", "mobile", "mp-wechat", "zhihu"]
                      */
                     // actions: [
                     //     "desktop", //
@@ -928,16 +1001,16 @@
 
                     /**
                      * 预览回调函数
-                     * @param elemeent <div class="vditor-preview">...</div>
+                     * @param _element - <div class="vditor-preview">...</div>
                      */
-                    parse(element: HTMLElement): void {
-                        // plugin.logger.debug(element);
+                    parse(_element: HTMLElement): void {
+                    // plugin.logger.debug(element);
                         // <div class="vditor-preview">...</div>
                     },
 
                     /**
                      * 渲染前回调函数
-                     * @param html 渲染后的 HTML 字符串, 没有其他标签包裹
+                     * @param html - 渲染后的 HTML 字符串, 没有其他标签包裹
                      */
                     transform(html: string): string {
                         // plugin.logger.debug(html);
@@ -951,13 +1024,13 @@
                 link: {
                     /**
                      * 超链接是否可打开
-                     * @default true
+                     * @defaultValue true
                      */
                     // isOpen: true,
 
                     /**
                      * 点击链接事件
-                     * @param bom 所点击超链接元素的 DOM 对象
+                     * @param bom - 所点击超链接元素的 DOM 对象
                      * @example 所见即所得模式 | 分屏编辑模式的预览面板 | 预览模式
                      * ```html
                      * <a href="http://超链接目标" title="超链接标题">超链接锚文本</a>
@@ -982,14 +1055,14 @@
                         switch (true) {
                             case bom instanceof HTMLAnchorElement: {
                                 const link = bom as HTMLAnchorElement;
-                                dispatcher("open-link", {
+                                onOpenLink?.({
                                     path: {
                                         current: path,
                                         target: parseFilePath(link.href),
                                     },
                                     href: link.href,
                                     title: link.title,
-                                    anchor: link.textContent,
+                                    anchor: link.textContent ?? undefined,
                                     target: link.target,
                                 });
                                 break;
@@ -1004,15 +1077,17 @@
                                 while (title && !title.classList.contains("vditor-ir__marker--title")) {
                                     title = title.nextElementSibling as HTMLSpanElement;
                                 }
-                                dispatcher("open-link", {
+                                const textContent = anchor?.textContent ?? "";
+                                onOpenLink?.({
                                     path: {
                                         current: path,
-                                        target: parseFilePath(link.textContent),
+                                        target: parseFilePath(textContent),
                                     },
-                                    href: link.textContent,
-                                    title: title?.textContent,
-                                    anchor: anchor?.textContent,
+                                    href: textContent,
+                                    title: title?.textContent ?? undefined,
+                                    anchor: anchor?.textContent ?? undefined,
                                 });
+                                break;
                             }
                             default:
                                 break;
@@ -1026,7 +1101,7 @@
                 image: {
                     /**
                      * 是否预览图片
-                     * @default true
+                     * @defaultValue true
                      */
                     // isPreview: true,
 
@@ -1034,8 +1109,8 @@
                      * 图片预览处理
                      * 双击图片进行预览模式
                      */
-                    preview(bom: Element): void {
-                        // plugin.logger.debug(bom);
+                    preview(_bom: Element): void {
+                    // plugin.logger.debug(bom);
                     },
                 },
 
@@ -1054,7 +1129,7 @@
                     // emojiTail: "",
 
                     /**
-                     * emojis 名称 => 图标
+                     * emojis 名称 → 图标
                      */
                     // emoji: {},
 
@@ -1063,9 +1138,9 @@
                      */
                     parse: false,
 
-                    /**
-                     * 其他自动补全
-                     */
+                /**
+                 * 其他自动补全
+                 */
                     // extend: [
                     //     {
                     //         key: "@",
@@ -1105,13 +1180,13 @@
                 toolbarConfig: {
                     /**
                      * 是否隐藏工具栏
-                     * @default false
+                     * @defaultValue false
                      */
                     // hide: false,
 
                     /**
                      * 是否钉在顶部
-                     * @default false
+                     * @defaultValue false
                      */
                     pin: true,
                 },
@@ -1126,7 +1201,7 @@
                  * 默认主题
                  * - "classic"
                  * - "dark"
-                 * @default "classic"
+                 * @defaultValue "classic"
                  */
                 theme: globalTheme,
 
@@ -1134,7 +1209,7 @@
                  * 默认图标主题
                  * - "ant"
                  * - "material"
-                 * @default "ant"
+                 * @defaultValue "ant"
                  */
                 // icon: "ant",
 
@@ -1150,7 +1225,7 @@
 
                     /**
                      * 上传文件最大 Byte
-                     * @default 10 * 1024 * 1024
+                     * @defaultValue 10 * 1024 * 1024
                      */
                     max: Infinity,
 
@@ -1171,7 +1246,7 @@
 
                     /**
                      * 跨站点访问控制
-                     * @default false
+                     * @defaultValue false
                      */
                     // withCredentials: false,
 
@@ -1189,13 +1264,13 @@
 
                     /**
                      * 是否允许多文件上传
-                     * @default true
+                     * @defaultValue true
                      */
                     // multiple: true,
 
                     /**
                      * 上传字段名
-                     * @default "file[]"
+                     * @defaultValue "file[]"
                      */
                     // fieldName: "file[]",
 
@@ -1217,15 +1292,15 @@
                      * 第 2 步
                      * 校验，成功时返回 true 否则返回错误信息
                      */
-                    validate(files: File[]): string | boolean {
+                    validate(_files: File[]): boolean | string {
                         // plugin.logger.debugs("upload.validate", files);
                         return true;
                     },
 
                     /**
                      * 第 3 步
-                     * 文件名安全处理。 默认值: name => name.replace(/\W/g, '')
-                     * @param name 不包含扩展名的文件名 (主文件名)
+                     * 文件名安全处理。 默认值: `name => name.replace(/\W/g, '')`
+                     * @param name - 不包含扩展名的文件名 (主文件名)
                      */
                     filename(name: string): string {
                         // plugin.logger.debugs("upload.filename", name);
@@ -1235,15 +1310,17 @@
                     /**
                      * 第 4 步
                      * 上传成功回调
-                     * @param msg 服务端返回的数据
+                     * @param _editor - 编辑器元素
+                     * @param msg - 服务端返回的数据
                      */
-                    success(editor: HTMLPreElement, msg: string): void {
+                    success(_editor: HTMLPreElement, msg: string): void {
                         // plugin.logger.debugs("upload.success", editor, msg);
                         try {
                             const response = JSON.parse(msg) as sdk.types.kernel.api.asset.upload.IResponse;
                             const succMap = response.data.succMap;
                             assetsUploadCallback(Object.entries(succMap));
-                        } catch (error) {
+                        }
+                        catch (error) {
                             plugin.logger.warn(error);
                         }
                     },
@@ -1251,7 +1328,7 @@
                     /**
                      * 第 4 步
                      * 上传失败回调
-                     * @param msg 服务端返回的数据
+                     * @param msg - 服务端返回的数据
                      */
                     error(msg: string): void {
                         plugin.logger.warns("upload.error", msg);
@@ -1269,7 +1346,7 @@
                     /**
                      * 对服务端返回的数据进行转换，以满足内置的数据结构
                      */
-                    format(files: File[], responseText: string): string {
+                    format(_files: File[], responseText: string): string {
                         // plugin.logger.debugs("upload.format", files, responseText);
                         return responseText;
                     },
@@ -1285,26 +1362,26 @@
                     /**
                      * 图片地址上传后的回调
                      */
-                    linkToImgCallback(responseText: string): void {
-                        // plugin.logger.debugs("upload.linkToImgCallback", responseText);
+                    linkToImgCallback(_responseText: string): void {
+                    // plugin.logger.debugs("upload.linkToImgCallback", responseText);
                     },
                 },
 
                 /**
                  * 预览元素的 className
-                 * @default ""
+                 * @defaultValue ""
                  */
                 // classes: "",
 
                 /**
                  * 静态资源地址
-                 * @default `https://unpkg.com/vditor@${VDITOR_VERSION}`
+                 * @defaultValue `https://unpkg.com/vditor@${VDITOR_VERSION}`
                  */
                 cdn: rootURL,
 
                 /**
                  * 静态资源路径
-                 * @default "dist"
+                 * @defaultValue "dist"
                  */
                 dist: "stage/protyle",
 
@@ -1319,7 +1396,7 @@
                 outline: {
                     /**
                      * 是否显示大纲
-                     * @default false
+                     * @defaultValue false
                      */
                     enable: true,
 
@@ -1327,14 +1404,14 @@
                      * 大纲显示位置
                      * - "left"
                      * - "right"
-                     * @default "left"
+                     * @defaultValue "left"
                      */
                     position: "right",
                 },
             },
             options,
         );
-        vditorElement.addEventListener("error", onerror, true);
+        vditorElement!.addEventListener("error", onerror, true);
         loadVditor(vditorElement, mergedOptions);
     });
 
@@ -1351,7 +1428,7 @@
     bind:this={vditorElement}
     id={vditorID}
     class="vditor"
-/>
+></div>
 
 <style lang="less">
 </style>

@@ -1,69 +1,25 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig.json",
-    // "extends": "@tsconfig/svelte/tsconfig.json",
+    "extends": "@workspace/tsconfig/tsconfig.app.json",
     "compilerOptions": {
-        "moduleResolution": "node",
-        /**
-         * Svelte Preprocess cannot figure out whether you have a value or a type, so tell TypeScript
-         * to enforce using `import type` instead of `import` for Types.
-         */
-        "verbatimModuleSyntax": true,
-        /**
-         * To have warnings/errors of the Svelte compiler at the correct position,
-         * enable source maps by default.
-         */
-        "sourceMap": true,
-        "strict": false,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        /**
-         * Typecheck JS in `.svelte` and `.js` files by default.
-         * Disable checkJs if you'd like to use dynamic types in JS.
-         * Note that setting allowJs false does not prevent the use
-         * of JS in `.svelte` files.
-         */
-        "allowJs": true,
-        "checkJs": true,
-
-        "target": "ESNext",
-        "module": "ESNext",
-        "isolatedModules": true,
-        "resolveJsonModule": true,
-        "lib": [
-            "ESNext",
-            "DOM",
-        ],
-        "baseUrl": "./",
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
             "~/*": [
-                "./*"
+                "./*",
+            ],
+            "@/*": [
+                "./src/*",
             ],
         },
     },
-    "ts-node": {
-        "esm": true,
-        "experimentalSpecifierResolution": "node",
-        "compilerOptions": {},
-    },
+    "references": [
+        {
+            "path": "./tsconfig.node.json",
+        },
+    ],
     "include": [
         "public/i18n/*.json",
         "src/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.js",
         "src/**/*.svelte",
-    ],
-    "exclude": [
-        "dist",
-        "node_modules",
-        "temp",
-    ],
-    "references": [
-        {
-            "path": "./tsconfig.node.json",
-        },
     ],
 }

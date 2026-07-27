@@ -4,7 +4,39 @@
         "#icon-monaco-editor-material-folder-jinja_light"
     ],
     [
+        ".jinja",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "_jinja",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "-jinja",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "__jinja__",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
         "jinja2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        ".jinja2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "_jinja2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "-jinja2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "__jinja2__",
         "#icon-monaco-editor-material-folder-jinja_light"
     ],
     [
@@ -12,7 +44,59 @@
         "#icon-monaco-editor-material-folder-jinja_light"
     ],
     [
+        ".j2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "_j2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "-j2",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "__j2__",
+        "#icon-monaco-editor-material-folder-jinja_light"
+    ],
+    [
+        "idea",
+        "#icon-monaco-editor-material-folder-intellij_light"
+    ],
+    [
         ".idea",
         "#icon-monaco-editor-material-folder-intellij_light"
+    ],
+    [
+        "_idea",
+        "#icon-monaco-editor-material-folder-intellij_light"
+    ],
+    [
+        "-idea",
+        "#icon-monaco-editor-material-folder-intellij_light"
+    ],
+    [
+        "__idea__",
+        "#icon-monaco-editor-material-folder-intellij_light"
+    ],
+    [
+        "cursor",
+        "#icon-monaco-editor-material-folder-cursor_light"
+    ],
+    [
+        ".cursor",
+        "#icon-monaco-editor-material-folder-cursor_light"
+    ],
+    [
+        "_cursor",
+        "#icon-monaco-editor-material-folder-cursor_light"
+    ],
+    [
+        "-cursor",
+        "#icon-monaco-editor-material-folder-cursor_light"
+    ],
+    [
+        "__cursor__",
+        "#icon-monaco-editor-material-folder-cursor_light"
     ]
 ]

@@ -1,23 +1,25 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import path from "path";
-import asyncFs from "fs/promises";
-import convert, { type ElementCompact } from "xml-js";
+import asyncFs from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+
+import convert from "xml-js";
+
+import type { ElementCompact } from "xml-js";
 
 const root = process.cwd();
 
@@ -59,6 +61,56 @@ interface IMap {
 type IEntry = [string, string];
 
 /**
+ * 构建图标映射
+ * @param icons - icons 对象(key: 名称, value: 图标名称)
+ * @param path - entries 文件保存路径
+ * @param prefix - 图标 ID 前缀
+ * @param ext - 是否为文件扩展名
+ * @returns 图标映射 (图标名 → 图标 ID)
+ */
+async function buildIconsMapEntries(
+    icons: IMap,
+    path: string,
+    prefix: string,
+    ext: boolean = false,
+): Promise<IEntry[]> {
+    const entries: IEntry[] = [];
+    Object.entries(icons).forEach(([name, icon]) => {
+        const id = `#${prefix}-${icon}`;
+        if (ext) {
+            entries.push([`.${name}`, id]);
+            // entries.push([`.${icon}`, id]);
+        }
+        else {
+            entries.push([name, id]);
+        }
+    });
+    await asyncFs.writeFile(path, JSON.stringify(entries, null, 4));
+    return entries;
+}
+
+/**
+ * 构建图标文件符号
+ * @param icon - *.svg 文件引用名称
+ * @param path - *.svg 文件路径
+ * @param prefix - 图标 ID 前缀
+ * @returns xml <symbol>
+ */
+async function buildIconSymbol(
+    icon: string,
+    path: string,
+    prefix: string,
+): Promise<string> {
+    const svg = await asyncFs.readFile(path, "utf-8");
+    const xml = convert.xml2js(svg, { compact: true }) as ElementCompact;
+
+    xml.svg._attributes.id = `${prefix}-${icon}`;
+    delete xml.svg._attributes.xmlns;
+
+    return convert.js2xml({ symbol: xml.svg }, { compact: true, spaces: 4 });
+}
+
+/**
  * 构建图标
  * TODO: 将 svg 图标转换为 symbol 并设置 ID, 合并为一个文件
  */
@@ -97,55 +149,6 @@ async function buildMaterialIcons() {
     // REF: https://www.npmjs.com/package/xml-js
     const symbols = await Promise.all(paths.map(([name, path]) => buildIconSymbol(name, path, C.ID_PREFIX_MATERIAL)));
     await asyncFs.writeFile(C.MATERIAL_FILE_PATH_SYMBOL, symbols.join("\n"));
-}
-
-/**
- * 构建图标映射
- * @param icons: icons 对象(key: 名称, value: 图标名称)
- * @param path: entries 文件保存路径
- * @param prefix: 图标 ID 前缀
- * @param ext: 是否为文件扩展名
- */
-async function buildIconsMapEntries(
-    icons: IMap,
-    path: string,
-    prefix: string,
-    ext: boolean = false,
-): Promise<IEntry[]> {
-    const entries: IEntry[] = [];
-    Object.entries(icons).forEach(([name, icon]) => {
-        const id = `#${prefix}-${icon}`;
-        if (ext) {
-            entries.push([`.${name}`, id]);
-            // entries.push([`.${icon}`, id]);
-        }
-        else {
-            entries.push([name, id]);
-        }
-    });
-    await asyncFs.writeFile(path, JSON.stringify(entries, null, 4));
-    return entries;
-}
-
-/**
- * 构建图标文件符号
- * @param icon: *.svg 文件引用名称
- * @param path: *.svg 文件路径
- * @param prefix: 图标 ID 前缀
- * @return: xml <symbol>
- */
-async function buildIconSymbol(
-    icon: string,
-    path: string,
-    prefix: string,
-): Promise<string> {
-    const svg = await asyncFs.readFile(path, "utf-8");
-    const xml = convert.xml2js(svg, { compact: true }) as ElementCompact;
-
-    xml.svg._attributes.id = `${prefix}-${icon}`;
-    delete xml.svg._attributes.xmlns;
-
-    return convert.js2xml({ symbol: xml.svg }, { compact: true, spaces: 4 });
 }
 
 buildMaterialIcons();

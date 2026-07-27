@@ -1,29 +1,31 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type siyuan from "siyuan";
-import type MonacoEditorPlugin from "@/index";
-import UploadDialog from "@/components/UploadDialog.svelte"
+import { mount, unmount } from "svelte";
+import { get } from "svelte/store";
+
+import { prompt } from "@workspace/components/siyuan/dialog/prompt.svelte.ts";
 import {
     FileTreeNodeType,
-    type IFileTreeNodeStores,
+
 } from "@workspace/components/siyuan/tree/file";
-import { get } from "svelte/store";
-import { HandlerType } from "@/facades/facade";
+import { showOpenDialog } from "@workspace/utils/electron/remote/dialog";
+import {
+    openPath,
+    showItemInFolder,
+} from "@workspace/utils/electron/shell";
 import {
     FLAG_BROWSER,
     FLAG_ELECTRON,
@@ -32,41 +34,46 @@ import {
     directoryOpen,
     fileOpen,
 } from "@workspace/utils/file/browser-fs-access";
+import { isValidName } from "@workspace/utils/file/filename";
 import { copyText } from "@workspace/utils/misc/copy";
+import { escapeHTML } from "@workspace/utils/misc/html";
+import { cp } from "@workspace/utils/node/fs/promises";
 import {
-    isStaticWebFileServicePath,
-    workspacePath2StaticPathname,
-} from "@workspace/utils/siyuan/url";
-import { ExplorerIcon } from "./icon";
-import {
-    Explorer,
-    ProtectedResourceType,
-} from ".";
-import {
-    extname,
     join,
     parse,
 } from "@workspace/utils/path/browserify";
+import { normalize } from "@workspace/utils/path/normalize";
 import {
     fn__code,
     ft__error,
     ft__primary,
 } from "@workspace/utils/siyuan/text/span";
-import { prompt } from "@workspace/components/siyuan/dialog/prompt";
-import { isValidName } from "@workspace/utils/file/filename";
-import { escapeHTML } from "@workspace/utils/misc/html";
 import {
-    ResourceOption,
+    isStaticWebFileServicePath,
+    workspacePath2StaticPathname,
+} from "@workspace/utils/siyuan/url";
+
+import { HandlerType } from "@/facades/facade";
+import {
     isResourceOperable,
+    ResourceOption,
 } from "@/utils/permission";
-import {
-    openPath,
-    showItemInFolder,
-} from "@workspace/utils/electron/shell";
-import { showOpenDialog } from "@workspace/utils/electron/remote/dialog";
-import { cp } from "@workspace/utils/node/fs/promises";
-import { normalize } from "@workspace/utils/path/normalize";
 import { OpenScheme } from "@/utils/url";
+
+import {
+    Explorer,
+    ProtectedResourceType,
+} from ".";
+import { ExplorerIcon } from "./icon";
+
+import UploadDialog from "@/components/UploadDialog.svelte";
+
+import type siyuan from "siyuan";
+
+import type { PromptCallback } from "@workspace/components/siyuan/dialog/prompt.svelte.ts";
+import type { IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
+
+import type MonacoEditorPlugin from "@/index";
 
 /* 菜单项类型 */
 export enum MenuItemType {
@@ -86,26 +93,25 @@ export interface IMenuBase {
 
 /* 常规菜单项 */
 export interface IMenuAction extends IMenuBase {
-    type: MenuItemType.Action,
-    options: siyuan.IMenuItemOption,
+    type: MenuItemType.Action;
+    options: siyuan.IMenu;
 }
 
 /* 多级菜单项 */
 export interface IMenuSubmenu extends IMenuBase {
-    type: MenuItemType.Submenu,
-    options: siyuan.IMenuItemOption,
-    submenu: IMenuItem[],
+    type: MenuItemType.Submenu;
+    options: siyuan.IMenu;
+    submenu: IMenuItem[];
 }
 
 /* 菜单分割线 */
 export interface IMenuSeparator extends IMenuBase {
-    type: MenuItemType.Separator,
-    index?: number,
+    type: MenuItemType.Separator;
+    index?: number;
 }
 
 /* 菜单项 */
-export type IMenuItem = IMenuAction | IMenuSubmenu | IMenuSeparator;
-
+export type IMenuItem = IMenuAction | IMenuSeparator | IMenuSubmenu;
 
 export class ExplorerContextMenu {
     /* 按类型过滤节点 */
@@ -117,36 +123,42 @@ export class ExplorerContextMenu {
         items = (() => {
             switch (type) {
                 case FileTreeNodeType.Root:
-                    return items.filter(item => item.root);
+                    return items.filter((item) => item.root);
                 case FileTreeNodeType.Folder:
-                    return items.filter(item => item.folder);
+                    return items.filter((item) => item.folder);
                 case FileTreeNodeType.File:
-                    return items.filter(item => item.file);
+                    return items.filter((item) => item.file);
             }
         })();
-        if (items.length === 0) return items;
+        if (items.length === 0)
+            return items;
 
         /* 过滤下级菜单 */
-        items = items.filter(item => {
+        items = items.filter((item) => {
             if (item.type === MenuItemType.Submenu) {
                 item.submenu = ExplorerContextMenu.filter(item.submenu, type);
                 return item.submenu.length > 0
-                    && item.submenu.some(item => item.type !== MenuItemType.Separator);
+                    && item.submenu.some((item) => item.type !== MenuItemType.Separator);
             }
-            else return true;
+            else {
+                return true;
+            }
         });
-        if (items.length === 0) return items;
+        if (items.length === 0)
+            return items;
 
         /* 清理首尾两端的分割线 */
         items = items.slice(
-            items.findIndex(item => item.type !== MenuItemType.Separator),
-            items.findLastIndex(item => item.type !== MenuItemType.Separator) + 1,
+            items.findIndex((item) => item.type !== MenuItemType.Separator),
+            items.findLastIndex((item) => item.type !== MenuItemType.Separator) + 1,
         );
-        if (items.length === 0) return items;
+        if (items.length === 0)
+            return items;
 
         /* 清理连续的分割线 */
         items = items.filter((item, index, items) => {
-            if (item.type !== MenuItemType.Separator) return true;
+            if (item.type !== MenuItemType.Separator)
+                return true;
             else return items[index - 1]?.type !== MenuItemType.Separator;
         });
 
@@ -154,8 +166,9 @@ export class ExplorerContextMenu {
     };
 
     /* 构造含有下级菜单的菜单项 */
-    public static makeSubmenuItem(item: IMenuSubmenu): siyuan.IMenuItemOption {
-        item.options.submenu = item.submenu.map(item => {
+    public static makeSubmenuItem(item: IMenuSubmenu): siyuan.IMenu {
+        // eslint-disable-next-line array-callback-return
+        item.options.submenu = item.submenu.map((item) => {
             switch (item.type) {
                 case MenuItemType.Action:
                     return item.options;
@@ -181,7 +194,7 @@ export class ExplorerContextMenu {
     public makeMenu(node: IFileTreeNodeStores): InstanceType<typeof siyuan.Menu> {
         const menu = new this.plugin.siyuan.Menu();
         const items = ExplorerContextMenu.filter(this.makeMenuItems(node), get(node.type));
-        items.forEach(item => {
+        items.forEach((item) => {
             switch (item.type) {
                 case MenuItemType.Action:
                     menu.addItem(item.options);
@@ -200,25 +213,25 @@ export class ExplorerContextMenu {
     /* 构造菜单项列表 */
     public makeMenuItems(node: IFileTreeNodeStores): IMenuItem[] {
         const type = get(node.type);
-        const name = get(node.name);
+        const name = get(node.name)!;
         const icon = get(node.icon);
         const path = get(node.path);
         const text = get(node.text);
-        const relative = get(node.relative);
+        const relative = get(node.relative)!;
         const children = get(node.children);
 
         const protected_type = Explorer.isProtected(relative); // 受保护类型
         const protect = protected_type !== ProtectedResourceType.None; // 是否为被保护的资源
-        const ext = extname(path); // 文件扩展名
-        const sub_names: Set<string> = children // 下级资源名称列表
-            ? new Set(children.map(node => node.name))
+        // const ext = extname(path); // 文件扩展名
+        const sub_names = children // 下级资源名称列表
+            ? new Set(children.map((node) => node.name!))
             : null;
         const accessible = isStaticWebFileServicePath(relative); // 是否位于静态 web 文件目录下
         const isMarkdown = relative.endsWith(".md");
 
-        const root = type === FileTreeNodeType.Root; // 是否为根目录
-        const file = type === FileTreeNodeType.File; // 是否为文件
-        const folder = type === FileTreeNodeType.Folder; // 是否为文件夹
+        // const root = type === FileTreeNodeType.Root; // 是否为根目录
+        // const file = type === FileTreeNodeType.File; // 是否为文件
+        // const folder = type === FileTreeNodeType.Folder; // 是否为文件夹
 
         const items: IMenuItem[] = [];
 
@@ -641,7 +654,6 @@ export class ExplorerContextMenu {
                     file: true,
                 });
 
-
                 if (accessible) {
                     const pathname = workspacePath2StaticPathname(relative);
                     const url = new URL(`${globalThis.document.baseURI}${pathname}`);
@@ -729,7 +741,7 @@ export class ExplorerContextMenu {
             /**
              * 添加文件/文件夹
              * REF: https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowopendialogbrowserwindow-options
-            */
+             */
             items.push({
                 type: MenuItemType.Submenu,
                 options: {
@@ -745,7 +757,7 @@ export class ExplorerContextMenu {
                             label: this.i18n.menu.importFile.label,
                             click: async () => {
                                 const result = await showOpenDialog({
-                                    title: this.i18n.menu.importFile.title.replaceAll("${1}", relative),
+                                    title: this.i18n.menu.importFile.title.replaceAll("{{1}}", relative),
                                     buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openFile",
@@ -781,7 +793,7 @@ export class ExplorerContextMenu {
                             label: this.i18n.menu.importFolder.label,
                             click: async () => {
                                 const result = await showOpenDialog({
-                                    title: this.i18n.menu.importFolder.title.replaceAll("${1}", relative),
+                                    title: this.i18n.menu.importFolder.title.replaceAll("{{1}}", relative),
                                     buttonLabel: this.i18n.menu.import.label,
                                     properties: [
                                         "openDirectory",
@@ -961,17 +973,17 @@ export class ExplorerContextMenu {
                         }
                     }
 
-                    const parent = this.explorer.path2node(get(node.directory));
+                    const parent = this.explorer.path2node(get(node.directory))!;
                     const siblings = get(parent.children);
-                    const siblings_names: Set<string> = siblings // 同级资源名称列表
-                        ? new Set(siblings.map(node => node.name))
+                    const siblings_names = siblings // 同级资源名称列表
+                        ? new Set(siblings.map((node) => node.name!))
                         : null;
                     this.rename(
                         parent,
                         siblings_names,
                         name,
                         relative,
-                        get(parent.relative),
+                        get(parent.relative)!,
                         get(node.type) === FileTreeNodeType.Folder,
                     );
                 },
@@ -1012,7 +1024,7 @@ export class ExplorerContextMenu {
                         }
                     }
 
-                    const parent = this.explorer.path2node(get(node.directory));
+                    const parent = this.explorer.path2node(get(node.directory))!;
                     this.delete(
                         parent,
                         path,
@@ -1039,13 +1051,13 @@ export class ExplorerContextMenu {
         path: string,
         relative: string,
     ): Promise<boolean> {
-        return new Promise<boolean>(resolve => {
+        return new Promise<boolean>((resolve) => {
             const relative_code = fn__code(relative);
             /* 资源完整路径确认检查函数 */
-            const check = async (value, _dialog, _component) => {
+            const check: PromptCallback<string> = async (value, _dialog, _component) => {
                 if (value === path) {
                     return ft__error(this.i18n.menu.confirm.tips.warn
-                        .replaceAll("${1}", relative_code));
+                        .replaceAll("{{1}}", relative_code));
                 }
                 else {
                     return this.i18n.menu.confirm.tips.pleaseEnter;
@@ -1057,8 +1069,8 @@ export class ExplorerContextMenu {
                     selectable: false,
                     title: this.i18n.menu.confirm.title,
                     text: this.i18n.menu.confirm.text
-                        .replaceAll("${1}", relative_code)
-                        .replaceAll("${2}", fn__code(path)),
+                        .replaceAll("{{1}}", relative_code)
+                        .replaceAll("{{2}}", fn__code(path)),
                     placeholder: this.i18n.menu.confirm.placeholder,
                     tips: this.i18n.menu.confirm.tips.pleaseEnter,
                     width: "32em",
@@ -1090,44 +1102,48 @@ export class ExplorerContextMenu {
      */
     public upload(
         path: string,
-        files: FileList | File[],
+        files: File[] | FileList,
         prefix: string = "/",
     ): Promise<boolean> {
-        return new Promise<boolean>(resolve => {
+        return new Promise<boolean>((resolve) => {
             const DIALOG_ID = "plugin-monaco-editor-upload-dialog";
             const dialog = new this.plugin.siyuan.Dialog({
                 title: this.i18n.menu.upload.label,
                 content: `<div id="${DIALOG_ID}" class="fn__flex-column" />`,
                 width: "50vw",
                 height: "75vh",
-            })
-            const component = new UploadDialog({
-                target: dialog.element.querySelector(`#${DIALOG_ID}`),
-                props: {
-                    plugin: this.plugin,
-                    path,
-                    files,
-                    prefix,
-                },
             });
-            component.$on("cancel", e => {
-                component.$destroy();
-                dialog.destroy();
-                resolve(e.detail.finished);
-            });
+            const target = dialog.element.querySelector(`#${DIALOG_ID}`);
+            if (target) {
+                const component = mount(UploadDialog, {
+                    target,
+                    props: {
+                        plugin: this.plugin,
+                        path,
+                        files,
+                        prefix,
+
+                        onCancel: (params) => {
+                            unmount(component);
+                            dialog.destroy();
+                            resolve(params.finished);
+                        },
+                    },
+                });
+            }
         });
     }
 
     /**
      * 新建文件/文件夹弹出框
-     * @param node: 当前节点节点
-     * @param names: 当前目录下资源名称集合
-     * @param relative: 当前目录相对路径
-     * @param isDir: 是否为创建文件夹
+     * @param node - 当前节点节点
+     * @param names - 当前目录下资源名称集合
+     * @param relative - 当前目录相对路径
+     * @param isDir - 是否为创建文件夹
      */
     public create(
         node: IFileTreeNodeStores,
-        names: Set<string> | null,
+        names: null | Set<string>,
         relative: string,
         isDir: boolean,
     ): void {
@@ -1137,36 +1153,36 @@ export class ExplorerContextMenu {
             : this.i18n.menu.newFile;
 
         /* 文件/文件名检查函数 */
-        const check = async (value, _dialog, _component) => {
+        const check: PromptCallback<string> = async (value, _dialog, _component) => {
             const filename = fn__code(value);
             switch (true) {
                 case value === "": // 文件夹名不能为空
                     return ft__error(i10n.tips.empty);
                 case !isValidName(value): // 无效的文件名
                     return ft__error(i10n.tips.invalid
-                        .replaceAll("${1}", filename)
+                        .replaceAll("{{1}}", filename),
                     );
-                case !names: // 下级目录集合不存在, 更新集合
-                    {
-                        names = new Set();
-                        const response = await this.plugin.client.readDir({ path: relative });
-                        response.data.forEach(item => names.add(item.name));
-                    }
-                case names.has(value): // 存在同名文件
+                case !names: { // 下级目录集合不存在, 更新集合
+                    names = new Set();
+                    const response = await this.plugin.client.readDir({ path: relative });
+                    response.data.forEach((item) => names!.add(item.name));
+                    // fallthrough
+                }
+                case names?.has(value): // 存在同名文件
                     return ft__error(i10n.tips.exist
-                        .replaceAll("${1}", foldername)
-                        .replaceAll("${2}", filename)
+                        .replaceAll("{{1}}", foldername)
+                        .replaceAll("{{2}}", filename),
                     );
                 default: // 文件名有效
                     return i10n.tips.normal
-                        .replaceAll("${1}", filename);
+                        .replaceAll("{{1}}", filename);
             }
         };
         prompt(
             this.plugin.siyuan.Dialog,
             {
                 title: i10n.label,
-                text: i10n.text.replaceAll("${1}", foldername),
+                text: i10n.text.replaceAll("{{1}}", foldername),
                 placeholder: i10n.placeholder,
                 tips: i10n.tips.pleaseEnter,
                 width: "32em",
@@ -1193,7 +1209,9 @@ export class ExplorerContextMenu {
                         this.explorer.updateNode(node);
                         return true;
                     }
-                    else return false;
+                    else {
+                        return false;
+                    }
                 },
             },
         );
@@ -1201,16 +1219,16 @@ export class ExplorerContextMenu {
 
     /**
      * 文件/文件夹重命名弹出框
-     * @param parentNode: 当前节点的上级节点
-     * @param siblingsNames: 当前节点同级节点名称
-     * @param oldname: 原名称
-     * @param relative: 当前节点的相对路径
-     * @param parentRelative: 当前节点的上级节点的相对路径
-     * @param isDir: 是否为文件夹重命名
+     * @param parentNode - 当前节点的上级节点
+     * @param siblingsNames - 当前节点同级节点名称
+     * @param oldname - 原名称
+     * @param relative - 当前节点的相对路径
+     * @param parentRelative - 当前节点的上级节点的相对路径
+     * @param isDir - 是否为文件夹重命名
      */
     public rename(
         parentNode: IFileTreeNodeStores,
-        siblingsNames: Set<string> | null,
+        siblingsNames: null | Set<string>,
         oldname: string,
         relative: string,
         parentRelative: string,
@@ -1222,39 +1240,40 @@ export class ExplorerContextMenu {
             : this.i18n.menu.renameFile;
 
         /* 文件/文件名检查函数 */
-        const check = async (value, _dialog, _component) => {
+        const check: PromptCallback<string> = async (value, _dialog, _component) => {
             const newname = fn__code(value);
             switch (true) {
                 case value === "": // 文件夹名不能为空
                     return ft__error(i10n.tips.empty);
                 case !isValidName(value): // 无效的文件名
                     return ft__error(i10n.tips.invalid
-                        .replaceAll("${1}", newname)
+                        .replaceAll("{{1}}", newname),
                     );
                 case value === oldname: // 新名称与原名称一致
                     return ft__primary(i10n.tips.same);
                 case !siblingsNames: // 下级目录集合不存在, 更新集合
-                    {
-                        siblingsNames = new Set();
-                        const response = await this.plugin.client.readDir({ path: parentRelative });
-                        response.data.forEach(item => siblingsNames.add(item.name));
-                    }
-                case siblingsNames.has(value): // 存在同名文件
+                {
+                    siblingsNames = new Set();
+                    const response = await this.plugin.client.readDir({ path: parentRelative });
+                    response.data.forEach((item) => siblingsNames!.add(item.name));
+                    // fallthrough
+                }
+                case siblingsNames?.has(value): // 存在同名文件
                     return ft__error(i10n.tips.exist
-                        .replaceAll("${1}", foldername)
-                        .replaceAll("${2}", newname)
+                        .replaceAll("{{1}}", foldername)
+                        .replaceAll("{{2}}", newname),
                     );
                 default: // 文件名有效
                     return i10n.tips.normal
-                        .replaceAll("${1}", fn__code(oldname))
-                        .replaceAll("${2}", newname);
+                        .replaceAll("{{1}}", fn__code(oldname))
+                        .replaceAll("{{2}}", newname);
             }
         };
         prompt(
             this.plugin.siyuan.Dialog,
             {
                 title: i10n.label,
-                text: i10n.text.replaceAll("${1}", fn__code(relative)),
+                text: i10n.text.replaceAll("{{1}}", fn__code(relative)),
                 value: oldname,
                 placeholder: i10n.placeholder,
                 tips: ft__primary(i10n.tips.pleaseEnter),
@@ -1282,20 +1301,20 @@ export class ExplorerContextMenu {
                         this.explorer.updateNode(parentNode);
                         return true;
                     }
-                    else return false;
+                    else {
+                        return false;
+                    }
                 },
             },
         );
     }
 
-
     /**
      * 删除文件/文件夹弹出框
-     * @param parent: 上级节点
-     * @param path: 当前节点完整路径
-     * @param relative: 当前节点相对路径
-     * @param isDir: 当前节点是否为目录
-     * @param doubleCheck: 是否进行二次确认
+     * @param parent - 上级节点
+     * @param path - 当前节点完整路径
+     * @param relative - 当前节点相对路径
+     * @param isDir - 当前节点是否为目录
      */
     public delete(
         parent: IFileTreeNodeStores,
@@ -1303,15 +1322,14 @@ export class ExplorerContextMenu {
         relative: string,
         isDir: boolean,
     ): void {
-
         const i10n = isDir
             ? this.i18n.menu.deleteFolder
             : this.i18n.menu.deleteFile;
         this.plugin.siyuan.confirm(
             i10n.label,
             i10n.text
-                .replaceAll("${1}", fn__code(relative))
-                .replaceAll("${2}", fn__code(path)),
+                .replaceAll("{{1}}", fn__code(relative))
+                .replaceAll("{{2}}", fn__code(path)),
             async () => {
                 await this.plugin.client.removeFile({ path: relative });
                 this.explorer.updateNode(parent);

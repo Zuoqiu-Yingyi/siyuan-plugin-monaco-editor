@@ -1,28 +1,38 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { UserConfig } from "vite";
 import { resolve } from "node:path";
 
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { sveltePreprocess } from "svelte-preprocess";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+
+import type { UserConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default {
+    base: `./`,
     plugins: [
+        svelte({
+            preprocess: [
+                sveltePreprocess({
+                    typescript: true,
+                    less: true,
+                }),
+            ],
+        }),
         viteStaticCopy({
             targets: [
                 /* @siyuan-community/vditor */
@@ -72,11 +82,6 @@ export default {
                     dest: "./libs/monaco-editor",
                     rename: "min",
                 },
-                {
-                    src: "./node_modules/monaco-editor/min-maps",
-                    dest: "./libs/monaco-editor",
-                    rename: "min-maps",
-                },
                 /* streamsaver */
                 {
                     src: "./node_modules/streamsaver/sw.js",
@@ -86,7 +91,12 @@ export default {
             ],
         }),
     ],
+    resolve: {
+        tsconfigPaths: true,
+    },
     build: {
+        minify: true,
+        // sourcemap: "inline",
         emptyOutDir: true,
         copyPublicDir: true,
         lib: {
@@ -95,11 +105,15 @@ export default {
             formats: ["cjs"],
         },
         rollupOptions: {
+            external: [
+                "siyuan",
+                /^@electron\/.*$/,
+            ],
             input: {
                 index: resolve(__dirname, "src/index.ts"),
             },
             output: {
-                entryFileNames: chunkInfo => {
+                entryFileNames: (chunkInfo) => {
                     // console.log(chunkInfo);
                     switch (chunkInfo.name) {
                         case "index":
@@ -109,7 +123,7 @@ export default {
                             return "assets/[name]-[hash].js";
                     }
                 },
-                assetFileNames: assetInfo => {
+                assetFileNames: (assetInfo) => {
                     // console.log(chunkInfo);
                     switch (assetInfo.name) {
                         case "style.css":

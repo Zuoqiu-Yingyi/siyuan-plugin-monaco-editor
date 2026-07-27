@@ -10,11 +10,12 @@
 ![GitHub code size](https://img.shields.io/github/languages/code-size/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg?style=flat-square)
 ![hits](https://hits.b3log.org/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor.svg)
 [![GitHub all releases](https://img.shields.io/github/downloads/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/total?style=flat-square)](https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor/releases)
-
 ---
+
 [简体中文](./README_zh_CN.md) \| English
 
 ---
+
 </div>
 
 # Integrated Edit Environment (IEE)
@@ -52,105 +53,105 @@ This panel displays the markdown/kramdown source code of the currently edited bl
 
 ## Settings Introduction
 
-* `General Settings`
+- `General Settings`
 
-  * `Text Editor`
+  - `Text Editor`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the text editor side panel is enabled
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the text editor side panel is enabled
 
-      * This panel displays the markdown/kramdown source code of the currently edited content block
-    * After changing the state of this switch, the interface will refresh to close the text editor panel
-  * `Explorer`
+      - This panel displays the markdown/kramdown source code of the currently edited content block
+    - After changing the state of this switch, the interface will refresh to close the text editor panel
+  - `Explorer`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the file explorer side panel is enabled
-    * After changing the state of this switch, the interface will refresh to close the file explorer panel
-  * `Safe Mode`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the file explorer side panel is enabled
+    - After changing the state of this switch, the interface will refresh to close the file explorer panel
+  - `Safe Mode`
 
-    * This is a switch
-    * Default state: *disabled*
-    * When enabled, it disables certain dangerous operations in important directories
-    * When disabled, there will be three confirmations before performing dangerous operations in important directories
-  * `Reset Settings`
+    - This is a switch
+    - Default state: _disabled_
+    - When enabled, it disables certain dangerous operations in important directories
+    - When disabled, there will be three confirmations before performing dangerous operations in important directories
+  - `Reset Settings`
 
-    * This is a button
-    * Resets all settings to their default values
-    * Clicking this button will display a confirmation dialog
+    - This is a button
+    - Resets all settings to their default values
+    - Clicking this button will display a confirmation dialog
 
-      * After clicking the confirmation button in the dialog, all options of this plugin will be reset to the default values, and the current interface will be automatically refreshed
-* `Menu Settings`
+      - After clicking the confirmation button in the dialog, all options of this plugin will be reset to the default values, and the current interface will be automatically refreshed
+- `Menu Settings`
 
-  * `Code Snippet Menu`
+  - `Code Snippet Menu`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in Settings → Appearance → Code Snippets is enabled. This menu allows you to open Monaco Editor to view/edit code snippets
-  * `Inbox Menu`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the right-click menu in Settings → Appearance → Code Snippets is enabled. This menu allows you to open Monaco Editor to view/edit code snippets
+  - `Inbox Menu`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu of the vault is enabled. This menu allows you to open Monaco Editor to view the contents of the inbox
-  * `File History Menu`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the right-click menu of the vault is enabled. This menu allows you to open Monaco Editor to view the contents of the inbox
+  - `File History Menu`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the file history tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit the change history of files
-  * `Document History Menu`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the right-click menu in the file history tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit the change history of files
+  - `Document History Menu`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the document history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit document version history and the current version
-  * `Snapshot Menu`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the right-click menu in the document history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view/edit document version history and the current version
+  - `Snapshot Menu`
 
-    * This is a switch
-    * Default state: *enabled*
-    * This switch controls whether the right-click menu in the snapshot tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view changes in snapshots
-* `Editor Settings`
+    - This is a switch
+    - Default state: _enabled_
+    - This switch controls whether the right-click menu in the snapshot tab of the file history dialog is enabled. This menu allows you to open Monaco Editor in compare mode to view changes in snapshots
+- `Editor Settings`
 
-  * `Global Settings`
+  - `Global Settings`
 
-    * `Default Editor for Markdown Files`
+    - `Default Editor for Markdown Files`
 
-      * Set the default editor for opening `*.md` files
-      * Default is to open `*.md` files with the Vditor editor
-  * `Monaco Editor`
+      - Set the default editor for opening `*.md` files
+      - Default is to open `*.md` files with the Vditor editor
+  - `Monaco Editor`
 
-    * `Editor Word Wrapping Solution`
+    - `Editor Word Wrapping Solution`
 
-      * Set the word wrapping solution used in the editor
-      * options
+      - Set the word wrapping solution used in the editor
+      - options
 
-        * `off`: Do not wrap
-        * `on`: Wrap at the visible viewport
-        * `wordWrapColumn`: Wrap at the custom column width
-        * `bounded`: Wrap at the minimum of custom column width and viewport width
-  * `Vditor Editor`
+        - `off`: Do not wrap
+        - `on`: Wrap at the visible viewport
+        - `wordWrapColumn`: Wrap at the custom column width
+        - `bounded`: Wrap at the minimum of custom column width and viewport width
+  - `Vditor Editor`
 
-    * `Resource File Saving Scheme`
+    - `Resource File Saving Scheme`
 
-      * Specify the scheme for saving (image, etc.) resource files. Different schemes will save resource files in different directories. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Directory</kbd> option.
-    * `Resource File Saving Directory`
+      - Specify the scheme for saving (image, etc.) resource files. Different schemes will save resource files in different directories. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Directory</kbd> option.
+    - `Resource File Saving Directory`
 
-      * Specify the exact directory for saving resource files. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Scheme</kbd> option.
-      * Examples
+      - Specify the exact directory for saving resource files. The actual saving directory will also be affected by the <kbd>Editor Settings > Vditor Editor > Resource File Saving Scheme</kbd> option.
+      - Examples
 
-        * `Resource File Saving Scheme`: `Upload to data/assets directory`
+        - `Resource File Saving Scheme`: `Upload to data/assets directory`
 
-          * `/assets/`: Save the resource files in the `workspace/data/assets/` directory
-          * `/assets/vditor/`: Save the resource files in the `workspace/data/assets/vditor/` directory
-        * `Resource File Saving Scheme`: `Specify directory using relative path`
+          - `/assets/`: Save the resource files in the `workspace/data/assets/` directory
+          - `/assets/vditor/`: Save the resource files in the `workspace/data/assets/vditor/` directory
+        - `Resource File Saving Scheme`: `Specify directory using relative path`
 
-          * `./`: Save the resource files in the same directory as the current file
-          * `./../`: Save the resource files in the parent directory of the current file
-          * `./assets/`: Save the resource files in the `assets` folder of the current file's directory
-        * `Resource File Saving Scheme`: `Specify directory using absolute path`
+          - `./`: Save the resource files in the same directory as the current file
+          - `./../`: Save the resource files in the parent directory of the current file
+          - `./assets/`: Save the resource files in the `assets` folder of the current file's directory
+        - `Resource File Saving Scheme`: `Specify directory using absolute path`
 
-          * `/`: Save the resource files in the `workspace/` directory
-          * `/assets/`: Save the resource files in the `workspace/assets/` directory
-          * `/vditor/assets/`: Save the resource files in the `workspace/vditor/assets/` directory
+          - `/`: Save the resource files in the `workspace/` directory
+          - `/assets/`: Save the resource files in the `workspace/assets/` directory
+          - `/vditor/assets/`: Save the resource files in the `workspace/vditor/assets/` directory
 
 ## CHANGELOG
 

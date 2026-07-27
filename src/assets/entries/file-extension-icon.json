@@ -1,5 +1,9 @@
 [
     [
+        ".60",
+        "#icon-monaco-editor-material-slint"
+    ],
+    [
         ".htm",
         "#icon-monaco-editor-material-html"
     ],
@@ -13,6 +17,34 @@
     ],
     [
         ".asp",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".html",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".aspx",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".jshtm",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".rhtml",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".shtml",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".volt",
+        "#icon-monaco-editor-material-html"
+    ],
+    [
+        ".xht",
         "#icon-monaco-editor-material-html"
     ],
     [
@@ -33,6 +65,50 @@
     ],
     [
         ".rst",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".copilotmd",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".litcoffee",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".markdn",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mdown",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mdtext",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mdtxt",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mdwn",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mkd",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".mkdn",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".ronn",
+        "#icon-monaco-editor-material-markdown"
+    ],
+    [
+        ".workbook",
         "#icon-monaco-editor-material-markdown"
     ],
     [
@@ -80,6 +156,30 @@
         "#icon-monaco-editor-material-json"
     ],
     [
+        ".geojson",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        ".har",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        ".jsonld",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        ".webmanifest",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        ".ts.map",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        ".schema.json",
+        "#icon-monaco-editor-material-json_schema"
+    ],
+    [
         ".hjson",
         "#icon-monaco-editor-material-hjson"
     ],
@@ -104,12 +204,28 @@
         "#icon-monaco-editor-material-proto"
     ],
     [
+        ".prompt.md",
+        "#icon-monaco-editor-material-prompt"
+    ],
+    [
+        ".prompts.md",
+        "#icon-monaco-editor-material-prompt"
+    ],
+    [
         ".sublime-project",
         "#icon-monaco-editor-material-sublime"
     ],
     [
         ".sublime-workspace",
         "#icon-monaco-editor-material-sublime"
+    ],
+    [
+        ".slx",
+        "#icon-monaco-editor-material-simulink"
+    ],
+    [
+        ".qmd",
+        "#icon-monaco-editor-material-quarto"
     ],
     [
         ".tw",
@@ -129,6 +245,38 @@
     ],
     [
         ".YAML-tmLanguage",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".yaml",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".yml",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".cff",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".eyaml",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".eyml",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".winget",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".yaml-tmpreferences",
+        "#icon-monaco-editor-material-yaml"
+    ],
+    [
+        ".yaml-tmtheme",
         "#icon-monaco-editor-material-yaml"
     ],
     [
@@ -196,6 +344,186 @@
         "#icon-monaco-editor-material-xml"
     ],
     [
+        ".xmp",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".ascx",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".atom",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".axaml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".axml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".bpmn",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".csl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".csproj.user",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".dita",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".ditamap",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".dtml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".ent",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".fxml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".isml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".jmx",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".launch",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".menu",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".opml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".owl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".proj",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".publishsettings",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".pubxml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".pubxml.user",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".rdf",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".rng",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".rss",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".shproj",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".storyboard",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".targets",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".tld",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".tmx",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".vbproj",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".vbproj.user",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".wsdl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".wxi",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".wxl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".wxs",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xbl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xib",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xliff",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xoml",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xpdl",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".xul",
+        "#icon-monaco-editor-material-xml"
+    ],
+    [
+        ".toml",
+        "#icon-monaco-editor-material-toml"
+    ],
+    [
+        ".toon",
+        "#icon-monaco-editor-material-toon"
+    ],
+    [
         ".png",
         "#icon-monaco-editor-material-image"
     ],
@@ -221,14 +549,6 @@
     ],
     [
         ".tiff",
-        "#icon-monaco-editor-material-image"
-    ],
-    [
-        ".psd",
-        "#icon-monaco-editor-material-image"
-    ],
-    [
-        ".psb",
         "#icon-monaco-editor-material-image"
     ],
     [
@@ -264,10 +584,6 @@
         "#icon-monaco-editor-material-image"
     ],
     [
-        ".dng",
-        "#icon-monaco-editor-material-image"
-    ],
-    [
         ".exr",
         "#icon-monaco-editor-material-image"
     ],
@@ -293,6 +609,10 @@
     ],
     [
         ".jng",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".jxl",
         "#icon-monaco-editor-material-image"
     ],
     [
@@ -404,11 +724,211 @@
         "#icon-monaco-editor-material-image"
     ],
     [
+        ".3fr",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".ari",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".arw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".bay",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".braw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".crw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".cr2",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".cr3",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".cap",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".data",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".dcs",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".dcr",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".dng",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".drf",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".eip",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".erf",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".fff",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".gpr",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".iiq",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".k25",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".kdc",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".mdc",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".mef",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".mos",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".mrw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".nef",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".nrw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".obm",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".orf",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".pef",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".ptx",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".pxn",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".r3d",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".raf",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".rwl",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".rw2",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".rwz",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".sr2",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".srf",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".srw",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".x3f",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".ktx",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".ktx2",
+        "#icon-monaco-editor-material-image"
+    ],
+    [
+        ".pal",
+        "#icon-monaco-editor-material-palette"
+    ],
+    [
+        ".gpl",
+        "#icon-monaco-editor-material-palette"
+    ],
+    [
+        ".act",
+        "#icon-monaco-editor-material-palette"
+    ],
+    [
         ".esx",
         "#icon-monaco-editor-material-javascript"
     ],
     [
         ".mjs",
+        "#icon-monaco-editor-material-javascript"
+    ],
+    [
+        ".js",
+        "#icon-monaco-editor-material-javascript"
+    ],
+    [
+        ".cjs",
+        "#icon-monaco-editor-material-javascript"
+    ],
+    [
+        ".es6",
+        "#icon-monaco-editor-material-javascript"
+    ],
+    [
+        ".pac",
         "#icon-monaco-editor-material-javascript"
     ],
     [
@@ -436,6 +956,22 @@
         "#icon-monaco-editor-material-routing"
     ],
     [
+        ".route.ts",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        ".route.tsx",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        ".route.js",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        ".route.jsx",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
         ".routes.ts",
         "#icon-monaco-editor-material-routing"
     ],
@@ -457,10 +993,6 @@
     ],
     [
         ".dlc",
-        "#icon-monaco-editor-material-settings"
-    ],
-    [
-        ".dll",
         "#icon-monaco-editor-material-settings"
     ],
     [
@@ -492,10 +1024,6 @@
         "#icon-monaco-editor-material-settings"
     ],
     [
-        ".toml",
-        "#icon-monaco-editor-material-settings"
-    ],
-    [
         ".prefs",
         "#icon-monaco-editor-material-settings"
     ],
@@ -512,6 +1040,42 @@
         "#icon-monaco-editor-material-settings"
     ],
     [
+        ".cnf",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".tool-versions",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".directory",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".mak",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".npmrc",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".repo",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        ".ts",
+        "#icon-monaco-editor-material-typescript"
+    ],
+    [
+        ".cts",
+        "#icon-monaco-editor-material-typescript"
+    ],
+    [
+        ".mts",
+        "#icon-monaco-editor-material-typescript"
+    ],
+    [
         ".d.ts",
         "#icon-monaco-editor-material-typescript-def"
     ],
@@ -522,6 +1086,22 @@
     [
         ".d.mts",
         "#icon-monaco-editor-material-typescript-def"
+    ],
+    [
+        ".d.ets",
+        "#icon-monaco-editor-material-typescript-def"
+    ],
+    [
+        ".mdoc",
+        "#icon-monaco-editor-material-markdoc"
+    ],
+    [
+        ".markdoc",
+        "#icon-monaco-editor-material-markdoc"
+    ],
+    [
+        ".markdoc.md",
+        "#icon-monaco-editor-material-markdoc"
     ],
     [
         ".marko",
@@ -604,6 +1184,14 @@
         "#icon-monaco-editor-material-visualstudio"
     ],
     [
+        ".slnf",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".slnx",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
         ".suo",
         "#icon-monaco-editor-material-visualstudio"
     ],
@@ -630,6 +1218,26 @@
     [
         ".vcxproj.filters",
         "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".wixproj",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".bas",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".brs",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".vba",
+        "#icon-monaco-editor-material-visualstudio"
+    ],
+    [
+        ".vcl",
+        "#icon-monaco-editor-material-varnish"
     ],
     [
         ".pdb",
@@ -672,6 +1280,10 @@
         "#icon-monaco-editor-material-database"
     ],
     [
+        ".plpgsql",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
         ".psql",
         "#icon-monaco-editor-material-database"
     ],
@@ -681,6 +1293,106 @@
     ],
     [
         ".db3",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".dblite",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".dblite3",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".debugsymbols",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".odb",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".accde",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".adp",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".bak",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".bdb",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".dbf",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".fdb",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".feather",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".gdb",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".ibd",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".mdf",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".mde",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".myd",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".myi",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".ndf",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".orc",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".parquet",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".sdf",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".ldf",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".frm",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".kdbx",
+        "#icon-monaco-editor-material-database"
+    ],
+    [
+        ".dsql",
         "#icon-monaco-editor-material-database"
     ],
     [
@@ -708,6 +1420,10 @@
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".z",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".tar",
         "#icon-monaco-editor-material-zip"
     ],
@@ -720,11 +1436,35 @@
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".lz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".liz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".lzma",
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".lzma2",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".lz4",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".lz5",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".lzh",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".lha",
         "#icon-monaco-editor-material-zip"
     ],
     [
@@ -752,11 +1492,27 @@
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".001",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".rar",
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".far",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".tz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".taz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".tlz",
         "#icon-monaco-editor-material-zip"
     ],
     [
@@ -768,7 +1524,87 @@
         "#icon-monaco-editor-material-zip"
     ],
     [
+        ".tpz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".tbz",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".tbz2",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
         ".zst",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".zstd",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".tzst",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".tzstd",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".cab",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".cpio",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".rpm",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".deb",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".arj",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".wim",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".swm",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".esd",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".fat",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".xar",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".ntfs",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".hfs",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".squashfs",
+        "#icon-monaco-editor-material-zip"
+    ],
+    [
+        ".apfs",
         "#icon-monaco-editor-material-zip"
     ],
     [
@@ -777,6 +1613,10 @@
     ],
     [
         ".zig",
+        "#icon-monaco-editor-material-zig"
+    ],
+    [
+        ".zon",
         "#icon-monaco-editor-material-zig"
     ],
     [
@@ -808,12 +1648,20 @@
         "#icon-monaco-editor-material-java"
     ],
     [
+        ".jav",
+        "#icon-monaco-editor-material-java"
+    ],
+    [
         ".jar",
         "#icon-monaco-editor-material-jar"
     ],
     [
         ".class",
         "#icon-monaco-editor-material-javaclass"
+    ],
+    [
+        ".c3",
+        "#icon-monaco-editor-material-c3"
     ],
     [
         ".c",
@@ -830,6 +1678,10 @@
     [
         ".h",
         "#icon-monaco-editor-material-h"
+    ],
+    [
+        ".hip",
+        "#icon-monaco-editor-material-hip"
     ],
     [
         ".cc",
@@ -857,6 +1709,46 @@
     ],
     [
         ".ii",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".cppm",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".c++m",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".ccm",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".cxxm",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".h.in",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".hpp.in",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".ipp",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".ixx",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".tpp",
+        "#icon-monaco-editor-material-cpp"
+    ],
+    [
+        ".txx",
         "#icon-monaco-editor-material-cpp"
     ],
     [
@@ -908,11 +1800,47 @@
         "#icon-monaco-editor-material-python"
     ],
     [
+        ".cpy",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".gyp",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".gypi",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".ipy",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".pyi",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".pyt",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".pyw",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
+        ".rpy",
+        "#icon-monaco-editor-material-python"
+    ],
+    [
         ".pyc",
         "#icon-monaco-editor-material-python-misc"
     ],
     [
         ".whl",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        ".egg",
         "#icon-monaco-editor-material-python-misc"
     ],
     [
@@ -968,6 +1896,94 @@
         "#icon-monaco-editor-material-console"
     ],
     [
+        ".xsh",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".bash_aliases",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".bash_login",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".bash_logout",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".bash_profile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".bashrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".cshrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".ebuild",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".eclass",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".profile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".tcshrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".xprofile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".xsession",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".xsessionrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".yash_profile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".yashrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zlogin",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zlogout",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zprofile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zsh-theme",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zshenv",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".zshrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
         ".ps1",
         "#icon-monaco-editor-material-powershell"
     ],
@@ -990,6 +2006,26 @@
     [
         ".pssc",
         "#icon-monaco-editor-material-powershell"
+    ],
+    [
+        ".psrc",
+        "#icon-monaco-editor-material-powershell"
+    ],
+    [
+        ".excalidraw",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        ".excalidraw.json",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        ".excalidraw.svg",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        ".excalidraw.png",
+        "#icon-monaco-editor-material-excalidraw"
     ],
     [
         ".gradle",
@@ -1045,6 +2081,26 @@
     ],
     [
         ".passwd",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".shasum",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".sha256",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".sha256sum",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".sha256sums",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".secret",
         "#icon-monaco-editor-material-key"
     ],
     [
@@ -1112,8 +2168,40 @@
         "#icon-monaco-editor-material-lib"
     ],
     [
-        ".bib",
+        ".a",
         "#icon-monaco-editor-material-lib"
+    ],
+    [
+        ".bib",
+        "#icon-monaco-editor-material-bibliography"
+    ],
+    [
+        ".bbl",
+        "#icon-monaco-editor-material-bibliography"
+    ],
+    [
+        ".bcf",
+        "#icon-monaco-editor-material-bibliography"
+    ],
+    [
+        ".blg",
+        "#icon-monaco-editor-material-bibliography"
+    ],
+    [
+        ".bst",
+        "#icon-monaco-editor-material-bibtex-style"
+    ],
+    [
+        ".dll",
+        "#icon-monaco-editor-material-dll"
+    ],
+    [
+        ".ilk",
+        "#icon-monaco-editor-material-dll"
+    ],
+    [
+        ".so",
+        "#icon-monaco-editor-material-dll"
     ],
     [
         ".rb",
@@ -1125,6 +2213,34 @@
     ],
     [
         ".rbs",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".gemspec",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".podspec",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".rake",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".rbi",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".rbx",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".rjs",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        ".ru",
         "#icon-monaco-editor-material-ruby"
     ],
     [
@@ -1144,7 +2260,31 @@
         "#icon-monaco-editor-material-fsharp"
     ],
     [
+        ".fsscript",
+        "#icon-monaco-editor-material-fsharp"
+    ],
+    [
         ".swift",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".xcplayground",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swiftdeps",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swiftdoc",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swiftmodule",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swiftsourceinfo",
         "#icon-monaco-editor-material-swift"
     ],
     [
@@ -1188,16 +2328,64 @@
         "#icon-monaco-editor-material-tex"
     ],
     [
-        ".sty",
+        ".ltx",
         "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".cls",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".clo",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".latex",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".aux",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".tikz",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".synctex",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".synctex.gz",
+        "#icon-monaco-editor-material-tex"
+    ],
+    [
+        ".sty",
+        "#icon-monaco-editor-material-sty"
+    ],
+    [
+        ".ctx",
+        "#icon-monaco-editor-material-context"
     ],
     [
         ".dtx",
-        "#icon-monaco-editor-material-tex"
+        "#icon-monaco-editor-material-dtx"
     ],
     [
-        ".ltx",
-        "#icon-monaco-editor-material-tex"
+        ".ins",
+        "#icon-monaco-editor-material-doctex-installer"
+    ],
+    [
+        ".bbx",
+        "#icon-monaco-editor-material-bbx"
+    ],
+    [
+        ".cbx",
+        "#icon-monaco-editor-material-cbx"
+    ],
+    [
+        ".lbx",
+        "#icon-monaco-editor-material-lbx"
     ],
     [
         ".pptx",
@@ -1344,23 +2532,91 @@
         "#icon-monaco-editor-material-virtual"
     ],
     [
+        ".ved",
+        "#icon-monaco-editor-material-vedic"
+    ],
+    [
+        ".veda",
+        "#icon-monaco-editor-material-vedic"
+    ],
+    [
+        ".vedic",
+        "#icon-monaco-editor-material-vedic"
+    ],
+    [
+        ".edb",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".eml",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".emlx",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
         ".ics",
         "#icon-monaco-editor-material-email"
     ],
     [
-        ".mp3",
+        ".mbox",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".msg",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".oft",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".olm",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".ost",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".p7s",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".pst",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".rpmsg",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".tnef",
+        "#icon-monaco-editor-material-email"
+    ],
+    [
+        ".8svx",
         "#icon-monaco-editor-material-audio"
     ],
     [
-        ".flac",
+        ".aa",
         "#icon-monaco-editor-material-audio"
     ],
     [
-        ".m4a",
+        ".aac",
         "#icon-monaco-editor-material-audio"
     ],
     [
-        ".wma",
+        ".aax",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".ac3",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".aif",
         "#icon-monaco-editor-material-audio"
     ],
     [
@@ -1368,7 +2624,215 @@
         "#icon-monaco-editor-material-audio"
     ],
     [
+        ".alac",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".amr",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".ape",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".caf",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".cda",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".cdr",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".dss",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".ec3",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".efs",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".enc",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".flac",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".flp",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".gp",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".gsm",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".it",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m3u",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m3u8",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m4a",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m4b",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m4p",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".m4r",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mid",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mka",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mmf",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mod",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mp3",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mpc",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mscz",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mtm",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mui",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".musx",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".mxl",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".nsa",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".opus",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".pkf",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".qcp",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".ra",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".rf64",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".rip",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".sdt",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".sesx",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".sf2",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".stap",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".tg",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".voc",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".vqf",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
         ".wav",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".weba",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".wfp",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".wma",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".wpl",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".wproj",
+        "#icon-monaco-editor-material-audio"
+    ],
+    [
+        ".wv",
         "#icon-monaco-editor-material-audio"
     ],
     [
@@ -1386,6 +2850,10 @@
     [
         ".txt",
         "#icon-monaco-editor-material-document"
+    ],
+    [
+        ".lrc",
+        "#icon-monaco-editor-material-lyric"
     ],
     [
         ".graphql",
@@ -1416,6 +2884,10 @@
         "#icon-monaco-editor-material-haskell"
     ],
     [
+        ".lhs",
+        "#icon-monaco-editor-material-haskell"
+    ],
+    [
         ".kt",
         "#icon-monaco-editor-material-kotlin"
     ],
@@ -1424,12 +2896,36 @@
         "#icon-monaco-editor-material-kotlin"
     ],
     [
+        ".mist.js",
+        "#icon-monaco-editor-material-mist"
+    ],
+    [
+        ".mist.ts",
+        "#icon-monaco-editor-material-mist"
+    ],
+    [
+        ".mist.jsx",
+        "#icon-monaco-editor-material-mist"
+    ],
+    [
+        ".mist.tsx",
+        "#icon-monaco-editor-material-mist"
+    ],
+    [
         ".otne",
         "#icon-monaco-editor-material-otne"
     ],
     [
         ".patch",
         "#icon-monaco-editor-material-git"
+    ],
+    [
+        ".diff",
+        "#icon-monaco-editor-material-diff"
+    ],
+    [
+        ".rej",
+        "#icon-monaco-editor-material-diff"
     ],
     [
         ".lua",
@@ -1448,7 +2944,27 @@
         "#icon-monaco-editor-material-clojure"
     ],
     [
+        ".cljx",
+        "#icon-monaco-editor-material-clojure"
+    ],
+    [
+        ".clojure",
+        "#icon-monaco-editor-material-clojure"
+    ],
+    [
+        ".edn",
+        "#icon-monaco-editor-material-clojure"
+    ],
+    [
         ".groovy",
+        "#icon-monaco-editor-material-groovy"
+    ],
+    [
+        ".gvy",
+        "#icon-monaco-editor-material-groovy"
+    ],
+    [
+        ".nf",
         "#icon-monaco-editor-material-groovy"
     ],
     [
@@ -1457,6 +2973,18 @@
     ],
     [
         ".rmd",
+        "#icon-monaco-editor-material-r"
+    ],
+    [
+        ".rhistory",
+        "#icon-monaco-editor-material-r"
+    ],
+    [
+        ".rprofile",
+        "#icon-monaco-editor-material-r"
+    ],
+    [
+        ".rt",
         "#icon-monaco-editor-material-r"
     ],
     [
@@ -1489,6 +3017,10 @@
     ],
     [
         ".swc",
+        "#icon-monaco-editor-material-adobe-swc"
+    ],
+    [
+        ".swcrc",
         "#icon-monaco-editor-material-swc"
     ],
     [
@@ -1564,6 +3096,10 @@
         "#icon-monaco-editor-material-odin"
     ],
     [
+        ".onnx",
+        "#icon-monaco-editor-material-onnx"
+    ],
+    [
         ".js.map",
         "#icon-monaco-editor-material-javascript-map"
     ],
@@ -1592,11 +3128,31 @@
         "#icon-monaco-editor-material-handlebars"
     ],
     [
+        ".handlebars",
+        "#icon-monaco-editor-material-handlebars"
+    ],
+    [
+        ".hjs",
+        "#icon-monaco-editor-material-handlebars"
+    ],
+    [
         ".pm",
         "#icon-monaco-editor-material-perl"
     ],
     [
         ".raku",
+        "#icon-monaco-editor-material-perl"
+    ],
+    [
+        ".pod",
+        "#icon-monaco-editor-material-perl"
+    ],
+    [
+        ".psgi",
+        "#icon-monaco-editor-material-perl"
+    ],
+    [
+        ".t",
         "#icon-monaco-editor-material-perl"
     ],
     [
@@ -1804,6 +3360,14 @@
         "#icon-monaco-editor-material-angular-resolver"
     ],
     [
+        ".interceptor.ts",
+        "#icon-monaco-editor-material-angular-interceptor"
+    ],
+    [
+        ".interceptor.js",
+        "#icon-monaco-editor-material-angular-interceptor"
+    ],
+    [
         ".pp",
         "#icon-monaco-editor-material-puppet"
     ],
@@ -1884,11 +3448,19 @@
         "#icon-monaco-editor-material-verilog"
     ],
     [
+        ".vhdx",
+        "#icon-monaco-editor-material-verilog"
+    ],
+    [
         ".sv",
         "#icon-monaco-editor-material-verilog"
     ],
     [
         ".svh",
+        "#icon-monaco-editor-material-verilog"
+    ],
+    [
+        ".vhdl",
         "#icon-monaco-editor-material-verilog"
     ],
     [
@@ -1954,6 +3526,14 @@
     [
         ".tfbackend",
         "#icon-monaco-editor-material-terraform"
+    ],
+    [
+        ".terraformignore",
+        "#icon-monaco-editor-material-terraform"
+    ],
+    [
+        ".tofu",
+        "#icon-monaco-editor-material-opentofu"
     ],
     [
         ".blade.php",
@@ -2116,6 +3696,10 @@
         "#icon-monaco-editor-material-figma"
     ],
     [
+        ".huff",
+        "#icon-monaco-editor-material-huff"
+    ],
+    [
         ".cr",
         "#icon-monaco-editor-material-crystal"
     ],
@@ -2208,6 +3792,10 @@
         "#icon-monaco-editor-material-storybook"
     ],
     [
+        ".stories.vue",
+        "#icon-monaco-editor-material-storybook"
+    ],
+    [
         ".wpy",
         "#icon-monaco-editor-material-wepy"
     ],
@@ -2218,6 +3806,22 @@
     [
         ".san",
         "#icon-monaco-editor-material-san"
+    ],
+    [
+        ".quokka.js",
+        "#icon-monaco-editor-material-quokka"
+    ],
+    [
+        ".quokka.ts",
+        "#icon-monaco-editor-material-quokka"
+    ],
+    [
+        ".quokka.jsx",
+        "#icon-monaco-editor-material-quokka"
+    ],
+    [
+        ".quokka.tsx",
+        "#icon-monaco-editor-material-quokka"
     ],
     [
         ".djt",
@@ -2253,6 +3857,10 @@
     ],
     [
         ".lang",
+        "#icon-monaco-editor-material-i18n"
+    ],
+    [
+        ".xlf",
         "#icon-monaco-editor-material-i18n"
     ],
     [
@@ -2360,6 +3968,14 @@
         "#icon-monaco-editor-material-azure-pipelines"
     ],
     [
+        ".azure-pipelines-main.yml",
+        "#icon-monaco-editor-material-azure-pipelines"
+    ],
+    [
+        ".azure-pipelines-main.yaml",
+        "#icon-monaco-editor-material-azure-pipelines"
+    ],
+    [
         ".azcli",
         "#icon-monaco-editor-material-azure"
     ],
@@ -2377,6 +3993,10 @@
     ],
     [
         ".vbhtml",
+        "#icon-monaco-editor-material-razor"
+    ],
+    [
+        ".razor",
         "#icon-monaco-editor-material-razor"
     ],
     [
@@ -2432,6 +4052,14 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".step",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".ste",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".obj",
         "#icon-monaco-editor-material-3d"
     ],
@@ -2444,7 +4072,7 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
-        ".blend",
+        ".dwg",
         "#icon-monaco-editor-material-3d"
     ],
     [
@@ -2460,6 +4088,50 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".3dm",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".3mf",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".catpart",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".catproduct",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".f3d",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".iam",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".ige",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".iges",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".igs",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".ipt",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".jt",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".mqo",
         "#icon-monaco-editor-material-3d"
     ],
@@ -2472,7 +4144,39 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".prt",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".sab",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".sat",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".skp",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".sldasm",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".slddrw",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".sldprt",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".smb",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".smt",
         "#icon-monaco-editor-material-3d"
     ],
     [
@@ -2488,12 +4192,88 @@
         "#icon-monaco-editor-material-3d"
     ],
     [
+        ".gltf",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".glb",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".3ds",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".dae",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".ply",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".wrl",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".usd",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".usdz",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".wire",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".x_b",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".x_t",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
+        ".123dx",
+        "#icon-monaco-editor-material-3d"
+    ],
+    [
         ".svg",
         "#icon-monaco-editor-material-svg"
     ],
     [
+        ".ai",
+        "#icon-monaco-editor-material-adobe-illustrator"
+    ],
+    [
+        ".ait",
+        "#icon-monaco-editor-material-adobe-illustrator"
+    ],
+    [
+        ".psd",
+        "#icon-monaco-editor-material-adobe-photoshop"
+    ],
+    [
+        ".psb",
+        "#icon-monaco-editor-material-adobe-photoshop"
+    ],
+    [
+        ".psdt",
+        "#icon-monaco-editor-material-adobe-photoshop"
+    ],
+    [
         ".svelte",
         "#icon-monaco-editor-material-svelte"
+    ],
+    [
+        ".svelte.js",
+        "#icon-monaco-editor-material-svelte_js"
+    ],
+    [
+        ".svelte.ts",
+        "#icon-monaco-editor-material-svelte_ts"
     ],
     [
         ".vimrc",
@@ -2521,23 +4301,23 @@
     ],
     [
         ".prw",
-        "#icon-monaco-editor-material-advpl_prw"
+        "#icon-monaco-editor-material-advpl"
     ],
     [
         ".prx",
-        "#icon-monaco-editor-material-advpl_prw"
+        "#icon-monaco-editor-material-advpl"
     ],
     [
         ".ptm",
-        "#icon-monaco-editor-material-advpl_ptm"
+        "#icon-monaco-editor-material-advpl-ptm"
     ],
     [
         ".tlpp",
-        "#icon-monaco-editor-material-advpl_tlpp"
+        "#icon-monaco-editor-material-advpl-tlpp"
     ],
     [
         ".ch",
-        "#icon-monaco-editor-material-advpl_include"
+        "#icon-monaco-editor-material-advpl-include"
     ],
     [
         ".iso",
@@ -2593,6 +4373,10 @@
     ],
     [
         ".tcl",
+        "#icon-monaco-editor-material-tcl"
+    ],
+    [
+        ".do",
         "#icon-monaco-editor-material-tcl"
     ],
     [
@@ -2729,7 +4513,11 @@
     ],
     [
         ".unity",
-        "#icon-monaco-editor-material-shaderlab"
+        "#icon-monaco-editor-material-unity"
+    ],
+    [
+        ".unitypackage",
+        "#icon-monaco-editor-material-unity"
     ],
     [
         ".sas",
@@ -2757,6 +4545,10 @@
     ],
     [
         ".nupkg",
+        "#icon-monaco-editor-material-nuget"
+    ],
+    [
+        ".nuspec",
         "#icon-monaco-editor-material-nuget"
     ],
     [
@@ -2848,6 +4640,10 @@
         "#icon-monaco-editor-material-rescript-interface"
     ],
     [
+        ".duc",
+        "#icon-monaco-editor-material-duc"
+    ],
+    [
         ".b",
         "#icon-monaco-editor-material-brainfuck"
     ],
@@ -2928,6 +4724,26 @@
         "#icon-monaco-editor-material-gemini"
     ],
     [
+        ".php",
+        "#icon-monaco-editor-material-php"
+    ],
+    [
+        ".php4",
+        "#icon-monaco-editor-material-php"
+    ],
+    [
+        ".php5",
+        "#icon-monaco-editor-material-php"
+    ],
+    [
+        ".phtml",
+        "#icon-monaco-editor-material-php"
+    ],
+    [
+        ".ctp",
+        "#icon-monaco-editor-material-php"
+    ],
+    [
         ".tsconfig.json",
         "#icon-monaco-editor-material-tsconfig"
     ],
@@ -2958,6 +4774,14 @@
     [
         ".horusec-config.json",
         "#icon-monaco-editor-material-horusec"
+    ],
+    [
+        ".pdm.lock",
+        "#icon-monaco-editor-material-pdm"
+    ],
+    [
+        ".pdm.toml",
+        "#icon-monaco-editor-material-pdm"
     ],
     [
         ".coarc",
@@ -3016,6 +4840,30 @@
         "#icon-monaco-editor-material-shader"
     ],
     [
+        ".rgen",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rint",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rahit",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rchit",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rmiss",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rcall",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
         ".vert.glsl",
         "#icon-monaco-editor-material-shader"
     ],
@@ -3037,6 +4885,30 @@
     ],
     [
         ".comp.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rgen.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rint.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rahit.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rchit.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rmiss.glsl",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".rcall.glsl",
         "#icon-monaco-editor-material-shader"
     ],
     [
@@ -3132,6 +5004,42 @@
         "#icon-monaco-editor-material-shader"
     ],
     [
+        ".spv",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".slang",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".cginc",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".compute",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".fx",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".fxh",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".hlsli",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".psh",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
+        ".vsh",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
         ".sy",
         "#icon-monaco-editor-material-siyuan"
     ],
@@ -3164,12 +5072,40 @@
         "#icon-monaco-editor-material-steadybit"
     ],
     [
+        ".capnp",
+        "#icon-monaco-editor-material-capnp"
+    ],
+    [
         ".tree",
         "#icon-monaco-editor-material-tree"
     ],
     [
         ".cdc",
         "#icon-monaco-editor-material-cadence"
+    ],
+    [
+        ".openapi.json",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        ".openapi.yml",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        ".openapi.yaml",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        ".swagger.json",
+        "#icon-monaco-editor-material-swagger"
+    ],
+    [
+        ".swagger.yml",
+        "#icon-monaco-editor-material-swagger"
+    ],
+    [
+        ".swagger.yaml",
+        "#icon-monaco-editor-material-swagger"
     ],
     [
         ".g4",
@@ -3248,12 +5184,28 @@
         "#icon-monaco-editor-material-roblox"
     ],
     [
+        ".luau",
+        "#icon-monaco-editor-material-luau"
+    ],
+    [
+        ".rbxmk.lua",
+        "#icon-monaco-editor-material-rbxmk"
+    ],
+    [
+        ".rbxmk.luau",
+        "#icon-monaco-editor-material-rbxmk"
+    ],
+    [
         ".spwn",
         "#icon-monaco-editor-material-spwn"
     ],
     [
         ".templ",
         "#icon-monaco-editor-material-templ"
+    ],
+    [
+        ".crx",
+        "#icon-monaco-editor-material-chrome"
     ],
     [
         ".stan",
@@ -3278,5 +5230,285 @@
     [
         ".gs",
         "#icon-monaco-editor-material-apps-script"
+    ],
+    [
+        ".garden.yml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        ".garden.yaml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        ".pkl",
+        "#icon-monaco-editor-material-pkl"
+    ],
+    [
+        ".k",
+        "#icon-monaco-editor-material-kcl"
+    ],
+    [
+        ".sigstore.json",
+        "#icon-monaco-editor-material-verified"
+    ],
+    [
+        ".bru",
+        "#icon-monaco-editor-material-bruno"
+    ],
+    [
+        ".cairo",
+        "#icon-monaco-editor-material-cairo"
+    ],
+    [
+        ".alloy",
+        "#icon-monaco-editor-material-grafana-alloy"
+    ],
+    [
+        ".ftl",
+        "#icon-monaco-editor-material-freemarker"
+    ],
+    [
+        ".ц",
+        "#icon-monaco-editor-material-tsil"
+    ],
+    [
+        ".tape",
+        "#icon-monaco-editor-material-tape"
+    ],
+    [
+        ".hurl",
+        "#icon-monaco-editor-material-hurl"
+    ],
+    [
+        ".cds",
+        "#icon-monaco-editor-material-cds"
+    ],
+    [
+        ".slint",
+        "#icon-monaco-editor-material-slint"
+    ],
+    [
+        ".verse",
+        "#icon-monaco-editor-material-verse"
+    ],
+    [
+        ".sw",
+        "#icon-monaco-editor-material-sway"
+    ],
+    [
+        ".zeabur",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        ".bench.ts",
+        "#icon-monaco-editor-material-bench-ts"
+    ],
+    [
+        ".bench.cts",
+        "#icon-monaco-editor-material-bench-ts"
+    ],
+    [
+        ".bench.mts",
+        "#icon-monaco-editor-material-bench-ts"
+    ],
+    [
+        ".bench.jsx",
+        "#icon-monaco-editor-material-bench-jsx"
+    ],
+    [
+        ".bench.tsx",
+        "#icon-monaco-editor-material-bench-jsx"
+    ],
+    [
+        ".bench.js",
+        "#icon-monaco-editor-material-bench-js"
+    ],
+    [
+        ".bench.cjs",
+        "#icon-monaco-editor-material-bench-js"
+    ],
+    [
+        ".bench.mjs",
+        "#icon-monaco-editor-material-bench-js"
+    ],
+    [
+        ".controller.js",
+        "#icon-monaco-editor-material-controller"
+    ],
+    [
+        ".controller.ts",
+        "#icon-monaco-editor-material-controller"
+    ],
+    [
+        "..ncurc.json",
+        "#icon-monaco-editor-material-dependencies-update"
+    ],
+    [
+        "..ncurc.yml",
+        "#icon-monaco-editor-material-dependencies-update"
+    ],
+    [
+        "..ncurc.js",
+        "#icon-monaco-editor-material-dependencies-update"
+    ],
+    [
+        ".srt",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".ssa",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".ttml",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".sbv",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".dfxp",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".vtt",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".sub",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".ass",
+        "#icon-monaco-editor-material-subtitles"
+    ],
+    [
+        ".beancount",
+        "#icon-monaco-editor-material-beancount"
+    ],
+    [
+        ".bean",
+        "#icon-monaco-editor-material-beancount"
+    ],
+    [
+        ".epub",
+        "#icon-monaco-editor-material-epub"
+    ],
+    [
+        ".reg",
+        "#icon-monaco-editor-material-regedit"
+    ],
+    [
+        ".gnu",
+        "#icon-monaco-editor-material-gnuplot"
+    ],
+    [
+        ".smk",
+        "#icon-monaco-editor-material-snakemake"
+    ],
+    [
+        ".snakemake",
+        "#icon-monaco-editor-material-snakemake"
+    ],
+    [
+        ".cpn",
+        "#icon-monaco-editor-material-coloredpetrinets"
+    ],
+    [
+        ".pnml",
+        "#icon-monaco-editor-material-coloredpetrinets"
+    ],
+    [
+        ".pt",
+        "#icon-monaco-editor-material-pytorch"
+    ],
+    [
+        ".pth",
+        "#icon-monaco-editor-material-pytorch"
+    ],
+    [
+        ".pwf",
+        "#icon-monaco-editor-material-pytorch"
+    ],
+    [
+        ".blend",
+        "#icon-monaco-editor-material-blender"
+    ],
+    [
+        ".blend1",
+        "#icon-monaco-editor-material-blender"
+    ],
+    [
+        ".blend2",
+        "#icon-monaco-editor-material-blender"
+    ],
+    [
+        ".css.ts",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".css.js",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".css.cjs",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".css.mjs",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".css.tsx",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".css.jsx",
+        "#icon-monaco-editor-material-vanilla-extract"
+    ],
+    [
+        ".toc",
+        "#icon-monaco-editor-material-toc"
+    ],
+    [
+        ".cue",
+        "#icon-monaco-editor-material-cue"
+    ],
+    [
+        ".lean",
+        "#icon-monaco-editor-material-lean"
+    ],
+    [
+        ".sls",
+        "#icon-monaco-editor-material-salt"
+    ],
+    [
+        ".m2",
+        "#icon-monaco-editor-material-macaulay2"
+    ],
+    [
+        ".ua",
+        "#icon-monaco-editor-material-uiua"
+    ],
+    [
+        ".skill.md",
+        "#icon-monaco-editor-material-skill"
+    ],
+    [
+        ".skills.md",
+        "#icon-monaco-editor-material-skill"
+    ],
+    [
+        ".instructions.md",
+        "#icon-monaco-editor-material-instructions"
+    ],
+    [
+        ".instruction.md",
+        "#icon-monaco-editor-material-instructions"
+    ],
+    [
+        ".mrpack",
+        "#icon-monaco-editor-material-mrpack"
     ]
 ]

@@ -1,38 +1,39 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import { get } from "svelte/store";
+
+import { FileTreeNodeType } from "@workspace/components/siyuan/tree/file";
+import { FLAG_LIGHT } from "@workspace/utils/env/native-front-end";
+import { parse } from "@workspace/utils/path/browserify";
+
+import file_extension_icon from "@/assets/entries/file-extension-icon.json";
+import file_icon from "@/assets/entries/file-icon.json";
+import folder_expanded_icon from "@/assets/entries/folder-expanded-icon.json";
+import folder_icon from "@/assets/entries/folder-icon.json";
+import language_icon from "@/assets/entries/language-icon.json";
+import file_extension_icon_light from "@/assets/entries/light/file-extension-icon.json";
+import file_icon_light from "@/assets/entries/light/file-icon.json";
+import folder_expanded_icon_light from "@/assets/entries/light/folder-expanded-icon.json";
+import folder_icon_light from "@/assets/entries/light/folder-icon.json";
+
+import type { ParsedPath } from "node:path";
+
+import type { IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
 
 import type MonacoEditorPlugin from "@/index";
-import { FileTreeNodeType, type IFileTreeNodeStores } from "@workspace/components/siyuan/tree/file";
-import { parse } from "@workspace/utils/path/browserify";
-import { get } from "svelte/store";
-import { FLAG_LIGHT } from "@workspace/utils/env/native-front-end";
-import type { ParsedPath } from "path";
-
-import language_icon from "@/assets/entries/language-icon.json";
-
-import file_icon from "@/assets/entries/file-icon.json";
-import file_extension_icon from "@/assets/entries/file-extension-icon.json";
-import folder_icon from "@/assets/entries/folder-icon.json";
-import folder_expanded_icon from "@/assets/entries/folder-expanded-icon.json";
-
-import file_icon_light from "@/assets/entries/light/file-icon.json";
-import file_extension_icon_light from "@/assets/entries/light/file-extension-icon.json";
-import folder_icon_light from "@/assets/entries/light/folder-icon.json";
-import folder_expanded_icon_light from "@/assets/entries/light/folder-expanded-icon.json";
 
 export type IEntries = [string, string][];
 
@@ -90,33 +91,33 @@ export class ExplorerIcon {
         this.i18n = this.plugin.i18n;
         this.map = new Map();
 
-        const javascript = this.material.languageIds.get("javascript");
+        const javascript = this.material.languageIds.get("javascript")!;
         this.material.fileExtensions.set(".js", javascript);
         this.material.fileExtensions.set(".cjs", javascript);
         this.material.fileExtensions.set(".mjs", javascript);
 
-        const typescript = this.material.languageIds.get("typescript");
+        const typescript = this.material.languageIds.get("typescript")!;
         this.material.fileExtensions.set(".ts", typescript);
         this.material.fileExtensions.set(".cts", typescript);
         this.material.fileExtensions.set(".mts", typescript);
 
-        const html = this.material.languageIds.get("html");
+        const html = this.material.languageIds.get("html")!;
         this.material.fileExtensions.set(".html", html);
     }
 
     /* 展开节点 */
     public expand(node: IFileTreeNodeStores): void {
-        node.icon.set(this.make(get(node.type), get(node.relative), true));
+        node.icon.set(this.make(get(node.type), get(node.relative)!, true));
     }
 
     /* 收缩节点 */
     public collapse(node: IFileTreeNodeStores): void {
-        node.icon.set(this.make(get(node.type), get(node.relative), false));
+        node.icon.set(this.make(get(node.type), get(node.relative)!, false));
     }
 
     /* 根据节点信息获取浮窗预览 ID */
     public getPopoverID(
-        type: FileTreeNodeType,
+        _type: FileTreeNodeType,
         path: string,
     ): string {
         const info = parse(path.toLowerCase()); // 节点路径信息
@@ -126,6 +127,7 @@ export class ExplorerIcon {
                 if (/^\d{14}-[0-9a-z]{7}$/.test(info.name)) { // 文档文件/文件夹
                     return info.name;
                 }
+                // fallthrough
             default:
                 return "";
         }
@@ -140,7 +142,8 @@ export class ExplorerIcon {
     ): string {
         /* 若映射表中存在对应的图标, 则直接使用 */
         const icon = this.map.get(path);
-        if (icon) return icon;
+        if (icon)
+            return icon;
 
         const info = parse(path.toLowerCase()); // 节点路径信息
 
@@ -157,9 +160,11 @@ export class ExplorerIcon {
 
     public makeRootNodeIcon(
         expanded: boolean = false,
-        light: boolean = FLAG_LIGHT,
+        _light: boolean = FLAG_LIGHT,
     ): string {
-        return expanded ? ExplorerIcon.ICONS.material.rootFolderExpanded : ExplorerIcon.ICONS.material.rootFolder;
+        return expanded
+            ? ExplorerIcon.ICONS.material.rootFolderExpanded
+            : ExplorerIcon.ICONS.material.rootFolder;
     }
 
     public makeFolderNodeIcon(
@@ -169,9 +174,9 @@ export class ExplorerIcon {
     ): string {
         return (light
             ? (expanded
-                ? this.material.folderNamesExpandedLight // 文件夹名称->浅色展开图标
-                : this.material.folderNamesLight // 文件夹名称->浅色图标
-            ).get(info.base)
+                    ? this.material.folderNamesExpandedLight // 文件夹名称->浅色展开图标
+                    : this.material.folderNamesLight // 文件夹名称->浅色图标
+                ).get(info.base)
             : undefined)
             ?? (expanded
                 ? this.material.folderNamesExpanded // 文件夹名称->展开图标
@@ -189,13 +194,17 @@ export class ExplorerIcon {
     ): string {
         const exts = info.base.split(".");
 
-        return (light ? (
-            this.material.fileNamesLight.get(info.base) // 文件名称->浅色图标
-            ?? this.getIconByExts(exts, light) // 文件扩展名->浅色图标
-        ) : undefined)
-            ?? this.material.fileNames.get(info.base) // 文件名称->图标
+        let icon: string | undefined;
+        if (light) {
+            icon ??= this.material.fileNamesLight.get(info.base) // 文件名称->浅色图标
+                ?? this.getIconByExts(exts, light); // 文件扩展名->浅色
+        }
+
+        icon ??= this.material.fileNames.get(info.base) // 文件名称->图标
             ?? this.getIconByExts(exts, light) // 文件扩展名->图标
             ?? ExplorerIcon.ICONS.material.file; // 默认文件图标
+
+        return icon;
     }
 
     protected getIconByExts(
@@ -207,7 +216,8 @@ export class ExplorerIcon {
             const icon = light
                 ? this.material.fileExtensionsLight.get(ext)
                 : this.material.fileExtensions.get(ext);
-            if (icon) return icon;
+            if (icon)
+                return icon;
         }
         return undefined;
     }

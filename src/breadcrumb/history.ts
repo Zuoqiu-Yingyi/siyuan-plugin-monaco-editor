@@ -1,37 +1,40 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import {
-    Breadcrumb,
-    type IBaseBreadcrumbOptions,
-    type IBaseStore,
-    type IBreadcrumb,
-} from "./breadcrumb";
-import type { ComponentProps } from "svelte";
+import * as sdk from "@siyuan-community/siyuan-sdk";
 import {
     get,
-    type Writable,
+
 } from "svelte/store";
-import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+
 import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
-import type { BlockID } from "@workspace/types/siyuan";
 import { getDocPaths } from "@workspace/utils/siyuan/breadcrumb";
+
 import { NodeType2IconID } from "./block";
-import * as sdk from "@siyuan-community/siyuan-sdk";
+import {
+    Breadcrumb,
+
+} from "./breadcrumb";
+
+import type { ComponentProps } from "svelte";
+import type { Writable } from "svelte/store";
+
+import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+import type { BlockID } from "@workspace/types/siyuan";
+
+import type { IBaseBreadcrumbOptions, IBaseStore, IBreadcrumb } from "./breadcrumb";
 
 export interface IHistoryStore extends IBaseStore {
     fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
@@ -65,9 +68,10 @@ export class HistoryBreadcrumb extends Breadcrumb {
             breadcrumbIcons: [],
         };
 
+        let block_id: BlockID = options.id ?? "";
         /* 通过 path 获取文档块 ID */
         if (options.path) {
-            options.id = options.path.slice(-25, -3);
+            block_id = options.path.slice(-25, -3);
         }
 
         /* 获取块信息 */
@@ -75,26 +79,26 @@ export class HistoryBreadcrumb extends Breadcrumb {
             response_getBlockInfo,
             response_getBlockBreadcrumb,
         ] = await Promise.all([
-            this.client.getBlockInfo({ id: options.id }),
-            this.client.getBlockBreadcrumb({ id: options.id }),
+            this.client.getBlockInfo({ id: block_id }),
+            this.client.getBlockBreadcrumb({ id: block_id }),
         ]);
 
         /* 获得文档路径 */
         const paths = getDocPaths(
             response_getBlockInfo.data.box,
             response_getBlockInfo.data.path,
-            response_getBlockBreadcrumb.data[0].name,
+            response_getBlockBreadcrumb.data[0]!.name,
         );
         const notebook = paths.shift();
         breadcrumb.breadcrumbItems.push({
             type: "item",
             icon: NodeType2IconID.get(sdk.siyuan.NodeType.NodeNotebook),
-            text: notebook.hpath,
-            textTitle: notebook.hpath,
+            text: notebook!.hpath,
+            textTitle: notebook!.hpath,
             textEllipsis: true,
         });
 
-        paths.forEach(doc => {
+        paths.forEach((doc) => {
             breadcrumb.breadcrumbItems.push({
                 type: "arrow",
                 icon: "#icon-monaco-editor-slash",
@@ -120,9 +124,9 @@ export class HistoryBreadcrumb extends Breadcrumb {
                 ariaLabel: this.i18n.button.fullscreen.ariaLabel,
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick(_e, _element, props) {
-                    const fullscreen = get(props.active);
-                    options.stores.fullscreen.set(!fullscreen);
-                    props.active.set(!fullscreen);
+                    const fullscreen = get(props.active!);
+                    options.stores!.fullscreen!.set(!fullscreen);
+                    props.active!.set(!fullscreen);
                 },
             });
 
