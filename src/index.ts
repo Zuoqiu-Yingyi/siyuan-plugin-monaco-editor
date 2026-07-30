@@ -923,6 +923,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 // icon: "iconCode",
                 icon: "icon-monaco-editor",
                 label: this.displayName,
+                accelerator: fn__code(this.name),
                 submenu,
             });
         }
@@ -978,6 +979,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 // icon: "iconCode",
                 icon: "icon-monaco-editor",
                 label: this.displayName,
+                accelerator: fn__code(this.name),
                 submenu,
             });
         }
@@ -1091,6 +1093,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                 // icon: "iconCode",
                 icon: "icon-monaco-editor",
                 label: this.displayName,
+                accelerator: fn__code(this.name),
                 submenu,
             });
         }
@@ -1187,6 +1190,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                     // icon: "iconCode",
                     icon: "icon-monaco-editor",
                     label: this.displayName,
+                    accelerator: fn__code(this.name),
                     submenu,
                 });
             }
