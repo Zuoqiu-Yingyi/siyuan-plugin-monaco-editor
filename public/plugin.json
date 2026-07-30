@@ -50,18 +50,18 @@
     ],
     "displayName": {
         "default": "Integrated Edit Environment",
-        "zh_CN": "集成编辑环境",
-        "zh_CHT": "集成編輯環境"
+        "zh-CN": "集成编辑环境",
+        "zh-TW": "集成編輯環境"
     },
     "description": {
         "default": "A file editing tool integrating <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a>.",
-        "zh_CN": "一个集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件编辑工具。",
-        "zh_CHT": "一個集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件編輯工具。"
+        "zh-CN": "一个集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件编辑工具。",
+        "zh-TW": "一個集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件編輯工具。"
     },
     "readme": {
         "default": "README.md",
-        "zh_CN": "README_zh_CN.md",
-        "zh_CHT": "README_zh_CN.md"
+        "zh-CN": "README.zh-CN.md",
+        "zh-TW": "README.zh-CN.md"
     },
     "funding": {
         "openCollective": "",

@@ -25,7 +25,7 @@ import { Logger } from "@workspace/utils/logger";
 import { trimSuffix } from "@workspace/utils/misc/string";
 import { state } from "@workspace/utils/svelte/runes.svelte";
 
-import i18n from "~/public/i18n/en_US.json";
+import i18n from "~/public/i18n/en.json";
 import manifest from "~/public/plugin.json";
 
 import { VditorBridgeSlave } from "@/bridge/VditorSlave";
