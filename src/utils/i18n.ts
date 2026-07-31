@@ -19,8 +19,8 @@ import {
 } from "@workspace/types/siyuan/i18n";
 
 import type en from "~/public/i18n/en.json";
-import type zh_Hant from "~/public/i18n/zh-TW.json";
 import type zh_Hans from "~/public/i18n/zh-CN.json";
+import type zh_Hant from "~/public/i18n/zh-TW.json";
 
 export type I18N = typeof zh_Hans;
 
