@@ -43,8 +43,8 @@ export default {
         copyPublicDir: false,
         rollupOptions: {
             input: {
-                editor: resolve(__dirname, "./iframes/editor.html"),
-                vditor: resolve(__dirname, "./iframes/vditor.html"),
+                editor: resolve(import.meta.dirname, "./iframes/editor.html"),
+                vditor: resolve(import.meta.dirname, "./iframes/vditor.html"),
             },
             output: {
                 // REF: https://cn.rollupjs.org/configuration-options/#output-intro-output-outro
