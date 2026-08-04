@@ -26,29 +26,15 @@ jobs:
           # 递归拉取 submodule | recursively checkout submodules
           submodules: recursive
 
-      # Install Node.js
-      # REF https://github.com/marketplace/actions/setup-node-js-environment
-      - name: Install Node.js
-        uses: actions/setup-node@v6
+      # Setup pnpm with Node.js
+      # REF: https://github.com/marketplace/actions/setup-pnpm-with-runtime
+      - name: Setup pnpm with Node.js
+        uses: pnpm/setup@v2
         with:
-          # Node.js 版本号 | Node.js version
-          node-version: latest
-
-          # # Node.js 源 | Node.js registry
-          registry-url: https://registry.npmjs.org
-
-      # Install pnpm
-      # REF https://github.com/marketplace/actions/setup-pnpm
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-        with:
-          # pnpm 版本号 | pnpm version
-          version: 11
-
-          # 是否安装 npm 包 | if install npm package?
-          run_install: false
-          cache: false
+          package-json-file: ./workspace/package.json
+          cache-dependency-path: ./workspace/pnpm-lock.yaml
+          cache: true
+          install: false
 
       # Install dependencies
       - name: Install dependencies
