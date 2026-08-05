@@ -269,7 +269,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
         });
     }
 
-    public override onload(): void {
+    public override async onload(): Promise<void> {
         // this.logger.debug(this);
         /* 注册图标 */
         this.addIcons([
@@ -282,151 +282,152 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
             icon_material_icons, // material 文件主题图标
         ].join(""));
 
-        this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME)
-            .then((config) => {
-                this.config = merge(DEFAULT_CONFIG, config || {}) as IConfig;
-                this.updateConfigBySiyuanConfig();
-            })
-            .catch((error) => this.logger.error(error))
-            .finally(() => {
-                // eslint-disable-next-line ts/no-this-alias
-                const plugin = this;
+        try {
+            this.config = merge(DEFAULT_CONFIG, await this.loadData(MonacoEditorPlugin.GLOBAL_CONFIG_NAME) || {}) as IConfig;
+            this.updateConfigBySiyuanConfig();
+        }
+        catch (error) {
+            this.logger.error(error);
+        }
+        finally {
+            // eslint-disable-next-line ts/no-this-alias
+            const plugin = this;
 
-                /* 添加编辑器侧边面板 */
-                if (this.config.dock.editor.enable) {
-                    this.editorDock = {
-                        dock: this.addDock({
-                            config: {
-                                position: "BottomRight",
-                                size: { width: 0, height: 256 },
-                                icon: "iconCode",
-                                title: this.i18n.dock.title,
-                                show: true,
-                            },
-                            data: {
-                                id: "",
-                                realTime: false,
-                                inline: Inline.mark,
-                                language: Language.kramdown,
-                            } as IDockData,
-                            type: "-dock-editor",
-                            init() {
-                                // plugin.logger.debug(this);
+            /* 添加编辑器侧边面板 */
+            if (this.config.dock.editor.enable) {
+                this.editorDock = {
+                    dock: this.addDock({
+                        config: {
+                            position: "BottomRight",
+                            size: { width: 0, height: 256 },
+                            icon: "iconCode",
+                            title: this.i18n.dock.title,
+                            show: true,
+                        },
+                        data: {
+                            id: "",
+                            realTime: false,
+                            inline: Inline.mark,
+                            language: Language.kramdown,
+                        } as IDockData,
+                        type: "-dock-editor",
+                        init() {
+                            // plugin.logger.debug(this);
 
-                                (this.element as HTMLElement).classList.add("fn__flex-column");
-                                plugin.editorDock.props = state({
+                            (this.element as HTMLElement).classList.add("fn__flex-column");
+                            plugin.editorDock.props = state({
+                                plugin,
+                                editor: {
+                                    modified: {
+                                        value: "",
+                                        language: "markdown",
+                                    },
+                                    options: plugin.config.editor.options,
+                                },
+                                ...this.data,
+                            });
+                            const dock = mount(EditorDock, {
+                                target: this.element,
+                                props: plugin.editorDock.props,
+                            });
+                            plugin.editorDock.model = this;
+                            plugin.editorDock.component = dock;
+                        },
+                        destroy() {
+                            if (plugin.editorDock.component) {
+                                unmount(plugin.editorDock.component);
+                            }
+                            delete plugin.editorDock.component;
+                            delete plugin.editorDock.props;
+                            delete plugin.editorDock.model;
+                        },
+                    }),
+                };
+            }
+
+            /* 添加文件资源管理器侧边面板 */
+            if (this.config.dock.explorer.enable) {
+                this.explorerDock = {
+                    dock: this.addDock({
+                        config: {
+                            position: "LeftTop",
+                            size: { width: 256, height: 0 },
+                            icon: "icon-monaco-editor-file-tree",
+                            title: this.i18n.explorer.title,
+                            show: true,
+                        },
+                        data: {
+                            workspace: normalize(window.siyuan.config!.system.workspaceDir),
+                        },
+                        type: "-dock-explorer",
+                        init() {
+                            // plugin.logger.debug(this);
+
+                            (this.element as HTMLElement).classList.add("fn__flex-column");
+                            const dock = mount(ExplorerDock, {
+                                target: this.element,
+                                props: {
                                     plugin,
-                                    editor: {
-                                        modified: {
-                                            value: "",
-                                            language: "markdown",
-                                        },
-                                        options: plugin.config.editor.options,
-                                    },
-                                    ...this.data,
-                                });
-                                const dock = mount(EditorDock, {
-                                    target: this.element,
-                                    props: plugin.editorDock.props,
-                                });
-                                plugin.editorDock.model = this;
-                                plugin.editorDock.component = dock;
-                            },
-                            destroy() {
-                                if (plugin.editorDock.component) {
-                                    unmount(plugin.editorDock.component);
-                                }
-                                delete plugin.editorDock.component;
-                                delete plugin.editorDock.props;
-                                delete plugin.editorDock.model;
-                            },
-                        }),
-                    };
-                }
+                                    ...(this.data as any),
+                                },
+                            });
+                            plugin.explorerDock.model = this;
+                            plugin.explorerDock.component = dock;
+                        },
+                        destroy() {
+                            if (plugin.explorerDock.component) {
+                                unmount(plugin.explorerDock.component);
+                            }
+                            delete plugin.explorerDock.component;
+                            delete plugin.explorerDock.model;
+                        },
+                    }),
+                };
+            }
 
-                /* 添加文件资源管理器侧边面板 */
-                if (this.config.dock.explorer.enable) {
-                    this.explorerDock = {
-                        dock: this.addDock({
-                            config: {
-                                position: "LeftTop",
-                                size: { width: 256, height: 0 },
-                                icon: "icon-monaco-editor-file-tree",
-                                title: this.i18n.explorer.title,
-                                show: true,
-                            },
-                            data: {
-                                workspace: normalize(window.siyuan.config!.system.workspaceDir),
-                            },
-                            type: "-dock-explorer",
-                            init() {
-                                // plugin.logger.debug(this);
+            /* 注册触发打开窗口动作的监听器 */
+            globalThis.addEventListener(this.config.operates.menu.open.mouse.type, this.contextmenuEventListener as EventListener, true);
 
-                                (this.element as HTMLElement).classList.add("fn__flex-column");
-                                const dock = mount(ExplorerDock, {
-                                    target: this.element,
-                                    props: {
-                                        plugin,
-                                        ...(this.data as any),
-                                    },
-                                });
-                                plugin.explorerDock.model = this;
-                                plugin.explorerDock.component = dock;
-                            },
-                            destroy() {
-                                if (plugin.explorerDock.component) {
-                                    unmount(plugin.explorerDock.component);
-                                }
-                                delete plugin.explorerDock.component;
-                                delete plugin.explorerDock.model;
-                            },
-                        }),
-                    };
-                }
+            /* 编辑区点击 */
+            this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
 
-                /* 注册触发打开窗口动作的监听器 */
-                globalThis.addEventListener(this.config.operates.menu.open.mouse.type, this.contextmenuEventListener as EventListener, true);
+            /* 文档树菜单 */
+            this.eventBus.on("open-menu-doctree", this.doctreeMenuEventListener);
+            /* 收集箱菜单 */
+            this.eventBus.on("open-menu-inbox", this.inobxMenuEventListener);
 
-                /* 编辑区点击 */
-                this.eventBus.on("click-editorcontent", this.clickEditorContentEventListener);
+            /* 其他块菜单 */
+            this.eventBus.on("click-blockicon", this.blockMenuEventListener);
+            /* 文档块菜单 */
+            this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
+            // /* 块引用菜单 */
+            // this.eventBus.on("open-menu-blockref", this.blockRefMenuEventListener);
+            /* 超链接菜单 */
+            this.eventBus.on("open-menu-link", this.linkMenuEventListener);
 
-                /* 文档树菜单 */
-                this.eventBus.on("open-menu-doctree", this.doctreeMenuEventListener);
-                /* 收集箱菜单 */
-                this.eventBus.on("open-menu-inbox", this.inobxMenuEventListener);
+            /* 思源 URL */
+            this.eventBus.on("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
 
-                /* 其他块菜单 */
-                this.eventBus.on("click-blockicon", this.blockMenuEventListener);
-                /* 文档块菜单 */
-                this.eventBus.on("click-editortitleicon", this.blockMenuEventListener);
-                // /* 块引用菜单 */
-                // this.eventBus.on("open-menu-blockref", this.blockRefMenuEventListener);
-                /* 超链接菜单 */
-                this.eventBus.on("open-menu-link", this.linkMenuEventListener);
-
-                /* 思源 URL */
-                this.eventBus.on("open-siyuan-url-plugin", this.openSiyuanUrlEventListener);
-
-                // /* 快捷键/命令 */
-                // this.addCommand({
-                //     langKey: "openDesktopWindow",
-                //     langText: this.i18n.menu.openDesktopWindow.label,
-                //     hotkey: "⇧⌘N",
-                //     customHotkey: "",
-                //     callback: () => {
-                //         this.openSiyuanDesktopWindow();
-                //     },
-                // });
-                // this.addCommand({
-                //     langKey: "openMobildWindow",
-                //     langText: this.i18n.menu.openMobildWindow.label,
-                //     hotkey: "",
-                //     customHotkey: "",
-                //     callback: () => {
-                //         this.openSiyuanMobileWindow();
-                //     },
-                // });
-            });
+            // /* 快捷键/命令 */
+            // this.addCommand({
+            //     langKey: "openDesktopWindow",
+            //     langText: this.i18n.menu.openDesktopWindow.label,
+            //     hotkey: "⇧⌘N",
+            //     customHotkey: "",
+            //     callback: () => {
+            //         this.openSiyuanDesktopWindow();
+            //     },
+            // });
+            // this.addCommand({
+            //     langKey: "openMobildWindow",
+            //     langText: this.i18n.menu.openMobildWindow.label,
+            //     hotkey: "",
+            //     customHotkey: "",
+            //     callback: () => {
+            //         this.openSiyuanMobileWindow();
+            //     },
+            // });
+        }
     }
 
     public override onLayoutReady(): void {
