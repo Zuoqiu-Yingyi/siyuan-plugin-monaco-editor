@@ -1,0 +1,75 @@
+{
+    "name": "monaco-editor",
+    "author": "Zuoqiu Yingyi",
+    "url": "https://github.com/Zuoqiu-Yingyi/siyuan-plugin-monaco-editor",
+    "version": "0.3.0",
+    "minAppVersion": "3.0.12",
+    "keywords": [
+        "代码",
+        "代碼",
+        "程式碼",
+        "code",
+        "visual",
+        "studio",
+        "vscode",
+        "monaco",
+        "编辑器",
+        "編輯器",
+        "editor",
+        "vditor",
+        "文件",
+        "資料",
+        "file",
+        "文件夹",
+        "文件夾",
+        "資料夾",
+        "folder",
+        "管理",
+        "manage",
+        "资源管理器",
+        "資源管理器",
+        "explorer",
+        "markdown",
+        "所见即所得",
+        "所見即所得",
+        "wysiwyg",
+        "下载",
+        "下載",
+        "download",
+        "上传",
+        "上傳",
+        "upload"
+    ],
+    "backends": [
+        "all"
+    ],
+    "frontends": [
+        "desktop",
+        "desktop-window",
+        "browser-desktop"
+    ],
+    "displayName": {
+        "default": "Integrated Edit Environment",
+        "zh-CN": "集成编辑环境",
+        "zh-TW": "集成編輯環境"
+    },
+    "description": {
+        "default": "A file editing tool integrating <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a>.",
+        "zh-CN": "一个集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件编辑工具。",
+        "zh-TW": "一個集成了 <a href='https://microsoft.github.io/monaco-editor/'>Monaco Editor</a> 的文件編輯工具。"
+    },
+    "readme": {
+        "default": "README.md",
+        "zh-CN": "README.zh-CN.md",
+        "zh-TW": "README.zh-CN.md"
+    },
+    "funding": {
+        "openCollective": "",
+        "patreon": "",
+        "github": "https://github.com/Zuoqiu-Yingyi",
+        "custom": [
+            "https://afdian.com/a/zuoqiu",
+            "https://ko-fi.com/zuoqiu"
+        ]
+    }
+}
