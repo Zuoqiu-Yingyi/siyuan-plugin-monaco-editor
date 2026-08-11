@@ -1,25 +1,28 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* 收集箱处理器 */
-import { Handler, type IBaseHandlerOptions, type IHandler } from "./handler";
+import { Handler } from "./handler";
 
-import type { IEditorModel } from "@/types/editor";
+import type MonacoEditorPlugin from "@/index";
 import type { IMonacoEditorOptions } from "@/types/config";
+import type { IEditorModel } from "@/types/editor";
+
+import type { IBaseHandlerOptions, IHandler } from "./handler";
+
+type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
 export interface IInboxHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
@@ -28,14 +31,14 @@ export interface IInboxHandler extends IHandler {
 
 export interface IInboxHandlerOptions extends IBaseHandlerOptions {
     id: string; // 收集箱 ID
-    format: "markdown" | "html"; // 收集箱内容格式
+    format: "html" | "markdown"; // 收集箱内容格式
 }
 
 export class InboxHandler extends Handler {
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
-        plugin,
+        plugin: Plugin,
     ) {
         super(plugin);
         this.customTabSize = this.plugin.config.editor.options.tabSize;
@@ -53,6 +56,7 @@ export class InboxHandler extends Handler {
         /* 生成的处理器 */
         const modified: IEditorModel = (() => {
             switch (options.format) {
+                // eslint-disable-next-line default-case-last
                 default:
                 case "markdown":
                     return {

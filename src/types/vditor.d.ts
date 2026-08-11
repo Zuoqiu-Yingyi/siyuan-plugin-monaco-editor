@@ -1,30 +1,29 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// <reference types="@siyuan-community/vditor/dist/types" />
 import type MonacoEditorPlugin from "@/index";
 import type { AssetsUploadMode } from "@/vditor/asset";
+
 export {
     IOptions,
-}
+};
 
 export type IPlugin = Pick<
     MonacoEditorPlugin,
-    "name" | "i18n" | "logger" | "client",
+    "client" | "i18n" | "logger" | "name"
 >;
 
 /* Vditor 组件配置项 */
@@ -44,7 +43,7 @@ export interface IVditorProps {
     codeBlockThemeLight: string; // 代码主题模式 (明亮)
     codeBlockThemeDark: string; // 代码主题模式 (黑暗)
     updatable: boolean; // 内容是否可更改
-    changable: boolean; // 是否在内容更改时派发 changed 事件
+    changeable: boolean; // 是否在内容更改时派发 changed 事件
     debug: boolean; // 是否开启调试模式
 }
 
@@ -54,7 +53,7 @@ export interface IVditorEvents {
         path: {
             current: string; // 当前文件路径
             target: string; // 目标文件路径
-        },
+        };
         href: string; // 超链接
         title?: string; // 超链接标题
         target?: string; // 超链接打开方式
@@ -66,4 +65,10 @@ export interface IVditorEvents {
     "save": {
         markdown: string; // Markdown 文本
     };
+}
+
+export interface IVditorHandlers {
+    onOpenLink?: (params: IVditorEvents["open-link"]) => void;
+    onChanged?: (params: IVditorEvents["changed"]) => void;
+    onSave?: (params: IVditorEvents["save"]) => void;
 }

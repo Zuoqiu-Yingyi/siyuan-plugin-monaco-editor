@@ -1,52 +1,53 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { ComponentEvents } from "svelte";
 import { get } from "svelte/store";
 
-import Node from "@workspace/components/siyuan/tree/file/Node.svelte";
 import {
     FileTreeNodeType,
-    type ITree,
-    type IFileTreeNode,
-    type IFileTreeNodeStores,
-    type IFileTreeRootNode,
+
 } from "@workspace/components/siyuan/tree/file";
-import { normalize } from "@workspace/utils/path/normalize";
-import {
-    join,
-    dirname,
-    basename,
-    extname,
-} from "@workspace/utils/path/browserify";
+import { FLAG_BROWSER } from "@workspace/utils/env/front-end";
 import { isBinaryExt } from "@workspace/utils/file/binary";
+import { trimSuffix } from "@workspace/utils/misc/string";
+import {
+    basename,
+    dirname,
+    extname,
+    join,
+} from "@workspace/utils/path/browserify";
+import { normalize } from "@workspace/utils/path/normalize";
 import { fn__code, ft__primary } from "@workspace/utils/siyuan/text/span";
+import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
+
+import { isResourceOperable, ResourceOption } from "@/utils/permission";
+
+import { FileTree } from "./filetree";
+import { ExplorerIcon } from "./icon";
+import { ExplorerContextMenu } from "./menu";
+import { Select } from "./select";
+import { ExplorerTooltip } from "./tooltip";
+
+import type { ComponentEvents } from "svelte";
+
+import type { IFileTreeNode, IFileTreeNodeStores, IFileTreeRootNode, ITree } from "@workspace/components/siyuan/tree/file";
+import type Node from "@workspace/components/siyuan/tree/file/Node.svelte";
 
 import type MonacoEditorPlugin from "@/index";
-import { Select } from "./select";
-import { ExplorerIcon } from "./icon";
-import { ExplorerTooltip } from "./tooltip";
-import { ExplorerContextMenu } from "./menu";
-import { ResourceOption, isResourceOperable } from "@/utils/permission";
-import { FileTree, type IFile } from "./filetree";
-import { trimSuffix } from "@workspace/utils/misc/string";
-import { isStaticWebFileServicePath, workspacePath2StaticPathname } from "@workspace/utils/siyuan/url";
-import type ExplorerDock from "@/components/ExplorerDock.svelte";
-import { FLAG_BROWSER } from "@workspace/utils/env/front-end";
+
+import type { IFile } from "./filetree";
 
 /* 资源 */
 export interface IItem {
@@ -69,16 +70,16 @@ export interface IResources {
 
 export type DefaultNodeProps = Required<Pick<
     IFileTreeNode,
-    "root"
-    | "indent"
+    "countAriaLabel"
     | "draggable"
-    | "toggleIcon"
-    | "toggleAriaLabel"
-    | "menuIcon"
+    | "indent"
     | "menuAriaLabel"
-    | "symlinkIcon"
+    | "menuIcon"
+    | "root"
     | "symlinkAriaLabel"
-    | "countAriaLabel"
+    | "symlinkIcon"
+    | "toggleAriaLabel"
+    | "toggleIcon"
 >>;
 
 /* 重要资源类型 */
@@ -131,13 +132,13 @@ export class Explorer implements ITree {
     protected readonly select = new Select();
 
     /* 根节点列表 */
-    protected roots: IFileTreeRootNode[];
+    protected roots!: IFileTreeRootNode[];
 
     /* 是否拖拽出窗口 */
     protected outer: boolean = false;
 
     /* 拖拽进入用定时器 */
-    protected timer;
+    protected timer?: NodeJS.Timeout | number;
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
@@ -225,33 +226,33 @@ export class Explorer implements ITree {
     public readonly appendNode = (node: IFileTreeNodeStores) => {
         this.call(
             node,
-            node => {
+            (node) => {
                 const id = get(node.path);
                 this.map.set(id, node); // 覆盖对应 ID 的节点
                 this.set.add(node); // 添加节点对象
             },
             true,
         );
-    }
+    };
 
     /* 移除节点 */
     public readonly removeNode = (node: IFileTreeNodeStores) => {
         this.call(
             node,
-            node => {
+            (node) => {
                 const id = get(node.path);
                 if (this.map.has(id)) { // 移除节点
                     this.map.delete(id);
                     get(node.children)
-                        ?.map(node => this.map.get(node.path))
-                        .filter(node => node)
+                        ?.map((node) => this.map.get(node.path)!)
+                        .filter((node) => node)
                         .forEach(this.removeNode);
                 }
                 this.set.delete(node);
             },
             true,
         );
-    }
+    };
 
     /* 菜单事件 */
     public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
@@ -271,7 +272,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 文件打开事件 */
     public readonly open = (e: ComponentEvents<Node>["open"]) => {
@@ -281,11 +282,11 @@ export class Explorer implements ITree {
             this.select.one(node);
 
             switch (get(node.type)) {
-                case FileTreeNodeType.File: {  // 打开文件
-                    const name = get(node.name);
-                    const relative = get(node.relative);
-                    const icon = get(node.icon);
-                    const text = get(node.text);
+                case FileTreeNodeType.File: { // 打开文件
+                    const name = get(node.name)!;
+                    const relative = get(node.relative)!;
+                    const icon = get(node.icon)!;
+                    const text = get(node.text)!;
 
                     const ext = extname(name); // 文件扩展名
 
@@ -335,7 +336,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 折叠文件夹 */
     public readonly fold = (e: ComponentEvents<Node>["fold"]) => {
@@ -349,7 +350,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 展开文件夹 */
     public readonly unfold = async (e: ComponentEvents<Node>["unfold"]) => {
@@ -372,17 +373,17 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽入窗口 */
-    public readonly dragEnterWindow = async (e: DragEvent) => {
+    public readonly dragEnterWindow = async (_e: DragEvent) => {
         this.outer = false;
-    }
+    };
 
     /* 拖拽出窗口 */
-    public readonly dragLeaveWindow = async (e: DragEvent) => {
+    public readonly dragLeaveWindow = async (_e: DragEvent) => {
         this.outer = true;
-    }
+    };
 
     /* 拖拽开始 */
     public readonly dragstart = async (e: ComponentEvents<Node>["dragstart"]) => {
@@ -397,9 +398,9 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.File: {
                     node.dragging.set(true); // 设置为正在拖拽状态
 
-                    const dataTransfer = e.detail.e.dataTransfer; // 拖拽数据传输对象
-                    const name = get(node.name); // 文件名/文件夹名
-                    const relative = get(node.relative); // 相对于工作空间目录的相对路径
+                    const dataTransfer = e.detail.e.dataTransfer!; // 拖拽数据传输对象
+                    const name = get(node.name)!; // 文件名/文件夹名
+                    const relative = get(node.relative)!; // 相对于工作空间目录的相对路径
                     if (isStaticWebFileServicePath(relative)) { // 静态文件服务路径
                         const pathname = workspacePath2StaticPathname(relative); // 获取该文件/文件夹的静态资源引用路径
                         // REF: https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types
@@ -407,13 +408,12 @@ export class Explorer implements ITree {
                         dataTransfer.setData("text/uri-list", pathname);
                         dataTransfer.setData("text/markdown", `[${name}](<${pathname}>)`);
                         dataTransfer.setData("text/html", `<a href="${globalThis.encodeURI(pathname)}">${name}</a>`);
-
                     }
                     /* 设置相关数据, 用于移动节点 */
                     dataTransfer.setData("text/type", get(node.type));
-                    dataTransfer.setData("text/name", get(node.name));
+                    dataTransfer.setData("text/name", get(node.name)!);
                     dataTransfer.setData("text/path", get(node.path));
-                    dataTransfer.setData("text/relative", get(node.relative));
+                    dataTransfer.setData("text/relative", get(node.relative)!);
                     dataTransfer.setData("text/directory", get(node.directory));
                     break;
                 }
@@ -425,7 +425,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽结束 */
     public readonly dragend = async (e: ComponentEvents<Node>["dragend"]) => {
@@ -441,8 +441,8 @@ export class Explorer implements ITree {
                         this.outer = false;
 
                         const type = get(node.type);
-                        const name = get(node.name);
-                        const relative = get(node.relative);
+                        const name = get(node.name)!;
+                        const relative = get(node.relative)!;
                         await this.plugin.download(relative, name, type);
                     }
                     break;
@@ -454,7 +454,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽进入 */
     public readonly dragenter = async (e: ComponentEvents<Node>["dragenter"]) => {
@@ -480,7 +480,8 @@ export class Explorer implements ITree {
                         });
                     }
                     break;
-                case FileTreeNodeType.File: // 文件所在目录
+                case FileTreeNodeType.File: {
+                    // 文件所在目录
                     const parent = this.path2node(get(node.directory));
                     if (parent) {
                         /**
@@ -491,6 +492,8 @@ export class Explorer implements ITree {
                             parent.dragover.set(true);
                         });
                     }
+                    break;
+                }
                 default:
                     break;
             }
@@ -498,18 +501,19 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽悬浮 */
     public readonly dragover = async (e: ComponentEvents<Node>["dragover"]) => {
         // this.plugin.logger.debug(e);
         try {
             const node = e.detail.props;
+            void node;
         }
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽离开 */
     public readonly dragleave = async (e: ComponentEvents<Node>["dragleave"]) => {
@@ -526,11 +530,13 @@ export class Explorer implements ITree {
                     clearTimeout(this.timer);
                     this.timer = undefined;
                     break;
-                case FileTreeNodeType.File: // 文件所在目录
+                case FileTreeNodeType.File: { // 文件所在目录
                     const parent = this.path2node(get(node.directory));
                     if (parent) {
                         parent.dragover.set(false);
                     }
+                    break;
+                }
                 default:
                     break;
             }
@@ -538,7 +544,7 @@ export class Explorer implements ITree {
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /* 拖拽放置 */
     public readonly drop = async (e: ComponentEvents<Node>["drop"]) => {
@@ -546,7 +552,7 @@ export class Explorer implements ITree {
         try {
             const node = e.detail.props;
             const directory = get(node.type) === FileTreeNodeType.File
-                ? this.map.get(get(node.directory))
+                ? this.map.get(get(node.directory))!
                 : node; // 放置的目录
             directory.dragover.set(false); // 取消拖拽悬浮效果
 
@@ -556,17 +562,19 @@ export class Explorer implements ITree {
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_Access_API
              * REF: https://juejin.cn/post/6844904029349216269
              */
-            const items = Array.from(e.detail.e.dataTransfer.items);
-            const file_items = items.filter(item => item.kind === "file");
+            const items = Array.from(e.detail.e.dataTransfer!.items);
+            const file_items = items.filter((item) => item.kind === "file");
             if (file_items.length > 0 && directory) { // 存在拖拽的文件/文件夹
-                const path = get(directory.relative); // 待上传到的目录的路径
+                const path = get(directory.relative)!; // 待上传到的目录的路径
 
                 // REF: https://developer.mozilla.org/zh-CN/docs/Web/API/DataTransferItem/getAsFile
-                const file = file_items[0].getAsFile() as IFile; // 其中一个文件/文件夹
-                const prefix = trimSuffix(file.path, file.name); // 获取文件/文件夹的路径前缀
+                const file = file_items[0]!.getAsFile() as IFile; // 其中一个文件/文件夹
+                const prefix = trimSuffix(file.path!, file.name); // 获取文件/文件夹的路径前缀
 
                 // REF: https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
-                const entries = file_items.map(item => item.webkitGetAsEntry()); // 将文件/文件夹列表转换为资源列表
+                const entries = file_items
+                    .map((item) => item.webkitGetAsEntry())
+                    .filter((item) => !!item); // 将文件/文件夹列表转换为资源列表
                 const files = (await Promise.all(entries.map(FileTree.flat))).flat(); // 将资源列表转换为文件列表
                 this.plugin.logger.debug(prefix, files);
                 await this.contextMenu.upload(path, files, prefix); // 显示文件列表并上传
@@ -577,7 +585,7 @@ export class Explorer implements ITree {
 
             /* 拖拽移动资源 */
             const path = get(directory.path);
-            const relative = get(directory.relative);
+            const relative = get(directory.relative)!;
             const protected_type = Explorer.isProtected(relative); // 受保护类型
             const protect = protected_type !== ProtectedResourceType.None; // 是否为被保护的资源
             if (isResourceOperable(
@@ -587,22 +595,25 @@ export class Explorer implements ITree {
                 ResourceOption.move,
             )) { // 允许操作
                 const dataTransfer = e.detail.e.dataTransfer; // 拖拽数据传输对象
-                const source_name = dataTransfer.getData("text/name"); // 源名称
-                const source_path = dataTransfer.getData("text/path"); // 源路径
-                const source_relative = dataTransfer.getData("text/relative"); // 源相对路径
-                const source_directory = dataTransfer.getData("text/directory"); // 源目录路径
+                const source_name = dataTransfer?.getData("text/name"); // 源名称
+                const source_path = dataTransfer?.getData("text/path"); // 源路径
+                const source_relative = dataTransfer?.getData("text/relative"); // 源相对路径
+                const source_directory = dataTransfer?.getData("text/directory"); // 源目录路径
 
-                if (!(source_name && source_path && source_relative)) return; // 无效的拖拽数据
+                if (!(source_name && source_path && source_relative))
+                    return; // 无效的拖拽数据
 
                 /* 目录不允许移动到其本身或下级目录中 */
-                if (path.startsWith(source_path) || path === source_directory) return;
+                if (path.startsWith(source_path) || path === source_directory)
+                    return;
 
                 if (protect) { // 受保护的资源
                     const confirm = await this.contextMenu.confirm(
                         path,
                         relative,
                     );
-                    if (!confirm) return; // 不允许继续操作
+                    if (!confirm)
+                        return; // 不允许继续操作
                 }
 
                 /* 二次确认 */
@@ -610,13 +621,14 @@ export class Explorer implements ITree {
                 const destination_relative = join(relative, source_name); // 目标路径
                 const confirm = await this.plugin.confirm(
                     this.plugin.i18n.menu.move.title
-                        .replaceAll("${1}", fn__code(source_name)),
+                        .replaceAll("{{1}}", fn__code(source_name)),
                     this.plugin.i18n.menu.move.text
-                        .replaceAll("${1}", fn__code(source_relative))
-                        .replaceAll("${2}", fn__code(source_path))
-                        .replaceAll("${3}", fn__code(destination_path)),
+                        .replaceAll("{{1}}", fn__code(source_relative))
+                        .replaceAll("{{2}}", fn__code(source_path))
+                        .replaceAll("{{3}}", fn__code(destination_path)),
                 );
-                if (!confirm) return;
+                if (!confirm)
+                    return;
 
                 /* 移动资源 */
                 await this.plugin.client.renameFile({
@@ -626,18 +638,19 @@ export class Explorer implements ITree {
 
                 /* 刷新原目录与目标目录 */
                 await this.updateNode(directory);
-                await this.updateNode(this.map.get(source_directory));
-                return;
+                if (source_directory) {
+                    await this.updateNode(this.map.get(source_directory));
+                }
             }
         }
         catch (error) {
             this.plugin.catch(error);
         }
-    }
+    };
 
     /**
      * 列出指定目录下的资源
-     * @param relative: 相对于工作空间目录的路径
+     * @param relative - 相对于工作空间目录的路径
      */
     protected async ls(relative: string): Promise<IResources> {
         relative = normalize(relative);
@@ -656,7 +669,7 @@ export class Explorer implements ITree {
         };
 
         /* 资源分类 */
-        response.data.forEach(item => {
+        response.data.forEach((item) => {
             if (item.isDir) {
                 resources.folders.push({
                     name: item.name,
@@ -673,7 +686,7 @@ export class Explorer implements ITree {
                     name: item.name,
                     updated: item.updated,
                     path: join(directory, item.name),
-                    relative: join(relative, item.name),                    // relative: `${relative}/${item.name}`,
+                    relative: join(relative, item.name), // relative: `${relative}/${item.name}`,
                     isFile: true,
                     isFolder: false,
                     isSymlink: item.isSymlink,
@@ -690,7 +703,7 @@ export class Explorer implements ITree {
         const nodes: IFileTreeNode[] = [];
 
         /* 文件夹节点 */
-        resources.folders.forEach(item => {
+        resources.folders.forEach((item) => {
             nodes.push({
                 ...this.defaultNodeProps,
                 type: FileTreeNodeType.Folder,
@@ -711,14 +724,14 @@ export class Explorer implements ITree {
 
                 text: item.name,
                 textAriaLabel: `${item.relative
-                    }<br/>${this.plugin.i18n.explorer.lastUpdated.text
-                    }: ${new Date(item.updated * 1_000).toLocaleString()
-                    }`,
+                }<br/>${this.plugin.i18n.explorer.lastUpdated.text
+                }: ${new Date(item.updated * 1_000).toLocaleString()
+                }`,
             });
         });
 
         /* 文件节点 */
-        resources.files.forEach(item => {
+        resources.files.forEach((item) => {
             nodes.push({
                 ...this.defaultNodeProps,
                 type: FileTreeNodeType.File,
@@ -737,9 +750,9 @@ export class Explorer implements ITree {
 
                 text: item.name,
                 textAriaLabel: `${item.relative
-                    }<br/>${this.plugin.i18n.explorer.lastUpdated.text
-                    }: ${new Date(item.updated * 1_000).toLocaleString()
-                    }`,
+                }<br/>${this.plugin.i18n.explorer.lastUpdated.text
+                }: ${new Date(item.updated * 1_000).toLocaleString()
+                }`,
             });
         });
 
@@ -750,27 +763,30 @@ export class Explorer implements ITree {
      * 更新节点状态
      * @param node - 节点
      * @param recursive - 递归遍历更新节点状态
-     * @return - 是否成功更新节点
+     * @returns 是否成功更新节点
      */
     public async updateNode(
         node?: IFileTreeNodeStores,
         recursive: boolean = false,
     ): Promise<boolean> {
-        if (!node) return false;
-        if (get(node.type) === FileTreeNodeType.File) return false;
+        if (!node)
+            return false;
+        if (get(node.type) === FileTreeNodeType.File)
+            return false;
 
         if (recursive) {
             this.call(
                 node,
-                async node => {
-                    if (get(node.children) === undefined) return; // 忽略未加载的节点
+                async (node) => {
+                    if (get(node.children) === undefined)
+                        return; // 忽略未加载的节点
                     this.updateNode(node);
                 },
                 true,
             );
         }
         else {
-            const resources = await this.ls(get(node.relative));
+            const resources = await this.ls(get(node.relative)!);
             const children = this.resources2nodes(resources);
 
             node.count.set(resources.count); // 设置资源数量
@@ -779,7 +795,7 @@ export class Explorer implements ITree {
                 }: ${resources.folders.length
                 }  ${this.plugin.i18n.explorer.file.ariaLabel
                 }: ${resources.files.length
-                }`
+                }`,
             ); // 设置资源数量提示标签
             node.children.set(children); // 设置下级资源节点
         }
@@ -802,8 +818,8 @@ export class Explorer implements ITree {
 
     /**
      * 收缩节点
-     * @param node: 节点
-     * @param recursive: 是否递归收缩
+     * @param node - 节点
+     * @param recursive - 是否递归收缩
      */
     public readonly collapseNode = (
         node: IFileTreeNodeStores,
@@ -811,20 +827,20 @@ export class Explorer implements ITree {
     ) => {
         this.call(
             node,
-            node => {
+            (node) => {
                 /* 折叠节点并更新图标 */
                 node.folded.set(true);
                 this.icon.collapse(node);
             },
             recursive,
         );
-    }
+    };
 
     /**
      * 递归遍历节点
-     * @param node: 节点
-     * @param callback: 回调函数
-     * @param recursive: 是否递归遍历
+     * @param node - 节点
+     * @param callback - 回调函数
+     * @param recursive - 是否递归遍历
      */
     public call(
         node: IFileTreeNodeStores,
@@ -838,9 +854,10 @@ export class Explorer implements ITree {
                 if (node) {
                     callback(node);
                     const children = get(node.children)
-                        ?.map(node => this.map.get(node.path))
-                        .filter(node => !!node);
-                    if (children) nodes.push(...children);
+                        ?.map((node) => this.map.get(node.path))
+                        .filter((node) => !!node);
+                    if (children)
+                        nodes.push(...children);
                 }
             }
         }

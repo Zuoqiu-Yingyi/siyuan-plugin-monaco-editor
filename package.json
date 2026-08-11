@@ -1,19 +1,21 @@
 {
     "name": "monaco-editor",
-    "private": true,
-    "version": "0.2.5",
     "type": "module",
+    "version": "0.3.0",
+    "private": true,
     "scripts": {
         "dev": "vite",
         "build:dev": "npm run build:dev:plugin && npm run build:dev:iframes",
         "build:dev:plugin": "vite build --mode plugin --sourcemap inline ",
         "build:dev:iframes": "vite build --mode iframes --sourcemap inline ",
         "build": "npm run build:icons && npm run build:plugin && npm run build:iframes",
-        "build:icons": "node --import=./scripts/ts-node-register.js ./scripts/build-icons.ts",
+        "build:icons": "tsx ./scripts/build-icons.ts",
         "build:plugin": "vite build --mode plugin",
         "build:iframes": "vite build --mode iframes",
         "preview": "vite preview",
-        "check": "svelte-check --tsconfig ./tsconfig.json"
+        "lint": "eslint --max-warnings 0 .",
+        "format": "eslint --fix .",
+        "check:svelte": "svelte-check --tsconfig ./tsconfig.json"
     },
     "dependencies": {
         "@workspace/components": "workspace:^",
@@ -21,11 +23,11 @@
         "@workspace/utils": "workspace:^"
     },
     "devDependencies": {
-        "@monaco-editor/loader": "^1.4.0",
+        "@monaco-editor/loader": "^1.7.0",
         "@siyuan-community/vditor": "^3.9.6",
-        "@types/streamsaver": "^2.0.4",
-        "material-icon-theme": "^5.0.0",
-        "monaco-editor": "^0.48.0",
+        "@types/streamsaver": "^2.0.5",
+        "material-icon-theme": "^5.37.0",
+        "monaco-editor": "^0.56.0",
         "streamsaver": "^2.0.6",
         "xml-js": "^1.6.11"
     }

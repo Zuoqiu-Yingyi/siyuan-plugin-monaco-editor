@@ -1,27 +1,27 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { IEditorEvents, IPlugin } from "@/types/editor";
-import type { BlockID } from "@workspace/types/siyuan";
-import type { default as Monaco, languages } from "monaco-editor";
-import type { createEventDispatcher } from "svelte";
-import { MarkdownFormatter } from "./markdown/formatter";
 import { MarkdownCompletion } from "./markdown/completion";
+import { MarkdownFormatter } from "./markdown/formatter";
 
+import type Monaco from "monaco-editor";
+import type { languages } from "monaco-editor";
+
+import type { BlockID } from "@workspace/types/siyuan";
+
+import type { IEditorHandlers, IPlugin } from "@/types/editor";
 
 /* 将 heightlight.js 的语言映射为 monaco 支持的语言 */
 export function heightlight2monaco(language: string): string {
@@ -62,7 +62,7 @@ export interface ISiyuanLink extends Monaco.languages.ILink {
 
 export interface ISiyuanToken {
     token: string; // 思源相关字段
-    type: SiyuanTokenType, // 思源相关字段类型
+    type: SiyuanTokenType; // 思源相关字段类型
     id: BlockID; // 思源相关字段中的块 ID
     start: number; // 思源相关字段在行中的起始位置
     end: number; // 思源相关字段在行中的结束位置
@@ -85,34 +85,35 @@ export class Languages {
     public static getSiyuanTokens(line: string): ISiyuanToken[] {
         const tokens: ISiyuanToken[] = [];
         const results = line.matchAll(Languages.REGEXP.siyuan);
+
         for (const result of results) {
-            const token = result.at(0);
+            const token = result.at(0)!;
+
+            let type: SiyuanTokenType;
+            let id: string;
+            switch (true) {
+                case result.at(1) !== undefined: { // 思源超链接
+                    type = SiyuanTokenType.link;
+                    id = token.match(Languages.REGEXP.id)!.at(0)!;
+                    break;
+                }
+                case result.at(2) !== undefined: { // 思源块引用
+                    type = SiyuanTokenType.reference;
+                    id = token.match(Languages.REGEXP.id)!.at(0)!;
+                    break;
+                }
+                case result.at(3) !== undefined: { // 思源块 ID
+                    type = SiyuanTokenType.id;
+                    id = token;
+                    break;
+                }
+                default:
+                    continue;
+            }
+
             const start = result.index + 1;
             const end = start + token.length;
-            const { type, id } = (() => {
-                switch (true) {
-                    case result.at(1) !== undefined: { // 思源超链接
-                        return {
-                            type: SiyuanTokenType.link,
-                            id: token.match(Languages.REGEXP.id).at(0),
-                        }
-                    }
-                    case result.at(2) !== undefined: { // 思源块引用
-                        return {
-                            type: SiyuanTokenType.reference,
-                            id: token.match(Languages.REGEXP.id).at(0),
-                        }
-                    }
-                    case result.at(3) !== undefined: { // 思源块 ID
-                        return {
-                            type: SiyuanTokenType.id,
-                            id: token,
-                        }
-                    }
-                    default:
-                        break;
-                }
-            })();
+
             tokens.push({
                 token,
                 type,
@@ -135,10 +136,10 @@ export class Languages {
     constructor(
         public readonly pluign: IPlugin,
         protected readonly _monaco: typeof Monaco,
-        protected readonly _dispatch: ReturnType<typeof createEventDispatcher<IEditorEvents>>
+        protected readonly _handlers: Partial<IEditorHandlers>,
     ) {
         this._langs = this._monaco.languages.getLanguages();
-        this._langs.forEach(lang => {
+        this._langs.forEach((lang) => {
             const id = this.wash(lang.id);
             this._set_id.add(id);
 
@@ -147,26 +148,25 @@ export class Languages {
             /* 注册思源相关超链接悬浮解析器 */
             this._monaco.languages.registerHoverProvider(id, this.siyuanHoverProvider);
 
-
             if (lang.aliases) {
-                lang.aliases.forEach(alias => {
+                lang.aliases.forEach((alias) => {
                     this._map_alias_id.set(this.wash(alias), id);
                 });
             }
             if (lang.extensions) {
-                lang.extensions.forEach(extension => {
+                lang.extensions.forEach((extension) => {
                     this._map_extension_id.set(this.wash(extension), id);
                 });
                 if (lang.extensions.length > 0) {
-                    this._map_id_extension.set(id, this.wash(lang.extensions.at(0)));
+                    this._map_id_extension.set(id, this.wash(lang.extensions.at(0)!));
                 }
             }
             if (lang.mimetypes) {
-                lang.mimetypes.forEach(mimetype => {
+                lang.mimetypes.forEach((mimetype) => {
                     this._map_mimetype_id.set(this.wash(mimetype), id);
                 });
                 if (lang.mimetypes.length > 0) {
-                    this._map_id_mimetype.set(id, this.wash(lang.mimetypes.at(0)));
+                    this._map_id_mimetype.set(id, this.wash(lang.mimetypes.at(0)!));
                 }
             }
         });
@@ -188,20 +188,20 @@ export class Languages {
             /* 获取鼠标悬浮所在行 */
             const line = model.getLineContent(position.lineNumber);
             const siyuan_tokens = Languages.getSiyuanTokens(line);
-            const siyuan_token = siyuan_tokens.find(t => (t.start <= position.column && position.column <= t.end));
+            const siyuan_token = siyuan_tokens.find((t) => (t.start <= position.column && position.column <= t.end));
 
             const hover = { contents: [] };
             if (siyuan_token) { // 如果悬浮在思源 token 上方
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve, _reject) => {
                     const timer = setTimeout(() => {
                         // this.pluign.logger.info(siyuan_token);
-                        this._dispatch("hover", { id: siyuan_token.id }); // 派遣鼠标悬浮事件
+                        this._handlers.onHover?.({ id: siyuan_token.id }); // 派遣鼠标悬浮事件
                         resolve(hover);
                     }, 1_000); // 悬浮 1s 后派遣悬浮事件
 
                     /* 鼠标移出时调用 */
-                    token.onCancellationRequested((e) => {
-                        // this.pluign.logger.debug(e);
+                    token.onCancellationRequested((_e) => {
+                        // this.pluign.logger.debug(_e);
                         clearTimeout(timer);
                         resolve(hover);
                     });
@@ -210,17 +210,17 @@ export class Languages {
             else {
                 return hover;
             }
-        }
-    }
+        },
+    };
 
     /* 解析思源相关链接 */
     protected readonly siyuanLinkProvider: Monaco.languages.LinkProvider = {
-        provideLinks: (model, token) => {
+        provideLinks: (model, _token) => {
             const links: ISiyuanLink[] = [];
             const lines = model.getLinesContent();
             const length = lines.length;
             for (let i = 0; i < length; ++i) {
-                const tokens = Languages.getSiyuanTokens(lines[i]);
+                const tokens = Languages.getSiyuanTokens(lines[i]!);
                 for (const token of tokens) {
                     const link: ISiyuanLink = {
                         range: {
@@ -233,7 +233,7 @@ export class Languages {
                         type: token.type,
                         token: token.token,
                         /**
-                         * 提供 url 后就不会调用 {@link Monaco.languages.LinkProvider["resolveLink"]}
+                         * 提供 url 后就不会调用 {@link Monaco.languages.LinkProvider.resolveLink}
                          */
                         // url: "",
                         // tooltip: token,
@@ -261,34 +261,35 @@ export class Languages {
                 links,
             };
         },
-        resolveLink: (link: ISiyuanLink, token) => {
+        resolveLink: (link, _token) => {
             // this.pluign.logger.info(link);
+            const siyuan_link = link as ISiyuanLink;
 
-            switch (link.type) {
+            switch (siyuan_link.type) {
                 case SiyuanTokenType.link: { // 思源超链接
-                    link.url = link.token;
+                    siyuan_link.url = siyuan_link.token;
                     break;
                 }
                 default: {
-                    link.url = `siyuan://blocks/${link.id}`;
+                    siyuan_link.url = `siyuan://blocks/${siyuan_link.id}`;
                     break;
                 }
             }
 
             /* 派遣打开思源块事件 */
-            const url = new URL(link.url);
-            this._dispatch("open", {
-                id: link.id,
-                focus: parseInt(url.searchParams.get("focus")),
+            const url = new URL(siyuan_link.url);
+            this._handlers.onOpen?.({
+                id: siyuan_link.id,
+                focus: Number.parseInt(url.searchParams.get("focus")!),
             });
 
             /* 设置 url 以避免输出链接目标丢失的警告 */
-            link.url = this._monaco.Uri.parse(link.url);
+            siyuan_link.url = this._monaco.Uri.parse(siyuan_link.url);
             // link.url = " ";
 
-            return link;
-        }
-    }
+            return siyuan_link as Monaco.languages.ILink;
+        },
+    };
 
     /* 清洗语言名 */
     protected wash(lang: string): string {
@@ -314,11 +315,11 @@ export class Languages {
             case this._set_id.has(lang):
                 return lang;
             case this._map_alias_id.has(lang):
-                return this._map_alias_id.get(lang);
+                return this._map_alias_id.get(lang)!;
             case this._map_extension_id.has(lang):
-                return this._map_extension_id.get(lang);
+                return this._map_extension_id.get(lang)!;
             case this._map_mimetype_id.has(lang):
-                return this._map_mimetype_id.get(lang);
+                return this._map_mimetype_id.get(lang)!;
             default:
                 return lang;
         }

@@ -1,28 +1,27 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import { BridgeSlave } from "./slave";
 
 import type {
-    IMessageVditorMasterEventMap,
-    IMessageVditorReady,
     IMessageVditorChanged,
-    IMessageVditorSave,
+    IMessageVditorMasterEventMap,
     IMessageVditorOpenLink,
+    IMessageVditorReady,
+    IMessageVditorSave,
 } from "@/types/message";
-import { BridgeSlave } from "./slave";
 
 export type MasterMessageEvent = IMessageVditorMasterEventMap[keyof IMessageVditorMasterEventMap];
 export type MessageEventListener<
@@ -31,7 +30,7 @@ export type MessageEventListener<
 
 export class VditorBridgeSlave extends BridgeSlave<boolean, IMessageVditorMasterEventMap> {
     constructor(
-        protected oninited: (this: InstanceType<typeof VditorBridgeSlave>) => any = () => { },
+        protected override oninited: (this: InstanceType<typeof VditorBridgeSlave>) => any = () => { },
     ) {
         super(oninited);
     }

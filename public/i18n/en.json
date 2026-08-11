@@ -291,10 +291,10 @@
         },
         "confirm": {
             "placeholder": "The full path to the resource",
-            "text": "Warning: You are operating on a protected resource ${1} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource ${2} in the text box below",
+            "text": "Warning: You are operating on a protected resource {{1}} !<br/>Your subsequent activities may lead to data loss or damage!<br/><br/>If you want to continue the operation, please enter the complete path of the resource {{2}} in the text box below",
             "tips": {
                 "pleaseEnter": "Please enter the complete path of the resource",
-                "warn": "Are you sure you want to continue operating the resource ${1}?"
+                "warn": "Are you sure you want to continue operating the resource {{1}}?"
             },
             "title": "⚠️ High-risk operation confirmation"
         },
@@ -336,11 +336,11 @@
         },
         "deleteFile": {
             "label": "Delete File",
-            "text": "Make sure you want to delete the file ${1} ?<br/>The complete path of the file is ${2}"
+            "text": "Make sure you want to delete the file {{1}} ?<br/>The complete path of the file is {{2}}"
         },
         "deleteFolder": {
             "label": "Delete Folder",
-            "text": "Make sure you want to delete the folder ${1} ？<br/>The complete path of the folder is ${2}"
+            "text": "Make sure you want to delete the folder {{1}} ？<br/>The complete path of the folder is {{2}}"
         },
         "diffEdit": {
             "label": "Compare and Edit"
@@ -363,28 +363,28 @@
         },
         "exportFile": {
             "label": "File Export",
-            "message": "File ${1} has exported to ${2}, does you reveal it in explorer?",
-            "title": "Export file ${1}"
+            "message": "File {{1}} has exported to {{2}}, does you reveal it in explorer?",
+            "title": "Export file {{1}}"
         },
         "exportFolder": {
             "label": "Folder Export",
-            "message": "Folder ${1} has exported to ${2}, does you reveal it in explorer?",
-            "title": "Export folder ${1}"
+            "message": "Folder {{1}} has exported to {{2}}, does you reveal it in explorer?",
+            "title": "Export folder {{1}}"
         },
         "import": {
             "label": "Import"
         },
         "importFile": {
             "label": "Files Import...",
-            "title": "Import files to ${1}"
+            "title": "Import files to {{1}}"
         },
         "importFolder": {
             "label": "Folders Import...",
-            "title": "Import folders to ${1}"
+            "title": "Import folders to {{1}}"
         },
         "move": {
-            "text": "Move ${1}<br/>from ${2}<br/>to&ensp;&ensp;、 ${3}?",
-            "title": "Move ${1}"
+            "text": "Move {{1}}<br/>from {{2}}<br/>to&ensp;&ensp;、 {{3}}?",
+            "title": "Move {{1}}"
         },
         "new": {
             "label": "New"
@@ -392,24 +392,24 @@
         "newFile": {
             "label": "New File...",
             "placeholder": "File name",
-            "text": "Create a new file in the folder ${1}",
+            "text": "Create a new file in the folder {{1}}",
             "tips": {
                 "empty": "The file name cannot be empty",
-                "exist": "${2} already exists under folder ${1}, please enter a different name",
-                "invalid": "Name ${1} is an invalid file name, please enter a different name",
-                "normal": "Create a new file ${1} ?",
+                "exist": "{{2}} already exists under folder {{1}}, please enter a different name",
+                "invalid": "Name {{1}} is an invalid file name, please enter a different name",
+                "normal": "Create a new file {{1}} ?",
                 "pleaseEnter": "Please enter a file name"
             }
         },
         "newFolder": {
             "label": "New Folder...",
             "placeholder": "Folder name",
-            "text": "Create a new folder in the folder ${1}",
+            "text": "Create a new folder in the folder {{1}}",
             "tips": {
                 "empty": "The folder name cannot be empty",
-                "exist": "${2} already exists under folder ${1}, please enter a different name",
-                "invalid": "Name ${1} is an invalid folder name, please enter a different name",
-                "normal": "Create a new folder ${1} ?",
+                "exist": "{{2}} already exists under folder {{1}}, please enter a different name",
+                "invalid": "Name {{1}} is an invalid folder name, please enter a different name",
+                "normal": "Create a new folder {{1}} ?",
                 "pleaseEnter": "Please enter a folder name"
             }
         },
@@ -458,12 +458,12 @@
         "renameFile": {
             "label": "Rename File",
             "placeholder": "File name",
-            "text": "Rename file ${1}",
+            "text": "Rename file {{1}}",
             "tips": {
                 "empty": "The file name cannot be empty",
-                "exist": "${2} already exists under folder ${1}, please enter a different name",
-                "invalid": "Name ${1} is an invalid file name, please enter a different name",
-                "normal": "Rename file ${1} to ${2}?",
+                "exist": "{{2}} already exists under folder {{1}}, please enter a different name",
+                "invalid": "Name {{1}} is an invalid file name, please enter a different name",
+                "normal": "Rename file {{1}} to {{2}}?",
                 "pleaseEnter": "Please enter a new file name",
                 "same": "The file name has not changed"
             }
@@ -471,12 +471,12 @@
         "renameFolder": {
             "label": "Rename Folder",
             "placeholder": "Folder name",
-            "text": "Create a new folder in the folder ${1}",
+            "text": "Create a new folder in the folder {{1}}",
             "tips": {
                 "empty": "The folder name cannot be empty",
-                "exist": "${2} already exists under folder ${1}, please enter a different name",
-                "invalid": "Name ${1} is an invalid folder name, please enter a different name",
-                "normal": "Rename folder ${1} to ${2}?",
+                "exist": "{{2}} already exists under folder {{1}}, please enter a different name",
+                "invalid": "Name {{1}} is an invalid folder name, please enter a different name",
+                "normal": "Rename folder {{1}} to {{2}}?",
                 "pleaseEnter": "Please enter a new folder name",
                 "same": "The folder name has not changed"
             }
@@ -493,7 +493,7 @@
                 "confirm": "Confirm",
                 "reUpload": "Retry",
                 "startUpload": "Upload",
-                "statusInfo": "Number of files uploaded: ${1}/${2} &emsp; Size of files uploaded: ${3}/${4} Byte"
+                "statusInfo": "Number of files uploaded: {{1}}/{{2}} &emsp; Size of files uploaded: {{3}}/{{4}} Byte"
             }
         },
         "uploadFile": {

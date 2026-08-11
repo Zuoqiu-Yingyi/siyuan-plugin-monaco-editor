@@ -1,16 +1,16 @@
 <!--
  Copyright (C) 2023 Zuoqiu Yingyi
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as
  published by the Free Software Foundation, either version 3 of the
  License, or (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
@@ -18,26 +18,33 @@
 <!-- 设置面板 -->
 
 <script lang="ts">
-    import Panels from "@workspace/components/siyuan/setting/panel/Panels.svelte";
-    import Panel from "@workspace/components/siyuan/setting/panel/Panel.svelte";
-    import Item from "@workspace/components/siyuan/setting/item/Item.svelte";
-    import Tabs from "@workspace/components/siyuan/setting/tab/Tabs.svelte";
     import Input from "@workspace/components/siyuan/setting/item/Input.svelte";
-
     import { ItemType } from "@workspace/components/siyuan/setting/item/item";
-    import { type ITab } from "@workspace/components/siyuan/setting/tab";
+    import Item from "@workspace/components/siyuan/setting/item/Item.svelte";
+    import Panel from "@workspace/components/siyuan/setting/panel/Panel.svelte";
+    import Panels from "@workspace/components/siyuan/setting/panel/Panels.svelte";
+    import Tabs from "@workspace/components/siyuan/setting/tab/Tabs.svelte";
 
-    import type MonacoEditorPlugin from "@/index";
-
-    import type { IConfig } from "@/types/config";
-    import type { I18N } from "@/utils/i18n";
     import { OpenScheme } from "@/utils/url";
     import { AssetsUploadMode } from "@/vditor/asset";
 
-    export let config: IConfig; // 传入的配置项
-    export let plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
+    import type { ITab } from "@workspace/components/siyuan/setting/tab";
 
-    const i18n = plugin.i18n as unknown as I18N;
+    import type MonacoEditorPlugin from "@/index";
+    import type { IConfig } from "@/types/config";
+
+    interface IProps {
+        config: IConfig; // 传入的配置项
+        plugin: InstanceType<typeof MonacoEditorPlugin>; // 插件实例
+    }
+
+    const {
+        config,
+        plugin,
+    }: IProps = $props();
+
+    // svelte-ignore state_referenced_locally
+    const i18n = plugin.i18n;
 
     async function updated() {
         await plugin.updateConfig(config);
@@ -54,13 +61,13 @@
         );
     }
 
-    enum PanelKey {
-        general, // 常规设置
-        menu, // 菜单设置
-        editor, // 编辑器设置
-    }
+    const PanelKey = {
+        general: "general", // 常规设置
+        menu: "menu", // 菜单设置
+        editor: "editor", // 编辑器设置
+    } as const;
 
-    let panels_focus_key = PanelKey.general;
+    const panels_focus_key = PanelKey.general;
     const panels: ITab[] = [
         {
             key: PanelKey.general,
@@ -82,13 +89,13 @@
         },
     ];
 
-    enum TabKey {
-        global, // 全局设置
-        monaco, // Monaco 编辑器设置
-        vditor, // Vditor 编辑器设置
-    }
+    const TabKey = {
+        global: "global", // 全局设置
+        monaco: "monaco", // Monaco 编辑器设置
+        vditor: "vditor", // Vditor 编辑器设置
+    } as const;
 
-    let editor_settings_tabs_focus_key = TabKey.global;
+    const editor_settings_tabs_focus_key = TabKey.global;
     const tabs = {
         editor: [
             {
@@ -130,23 +137,23 @@
 </script>
 
 <Panels
-    {panels}
     focus={panels_focus_key}
+    {panels}
     let:focus={focusPanel}
 >
     <!-- 常规设置面板 -->
-    <Panel display={panels[0].key === focusPanel}>
+    <Panel display={panels[0]?.key === focusPanel}>
         <!-- 编辑器面板 -->
         <Item
-            title={i18n.settings.generalSettings.editor.title}
             text={i18n.settings.generalSettings.editor.description}
+            title={i18n.settings.generalSettings.editor.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Editor"
                 settingValue={config.dock.editor.enable}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.dock.editor.enable = e.detail.value;
                     await updated();
                     globalThis.location.reload();
@@ -156,15 +163,15 @@
 
         <!-- 资源管理器面板 -->
         <Item
-            title={i18n.settings.generalSettings.explorer.title}
             text={i18n.settings.generalSettings.explorer.description}
+            title={i18n.settings.generalSettings.explorer.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Explorer"
                 settingValue={config.dock.explorer.enable}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.dock.explorer.enable = e.detail.value;
                     await updated();
                     globalThis.location.reload();
@@ -174,15 +181,15 @@
 
         <!-- 安全模式 -->
         <Item
-            title={i18n.settings.generalSettings.safeMode.title}
             text={i18n.settings.generalSettings.safeMode.description}
+            title={i18n.settings.generalSettings.safeMode.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Safe Mode"
                 settingValue={config.dock.explorer.safe}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.dock.explorer.safe = e.detail.value;
                     await updated();
                 }}
@@ -191,32 +198,32 @@
 
         <!-- 重置设置 -->
         <Item
-            title={i18n.settings.generalSettings.reset.title}
             text={i18n.settings.generalSettings.reset.description}
+            title={i18n.settings.generalSettings.reset.title}
         >
             <Input
                 slot="input"
-                type={ItemType.button}
                 settingKey="Reset"
                 settingValue={i18n.settings.generalSettings.reset.text}
+                type={ItemType.button}
                 on:clicked={resetOptions}
             />
         </Item>
     </Panel>
 
     <!-- 菜单面板 -->
-    <Panel display={panels[1].key === focusPanel}>
+    <Panel display={panels[1]?.key === focusPanel}>
         <!-- 代码片段右键菜单 -->
         <Item
-            title={i18n.settings.menuSettings.snippet.title}
             text={i18n.settings.menuSettings.snippet.description}
+            title={i18n.settings.menuSettings.snippet.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Snippet"
                 settingValue={config.operates.menu.snippet}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.operates.menu.snippet = e.detail.value;
                     await updated();
                 }}
@@ -225,15 +232,15 @@
 
         <!-- 收集箱速记右键菜单 -->
         <Item
-            title={i18n.settings.menuSettings.shorthand.title}
             text={i18n.settings.menuSettings.shorthand.description}
+            title={i18n.settings.menuSettings.shorthand.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Shorthand"
                 settingValue={config.operates.menu.shorthand}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.operates.menu.shorthand = e.detail.value;
                     await updated();
                 }}
@@ -242,15 +249,15 @@
 
         <!-- 文件历史面板 -->
         <Item
-            title={i18n.settings.menuSettings.history1.title}
             text={i18n.settings.menuSettings.history1.description}
+            title={i18n.settings.menuSettings.history1.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="File hostory"
                 settingValue={config.operates.menu.history1}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.operates.menu.history1 = e.detail.value;
                     await updated();
                 }}
@@ -259,15 +266,15 @@
 
         <!-- 文档历史面板 -->
         <Item
-            title={i18n.settings.menuSettings.history2.title}
             text={i18n.settings.menuSettings.history2.description}
+            title={i18n.settings.menuSettings.history2.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Document hostory"
                 settingValue={config.operates.menu.history2}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.operates.menu.history2 = e.detail.value;
                     await updated();
                 }}
@@ -276,15 +283,15 @@
 
         <!-- 快照 -->
         <Item
-            title={i18n.settings.menuSettings.snapshot.title}
             text={i18n.settings.menuSettings.snapshot.description}
+            title={i18n.settings.menuSettings.snapshot.title}
         >
             <Input
                 slot="input"
-                type={ItemType.checkbox}
                 settingKey="Snapshot"
                 settingValue={config.operates.menu.snapshot}
-                on:changed={async e => {
+                type={ItemType.checkbox}
+                on:changed={async (e) => {
                     config.operates.menu.snapshot = e.detail.value;
                     await updated();
                 }}
@@ -293,7 +300,7 @@
     </Panel>
 
     <!-- 编辑器面板 -->
-    <Panel display={panels[2].key === focusPanel}>
+    <Panel display={panels[2]?.key === focusPanel}>
         <Tabs
             focus={editor_settings_tabs_focus_key}
             tabs={tabs.editor}
@@ -301,21 +308,21 @@
         >
             <!-- 标签页 1 - 全局设置 -->
             <div
-                data-type={tabs.editor[0].name}
-                class:fn__none={tabs.editor[0].key !== focusTab}
+                class:fn__none={tabs.editor[0]?.key !== focusTab}
+                data-type={tabs.editor[0]?.name}
             >
                 <!-- Markdown 文件默认编辑器 -->
                 <Item
-                    title={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.title}
                     text={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.description}
+                    title={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.title}
                 >
                     <Input
                         slot="input"
-                        type={ItemType.select}
+                        options={default_editor_markdown_options}
                         settingKey="open.markdown"
                         settingValue={config.open.markdown}
-                        options={default_editor_markdown_options}
-                        on:changed={async e => {
+                        type={ItemType.select}
+                        on:changed={async (e) => {
                             config.open.markdown = e.detail.value;
                             await updated();
                         }}
@@ -325,23 +332,23 @@
 
             <!-- 标签页 2 - Monaco 编辑器设置 -->
             <div
-                data-type={tabs.editor[1].name}
-                class:fn__none={tabs.editor[1].key !== focusTab}
+                class:fn__none={tabs.editor[1]?.key !== focusTab}
+                data-type={tabs.editor[1]?.name}
             >
                 <!-- 自动折行方案 -->
                 <Item
-                    title={i18n.settings.editorSettings.monacoTab.wordWrap.title}
-                    text={i18n.settings.editorSettings.monacoTab.wordWrap.description}
                     block={true}
+                    text={i18n.settings.editorSettings.monacoTab.wordWrap.description}
+                    title={i18n.settings.editorSettings.monacoTab.wordWrap.title}
                 >
                     <Input
                         slot="input"
-                        type={ItemType.select}
-                        settingKey="editor.wordWrap"
-                        settingValue={config.editor.options.wordWrap}
                         block={true}
                         options={word_wrap_options}
-                        on:changed={async e => {
+                        settingKey="editor.wordWrap"
+                        settingValue={config.editor.options.wordWrap}
+                        type={ItemType.select}
+                        on:changed={async (e) => {
                             config.editor.options.wordWrap = e.detail.value;
                             await updated();
                         }}
@@ -351,23 +358,23 @@
 
             <!-- 标签页 3 - Vditor 编辑器设置 -->
             <div
-                data-type={tabs.editor[2].name}
-                class:fn__none={tabs.editor[2].key !== focusTab}
+                class:fn__none={tabs.editor[2]?.key !== focusTab}
+                data-type={tabs.editor[2]?.name}
             >
                 <!-- 资源文件保存方案 -->
                 <Item
-                    title={i18n.settings.editorSettings.vditorTab.assetsUploadMode.title}
-                    text={i18n.settings.editorSettings.vditorTab.assetsUploadMode.description}
                     block={true}
+                    text={i18n.settings.editorSettings.vditorTab.assetsUploadMode.description}
+                    title={i18n.settings.editorSettings.vditorTab.assetsUploadMode.title}
                 >
                     <Input
                         slot="input"
-                        type={ItemType.select}
-                        settingKey="vditor.assetsUploadMode"
-                        settingValue={config.vditor.assetsUploadMode}
                         block={true}
                         options={assets_upload_mode_options}
-                        on:changed={async e => {
+                        settingKey="vditor.assetsUploadMode"
+                        settingValue={config.vditor.assetsUploadMode}
+                        type={ItemType.select}
+                        on:changed={async (e) => {
                             config.vditor.assetsUploadMode = e.detail.value;
                             await updated();
                         }}
@@ -376,17 +383,17 @@
 
                 <!-- 资源文件保存目录 -->
                 <Item
-                    title={i18n.settings.editorSettings.vditorTab.assetsDirPath.title}
-                    text={i18n.settings.editorSettings.vditorTab.assetsDirPath.description}
                     block={true}
+                    text={i18n.settings.editorSettings.vditorTab.assetsDirPath.description}
+                    title={i18n.settings.editorSettings.vditorTab.assetsDirPath.title}
                 >
                     <Input
                         slot="input"
-                        type={ItemType.text}
+                        block={true}
                         settingKey="vditor.assetsDirPath"
                         settingValue={config.vditor.assetsDirPath}
-                        block={true}
-                        on:changed={async e => {
+                        type={ItemType.text}
+                        on:changed={async (e) => {
                             config.vditor.assetsDirPath = e.detail.value;
                             await updated();
                         }}

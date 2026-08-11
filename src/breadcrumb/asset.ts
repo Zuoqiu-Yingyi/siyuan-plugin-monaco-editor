@@ -1,34 +1,37 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import {
+    get,
+
+} from "svelte/store";
+
+import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
+import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
 
 import {
     Breadcrumb,
-    type IBaseBreadcrumbOptions,
-    type IBaseStore,
-    type IBreadcrumb,
+
 } from "./breadcrumb";
+
 import type { ComponentProps } from "svelte";
-import {
-    get,
-    type Writable,
-} from "svelte/store";
+import type { Writable } from "svelte/store";
+
 import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
-import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
-import { staticPathname2WorkspacePath } from "@workspace/utils/siyuan/url";
+
+import type { IBaseBreadcrumbOptions, IBaseStore, IBreadcrumb } from "./breadcrumb";
 
 export interface IAssetStore extends IBaseStore {
     fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
@@ -61,7 +64,7 @@ export class AssetBreadcrumb extends Breadcrumb {
         /* 获得相对于工作空间目录的路径 */
         const path = options.path ?? staticPathname2WorkspacePath(options.pathname);
         const paths: string[] = [];
-        paths.push(...globalThis.siyuan.config.system.workspaceDir.replaceAll("\\", "/").split("/"));
+        paths.push(...window.siyuan.config!.system.workspaceDir.replaceAll("\\", "/").split("/"));
         breadcrumb.breadcrumbItems.push({
             type: "item",
             icon: "#iconWorkspace",
@@ -69,7 +72,7 @@ export class AssetBreadcrumb extends Breadcrumb {
             textTitle: paths.join("/"),
             textEllipsis: true,
         });
-        path.split("/").forEach(p => {
+        path.split("/").forEach((p) => {
             paths.push(p);
             breadcrumb.breadcrumbItems.push({
                 type: "arrow",
@@ -93,9 +96,9 @@ export class AssetBreadcrumb extends Breadcrumb {
                 ariaLabel: this.i18n.button.realTime.ariaLabel,
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick(_e, _element, props) {
-                    const changable = get(props.active);
-                    options.stores.changable.set(!changable);
-                    props.active.set(!changable);
+                    const changeable = get(props.active!);
+                    options.stores!.changeable!.set(!changeable);
+                    props.active!.set(!changeable);
                 },
             });
 
@@ -106,9 +109,9 @@ export class AssetBreadcrumb extends Breadcrumb {
                 ariaLabel: this.i18n.button.fullscreen.ariaLabel,
                 tooltipsDirection: TooltipsDirection.sw,
                 onClick(_e, _element, props) {
-                    const fullscreen = get(props.active);
-                    options.stores.fullscreen.set(!fullscreen);
-                    props.active.set(!fullscreen);
+                    const fullscreen = get(props.active!);
+                    options.stores!.fullscreen!.set(!fullscreen);
+                    props.active!.set(!fullscreen);
                 },
             });
 

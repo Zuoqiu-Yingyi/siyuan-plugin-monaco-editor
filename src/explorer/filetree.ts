@@ -1,27 +1,28 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { IListItem } from "@workspace/components/siyuan/list/list";
-import type MonacoEditorPlugin from "@/index";
-import { ExplorerIcon } from "./icon";
-import { parse } from "@workspace/utils/path/browserify";
 import { formatFileSize } from "@workspace/utils/misc/byte";
 import { trimPrefix } from "@workspace/utils/misc/string";
+import { parse } from "@workspace/utils/path/browserify";
 import { normalize } from "@workspace/utils/path/normalize";
+
+import { ExplorerIcon } from "./icon";
+
+import type { IListItem } from "@workspace/components/siyuan/list/list";
+
+import type MonacoEditorPlugin from "@/index";
 
 export enum NodeType {
     File,
@@ -59,7 +60,6 @@ export interface IFileTree {
 }
 
 export class FileTree {
-
     public static makeSort(depth: number): (n1: INode, n2: INode) => number {
         return (node1: INode, node2: INode) => {
             if (node1.type !== node2.type) { // 类型不一致, 文件夹在前
@@ -68,11 +68,13 @@ export class FileTree {
                         return -1;
                     case node2.type === NodeType.Folder:
                         return 1;
+                    default:
+                        return 0;
                 }
             }
             else { // 类型一致, 比较指定层级
-                const name1 = node1.paths[depth].toLowerCase();
-                const name2 = node2.paths[depth].toLowerCase();
+                const name1 = node1.paths[depth]!.toLowerCase();
+                const name2 = node2.paths[depth]!.toLowerCase();
                 switch (true) {
                     case name1 > name2: // 名称大的在后
                         return 1;
@@ -80,9 +82,11 @@ export class FileTree {
                         return -1;
                     case name1 === name2: // 名称一致, 不变
                         return 0;
+                    default:
+                        return 0;
                 }
             }
-        }
+        };
     }
 
     public static async readEntries(reader: FileSystemDirectoryReader): Promise<FileSystemEntry[]> {
@@ -109,8 +113,9 @@ export class FileTree {
             }
             case entry.isDirectory: {
                 const directory = entry as FileSystemDirectoryEntry;
-                const entries = await FileTree.readEntries(directory.createReader())
-                files.push(...(await Promise.all(entries.map(entry => FileTree.flat(entry)))).flat());
+                const entries = await FileTree.readEntries(directory.createReader());
+                files.push(...(await Promise.all(entries.map((entry) => FileTree.flat(entry)))).flat());
+                // fallthrough
             }
             default:
                 return files;
@@ -125,20 +130,25 @@ export class FileTree {
 
     constructor(
         public readonly plugin: InstanceType<typeof MonacoEditorPlugin>, // 插件对象
-        public readonly fileList: FileList | File[], // 文件列表
+        public readonly fileList: File[] | FileList, // 文件列表
         public readonly prefix: string = "/", // 路径前缀
     ) {
         this.icon = new ExplorerIcon(this.plugin);
         this.files = Array.from(fileList);
         this.nodes = this.files.map((file: IFile) => {
-
             const path = (() => {
-                if (file.webkitRelativePath) return file.webkitRelativePath; // <input>
-                else if (file.path) return normalize(trimPrefix(
-                    file.path,
-                    this.prefix,
-                )); // DataTransferItem.getAsFile() | FileSystemFileEntry.file()
-                else return file.name;
+                if (file.webkitRelativePath) {
+                    return file.webkitRelativePath;
+                } // <input>
+                else if (file.path) {
+                    return normalize(trimPrefix(
+                        file.path,
+                        this.prefix,
+                    ));
+                } // DataTransferItem.getAsFile() | FileSystemFileEntry.file()
+                else {
+                    return file.name;
+                }
             })();
             return {
                 type: NodeType.File,
@@ -147,7 +157,7 @@ export class FileTree {
                 file,
             };
         });
-        this.map = new Map(this.nodes.map(node => [
+        this.map = new Map(this.nodes.map((node) => [
             node.path,
             node,
         ]));
@@ -158,7 +168,7 @@ export class FileTree {
             nodes: this.nodes,
             files: [],
             folders: [],
-        }
+        };
         this.build();
     }
 
@@ -177,16 +187,16 @@ export class FileTree {
         const depth = node.paths.length + 1; // 文件夹下节点深度
 
         // node.files = node.nodes.filter(n => n.paths.length === depth);
-        node.files = node.nodes.filter(n => n.paths.length === depth).toSorted(FileTree.makeSort(depth - 1));
+        node.files = node.nodes.filter((n) => n.paths.length === depth).toSorted(FileTree.makeSort(depth - 1));
 
         // const children = node.nodes.filter(n => n.paths.length > depth); // 下级文件列表
-        const children = node.nodes.filter(n => n.paths.length > depth).toSorted(FileTree.makeSort(depth - 1)); // 下级文件列表
+        const children = node.nodes.filter((n) => n.paths.length > depth).toSorted(FileTree.makeSort(depth - 1)); // 下级文件列表
 
-        const folder_name_set = new Set<string>(children.map(n => n.paths[depth - 1])); // 下级文件夹名称集合
+        const folder_name_set = new Set<string>(children.map((n) => n.paths[depth - 1]!)); // 下级文件夹名称集合
         const folder_name_list = [...folder_name_set]; // 下级文件夹名称列表 (保留排序)
 
         /* 文件夹名称 -> 文件夹节点 */
-        const folder_map_name_folder = new Map<string, IFolderNode>(folder_name_list.map(name => {
+        const folder_map_name_folder = new Map<string, IFolderNode>(folder_name_list.map((name) => {
             const paths = [...node.paths, name];
             return [name, {
                 type: NodeType.Folder,
@@ -199,14 +209,15 @@ export class FileTree {
         }));
 
         /* 通过文件夹名称为每个文件夹分配下级节点 */
-        children.forEach(child => {
-            const name = child.paths[depth - 1];
+        children.forEach((child) => {
+            const name = child.paths[depth - 1]!;
             const folder = folder_map_name_folder.get(name);
-            if (folder) folder.nodes.push(child);
+            if (folder)
+                folder.nodes.push(child);
         });
 
         /* 排序后的文件夹节点列表 */
-        node.folders = folder_name_list.map(name => folder_map_name_folder.get(name));
+        node.folders = folder_name_list.map((name) => folder_map_name_folder.get(name)!);
     }
 
     /* 生成列表 */
@@ -216,8 +227,8 @@ export class FileTree {
         indent: string = "1em",
     ): IListItem[] {
         const list: IListItem[] = [];
-        list.push(...node.folders.map(folder => ({
-            text: folder.paths[folder.paths.length - 1],
+        list.push(...node.folders.map((folder) => ({
+            text: folder.paths[folder.paths.length - 1]!,
             icon: this.icon.makeFolderNodeIcon(
                 parse(folder.path),
             ),
@@ -225,7 +236,7 @@ export class FileTree {
             children: this.toList(fold, folder),
             indent,
         })));
-        list.push(...node.files.map(file => ({
+        list.push(...node.files.map((file) => ({
             text: file.file.name,
             icon: this.icon.makeFileNodeIcon(
                 parse(file.path),

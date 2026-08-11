@@ -16,11 +16,11 @@
         "#icon-monaco-editor-material-git"
     ],
     [
-        "yaml",
-        "#icon-monaco-editor-material-yaml"
+        "github-actions-workflow",
+        "#icon-monaco-editor-material-github-actions-workflow"
     ],
     [
-        "github-actions-workflow",
+        "yaml",
         "#icon-monaco-editor-material-yaml"
     ],
     [
@@ -56,10 +56,6 @@
         "#icon-monaco-editor-material-settings"
     ],
     [
-        "toml",
-        "#icon-monaco-editor-material-settings"
-    ],
-    [
         "ini",
         "#icon-monaco-editor-material-settings"
     ],
@@ -72,8 +68,8 @@
         "#icon-monaco-editor-material-settings"
     ],
     [
-        "shaderlab",
-        "#icon-monaco-editor-material-shaderlab"
+        "toml",
+        "#icon-monaco-editor-material-toml"
     ],
     [
         "diff",
@@ -81,6 +77,10 @@
     ],
     [
         "json",
+        "#icon-monaco-editor-material-json"
+    ],
+    [
+        "jsonl",
         "#icon-monaco-editor-material-json"
     ],
     [
@@ -121,6 +121,10 @@
     ],
     [
         "typescript",
+        "#icon-monaco-editor-material-typescript"
+    ],
+    [
+        "ets",
         "#icon-monaco-editor-material-typescript"
     ],
     [
@@ -246,6 +250,10 @@
     [
         "terraform",
         "#icon-monaco-editor-material-terraform"
+    ],
+    [
+        "opentofu",
+        "#icon-monaco-editor-material-opentofu"
     ],
     [
         "applescript",
@@ -388,16 +396,40 @@
         "#icon-monaco-editor-material-tex"
     ],
     [
-        "doctex",
-        "#icon-monaco-editor-material-tex"
-    ],
-    [
         "latex",
-        "#icon-monaco-editor-material-tex"
+        "#icon-monaco-editor-material-latex"
     ],
     [
         "latex-expl3",
-        "#icon-monaco-editor-material-tex"
+        "#icon-monaco-editor-material-latex"
+    ],
+    [
+        "latex-class",
+        "#icon-monaco-editor-material-latex-class"
+    ],
+    [
+        "latex-package",
+        "#icon-monaco-editor-material-latex-package"
+    ],
+    [
+        "context",
+        "#icon-monaco-editor-material-context"
+    ],
+    [
+        "doctex",
+        "#icon-monaco-editor-material-doctex"
+    ],
+    [
+        "doctex-installer",
+        "#icon-monaco-editor-material-doctex-installer"
+    ],
+    [
+        "bibtex",
+        "#icon-monaco-editor-material-bibliography"
+    ],
+    [
+        "bibtex-style",
+        "#icon-monaco-editor-material-bibtex-style"
     ],
     [
         "apex",
@@ -413,6 +445,10 @@
     ],
     [
         "dockercompose",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "dockerbake",
         "#icon-monaco-editor-material-docker"
     ],
     [
@@ -460,6 +496,10 @@
         "#icon-monaco-editor-material-objective-cpp"
     ],
     [
+        "c3",
+        "#icon-monaco-editor-material-c3"
+    ],
+    [
         "coffeescript",
         "#icon-monaco-editor-material-coffee"
     ],
@@ -478,6 +518,10 @@
     [
         "groovy",
         "#icon-monaco-editor-material-groovy"
+    ],
+    [
+        "markdoc",
+        "#icon-monaco-editor-material-markdoc"
     ],
     [
         "markdown",
@@ -510,14 +554,6 @@
     [
         "lua",
         "#icon-monaco-editor-material-lua"
-    ],
-    [
-        "bibtex",
-        "#icon-monaco-editor-material-lib"
-    ],
-    [
-        "bibtex-style",
-        "#icon-monaco-editor-material-lib"
     ],
     [
         "log",
@@ -644,6 +680,10 @@
         "#icon-monaco-editor-material-wolframlanguage"
     ],
     [
+        "shaderlab",
+        "#icon-monaco-editor-material-shader"
+    ],
+    [
         "hlsl",
         "#icon-monaco-editor-material-shader"
     ],
@@ -678,5 +718,85 @@
     [
         "hjson",
         "#icon-monaco-editor-material-hjson"
+    ],
+    [
+        "huff",
+        "#icon-monaco-editor-material-huff"
+    ],
+    [
+        "cds",
+        "#icon-monaco-editor-material-cds"
+    ],
+    [
+        "capnb",
+        "#icon-monaco-editor-material-cds"
+    ],
+    [
+        "cds-markdown-injection",
+        "#icon-monaco-editor-material-cds"
+    ],
+    [
+        "concourse-pipeline-yaml",
+        "#icon-monaco-editor-material-concourse"
+    ],
+    [
+        "concourse-task-yaml",
+        "#icon-monaco-editor-material-concourse"
+    ],
+    [
+        "systemd-conf",
+        "#icon-monaco-editor-material-systemd"
+    ],
+    [
+        "systemd-unit-file",
+        "#icon-monaco-editor-material-systemd"
+    ],
+    [
+        "slint",
+        "#icon-monaco-editor-material-slint"
+    ],
+    [
+        "luau",
+        "#icon-monaco-editor-material-luau"
+    ],
+    [
+        "hosts",
+        "#icon-monaco-editor-material-hosts"
+    ],
+    [
+        "beancount",
+        "#icon-monaco-editor-material-beancount"
+    ],
+    [
+        "ahk2",
+        "#icon-monaco-editor-material-ahk2"
+    ],
+    [
+        "gnuplot",
+        "#icon-monaco-editor-material-gnuplot"
+    ],
+    [
+        "helm",
+        "#icon-monaco-editor-material-helm"
+    ],
+    [
+        "nginx",
+        "#icon-monaco-editor-material-nginx"
+    ],
+    [
+        "cue",
+        "#icon-monaco-editor-material-cue"
+    ],
+    [
+        "lean",
+        "#icon-monaco-editor-material-lean"
+    ],
+    [
+        "skill",
+        "#icon-monaco-editor-material-skill"
+    ],
+    [
+        "instructions",
+        "#icon-monaco-editor-material-instructions"
     ]
 ]

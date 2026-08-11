@@ -1,69 +1,105 @@
 <!--
  Copyright (C) 2023 Zuoqiu Yingyi
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as
  published by the Free Software Foundation, either version 3 of the
  License, or (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <script lang="ts">
-    import { onDestroy, type ComponentProps, type ComponentEvents } from "svelte";
-    import { Facade, type IFacadeOptions, type ITabOptions } from "@/facades/facade";
-    import { writable, type Unsubscriber } from "svelte/store";
+    import {
+        onDestroy,
+
+    } from "svelte";
+    import {
+        writable,
+
+    } from "svelte/store";
 
     import Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+
+    import {
+        Facade,
+
+    } from "@/facades/facade";
+
     import EditorIframe from "./EditorIframe.svelte";
 
-    export let plugin: ComponentProps<EditorIframe>["plugin"]; // 插件对象
-    export let options: ComponentProps<EditorIframe>["options"]; // 编辑器参数
-    export let facadeOptions: IFacadeOptions; // 门面参数
-    
-    let diff: ComponentProps<EditorIframe>["diff"];
-    let savable: ComponentProps<EditorIframe>["savable"];
-    let changable: ComponentProps<EditorIframe>["changable"];
+    import type { ComponentProps } from "svelte";
+    import type { Unsubscriber } from "svelte/store";
 
-    let original: ComponentProps<EditorIframe>["original"];
-    let originalOptions: ComponentProps<EditorIframe>["originalOptions"];
-    let modified: ComponentProps<EditorIframe>["modified"];
-    let modifiedOptions: ComponentProps<EditorIframe>["modifiedOptions"];
+    import type { IFacadeOptions, ITabOptions } from "@/facades/facade";
+    import type { IEditorEvents } from "@/types/editor";
 
-    let fullscreen: ComponentProps<Tab>["fullscreen"] = false; // 是否为全屏模式
+    import type { IProps as IEditorIframeProps } from "./EditorIframe.svelte";
 
-    let breadcrumb: ComponentProps<Tab>["breadcrumb"] = false; // 是否显示面包屑
-    let breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"] = []; // 面包屑项
-    let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = []; // 面包屑按钮
+    interface IProps {
+        plugin: IEditorIframeProps["plugin"]; // 插件对象
+        options: IEditorIframeProps["options"]; // 编辑器参数
+        facadeOptions: IFacadeOptions; // 门面参数
+    }
 
-    let tabOptions: ITabOptions;
-    let inited: boolean = false;
+    const {
+        plugin,
+        options,
+        facadeOptions,
+    }: IProps = $props();
+
+    let diff: IEditorIframeProps["diff"] = $state();
+    let savable: IEditorIframeProps["savable"] = $state();
+    let changeable: IEditorIframeProps["changeable"] = $state();
+
+    let original: IEditorIframeProps["original"] = $state();
+    let originalOptions: IEditorIframeProps["originalOptions"] = $state();
+    let modified: IEditorIframeProps["modified"] = $state();
+    let modifiedOptions: IEditorIframeProps["modifiedOptions"] = $state();
+
+    let fullscreen: ComponentProps<Tab>["fullscreen"] = $state(false); // 是否为全屏模式
+
+    let breadcrumb: ComponentProps<Tab>["breadcrumb"] = $state(false); // 是否显示面包屑
+    let breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"] = $state([]); // 面包屑项
+    let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = $state([]); // 面包屑按钮
+
+    let tabOptions: ITabOptions | undefined = $state();
+    // eslint-disable-next-line prefer-const
+    let inited: boolean = $derived(diff !== undefined);
 
     /* 响应式数据 */
     const stores = {
-        changable: writable(changable),
-        fullscreen: writable(fullscreen),
+        changeable: writable(false),
+        fullscreen: writable(false),
     };
-    $: stores.changable.set(changable);
-    $: stores.fullscreen.set(fullscreen);
+
+    $effect(() => {
+        stores.changeable.set(changeable!);
+    });
+    $effect(() => {
+        stores.fullscreen.set(fullscreen!);
+    });
+
     const unsubscribes: Unsubscriber[] = [
-        stores.changable.subscribe(v => (changable = v)), //
-        stores.fullscreen.subscribe(v => (fullscreen = v)), //
+        stores.changeable.subscribe((v) => (changeable = v)), //
+        stores.fullscreen.subscribe((v) => (fullscreen = v)), //
     ];
     onDestroy(() => {
-        unsubscribes.forEach(unsubscribe => unsubscribe());
+        unsubscribes.forEach((unsubscribe) => unsubscribe());
     });
 
     /* 门店 */
     const facade = new Facade(plugin);
-    $: facade.makeTabOptions(facadeOptions, stores).then(o => (tabOptions = o));
-    $: {
+    $effect(() => {
+        facade.makeTabOptions(facadeOptions, stores).then((o) => (tabOptions = o));
+    });
+    $effect(() => {
         if (tabOptions) {
             diff = !!tabOptions.handler.original;
             savable = !!tabOptions.handler.update;
@@ -78,32 +114,31 @@
             breadcrumbItems = tabOptions.breadcrumb.breadcrumbItems;
             breadcrumbIcons = tabOptions.breadcrumb.breadcrumbIcons;
         }
-    }
-    $: inited = (diff !== undefined);
+    });
 
     /* 保存内容 */
-    function update(e: ComponentEvents<EditorIframe>["save"] | ComponentEvents<EditorIframe>["changed"]) {
-        tabOptions?.handler?.update?.(e.detail.value);
+    function update(params: IEditorEvents["changed"] | IEditorEvents["save"]) {
+        tabOptions?.handler?.update?.(params.value);
     }
 
     /* 悬浮事件 */
-    function hover(e: ComponentEvents<EditorIframe>["hover"]) {
+    function hover(params: IEditorEvents["hover"]) {
         /* 悬浮显示思源块 */
-        plugin.openFloatLayer(e.detail);
+        plugin.openFloatLayer(params);
     }
 
     /* 打开链接事件 */
-    function open(e: ComponentEvents<EditorIframe>["open"]) {
+    function open(params: IEditorEvents["open"]) {
         /* 在新页签打开思源块 */
-        plugin.openDocTab(e.detail);
+        plugin.openDocTab(params);
     }
 </script>
 
 <Tab
-    {fullscreen}
     {breadcrumb}
-    {breadcrumbItems}
     {breadcrumbIcons}
+    {breadcrumbItems}
+    {fullscreen}
 >
     <div
         slot="content"
@@ -111,19 +146,19 @@
     >
         {#if inited}
             <EditorIframe
-                on:save={update}
-                on:changed={update}
-                on:hover={hover}
-                on:open={open}
-                {plugin}
+                {changeable}
                 {diff}
-                {savable}
-                {changable}
+                {modified}
+                {modifiedOptions}
+                onChanged={update}
+                onHover={hover}
+                onOpen={open}
+                onSave={update}
                 {options}
                 {original}
-                {modified}
                 {originalOptions}
-                {modifiedOptions}
+                {plugin}
+                {savable}
             />
         {/if}
     </div>

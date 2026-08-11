@@ -20,6 +20,18 @@
         "#icon-monaco-editor-material-jinja_light"
     ],
     [
+        ".toml",
+        "#icon-monaco-editor-material-toml_light"
+    ],
+    [
+        ".tofu",
+        "#icon-monaco-editor-material-opentofu_light"
+    ],
+    [
+        ".huff",
+        "#icon-monaco-editor-material-huff_light"
+    ],
+    [
         ".cr",
         "#icon-monaco-editor-material-crystal_light"
     ],
@@ -38,6 +50,26 @@
     [
         ".hcl",
         "#icon-monaco-editor-material-hcl_light"
+    ],
+    [
+        ".ai",
+        "#icon-monaco-editor-material-adobe-illustrator_light"
+    ],
+    [
+        ".ait",
+        "#icon-monaco-editor-material-adobe-illustrator_light"
+    ],
+    [
+        ".psd",
+        "#icon-monaco-editor-material-adobe-photoshop_light"
+    ],
+    [
+        ".psb",
+        "#icon-monaco-editor-material-adobe-photoshop_light"
+    ],
+    [
+        ".psdt",
+        "#icon-monaco-editor-material-adobe-photoshop_light"
     ],
     [
         ".iuml",
@@ -68,7 +100,27 @@
         "#icon-monaco-editor-material-chess_light"
     ],
     [
+        ".openapi.json",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
+        ".openapi.yml",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
+        ".openapi.yaml",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
         ".tldr",
         "#icon-monaco-editor-material-tldraw_light"
+    ],
+    [
+        ".verse",
+        "#icon-monaco-editor-material-verse_light"
+    ],
+    [
+        ".zeabur",
+        "#icon-monaco-editor-material-zeabur_light"
     ]
 ]

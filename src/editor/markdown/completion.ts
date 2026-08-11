@@ -1,19 +1,17 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * REF: https://github.com/yzhang-gh/vscode-markdown/blob/master/src/completion.ts
@@ -23,6 +21,7 @@
 import * as katexFuncs from "./katex-funcs";
 
 import type Monaco from "monaco-editor";
+
 import type { IPlugin } from "@/types/editor";
 
 export enum MathEnv {
@@ -54,7 +53,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
             && lineTextAfter.includes("$")) {
             // Inline math
             return MathEnv.inline;
-        } else {
+        }
+        else {
             const textBefore = docText.substring(0, crtOffset);
             const textAfter = docText.substring(crtOffset);
             const matches = textBefore.match(/\$\$/g);
@@ -63,7 +63,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 && textAfter.includes("$$")) {
                 // $$ ... $$
                 return MathEnv.display;
-            } else {
+            }
+            else {
                 return MathEnv.none;
             }
         }
@@ -107,13 +108,13 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         model: Monaco.editor.ITextModel,
         position: Monaco.Position,
         context: Monaco.languages.CompletionContext,
-        token: Monaco.CancellationToken,
+        _token: Monaco.CancellationToken,
     ): Promise<Monaco.languages.CompletionList> {
         const math_env = MarkdownCompletion.mathEnvCheck(model, position);
         // console.debug(context, math_env);
 
         const lineTextBefore = model.getLineContent(position.lineNumber).substring(0, position.column - 1);
-        const lineTextAfter = model.getLineContent(position.lineNumber).substring(position.column - 1);
+        // const lineTextAfter = model.getLineContent(position.lineNumber).substring(position.column - 1);
         // console.debug(lineTextBefore, lineTextAfter);
 
         switch (context.triggerCharacter) {
@@ -157,7 +158,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
     /* 当前聚焦的建议 */
     async resolveCompletionItem(
         item: Monaco.languages.CompletionItem,
-        token: Monaco.CancellationToken,
+        _token: Monaco.CancellationToken,
     ): Promise<Monaco.languages.CompletionItem> {
         // console.debug(item);
         return item;
@@ -198,96 +199,96 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
     protected buildKatexFuncsInfoMap(): Map<string, IKatexFuncsInfo> {
         const map = new Map<string, IKatexFuncsInfo>();
         katexFuncs.special2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Special", this._monaco.languages.CompletionItemKind.Variable));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Special", this._monaco.languages.CompletionItemKind.Variable));
 
         katexFuncs.extend0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Field));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Field));
         katexFuncs.extend1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Function));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Function));
         katexFuncs.extend2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Class));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Other", this._monaco.languages.CompletionItemKind.Class));
 
         katexFuncs.html1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "HTML", this._monaco.languages.CompletionItemKind.Reference));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "HTML", this._monaco.languages.CompletionItemKind.Reference));
         katexFuncs.html2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "HTML", this._monaco.languages.CompletionItemKind.Reference));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "HTML", this._monaco.languages.CompletionItemKind.Reference));
 
         katexFuncs.accents1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Accent", this._monaco.languages.CompletionItemKind.Event));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Accent", this._monaco.languages.CompletionItemKind.Event));
         katexFuncs.annotation1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Annotation", this._monaco.languages.CompletionItemKind.Text));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Annotation", this._monaco.languages.CompletionItemKind.Text));
         katexFuncs.arrows0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Arrow", this._monaco.languages.CompletionItemKind.Interface));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Arrow", this._monaco.languages.CompletionItemKind.Interface));
         katexFuncs.bigOperators0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Big Operator", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Big Operator", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.binaryOperators0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Binary Operator", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Binary Operator", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.binomialCoefficients0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Binomial", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Binomial", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.binomialCoefficients2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Binomial", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Binomial", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.braketNotation1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Bra-ket Notation", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Bra-ket Notation", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.classAssignment1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Class Assignment", this._monaco.languages.CompletionItemKind.Class));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Class Assignment", this._monaco.languages.CompletionItemKind.Class));
         katexFuncs.color2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Color", this._monaco.languages.CompletionItemKind.Color));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Color", this._monaco.languages.CompletionItemKind.Color));
         katexFuncs.debugging0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Debug", this._monaco.languages.CompletionItemKind.Property));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Debug", this._monaco.languages.CompletionItemKind.Property));
         katexFuncs.delimeterSizing0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Delimiter Sizing", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Delimiter Sizing", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.delimiters0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Delimiter", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Delimiter", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.envs
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Environment", this._monaco.languages.CompletionItemKind.EnumMember));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Environment", this._monaco.languages.CompletionItemKind.EnumMember));
         katexFuncs.extensibleArrows1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Extensible Arrow", this._monaco.languages.CompletionItemKind.Interface));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Extensible Arrow", this._monaco.languages.CompletionItemKind.Interface));
         katexFuncs.font0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Font", this._monaco.languages.CompletionItemKind.Text));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Font", this._monaco.languages.CompletionItemKind.Text));
         katexFuncs.font1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Font", this._monaco.languages.CompletionItemKind.Text));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Font", this._monaco.languages.CompletionItemKind.Text));
         katexFuncs.fractions0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Fraction", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Fraction", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.fractions2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Fraction", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Fraction", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.greekLetters0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Greek Letter", this._monaco.languages.CompletionItemKind.Text));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Greek Letter", this._monaco.languages.CompletionItemKind.Text));
         katexFuncs.logicAndSetTheory0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Logic & Set", this._monaco.languages.CompletionItemKind.Module));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Logic & Set", this._monaco.languages.CompletionItemKind.Module));
         katexFuncs.logicAndSetTheory1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Logic & Set", this._monaco.languages.CompletionItemKind.Module));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Logic & Set", this._monaco.languages.CompletionItemKind.Module));
         katexFuncs.macros0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Macros", this._monaco.languages.CompletionItemKind.Keyword));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Macros", this._monaco.languages.CompletionItemKind.Keyword));
         katexFuncs.mathOperators0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Math Operator", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Math Operator", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.mathOperators1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Math Operator", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Math Operator", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.negatedRelations0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Negated Relation", this._monaco.languages.CompletionItemKind.Interface));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Negated Relation", this._monaco.languages.CompletionItemKind.Interface));
         katexFuncs.otherLetters0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Other Letter", this._monaco.languages.CompletionItemKind.Text));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Other Letter", this._monaco.languages.CompletionItemKind.Text));
         katexFuncs.overlap1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Overlap", this._monaco.languages.CompletionItemKind.Struct));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Overlap", this._monaco.languages.CompletionItemKind.Struct));
         katexFuncs.relations0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Relation", this._monaco.languages.CompletionItemKind.Interface));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Relation", this._monaco.languages.CompletionItemKind.Interface));
         katexFuncs.size0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Size", this._monaco.languages.CompletionItemKind.Value));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Size", this._monaco.languages.CompletionItemKind.Value));
         katexFuncs.spacing0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Spacing", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Spacing", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.spacing1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Spacing", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Spacing", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.sqrt1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "SQRT", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "SQRT", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.style0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Style", this._monaco.languages.CompletionItemKind.Color));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Style", this._monaco.languages.CompletionItemKind.Color));
         katexFuncs.symbolsAndPunctuation0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Symbols & Punctuation", this._monaco.languages.CompletionItemKind.Operator));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Symbols & Punctuation", this._monaco.languages.CompletionItemKind.Operator));
         katexFuncs.verticalLayout0
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
         katexFuncs.verticalLayout1
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
         katexFuncs.verticalLayout2
-            .forEach(name => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
+            .forEach((name) => this.setKatexFuncsInfo(map, name, "Vertical Layout", this._monaco.languages.CompletionItemKind.Struct));
 
         return map;
     }
@@ -336,7 +337,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * 括号 Delimiters
          * REF: https://katex.org/docs/supported#delimiters
-        */
+         */
         map.set("lparen", `(`);
         map.set("rparen", `)`);
 
@@ -395,7 +396,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * 字母 Letters
          * REF: https://katex.org/docs/supported#letters-and-unicode
-        */
+         */
         /* 大写希腊字母 */
         map.set("Alpha", `A`);
         map.set("Beta", `B`);
@@ -517,7 +518,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * 空白 Spacing
          * REF: https://katex.org/docs/supported#overlap-and-spacing
-        */
+         */
         map.set(",", `³∕₁₈ em`);
         map.set("thinspace", `³∕₁₈ em`);
         map.set(">", `⁴∕₁₈ em`);
@@ -536,7 +537,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * 逻辑 & 集合 Logic & Set
          * REF: https://katex.org/docs/supported#logic-and-set-theory
-        */
+         */
         map.set("forall", `∀`);
         map.set("complement", `∁`);
         map.set("therefore", `∴`);
@@ -595,7 +596,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * TODO: 二进制算子 Binary Operators
          * REF: https://katex.org/docs/supported#binary-operators
-        */
+         */
         map.set("amalg", `⨿`);
         map.set("And", `&`);
         map.set("ast", `∗`);
@@ -1077,7 +1078,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         /**
          * 标点符号 Symbols & Punctuation
          * REF: https://katex.org/docs/supported#symbols-and-punctuation
-        */
+         */
         map.set("%", `%`);
         map.set("#", `#`);
         map.set("&", `&`);
@@ -1194,8 +1195,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
 
     /**
      * 构造数学环境的建议
-     * @param separator 分隔符
-     * @param indent 缩进符
+     * @param separator - 分隔符
+     * @param indent - 缩进符
      */
     protected buildMathSuggestions(
         separator: string = "\n",
@@ -1227,8 +1228,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 ...katexFuncs.style0,
                 ...katexFuncs.symbolsAndPunctuation0,
                 ...katexFuncs.verticalLayout0,
-            ]
-        )).map(cmd => {
+            ],
+        )).map((cmd) => {
             const info = this.katexFuncName2Info.get(cmd);
             const item: Monaco.languages.CompletionItem = {
                 // label: `\\${cmd}`,
@@ -1242,6 +1243,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 documentation: info?.documentation,
                 insertText: cmd,
                 insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.None,
+                // @ts-expect-error 使用默认替换范围
                 range: undefined,
             };
             return item;
@@ -1265,8 +1267,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 ...katexFuncs.spacing1,
                 ...katexFuncs.sqrt1,
                 ...katexFuncs.verticalLayout1,
-            ]
-        )).map(cmd => {
+            ],
+        )).map((cmd) => {
             const info = this.katexFuncName2Info.get(cmd);
             const item: Monaco.languages.CompletionItem = {
                 // label: `\\${cmd}{...}`,
@@ -1280,6 +1282,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 documentation: info?.documentation,
                 insertText: `${cmd}{$1}`,
                 insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                // @ts-expect-error 使用默认替换范围
                 range: undefined,
             };
             return item;
@@ -1295,8 +1298,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 ...katexFuncs.color2,
                 ...katexFuncs.fractions2,
                 ...katexFuncs.verticalLayout2,
-            ]
-        )).map(cmd => {
+            ],
+        )).map((cmd) => {
             const info = this.katexFuncName2Info.get(cmd);
             const item: Monaco.languages.CompletionItem = {
                 // label: `\\${cmd}{...}{...}`,
@@ -1310,6 +1313,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 documentation: info?.documentation,
                 insertText: `${cmd}{$1}{$2}`,
                 insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                // @ts-expect-error 使用默认替换范围
                 range: undefined,
             };
             return item;
@@ -1320,8 +1324,8 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
             [
                 ...katexFuncs.special2,
                 ...katexFuncs.extensibleArrows1,
-            ]
-        )).map(cmd => {
+            ],
+        )).map((cmd) => {
             const info = this.katexFuncName2Info.get(cmd);
             const item: Monaco.languages.CompletionItem = {
                 // label: `\\${cmd}[...]{...}`,
@@ -1335,6 +1339,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 documentation: info?.documentation,
                 insertText: `${cmd}[$1]{$2}`,
                 insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                // @ts-expect-error 使用默认替换范围
                 range: undefined,
             };
             return item;
@@ -1357,6 +1362,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 `\\end{$1}`,
             ].join(separator),
             insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            // @ts-expect-error 使用默认替换范围
             range: undefined,
         };
 
@@ -1377,6 +1383,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 `\\end{array}`,
             ].join(separator),
             insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            // @ts-expect-error 使用默认替换范围
             range: undefined,
         };
 
@@ -1404,6 +1411,7 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
                 `\\end{$1}`,
             ].join(separator),
             insertTextRules: this._monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            // @ts-expect-error 使用默认替换范围
             range: undefined,
         };
 
@@ -1424,16 +1432,17 @@ export class MarkdownCompletion implements Monaco.languages.CompletionItemProvid
         for (const item of mathSuggestions) {
             // sortText
             const label = typeof item.label === "string" ? item.label : item.label.label;
-            item.sortText = label.replace(/[a-zA-Z]/g, (c) => {
+            item.sortText = label.replace(/[a-z]/gi, (c) => {
                 if (/[a-z]/.test(c)) {
                     return `0${c}`;
-                } else {
+                }
+                else {
                     return `1${c.toLowerCase()}`;
                 }
             });
 
             // detail
-            const name = item.detail;
+            const name = item.detail!;
             const detail = this.katexFuncName2detail.get(name);
             if (detail) {
                 const detail_padded = detail.padStart(30 - label.length + detail.length, " ");

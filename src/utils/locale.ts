@@ -1,32 +1,30 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { mapLang } from "@workspace/utils/locale/language";
 
-export type TEditorLocale = "zh-cn"
-    | "zh-tw"
-    | "de"
+export type TEditorLocale = "de"
+    | "en"
     | "es"
     | "fr"
     | "it"
     | "ja"
     | "ko"
     | "ru"
-    | "en";
+    | "zh-cn"
+    | "zh-tw";
 
 // REF: https://www.npmjs.com/package/monaco-editor-nls
 export function mapLocale(locale: string): TEditorLocale {
@@ -53,20 +51,19 @@ export function mapLocale(locale: string): TEditorLocale {
 
         case "en":
         default:
-            return "";
+            return "en";
     }
 }
 
-
-export type TVditorLocale = "zh_CN"
-    | "zh_TW"
+export type TVditorLocale = "en_US"
     | "fr_FR"
     | "ja_JP"
     | "ko_KR"
     | "pt_BR"
     | "ru_RU"
     | "sv_SE"
-    | "en_US";
+    | "zh_CN"
+    | "zh_TW";
 
 export function mapLocaleVditor(locale: string): TVditorLocale {
     switch (mapLang(locale)) {

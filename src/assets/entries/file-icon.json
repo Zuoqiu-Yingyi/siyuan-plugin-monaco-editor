@@ -12,6 +12,14 @@
         "#icon-monaco-editor-material-pug"
     ],
     [
+        "justfile",
+        "#icon-monaco-editor-material-just"
+    ],
+    [
+        ".justfile",
+        "#icon-monaco-editor-material-just"
+    ],
+    [
         ".jscsrc",
         "#icon-monaco-editor-material-json"
     ],
@@ -36,15 +44,15 @@
         "#icon-monaco-editor-material-json"
     ],
     [
-        ".lintstagedrc",
-        "#icon-monaco-editor-material-json"
-    ],
-    [
         ".whitesource",
         "#icon-monaco-editor-material-json"
     ],
     [
         "playwright.config.js",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright.config.cjs",
         "#icon-monaco-editor-material-playwright"
     ],
     [
@@ -56,7 +64,19 @@
         "#icon-monaco-editor-material-playwright"
     ],
     [
+        "playwright.config.cts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright.config.mts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
         "playwright.config.base.js",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright.config.base.cjs",
         "#icon-monaco-editor-material-playwright"
     ],
     [
@@ -68,7 +88,19 @@
         "#icon-monaco-editor-material-playwright"
     ],
     [
+        "playwright.config.base.cts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright.config.base.mts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
         "playwright-ct.config.js",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright-ct.config.cjs",
         "#icon-monaco-editor-material-playwright"
     ],
     [
@@ -80,8 +112,60 @@
         "#icon-monaco-editor-material-playwright"
     ],
     [
+        "playwright-ct.config.cts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
+        "playwright-ct.config.mts",
+        "#icon-monaco-editor-material-playwright"
+    ],
+    [
         ".htaccess",
         "#icon-monaco-editor-material-xml"
+    ],
+    [
+        "jakefile",
+        "#icon-monaco-editor-material-javascript"
+    ],
+    [
+        ".release-it.json",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.ts",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.js",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.cjs",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.yaml",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.yml",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-it.toml",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        "release.toml",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        "release-plz.toml",
+        "#icon-monaco-editor-material-rocket"
+    ],
+    [
+        ".release-plz.toml",
+        "#icon-monaco-editor-material-rocket"
     ],
     [
         "router.js",
@@ -97,6 +181,22 @@
     ],
     [
         "router.tsx",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        "route.js",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        "route.jsx",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        "route.ts",
+        "#icon-monaco-editor-material-routing"
+    ],
+    [
+        "route.tsx",
         "#icon-monaco-editor-material-routing"
     ],
     [
@@ -140,32 +240,80 @@
         "#icon-monaco-editor-material-settings"
     ],
     [
+        ".clang-format-ignore",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
         ".clang-tidy",
         "#icon-monaco-editor-material-settings"
     ],
     [
+        ".conf",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        "compile_flags.txt",
+        "#icon-monaco-editor-material-settings"
+    ],
+    [
+        "typedoc.js",
+        "#icon-monaco-editor-material-typedoc"
+    ],
+    [
+        "typedoc.json",
+        "#icon-monaco-editor-material-typedoc"
+    ],
+    [
+        "markdoc.config.js",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
+        "markdoc.config.mjs",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
+        "markdoc.config.cjs",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
+        "markdoc.config.ts",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
+        "markdoc.config.mts",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
+        "markdoc.config.cts",
+        "#icon-monaco-editor-material-markdoc-config"
+    ],
+    [
         "astro.config.js",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
     ],
     [
         "astro.config.mjs",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
     ],
     [
         "astro.config.cjs",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
     ],
     [
         "astro.config.ts",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
     ],
     [
         "astro.config.cts",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
     ],
     [
         "astro.config.mts",
-        "#icon-monaco-editor-material-astro"
+        "#icon-monaco-editor-material-astro-config"
+    ],
+    [
+        ".vsconfig",
+        "#icon-monaco-editor-material-visualstudio"
     ],
     [
         "go.mod",
@@ -212,6 +360,62 @@
         "#icon-monaco-editor-material-python-misc"
     ],
     [
+        "py.typed",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        ".coveragerc",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        ".coverage",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        ".scrapy",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        "celerybeat-schedule",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        "celerybeat.pid",
+        "#icon-monaco-editor-material-python-misc"
+    ],
+    [
+        "ruff.toml",
+        "#icon-monaco-editor-material-ruff"
+    ],
+    [
+        ".ruff.toml",
+        "#icon-monaco-editor-material-ruff"
+    ],
+    [
+        "uv.toml",
+        "#icon-monaco-editor-material-uv"
+    ],
+    [
+        ".uv.toml",
+        "#icon-monaco-editor-material-uv"
+    ],
+    [
+        "uv.lock",
+        "#icon-monaco-editor-material-uv"
+    ],
+    [
+        "sconstruct",
+        "#icon-monaco-editor-material-scons"
+    ],
+    [
+        "sconscript",
+        "#icon-monaco-editor-material-scons"
+    ],
+    [
+        "scsub",
+        "#icon-monaco-editor-material-scons"
+    ],
+    [
         "commit-msg",
         "#icon-monaco-editor-material-console"
     ],
@@ -228,6 +432,66 @@
         "#icon-monaco-editor-material-console"
     ],
     [
+        ".envrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        ".hushlogin",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "APKBUILD",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "PKGBUILD",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "bashrc_Apple_Terminal",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zlogin",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zlogout",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zprofile",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zshenv",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zshrc",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "zshrc_Apple_Terminal",
+        "#icon-monaco-editor-material-console"
+    ],
+    [
+        "excalidraw",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        "excalidraw.json",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        "excalidraw.svg",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
+        "excalidraw.png",
+        "#icon-monaco-editor-material-excalidraw"
+    ],
+    [
         "gradle.properties",
         "#icon-monaco-editor-material-gradle"
     ],
@@ -240,123 +504,235 @@
         "#icon-monaco-editor-material-gradle"
     ],
     [
+        "gradlew.bat",
+        "#icon-monaco-editor-material-gradle"
+    ],
+    [
         "copying",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copying.md",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copying.rst",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copying.txt",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copyright",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copyright.md",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copyright.rst",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "copyright.txt",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-agpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-apache",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-bsd",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-mit",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-gpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license-lgpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license.md",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license.rst",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "license.txt",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-agpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-apache",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-bsd",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-mit",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-gpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence-lgpl",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence.md",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence.rst",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
     ],
     [
         "licence.txt",
-        "#icon-monaco-editor-material-certificate"
+        "#icon-monaco-editor-material-license"
+    ],
+    [
+        "unlicense",
+        "#icon-monaco-editor-material-unlicense"
+    ],
+    [
+        "unlicense.txt",
+        "#icon-monaco-editor-material-unlicense"
     ],
     [
         ".htpasswd",
         "#icon-monaco-editor-material-key"
     ],
     [
+        "sha256sums",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        ".secrets",
+        "#icon-monaco-editor-material-key"
+    ],
+    [
+        "keystatic.config.tsx",
+        "#icon-monaco-editor-material-keystatic"
+    ],
+    [
+        "keystatic.config.ts",
+        "#icon-monaco-editor-material-keystatic"
+    ],
+    [
+        "keystatic.config.jsx",
+        "#icon-monaco-editor-material-keystatic"
+    ],
+    [
+        "keystatic.config.js",
+        "#icon-monaco-editor-material-keystatic"
+    ],
+    [
         ".ruby-version",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "appraisals",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "berksfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "berksfile.lock",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "brewfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "capfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "cheffile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "dangerfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "deliverfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "guardfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "gymfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "hobofile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "matchfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "podfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "puppetfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "rakefile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "rantfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "scanfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "snapfile",
+        "#icon-monaco-editor-material-ruby"
+    ],
+    [
+        "thorfile",
         "#icon-monaco-editor-material-ruby"
     ],
     [
@@ -374,6 +750,22 @@
     [
         ".rubocop_todo.yml",
         "#icon-monaco-editor-material-rubocop"
+    ],
+    [
+        ".rspec",
+        "#icon-monaco-editor-material-rspec"
+    ],
+    [
+        ".swift-format",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swift-version",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
+        ".swiftformat",
+        "#icon-monaco-editor-material-swift"
     ],
     [
         "dockerfile",
@@ -429,6 +821,10 @@
     ],
     [
         "dockerfile.web",
+        "#icon-monaco-editor-material-docker"
+    ],
+    [
+        "dockerfile.windows",
         "#icon-monaco-editor-material-docker"
     ],
     [
@@ -752,12 +1148,16 @@
         "#icon-monaco-editor-material-docker"
     ],
     [
-        ".mailmap",
-        "#icon-monaco-editor-material-email"
+        ".latexmkrc",
+        "#icon-monaco-editor-material-latexmk"
     ],
     [
-        ".graphqlconfig",
-        "#icon-monaco-editor-material-graphql"
+        "latexmkrc",
+        "#icon-monaco-editor-material-latexmk"
+    ],
+    [
+        ".mailmap",
+        "#icon-monaco-editor-material-email"
     ],
     [
         ".graphqlrc",
@@ -768,19 +1168,11 @@
         "#icon-monaco-editor-material-graphql"
     ],
     [
-        ".graphqlrc.js",
+        ".graphqlrc.jsonc",
         "#icon-monaco-editor-material-graphql"
     ],
     [
-        ".graphqlrc.cjs",
-        "#icon-monaco-editor-material-graphql"
-    ],
-    [
-        ".graphqlrc.ts",
-        "#icon-monaco-editor-material-graphql"
-    ],
-    [
-        ".graphqlrc.toml",
+        ".graphqlrc.json5",
         "#icon-monaco-editor-material-graphql"
     ],
     [
@@ -792,11 +1184,115 @@
         "#icon-monaco-editor-material-graphql"
     ],
     [
+        ".graphqlrc.toml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.js",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.mjs",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.cjs",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.ts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.mts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".graphqlrc.cts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.json",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.jsonc",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.json5",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.yaml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.yml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.toml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.js",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.mjs",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.cjs",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.ts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.mts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        ".config/graphqlrc.cts",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
         "graphql.config.json",
         "#icon-monaco-editor-material-graphql"
     ],
     [
+        "graphql.config.jsonc",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "graphql.config.json5",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "graphql.config.yaml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "graphql.config.yml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "graphql.config.toml",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
         "graphql.config.js",
+        "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "graphql.config.mjs",
         "#icon-monaco-editor-material-graphql"
     ],
     [
@@ -808,16 +1304,36 @@
         "#icon-monaco-editor-material-graphql"
     ],
     [
-        "graphql.config.toml",
+        "graphql.config.mts",
         "#icon-monaco-editor-material-graphql"
     ],
     [
-        "graphql.config.yaml",
+        "graphql.config.cts",
         "#icon-monaco-editor-material-graphql"
     ],
     [
-        "graphql.config.yml",
+        ".graphqlconfig",
         "#icon-monaco-editor-material-graphql"
+    ],
+    [
+        "XamlStyler.json",
+        "#icon-monaco-editor-material-xaml"
+    ],
+    [
+        ".happo.js",
+        "#icon-monaco-editor-material-happo"
+    ],
+    [
+        ".happo.mjs",
+        "#icon-monaco-editor-material-happo"
+    ],
+    [
+        ".happo.cjs",
+        "#icon-monaco-editor-material-happo"
+    ],
+    [
+        "chromatic.config.json",
+        "#icon-monaco-editor-material-chromatic"
     ],
     [
         ".git",
@@ -892,6 +1408,18 @@
         "#icon-monaco-editor-material-git"
     ],
     [
+        "COMMIT_EDITMSG",
+        "#icon-monaco-editor-material-git"
+    ],
+    [
+        "MERGE_MSG",
+        "#icon-monaco-editor-material-git"
+    ],
+    [
+        "git-rebase-todo",
+        "#icon-monaco-editor-material-git"
+    ],
+    [
         ".luacheckrc",
         "#icon-monaco-editor-material-lua"
     ],
@@ -912,6 +1440,10 @@
         "#icon-monaco-editor-material-cmake"
     ],
     [
+        "CMakePresets.json",
+        "#icon-monaco-editor-material-cmake"
+    ],
+    [
         "semgrep.yml",
         "#icon-monaco-editor-material-semgrep"
     ],
@@ -921,6 +1453,14 @@
     ],
     [
         "vue.config.js",
+        "#icon-monaco-editor-material-vue-config"
+    ],
+    [
+        "vue.config.cjs",
+        "#icon-monaco-editor-material-vue-config"
+    ],
+    [
+        "vue.config.mjs",
         "#icon-monaco-editor-material-vue-config"
     ],
     [
@@ -940,6 +1480,10 @@
         "#icon-monaco-editor-material-vue-config"
     ],
     [
+        ".vuerc",
+        "#icon-monaco-editor-material-vue-config"
+    ],
+    [
         "nuxt.config.js",
         "#icon-monaco-editor-material-nuxt"
     ],
@@ -950,6 +1494,18 @@
     [
         ".nuxtignore",
         "#icon-monaco-editor-material-nuxt"
+    ],
+    [
+        ".nuxtrc",
+        "#icon-monaco-editor-material-nuxt"
+    ],
+    [
+        "harmonix.config.js",
+        "#icon-monaco-editor-material-harmonix"
+    ],
+    [
+        "harmonix.config.ts",
+        "#icon-monaco-editor-material-harmonix"
     ],
     [
         "security.md",
@@ -988,6 +1544,10 @@
         "#icon-monaco-editor-material-vercel"
     ],
     [
+        "vercel.ts",
+        "#icon-monaco-editor-material-vercel"
+    ],
+    [
         ".vercelignore",
         "#icon-monaco-editor-material-vercel"
     ],
@@ -1000,8 +1560,32 @@
         "#icon-monaco-editor-material-vercel"
     ],
     [
+        "liara.json",
+        "#icon-monaco-editor-material-liara"
+    ],
+    [
+        ".liaraignore",
+        "#icon-monaco-editor-material-liara"
+    ],
+    [
         "verdaccio.yml",
         "#icon-monaco-editor-material-verdaccio"
+    ],
+    [
+        "payload.config.js",
+        "#icon-monaco-editor-material-payload"
+    ],
+    [
+        "payload.config.mjs",
+        "#icon-monaco-editor-material-payload"
+    ],
+    [
+        "payload.config.ts",
+        "#icon-monaco-editor-material-payload"
+    ],
+    [
+        "payload.config.mts",
+        "#icon-monaco-editor-material-payload"
     ],
     [
         "next.config.js",
@@ -1018,6 +1602,38 @@
     [
         "next.config.mts",
         "#icon-monaco-editor-material-next"
+    ],
+    [
+        ".remarkrc",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.cjs",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.js",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.json",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.mjs",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.yaml",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkrc.yml",
+        "#icon-monaco-editor-material-remark"
+    ],
+    [
+        ".remarkignore",
+        "#icon-monaco-editor-material-remark"
     ],
     [
         "remix.config.js",
@@ -1040,43 +1656,19 @@
         "#icon-monaco-editor-material-kl"
     ],
     [
-        "postcss.config.js",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        "postcss.config.cjs",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        "postcss.config.ts",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        "postcss.config.cts",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        ".postcssrc.js",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        ".postcssrc.cjs",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        ".postcssrc.ts",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
-        ".postcssrc.cts",
-        "#icon-monaco-editor-material-postcss"
-    ],
-    [
         ".postcssrc",
         "#icon-monaco-editor-material-postcss"
     ],
     [
         ".postcssrc.json",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.jsonc",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.json5",
         "#icon-monaco-editor-material-postcss"
     ],
     [
@@ -1088,12 +1680,132 @@
         "#icon-monaco-editor-material-postcss"
     ],
     [
-        "posthtml.config.js",
-        "#icon-monaco-editor-material-posthtml"
+        ".postcssrc.toml",
+        "#icon-monaco-editor-material-postcss"
     ],
     [
-        ".posthtmlrc.js",
-        "#icon-monaco-editor-material-posthtml"
+        ".postcssrc.js",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.mjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.cjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.ts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.mts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".postcssrc.cts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.json",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.jsonc",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.json5",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.yaml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.yml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.toml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.js",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.mjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.cjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.ts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.mts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        ".config/postcssrc.cts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.json",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.jsonc",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.json5",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.yaml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.yml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.toml",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.js",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.mjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.cjs",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.ts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.mts",
+        "#icon-monaco-editor-material-postcss"
+    ],
+    [
+        "postcss.config.cts",
+        "#icon-monaco-editor-material-postcss"
     ],
     [
         ".posthtmlrc",
@@ -1104,7 +1816,147 @@
         "#icon-monaco-editor-material-posthtml"
     ],
     [
+        ".posthtmlrc.jsonc",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.json5",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.yaml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
         ".posthtmlrc.yml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.toml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.js",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.mjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.cjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.ts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.mts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".posthtmlrc.cts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.json",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.jsonc",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.json5",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.yaml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.yml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.toml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.js",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.mjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.cjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.ts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.mts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        ".config/posthtmlrc.cts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.json",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.jsonc",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.json5",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.yaml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.yml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.toml",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.js",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.mjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.cjs",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.ts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.mts",
+        "#icon-monaco-editor-material-posthtml"
+    ],
+    [
+        "posthtml.config.cts",
         "#icon-monaco-editor-material-posthtml"
     ],
     [
@@ -1136,35 +1988,7 @@
         "#icon-monaco-editor-material-graphcool"
     ],
     [
-        "webpack.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
         "webpack.base.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.base.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1172,11 +1996,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.base.ts",
+        "webpack.base.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.base.cts",
+        "webpack.base.ts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1184,291 +2008,7 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.common.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.babel.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.common.babel.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.dev.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.development.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.babel.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.dev.babel.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.main.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.renderer.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.mix.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.prod.config.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.production.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.server.mts",
+        "webpack.base.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1476,11 +2016,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.client.cjs",
+        "webpack.client.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.client.mjs",
+        "webpack.client.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1488,163 +2028,35 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.client.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
         "webpack.client.mts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.js",
+        "webpack.client.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.cjs",
+        "webpack.common.js",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.mjs",
+        "webpack.common.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.ts",
+        "webpack.common.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.cts",
+        "webpack.common.ts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.server.mts",
+        "webpack.common.mts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.client.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.client.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.client.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.client.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.client.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.client.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.babel.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.babel.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.babel.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.prod.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.production.mts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.staging.mts",
+        "webpack.common.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1652,7 +2064,23 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpack.config.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpack.config.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.babel.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1660,7 +2088,23 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpack.config.base.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.base.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpack.config.base.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.base.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.base.babel.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1668,11 +2112,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.base.cjs",
+        "webpack.config.base.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.base.mjs",
+        "webpack.config.base.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1680,11 +2124,299 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpack.config.base.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpack.config.base.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.base.mts",
+        "webpack.config.client.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.client.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.client.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.client.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.client.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.client.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.babel.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.common.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.babel.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.dev.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.main.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.babel.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.prod.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.babel.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.production.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.renderer.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.server.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1692,11 +2424,47 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpack.config.staging.babel.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.babel.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpack.config.staging.babel.ts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.coffee",
+        "webpack.config.staging.babel.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.babel.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.staging.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1704,11 +2472,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.test.cjs",
+        "webpack.config.test.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.test.mjs",
+        "webpack.config.test.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1716,35 +2484,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.test.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
         "webpack.config.test.mts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.vendor.js",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.vendor.cjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.vendor.mjs",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.vendor.ts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.vendor.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
-        "webpack.config.vendor.mts",
+        "webpack.config.test.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1752,11 +2496,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.vendor.production.cjs",
+        "webpack.config.vendor.production.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.vendor.production.mjs",
+        "webpack.config.vendor.production.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1764,35 +2508,107 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.config.vendor.production.cts",
-        "#icon-monaco-editor-material-webpack"
-    ],
-    [
         "webpack.config.vendor.production.mts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.js",
+        "webpack.config.vendor.production.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.cjs",
+        "webpack.config.vendor.js",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.mjs",
+        "webpack.config.vendor.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.ts",
+        "webpack.config.vendor.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.cts",
+        "webpack.config.vendor.ts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.test.mts",
+        "webpack.config.vendor.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.vendor.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.config.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.dev.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.development.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1800,11 +2616,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.dist.cjs",
+        "webpack.dist.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.dist.mjs",
+        "webpack.dist.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1812,11 +2628,179 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpack.dist.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpack.dist.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpack.dist.mts",
+        "webpack.mix.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mix.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mix.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mix.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mix.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mix.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.config.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.prod.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.production.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.server.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.test.cts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.js",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.cjs",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.ts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "webpack.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1824,11 +2808,11 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpackfile.cjs",
+        "webpackfile.mjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpackfile.mjs",
+        "webpackfile.cjs",
         "#icon-monaco-editor-material-webpack"
     ],
     [
@@ -1836,12 +2820,192 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "webpackfile.mts",
+        "#icon-monaco-editor-material-webpack"
+    ],
+    [
         "webpackfile.cts",
         "#icon-monaco-editor-material-webpack"
     ],
     [
-        "webpackfile.mts",
+        "webpack.config.coffee",
         "#icon-monaco-editor-material-webpack"
+    ],
+    [
+        "rspack.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspack.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspack.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspack.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspack.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspack.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rsbuild.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslib.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstest.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rspress.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.json",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rslint.jsonc",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "lynx.config.js",
+        "#icon-monaco-editor-material-lynx"
+    ],
+    [
+        "lynx.config.mjs",
+        "#icon-monaco-editor-material-lynx"
+    ],
+    [
+        "lynx.config.cjs",
+        "#icon-monaco-editor-material-lynx"
+    ],
+    [
+        "lynx.config.ts",
+        "#icon-monaco-editor-material-lynx"
+    ],
+    [
+        "lynx.config.mts",
+        "#icon-monaco-editor-material-lynx"
+    ],
+    [
+        "lynx.config.cts",
+        "#icon-monaco-editor-material-lynx"
     ],
     [
         "ionic.config.json",
@@ -1873,6 +3037,10 @@
     ],
     [
         "gulpfile.babel.js",
+        "#icon-monaco-editor-material-gulp"
+    ],
+    [
+        "gulpfile.cjs",
         "#icon-monaco-editor-material-gulp"
     ],
     [
@@ -1992,6 +3160,18 @@
         "#icon-monaco-editor-material-tune"
     ],
     [
+        ".env.prod.example",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
+        ".env.production.example",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
+        ".env.stg",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
         ".env.stage",
         "#icon-monaco-editor-material-tune"
     ],
@@ -2012,6 +3192,10 @@
         "#icon-monaco-editor-material-tune"
     ],
     [
+        ".env.dev.local",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
         ".env.development.local",
         "#icon-monaco-editor-material-tune"
     ],
@@ -2020,7 +3204,15 @@
         "#icon-monaco-editor-material-tune"
     ],
     [
+        ".env.prod.local",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
         ".env.production.local",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
+        ".env.stg.local",
         "#icon-monaco-editor-material-tune"
     ],
     [
@@ -2036,7 +3228,19 @@
         "#icon-monaco-editor-material-tune"
     ],
     [
+        ".vars",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
+        ".dev.vars",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
         "turbo.json",
+        "#icon-monaco-editor-material-turborepo"
+    ],
+    [
+        "turbo.jsonc",
         "#icon-monaco-editor-material-turborepo"
     ],
     [
@@ -2044,7 +3248,27 @@
         "#icon-monaco-editor-material-babel"
     ],
     [
-        ".babelrc.cjs",
+        ".babelrc.json",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.yaml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.yml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.toml",
         "#icon-monaco-editor-material-babel"
     ],
     [
@@ -2056,11 +3280,95 @@
         "#icon-monaco-editor-material-babel"
     ],
     [
-        ".babelrc.json",
+        ".babelrc.cjs",
         "#icon-monaco-editor-material-babel"
     ],
     [
-        "babel.config.cjs",
+        ".babelrc.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babelrc.cts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.json",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.yaml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.yml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.toml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.js",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.mjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.cjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babelrc.cts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.json",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.yaml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.yml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.toml",
         "#icon-monaco-editor-material-babel"
     ],
     [
@@ -2072,11 +3380,19 @@
         "#icon-monaco-editor-material-babel"
     ],
     [
-        "babel.config.json",
+        "babel.config.cjs",
         "#icon-monaco-editor-material-babel"
     ],
     [
-        "babel-transform.js",
+        "babel.config.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel.config.cts",
         "#icon-monaco-editor-material-babel"
     ],
     [
@@ -2088,6 +3404,14 @@
         "#icon-monaco-editor-material-babel"
     ],
     [
+        ".babel-plugin-macrosrc.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babel-plugin-macrosrc.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
         ".babel-plugin-macrosrc.yaml",
         "#icon-monaco-editor-material-babel"
     ],
@@ -2096,11 +3420,135 @@
         "#icon-monaco-editor-material-babel"
     ],
     [
+        ".babel-plugin-macrosrc.toml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
         ".babel-plugin-macrosrc.js",
         "#icon-monaco-editor-material-babel"
     ],
     [
+        ".babel-plugin-macrosrc.mjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babel-plugin-macrosrc.cjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babel-plugin-macrosrc.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babel-plugin-macrosrc.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".babel-plugin-macrosrc.cts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.json",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.yaml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.yml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.toml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.js",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.mjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.cjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        ".config/babel-plugin-macrosrc.cts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.json",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.jsonc",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.json5",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.yaml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.yml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.toml",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
         "babel-plugin-macros.config.js",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.mjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.cjs",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.ts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.mts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-plugin-macros.config.cts",
+        "#icon-monaco-editor-material-babel"
+    ],
+    [
+        "babel-transform.js",
         "#icon-monaco-editor-material-babel"
     ],
     [
@@ -2316,6 +3764,14 @@
         "#icon-monaco-editor-material-codecov"
     ],
     [
+        ".codecov.yaml",
+        "#icon-monaco-editor-material-codecov"
+    ],
+    [
+        "codecov.yaml",
+        "#icon-monaco-editor-material-codecov"
+    ],
+    [
         "sonar-project.properties",
         "#icon-monaco-editor-material-sonarcloud"
     ],
@@ -2325,6 +3781,10 @@
     ],
     [
         "sonarcloud.yaml",
+        "#icon-monaco-editor-material-sonarcloud"
+    ],
+    [
+        "SonarQube.Analysis.xml",
         "#icon-monaco-editor-material-sonarcloud"
     ],
     [
@@ -2364,6 +3824,14 @@
         "#icon-monaco-editor-material-editorconfig"
     ],
     [
+        ".editorconfig-checker.json",
+        "#icon-monaco-editor-material-editorconfig"
+    ],
+    [
+        ".ecrc",
+        "#icon-monaco-editor-material-editorconfig"
+    ],
+    [
         ".bowerrc",
         "#icon-monaco-editor-material-bower"
     ],
@@ -2372,11 +3840,19 @@
         "#icon-monaco-editor-material-bower"
     ],
     [
-        ".eslintrc.js",
+        ".eslintrc",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintrc.cjs",
+        ".eslintrc.json",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintrc.jsonc",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintrc.json5",
         "#icon-monaco-editor-material-eslint"
     ],
     [
@@ -2388,27 +3864,107 @@
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintrc.json",
+        ".eslintrc.toml",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintrc-md.js",
+        ".eslintrc.js",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintrc-jsdoc.js",
+        ".eslintrc.mjs",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintrc",
+        ".eslintrc.cjs",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintignore",
+        ".eslintrc.ts",
         "#icon-monaco-editor-material-eslint"
     ],
     [
-        ".eslintcache",
+        ".eslintrc.mts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintrc.cts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.json",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.jsonc",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.json5",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.yaml",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.yml",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.toml",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.js",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.mjs",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.cjs",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.ts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.mts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".config/eslintrc.cts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.json",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.jsonc",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.json5",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.yaml",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.yml",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.toml",
         "#icon-monaco-editor-material-eslint"
     ],
     [
@@ -2420,7 +3976,43 @@
         "#icon-monaco-editor-material-eslint"
     ],
     [
+        "eslint.config.cjs",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.ts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.mts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint.config.cts",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintrc-md.js",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintrc-jsdoc.js",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
         ".eslintrc.base.json",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintignore",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        ".eslintcache",
+        "#icon-monaco-editor-material-eslint"
+    ],
+    [
+        "eslint-options.js",
         "#icon-monaco-editor-material-eslint"
     ],
     [
@@ -2492,6 +4084,10 @@
         "#icon-monaco-editor-material-mocha"
     ],
     [
+        ".mocharc.cjs",
+        "#icon-monaco-editor-material-mocha"
+    ],
+    [
         ".mocharc.json",
         "#icon-monaco-editor-material-mocha"
     ],
@@ -2502,6 +4098,10 @@
     [
         "jenkinsfile",
         "#icon-monaco-editor-material-jenkins"
+    ],
+    [
+        "firebase.config.js",
+        "#icon-monaco-editor-material-firebase"
     ],
     [
         "firebase.json",
@@ -2620,19 +4220,15 @@
         "#icon-monaco-editor-material-stylelint"
     ],
     [
-        "stylelint.config.js",
-        "#icon-monaco-editor-material-stylelint"
-    ],
-    [
-        "stylelint.config.cjs",
-        "#icon-monaco-editor-material-stylelint"
-    ],
-    [
-        "stylelint.config.mjs",
-        "#icon-monaco-editor-material-stylelint"
-    ],
-    [
         ".stylelintrc.json",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".stylelintrc.jsonc",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".stylelintrc.json5",
         "#icon-monaco-editor-material-stylelint"
     ],
     [
@@ -2644,11 +4240,131 @@
         "#icon-monaco-editor-material-stylelint"
     ],
     [
+        ".stylelintrc.toml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
         ".stylelintrc.js",
         "#icon-monaco-editor-material-stylelint"
     ],
     [
+        ".stylelintrc.mjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
         ".stylelintrc.cjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".stylelintrc.ts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".stylelintrc.mts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".stylelintrc.cts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.json",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.jsonc",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.json5",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.yaml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.yml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.toml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.js",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.mjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.cjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.ts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.mts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        ".config/stylelintrc.cts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.json",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.jsonc",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.json5",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.yaml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.yml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.toml",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.js",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.mjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.cjs",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.ts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.mts",
+        "#icon-monaco-editor-material-stylelint"
+    ],
+    [
+        "stylelint.config.cts",
         "#icon-monaco-editor-material-stylelint"
     ],
     [
@@ -2668,23 +4384,11 @@
         "#icon-monaco-editor-material-prettier"
     ],
     [
-        "prettier.config.js",
-        "#icon-monaco-editor-material-prettier"
-    ],
-    [
-        "prettier.config.cjs",
-        "#icon-monaco-editor-material-prettier"
-    ],
-    [
-        ".prettierrc.js",
-        "#icon-monaco-editor-material-prettier"
-    ],
-    [
-        ".prettierrc.cjs",
-        "#icon-monaco-editor-material-prettier"
-    ],
-    [
         ".prettierrc.json",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.jsonc",
         "#icon-monaco-editor-material-prettier"
     ],
     [
@@ -2700,11 +4404,111 @@
         "#icon-monaco-editor-material-prettier"
     ],
     [
-        ".prettierignore",
+        ".prettierrc.toml",
         "#icon-monaco-editor-material-prettier"
     ],
     [
-        ".prettierrc.toml",
+        ".prettierrc.js",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.mjs",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.cjs",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.ts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.mts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierrc.cts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.json",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.jsonc",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.json5",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.yaml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.yml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.toml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.js",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.mjs",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.cjs",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.ts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.mts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".config/prettierrc.cts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.json",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.jsonc",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.json5",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.yaml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.yml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.toml",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.js",
         "#icon-monaco-editor-material-prettier"
     ],
     [
@@ -2712,7 +4516,23 @@
         "#icon-monaco-editor-material-prettier"
     ],
     [
-        ".prettierrc.mjs",
+        "prettier.config.cjs",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.ts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.mts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        "prettier.config.cts",
+        "#icon-monaco-editor-material-prettier"
+    ],
+    [
+        ".prettierignore",
         "#icon-monaco-editor-material-prettier"
     ],
     [
@@ -2766,6 +4586,14 @@
     [
         ".drone.yml",
         "#icon-monaco-editor-material-drone"
+    ],
+    [
+        "opencode.json",
+        "#icon-monaco-editor-material-opencode"
+    ],
+    [
+        "opencode.jsonc",
+        "#icon-monaco-editor-material-opencode"
     ],
     [
         ".sequelizerc",
@@ -2829,6 +4657,14 @@
     ],
     [
         "gruntfile.ts",
+        "#icon-monaco-editor-material-grunt"
+    ],
+    [
+        "gruntfile.cjs",
+        "#icon-monaco-editor-material-grunt"
+    ],
+    [
+        "gruntfile.cts",
         "#icon-monaco-editor-material-grunt"
     ],
     [
@@ -3052,6 +4888,18 @@
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
+        ".releaserc.json",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".releaserc.jsonc",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".releaserc.json5",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
         ".releaserc.yaml",
         "#icon-monaco-editor-material-semantic-release"
     ],
@@ -3060,7 +4908,7 @@
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
-        ".releaserc.json",
+        ".releaserc.toml",
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
@@ -3068,7 +4916,99 @@
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
+        ".releaserc.mjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
         ".releaserc.cjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".releaserc.ts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".releaserc.mts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".releaserc.cts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.json",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.jsonc",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.json5",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.yaml",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.yml",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.toml",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.js",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.mjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.cjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.ts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.mts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        ".config/releaserc.cts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.json",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.jsonc",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.json5",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.yaml",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.yml",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.toml",
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
@@ -3076,7 +5016,23 @@
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
+        "release.config.mjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
         "release.config.cjs",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.ts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.mts",
+        "#icon-monaco-editor-material-semantic-release"
+    ],
+    [
+        "release.config.cts",
         "#icon-monaco-editor-material-semantic-release"
     ],
     [
@@ -3120,11 +5076,23 @@
         "#icon-monaco-editor-material-azure-pipelines"
     ],
     [
+        "azure-pipelines-main.yml",
+        "#icon-monaco-editor-material-azure-pipelines"
+    ],
+    [
+        "azure-pipelines-main.yaml",
+        "#icon-monaco-editor-material-azure-pipelines"
+    ],
+    [
         "vagrantfile",
         "#icon-monaco-editor-material-vagrant"
     ],
     [
         "prisma.yml",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.config.ts",
         "#icon-monaco-editor-material-prisma"
     ],
     [
@@ -3145,6 +5113,10 @@
     ],
     [
         "nyc.config.js",
+        "#icon-monaco-editor-material-istanbul"
+    ],
+    [
+        "nyc.config.cjs",
         "#icon-monaco-editor-material-istanbul"
     ],
     [
@@ -3212,7 +5184,23 @@
         "#icon-monaco-editor-material-svelte"
     ],
     [
+        "svelte.config.mjs",
+        "#icon-monaco-editor-material-svelte"
+    ],
+    [
         "svelte.config.cjs",
+        "#icon-monaco-editor-material-svelte"
+    ],
+    [
+        "svelte.config.ts",
+        "#icon-monaco-editor-material-svelte"
+    ],
+    [
+        "svelte.config.mts",
+        "#icon-monaco-editor-material-svelte"
+    ],
+    [
+        "svelte.config.cts",
         "#icon-monaco-editor-material-svelte"
     ],
     [
@@ -3232,12 +5220,20 @@
         "#icon-monaco-editor-material-nest"
     ],
     [
+        "moon.yml",
+        "#icon-monaco-editor-material-moon"
+    ],
+    [
         ".percy.yml",
         "#icon-monaco-editor-material-percy"
     ],
     [
         ".gitpod.yml",
         "#icon-monaco-editor-material-gitpod"
+    ],
+    [
+        ".stackblitzrc",
+        "#icon-monaco-editor-material-stackblitz"
     ],
     [
         "codeowners",
@@ -3252,11 +5248,11 @@
         "#icon-monaco-editor-material-gcp"
     ],
     [
-        ".huskyrc",
-        "#icon-monaco-editor-material-husky"
+        "amplify.yml",
+        "#icon-monaco-editor-material-amplify"
     ],
     [
-        "husky.config.js",
+        ".huskyrc",
         "#icon-monaco-editor-material-husky"
     ],
     [
@@ -3264,7 +5260,11 @@
         "#icon-monaco-editor-material-husky"
     ],
     [
-        ".huskyrc.js",
+        ".huskyrc.jsonc",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.json5",
         "#icon-monaco-editor-material-husky"
     ],
     [
@@ -3273,6 +5273,134 @@
     ],
     [
         ".huskyrc.yml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.toml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.js",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.mjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.cjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.ts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.mts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".huskyrc.cts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.json",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.jsonc",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.json5",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.yaml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.yml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.toml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.js",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.mjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.cjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.ts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.mts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        ".config/huskyrc.cts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.json",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.jsonc",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.json5",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.yaml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.yml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.toml",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.js",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.mjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.cjs",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.ts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.mts",
+        "#icon-monaco-editor-material-husky"
+    ],
+    [
+        "husky.config.cts",
         "#icon-monaco-editor-material-husky"
     ],
     [
@@ -3304,27 +5432,59 @@
         "#icon-monaco-editor-material-meson"
     ],
     [
+        "meson.options",
+        "#icon-monaco-editor-material-meson"
+    ],
+    [
+        ".czrc",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        ".cz.json",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        ".cz.toml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        ".cz.yaml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        ".cz.yml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        "cz.json",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        "cz.toml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        "cz.yaml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
+        "cz.yml",
+        "#icon-monaco-editor-material-commitizen"
+    ],
+    [
         ".commitlintrc",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
-        ".commitlintrc.js",
-        "#icon-monaco-editor-material-commitlint"
-    ],
-    [
-        ".commitlintrc.cjs",
-        "#icon-monaco-editor-material-commitlint"
-    ],
-    [
-        ".commitlintrc.ts",
-        "#icon-monaco-editor-material-commitlint"
-    ],
-    [
-        ".commitlintrc.cts",
-        "#icon-monaco-editor-material-commitlint"
-    ],
-    [
         ".commitlintrc.json",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.jsonc",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.json5",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
@@ -3336,15 +5496,115 @@
         "#icon-monaco-editor-material-commitlint"
     ],
     [
-        ".commitlint.yaml",
+        ".commitlintrc.toml",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
-        ".commitlint.yml",
+        ".commitlintrc.js",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.mjs",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.cjs",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.ts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.mts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlintrc.cts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.json",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.jsonc",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.json5",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.yaml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.yml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.toml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.js",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.mjs",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.cjs",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.ts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.mts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".config/commitlintrc.cts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.json",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.jsonc",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.json5",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.yaml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.yml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.toml",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
         "commitlint.config.js",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        "commitlint.config.mjs",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
@@ -3356,7 +5616,19 @@
         "#icon-monaco-editor-material-commitlint"
     ],
     [
+        "commitlint.config.mts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
         "commitlint.config.cts",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlint.yaml",
+        "#icon-monaco-editor-material-commitlint"
+    ],
+    [
+        ".commitlint.yml",
         "#icon-monaco-editor-material-commitlint"
     ],
     [
@@ -3365,11 +5637,11 @@
     ],
     [
         "nx.json",
-        "#icon-monaco-editor-material-nrwl"
+        "#icon-monaco-editor-material-nx"
     ],
     [
         ".nxignore",
-        "#icon-monaco-editor-material-nrwl"
+        "#icon-monaco-editor-material-nx"
     ],
     [
         "dune",
@@ -3456,6 +5728,38 @@
         "#icon-monaco-editor-material-stryker"
     ],
     [
+        "stryker.config.json",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        "stryker.config.js",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        "stryker.config.mjs",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        "stryker.config.cjs",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        ".stryker.config.json",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        ".stryker.config.js",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        ".stryker.config.mjs",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
+        ".stryker.config.cjs",
+        "#icon-monaco-editor-material-stryker"
+    ],
+    [
         ".modernizrrc",
         "#icon-monaco-editor-material-modernizr"
     ],
@@ -3500,6 +5804,10 @@
         "#icon-monaco-editor-material-replit"
     ],
     [
+        "duc.fbs",
+        "#icon-monaco-editor-material-duc"
+    ],
+    [
         "snowpack.config.js",
         "#icon-monaco-editor-material-snowpack"
     ],
@@ -3540,6 +5848,18 @@
         "#icon-monaco-editor-material-quasar"
     ],
     [
+        "quasar.conf.ts",
+        "#icon-monaco-editor-material-quasar"
+    ],
+    [
+        "quasar.config.ts",
+        "#icon-monaco-editor-material-quasar"
+    ],
+    [
+        "quasar.config.cjs",
+        "#icon-monaco-editor-material-quasar"
+    ],
+    [
         "dependabot.yml",
         "#icon-monaco-editor-material-dependabot"
     ],
@@ -3564,12 +5884,48 @@
         "#icon-monaco-editor-material-vite"
     ],
     [
+        "vite.config.mts",
+        "#icon-monaco-editor-material-vite"
+    ],
+    [
         "vite.config.cts",
         "#icon-monaco-editor-material-vite"
     ],
     [
-        "vite.config.mts",
-        "#icon-monaco-editor-material-vite"
+        "vitest.workspace.js",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.workspace.mjs",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.workspace.cjs",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.workspace.ts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.workspace.mts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.workspace.cts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.config.js",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.config.mjs",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.config.cjs",
+        "#icon-monaco-editor-material-vitest"
     ],
     [
         "vitest.config.ts",
@@ -3584,16 +5940,100 @@
         "#icon-monaco-editor-material-vitest"
     ],
     [
-        "vitest.config.js",
+        "vitest.unit.config.js",
         "#icon-monaco-editor-material-vitest"
     ],
     [
-        "vitest.config.mjs",
+        "vitest.unit.config.mjs",
         "#icon-monaco-editor-material-vitest"
     ],
     [
-        "vitest.config.cjs",
+        "vitest.unit.config.cjs",
         "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.unit.config.ts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.unit.config.mts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.unit.config.cts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.js",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.mjs",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.cjs",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.ts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.mts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "vitest.e2e.config.cts",
+        "#icon-monaco-editor-material-vitest"
+    ],
+    [
+        "velite.config.js",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "velite.config.mjs",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "velite.config.cjs",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "velite.config.ts",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "velite.config.mts",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "velite.config.cts",
+        "#icon-monaco-editor-material-velite"
+    ],
+    [
+        "rolldown.config.js",
+        "#icon-monaco-editor-material-rolldown"
+    ],
+    [
+        "rolldown.config.mjs",
+        "#icon-monaco-editor-material-rolldown"
+    ],
+    [
+        "rolldown.config.cjs",
+        "#icon-monaco-editor-material-rolldown"
+    ],
+    [
+        "rolldown.config.ts",
+        "#icon-monaco-editor-material-rolldown"
+    ],
+    [
+        "rolldown.config.mts",
+        "#icon-monaco-editor-material-rolldown"
+    ],
+    [
+        "rolldown.config.cts",
+        "#icon-monaco-editor-material-rolldown"
     ],
     [
         "lerna.json",
@@ -3628,6 +6068,10 @@
         "#icon-monaco-editor-material-textlint"
     ],
     [
+        ".textlintrc.cjs",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
         ".textlintrc.json",
         "#icon-monaco-editor-material-textlint"
     ],
@@ -3640,6 +6084,10 @@
         "#icon-monaco-editor-material-textlint"
     ],
     [
+        ".textlintignore",
+        "#icon-monaco-editor-material-textlint"
+    ],
+    [
         "vpkg.json",
         "#icon-monaco-editor-material-vlang"
     ],
@@ -3648,8 +6096,108 @@
         "#icon-monaco-editor-material-vlang"
     ],
     [
+        "sentry.client.config.js",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.client.config.mjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.client.config.cjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.client.config.ts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.client.config.mts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.client.config.cts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.js",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.mjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.cjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.ts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.mts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.server.config.cts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.js",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.mjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.cjs",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.ts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.mts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "sentry.edge.config.cts",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
         ".sentryclirc",
         "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        ".env.sentry-build-plugin",
+        "#icon-monaco-editor-material-sentry"
+    ],
+    [
+        "contentlayer.config.js",
+        "#icon-monaco-editor-material-contentlayer"
+    ],
+    [
+        "contentlayer.config.mjs",
+        "#icon-monaco-editor-material-contentlayer"
+    ],
+    [
+        "contentlayer.config.cjs",
+        "#icon-monaco-editor-material-contentlayer"
+    ],
+    [
+        "contentlayer.config.ts",
+        "#icon-monaco-editor-material-contentlayer"
+    ],
+    [
+        "contentlayer.config.mts",
+        "#icon-monaco-editor-material-contentlayer"
+    ],
+    [
+        "contentlayer.config.cts",
+        "#icon-monaco-editor-material-contentlayer"
     ],
     [
         ".phpunit.result.cache",
@@ -3800,6 +6348,18 @@
         "#icon-monaco-editor-material-tsconfig"
     ],
     [
+        "tsconfig.server.json",
+        "#icon-monaco-editor-material-tsconfig"
+    ],
+    [
+        "tsconfig.client.json",
+        "#icon-monaco-editor-material-tsconfig"
+    ],
+    [
+        "tsconfig.declaration.json",
+        "#icon-monaco-editor-material-tsconfig"
+    ],
+    [
         "tauri.conf.json",
         "#icon-monaco-editor-material-tauri"
     ],
@@ -3864,6 +6424,10 @@
         "#icon-monaco-editor-material-supabase"
     ],
     [
+        "supabase.ts",
+        "#icon-monaco-editor-material-supabase"
+    ],
+    [
         "supabase.py",
         "#icon-monaco-editor-material-supabase"
     ],
@@ -3888,6 +6452,18 @@
         "#icon-monaco-editor-material-poetry"
     ],
     [
+        "pdm.lock",
+        "#icon-monaco-editor-material-pdm"
+    ],
+    [
+        "pdm.toml",
+        "#icon-monaco-editor-material-pdm"
+    ],
+    [
+        ".pdm-python",
+        "#icon-monaco-editor-material-pdm"
+    ],
+    [
         ".parcelrc",
         "#icon-monaco-editor-material-parcel"
     ],
@@ -3901,6 +6477,14 @@
     ],
     [
         "lighthouserc.js",
+        "#icon-monaco-editor-material-lighthouse"
+    ],
+    [
+        ".lighthouserc.cjs",
+        "#icon-monaco-editor-material-lighthouse"
+    ],
+    [
+        "lighthouserc.cjs",
         "#icon-monaco-editor-material-lighthouse"
     ],
     [
@@ -3932,11 +6516,15 @@
         "#icon-monaco-editor-material-svgr"
     ],
     [
-        "svgr.config.js",
+        ".svgrrc.json",
         "#icon-monaco-editor-material-svgr"
     ],
     [
-        ".svgrrc.js",
+        ".svgrrc.jsonc",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.json5",
         "#icon-monaco-editor-material-svgr"
     ],
     [
@@ -3948,7 +6536,131 @@
         "#icon-monaco-editor-material-svgr"
     ],
     [
-        ".svgrrc.json",
+        ".svgrrc.toml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.js",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.mjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.cjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.ts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.mts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".svgrrc.cts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.json",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.jsonc",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.json5",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.yaml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.yml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.toml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.js",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.mjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.cjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.ts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.mts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        ".config/svgrrc.cts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.json",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.jsonc",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.json5",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.yaml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.yml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.toml",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.js",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.mjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.cjs",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.ts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.mts",
+        "#icon-monaco-editor-material-svgr"
+    ],
+    [
+        "svgr.config.cts",
         "#icon-monaco-editor-material-svgr"
     ],
     [
@@ -3956,19 +6668,11 @@
         "#icon-monaco-editor-material-rome"
     ],
     [
-        "cypress.json",
-        "#icon-monaco-editor-material-cypress"
-    ],
-    [
-        "cypress.env.json",
-        "#icon-monaco-editor-material-cypress"
-    ],
-    [
-        "cypress.config.ts",
-        "#icon-monaco-editor-material-cypress"
-    ],
-    [
         "cypress.config.js",
+        "#icon-monaco-editor-material-cypress"
+    ],
+    [
+        "cypress.config.mjs",
         "#icon-monaco-editor-material-cypress"
     ],
     [
@@ -3976,7 +6680,23 @@
         "#icon-monaco-editor-material-cypress"
     ],
     [
-        "cypress.config.mjs",
+        "cypress.config.ts",
+        "#icon-monaco-editor-material-cypress"
+    ],
+    [
+        "cypress.config.mts",
+        "#icon-monaco-editor-material-cypress"
+    ],
+    [
+        "cypress.config.cts",
+        "#icon-monaco-editor-material-cypress"
+    ],
+    [
+        "cypress.json",
+        "#icon-monaco-editor-material-cypress"
+    ],
+    [
+        "cypress.env.json",
         "#icon-monaco-editor-material-cypress"
     ],
     [
@@ -4044,7 +6764,43 @@
         "#icon-monaco-editor-material-caddy"
     ],
     [
+        "openapi.json",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        "openapi.yml",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        "openapi.yaml",
+        "#icon-monaco-editor-material-openapi"
+    ],
+    [
+        "swagger.json",
+        "#icon-monaco-editor-material-swagger"
+    ],
+    [
+        "swagger.yml",
+        "#icon-monaco-editor-material-swagger"
+    ],
+    [
+        "swagger.yaml",
+        "#icon-monaco-editor-material-swagger"
+    ],
+    [
         "bun.lockb",
+        "#icon-monaco-editor-material-bun"
+    ],
+    [
+        "bunfig.toml",
+        "#icon-monaco-editor-material-bun"
+    ],
+    [
+        ".bun-version",
+        "#icon-monaco-editor-material-bun"
+    ],
+    [
+        "bun.lock",
         "#icon-monaco-editor-material-bun"
     ],
     [
@@ -4084,6 +6840,38 @@
         "#icon-monaco-editor-material-nano-staged"
     ],
     [
+        "knip.json",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        "knip.jsonc",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        ".knip.json",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        ".knip.jsonc",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        "knip.ts",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        "knip.js",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        "knip.config.ts",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
+        "knip.config.js",
+        "#icon-monaco-editor-material-knip"
+    ],
+    [
         "taskfile.yml",
         "#icon-monaco-editor-material-taskfile"
     ],
@@ -4100,19 +6888,39 @@
         "#icon-monaco-editor-material-taskfile"
     ],
     [
-        "craco.config.ts",
+        ".taskrc.yml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        ".taskrc.yaml",
+        "#icon-monaco-editor-material-taskfile"
+    ],
+    [
+        ".cracorc",
         "#icon-monaco-editor-material-craco"
     ],
     [
-        "craco.config.js",
+        ".cracorc.json",
         "#icon-monaco-editor-material-craco"
     ],
     [
-        "craco.config.cjs",
+        ".cracorc.jsonc",
         "#icon-monaco-editor-material-craco"
     ],
     [
-        ".cracorc.ts",
+        ".cracorc.json5",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.yaml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.yml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.toml",
         "#icon-monaco-editor-material-craco"
     ],
     [
@@ -4120,7 +6928,123 @@
         "#icon-monaco-editor-material-craco"
     ],
     [
-        ".cracorc",
+        ".cracorc.mjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.cjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.ts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.mts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".cracorc.cts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.json",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.jsonc",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.json5",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.yaml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.yml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.toml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.js",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.mjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.cjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.ts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.mts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        ".config/cracorc.cts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.json",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.jsonc",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.json5",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.yaml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.yml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.toml",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.js",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.mjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.cjs",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.ts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.mts",
+        "#icon-monaco-editor-material-craco"
+    ],
+    [
+        "craco.config.cts",
         "#icon-monaco-editor-material-craco"
     ],
     [
@@ -4133,6 +7057,10 @@
     ],
     [
         ".hgflow",
+        "#icon-monaco-editor-material-mercurial"
+    ],
+    [
+        ".hgtags",
         "#icon-monaco-editor-material-mercurial"
     ],
     [
@@ -4180,6 +7108,10 @@
         "#icon-monaco-editor-material-plastic"
     ],
     [
+        "typst.toml",
+        "#icon-monaco-editor-material-typst"
+    ],
+    [
         "uno.config.js",
         "#icon-monaco-editor-material-unocss"
     ],
@@ -4216,6 +7148,166 @@
         "#icon-monaco-editor-material-ifanr-cloud"
     ],
     [
+        ".qa-mincloudrc",
+        "#icon-monaco-editor-material-ifanr-cloud"
+    ],
+    [
+        "concourse.yml",
+        "#icon-monaco-editor-material-concourse"
+    ],
+    [
+        ".syncpackrc",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.json",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.jsonc",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.json5",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.yaml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.yml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.toml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.js",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.mjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.cjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.ts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.mts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".syncpackrc.cts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.json",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.jsonc",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.json5",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.yaml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.yml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.toml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.js",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.mjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.cjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.ts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.mts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        ".config/syncpackrc.cts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.json",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.jsonc",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.json5",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.yaml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.yml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.toml",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.js",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.mjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.cjs",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.ts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.mts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
+        "syncpack.config.cts",
+        "#icon-monaco-editor-material-syncpack"
+    ],
+    [
         "werf.yaml",
         "#icon-monaco-editor-material-werf"
     ],
@@ -4232,8 +7324,24 @@
         "#icon-monaco-editor-material-werf"
     ],
     [
-        "panda.config.ts",
-        "#icon-monaco-editor-material-panda"
+        "werf-includes.lock",
+        "#icon-monaco-editor-material-werf"
+    ],
+    [
+        "werf-includes.yaml",
+        "#icon-monaco-editor-material-werf"
+    ],
+    [
+        "werf-includes.yml",
+        "#icon-monaco-editor-material-werf"
+    ],
+    [
+        ".luaurc",
+        "#icon-monaco-editor-material-luau"
+    ],
+    [
+        "wally.toml",
+        "#icon-monaco-editor-material-wally"
     ],
     [
         "panda.config.js",
@@ -4244,11 +7352,19 @@
         "#icon-monaco-editor-material-panda"
     ],
     [
+        "panda.config.cjs",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
+        "panda.config.ts",
+        "#icon-monaco-editor-material-panda"
+    ],
+    [
         "panda.config.mts",
         "#icon-monaco-editor-material-panda"
     ],
     [
-        "panda.config.cjs",
+        "panda.config.cts",
         "#icon-monaco-editor-material-panda"
     ],
     [
@@ -4256,15 +7372,19 @@
         "#icon-monaco-editor-material-biome"
     ],
     [
+        "biome.jsonc",
+        "#icon-monaco-editor-material-biome"
+    ],
+    [
+        ".biome.json",
+        "#icon-monaco-editor-material-biome"
+    ],
+    [
+        ".biome.jsonc",
+        "#icon-monaco-editor-material-biome"
+    ],
+    [
         "esbuild.js",
-        "#icon-monaco-editor-material-esbuild"
-    ],
-    [
-        "esbuild.ts",
-        "#icon-monaco-editor-material-esbuild"
-    ],
-    [
-        "esbuild.cjs",
         "#icon-monaco-editor-material-esbuild"
     ],
     [
@@ -4272,11 +7392,27 @@
         "#icon-monaco-editor-material-esbuild"
     ],
     [
+        "esbuild.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
         "esbuild.config.js",
         "#icon-monaco-editor-material-esbuild"
     ],
     [
-        "esbuild.config.ts",
+        "esbuild.config.mjs",
         "#icon-monaco-editor-material-esbuild"
     ],
     [
@@ -4284,7 +7420,1107 @@
         "#icon-monaco-editor-material-esbuild"
     ],
     [
-        "esbuild.config.mjs",
+        "esbuild.config.ts",
         "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.config.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.mjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.dev.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.mjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.stage.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.mjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.prod.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.js",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.mjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.cjs",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.ts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.mts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "esbuild.test.cts",
+        "#icon-monaco-editor-material-esbuild"
+    ],
+    [
+        "drizzle.config.ts",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.dev.ts",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.prod.ts",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.js",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.dev.js",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.prod.js",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.json",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.dev.json",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        "drizzle.config.prod.json",
+        "#icon-monaco-editor-material-drizzle"
+    ],
+    [
+        ".puppeteerrc",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.json",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.jsonc",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.json5",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.yaml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.yml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.toml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.js",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.mjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.cjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.ts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.mts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".puppeteerrc.cts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.json",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.jsonc",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.json5",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.yaml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.yml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.toml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.js",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.mjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.cjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.ts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.mts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        ".config/puppeteerrc.cts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.json",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.jsonc",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.json5",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.yaml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.yml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.toml",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.js",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.mjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.cjs",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.ts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.mts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "puppeteer.config.cts",
+        "#icon-monaco-editor-material-puppeteer"
+    ],
+    [
+        "garden.yml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        "garden.yaml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        "project.garden.yml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        "project.garden.yaml",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        ".gardenignore",
+        "#icon-monaco-editor-material-garden"
+    ],
+    [
+        "PklProject",
+        "#icon-monaco-editor-material-pkl"
+    ],
+    [
+        "PklProject.deps.json",
+        "#icon-monaco-editor-material-pkl"
+    ],
+    [
+        "k8s.yml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        "k8s.yaml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        "kubernetes.yml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        "kubernetes.yaml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        ".k8s.yml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        ".k8s.yaml",
+        "#icon-monaco-editor-material-kubernetes"
+    ],
+    [
+        "phpstan.neon",
+        "#icon-monaco-editor-material-phpstan"
+    ],
+    [
+        "phpstan.neon.dist",
+        "#icon-monaco-editor-material-phpstan"
+    ],
+    [
+        "phpstan.dist.neon",
+        "#icon-monaco-editor-material-phpstan"
+    ],
+    [
+        "screwdriver.yaml",
+        "#icon-monaco-editor-material-screwdriver"
+    ],
+    [
+        "screwdriver.yml",
+        "#icon-monaco-editor-material-screwdriver"
+    ],
+    [
+        "snapcraft.yaml",
+        "#icon-monaco-editor-material-snapcraft"
+    ],
+    [
+        "snapcraft.yml",
+        "#icon-monaco-editor-material-snapcraft"
+    ],
+    [
+        ".devcontainer/devcontainer.json",
+        "#icon-monaco-editor-material-container"
+    ],
+    [
+        ".devcontainer/devcontainer-lock.json",
+        "#icon-monaco-editor-material-container"
+    ],
+    [
+        "kcl.mod",
+        "#icon-monaco-editor-material-kcl"
+    ],
+    [
+        "kcl.yaml",
+        "#icon-monaco-editor-material-kcl"
+    ],
+    [
+        "kcl.yml",
+        "#icon-monaco-editor-material-kcl"
+    ],
+    [
+        ".clangd",
+        "#icon-monaco-editor-material-clangd"
+    ],
+    [
+        ".markdownlint.json",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint.jsonc",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint.yaml",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint.yml",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint-cli2.jsonc",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint-cli2.yaml",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint-cli2.cjs",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlint-cli2.mjs",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        ".markdownlintignore",
+        "#icon-monaco-editor-material-markdownlint"
+    ],
+    [
+        "trigger.config.js",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        "trigger.config.mjs",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        "trigger.config.cjs",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        "trigger.config.ts",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        "trigger.config.mts",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        "trigger.config.cts",
+        "#icon-monaco-editor-material-trigger"
+    ],
+    [
+        ".deepsource.toml",
+        "#icon-monaco-editor-material-deepsource"
+    ],
+    [
+        "jsr.json",
+        "#icon-monaco-editor-material-jsr"
+    ],
+    [
+        "jsr.jsonc",
+        "#icon-monaco-editor-material-jsr"
+    ],
+    [
+        ".coderabbit.yml",
+        "#icon-monaco-editor-material-coderabbit-ai"
+    ],
+    [
+        ".coderabbit.yaml",
+        "#icon-monaco-editor-material-coderabbit-ai"
+    ],
+    [
+        ".aiexclude",
+        "#icon-monaco-editor-material-gemini-ai"
+    ],
+    [
+        "GEMINI.md",
+        "#icon-monaco-editor-material-gemini-ai"
+    ],
+    [
+        "taze.config.js",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "taze.config.mjs",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "taze.config.cjs",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "taze.config.ts",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "taze.config.mts",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "taze.config.cts",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        ".tazerc",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        ".tazerc.json",
+        "#icon-monaco-editor-material-taze"
+    ],
+    [
+        "wxt.config.js",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        "wxt.config.mjs",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        "wxt.config.cjs",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        "wxt.config.ts",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        "wxt.config.mts",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        "wxt.config.cts",
+        "#icon-monaco-editor-material-wxt"
+    ],
+    [
+        ".lefthook-local.json",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook-local.toml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook-local.yaml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook-local.yml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook.json",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook.toml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook.yaml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthook.yml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".lefthookrc",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook-local.json",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook-local.toml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook-local.yaml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook-local.yml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook.json",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook.toml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook.yaml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthook.yml",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        "lefthookrc",
+        "#icon-monaco-editor-material-lefthook"
+    ],
+    [
+        ".github/labeler.yml",
+        "#icon-monaco-editor-material-label"
+    ],
+    [
+        ".github/labeler.yaml",
+        "#icon-monaco-editor-material-label"
+    ],
+    [
+        "tags",
+        "#icon-monaco-editor-material-label"
+    ],
+    [
+        "zeabur.json",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "zeabur.jsonc",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "zeabur.json5",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "zeabur.yaml",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "zeabur.yml",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "zeabur.toml",
+        "#icon-monaco-editor-material-zeabur"
+    ],
+    [
+        "copilot-instructions.md",
+        "#icon-monaco-editor-material-copilot"
+    ],
+    [
+        ".copilotignore",
+        "#icon-monaco-editor-material-copilot"
+    ],
+    [
+        ".pre-commit-config.yaml",
+        "#icon-monaco-editor-material-pre-commit"
+    ],
+    [
+        ".pre-commit-hooks.yaml",
+        "#icon-monaco-editor-material-pre-commit"
+    ],
+    [
+        ".lintstagedrc",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.json",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.yaml",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.yml",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.mjs",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.cjs",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        "lint-staged.config.mjs",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        "lint-staged.config.cjs",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        "lint-staged.config.js",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        ".lintstagedrc.js",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
+        "histoire.config.js",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "histoire.config.mjs",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "histoire.config.cjs",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "histoire.config.ts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "histoire.config.mts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "histoire.config.cts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.js",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.mjs",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.cjs",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.ts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.mts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        ".histoire.cts",
+        "#icon-monaco-editor-material-histoire"
+    ],
+    [
+        "install",
+        "#icon-monaco-editor-material-installation"
+    ],
+    [
+        "installation",
+        "#icon-monaco-editor-material-installation"
+    ],
+    [
+        ".github/FUNDING.yml",
+        "#icon-monaco-editor-material-github-sponsors"
+    ],
+    [
+        "fabric.mod.json",
+        "#icon-monaco-editor-material-minecraft-fabric"
+    ],
+    [
+        ".umirc.js",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        ".umirc.mjs",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        ".umirc.cjs",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        ".umirc.ts",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        ".umirc.mts",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        ".umirc.cts",
+        "#icon-monaco-editor-material-umi"
+    ],
+    [
+        "ecosystem.config.js",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "ecosystem.config.mjs",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "ecosystem.config.cjs",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "ecosystem.config.ts",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "ecosystem.config.mts",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "ecosystem.config.cts",
+        "#icon-monaco-editor-material-pm2-ecosystem"
+    ],
+    [
+        "hosts",
+        "#icon-monaco-editor-material-hosts"
+    ],
+    [
+        "citation.cff",
+        "#icon-monaco-editor-material-citation"
+    ],
+    [
+        "xmake.lua",
+        "#icon-monaco-editor-material-xmake"
+    ],
+    [
+        "xmake",
+        "#icon-monaco-editor-material-xmake"
+    ],
+    [
+        "wrangler.toml",
+        "#icon-monaco-editor-material-wrangler"
+    ],
+    [
+        "wrangler.json",
+        "#icon-monaco-editor-material-wrangler"
+    ],
+    [
+        "wrangler.jsonc",
+        "#icon-monaco-editor-material-wrangler"
+    ],
+    [
+        ".clinerules",
+        "#icon-monaco-editor-material-cline"
+    ],
+    [
+        ".packshiprc",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        ".packshiprc.json",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        ".packshiprc.js",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        ".packshiprc.ts",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "packship.config.js",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "packship.config.ts",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "packship.config.mjs",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "packship.config.mts",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "packship.config.json",
+        "#icon-monaco-editor-material-packship"
+    ],
+    [
+        "Snakefile",
+        "#icon-monaco-editor-material-snakemake"
+    ],
+    [
+        ".hadolint.yaml",
+        "#icon-monaco-editor-material-hadolint"
+    ],
+    [
+        ".hadolint.yml",
+        "#icon-monaco-editor-material-hadolint"
+    ],
+    [
+        "hadolint.yaml",
+        "#icon-monaco-editor-material-hadolint"
+    ],
+    [
+        "hadolint.yml",
+        "#icon-monaco-editor-material-hadolint"
+    ],
+    [
+        "tsdoc.json",
+        "#icon-monaco-editor-material-tsdoc"
+    ],
+    [
+        ".oxlintrc.json",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        ".oxlintrc.jsonc",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        ".oxfmtrc.json",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        ".oxfmtrc.jsonc",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        "oxlint.config.ts",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        "oxfmt.config.ts",
+        "#icon-monaco-editor-material-oxc"
+    ],
+    [
+        "CLAUDE.md",
+        "#icon-monaco-editor-material-claude"
+    ],
+    [
+        "CLAUDE.local.md",
+        "#icon-monaco-editor-material-claude"
+    ],
+    [
+        ".cursorignore",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        ".cursorindexingignore",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        ".cursorrules",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        ".cursor",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        ".cursor.json",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        ".cursorrc",
+        "#icon-monaco-editor-material-cursor"
+    ],
+    [
+        "metro.config.js",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.cjs",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.mjs",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.json",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.ts",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.cts",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "metro.config.mts",
+        "#icon-monaco-editor-material-metro"
+    ],
+    [
+        "src/bashly.yaml",
+        "#icon-monaco-editor-material-bashly"
+    ],
+    [
+        "src/bashly.yml",
+        "#icon-monaco-editor-material-bashly"
+    ],
+    [
+        "bashly-settings.yaml",
+        "#icon-monaco-editor-material-bashly-settings"
+    ],
+    [
+        "bashly-settings.yml",
+        "#icon-monaco-editor-material-bashly-settings"
+    ],
+    [
+        "src/bashly-strings.yaml",
+        "#icon-monaco-editor-material-bashly-strings"
+    ],
+    [
+        "src/bashly-strings.yml",
+        "#icon-monaco-editor-material-bashly-strings"
+    ],
+    [
+        "google-services.json",
+        "#icon-monaco-editor-material-google"
+    ],
+    [
+        "GoogleService-Info.plist",
+        "#icon-monaco-editor-material-google"
+    ],
+    [
+        ".shellcheckrc",
+        "#icon-monaco-editor-material-shellcheck"
+    ],
+    [
+        "shellcheckrc",
+        "#icon-monaco-editor-material-shellcheck"
+    ],
+    [
+        "warp.md",
+        "#icon-monaco-editor-material-warp"
+    ],
+    [
+        "skill.md",
+        "#icon-monaco-editor-material-skill"
+    ],
+    [
+        "instructions.md",
+        "#icon-monaco-editor-material-instructions"
+    ],
+    [
+        "instruction.md",
+        "#icon-monaco-editor-material-instructions"
+    ],
+    [
+        "tsdown.config.ts",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.mts",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.cts",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.js",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.mjs",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.cjs",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config.json",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "tsdown.config",
+        "#icon-monaco-editor-material-tsdown"
+    ],
+    [
+        "appwrite.json",
+        "#icon-monaco-editor-material-appwrite"
+    ],
+    [
+        "appwrite.js",
+        "#icon-monaco-editor-material-appwrite"
+    ],
+    [
+        "appwrite.ts",
+        "#icon-monaco-editor-material-appwrite"
+    ],
+    [
+        "eas.json",
+        "#icon-monaco-editor-material-expo"
+    ],
+    [
+        ".easignore",
+        "#icon-monaco-editor-material-expo"
     ]
 ]

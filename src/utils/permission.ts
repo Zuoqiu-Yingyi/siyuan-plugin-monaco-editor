@@ -1,19 +1,17 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* 权限管理 */
 
@@ -59,31 +57,27 @@ export function isResourceOperable(
 ): boolean {
     return (protect // 是否为受保护的资源
         ? (safe // 是否为安全模式
-            ? (permission.enable // 是否可操作
-                ? ((option === ResourceOption.view
+                ? (permission.enable // 是否可操作
+                        ? ((option === ResourceOption.view
                     || option === ResourceOption.edit
                     || option === ResourceOption.move
                     || option === ResourceOption.copy
-                ) // 是否为读操作
-                    ? (permission.read // 是否可读
-                        ? (permission[option] // 是否可操作
-                            ? true // 可操作
-                            : false // 不可操作
-                        )
-                        : false // 不可读时不允许操作
+                            ) // 是否为读操作
+                                ? (permission.read // 是否可读
+                                        ? (!!permission[option] // 不可操作
+                                            )
+                                        : false // 不可读时不允许操作
+                                    )
+                                : (permission.write // 是否可写
+                                        ? (!!permission[option] // 不可操作
+                                            )
+                                        : false // 不可写时不允许操作
+                                    )
+                            )
+                        : false // 禁用受保护资源全部操作
                     )
-                    : (permission.write // 是否可写
-                        ? (permission[option] // 是否可操作
-                            ? true // 可操作
-                            : false // 不可操作
-                        )
-                        : false // 不可写时不允许操作
-                    )
-                )
-                : false // 禁用受保护资源全部操作
+                : true // 安全模式已被禁用, 可操作受保护资源
             )
-            : true // 安全模式已被禁用, 可操作受保护资源
-        )
         : true // 非受保护资源允许操作
     );
 }

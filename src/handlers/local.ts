@@ -1,30 +1,34 @@
-/**
- * Copyright (C) 2023 Zuoqiu Yingyi
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2023 Zuoqiu Yingyi
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { uri2path } from "@workspace/utils/misc/url";
 /* 本地文件处理器 */
 import { extname } from "@workspace/utils/path/browserify";
-import { uri2path } from "@workspace/utils/misc/url";
+
 import {
     Handler,
-    type IBaseHandlerOptions,
-    type IHandler,
+
 } from "./handler";
-import type { IEditorModel } from "@/types/editor";
+
+import type MonacoEditorPlugin from "@/index";
 import type { IMonacoEditorOptions } from "@/types/config";
+import type { IEditorModel } from "@/types/editor";
+
+import type { IBaseHandlerOptions, IHandler } from "./handler";
+
+type Plugin = InstanceType<typeof MonacoEditorPlugin>;
 
 export interface ILocalHandler extends IHandler {
     modified: IEditorModel; // 编辑器模式
@@ -40,7 +44,7 @@ export class LocalHandler extends Handler {
     protected customTabSize: number; // 用户定义的缩进大小,
 
     constructor(
-        plugin,
+        plugin: Plugin,
     ) {
         super(plugin);
         this.customTabSize = this.plugin.config.editor.options.tabSize;
@@ -51,7 +55,7 @@ export class LocalHandler extends Handler {
         path: string, // 文件绝对路径
     ): (value: string) => Promise<void> {
         return async (value: string) => {
-            const fs = globalThis.require("node:fs/promises") as typeof import("fs/promises");
+            const fs = globalThis.require("node:fs/promises") as typeof import("node:fs/promises");
             await fs.writeFile(path, value);
         };
     }
@@ -73,7 +77,7 @@ export class LocalHandler extends Handler {
         }; // 生成的处理器
 
         // this.logger.debug(uri, path);
-        const fs = globalThis.require("node:fs/promises") as typeof import("fs/promises");
+        const fs = globalThis.require("node:fs/promises") as typeof import("node:fs/promises");
         const stats = await fs.stat(path);
         if (stats?.isFile()) {
             const content = await fs.readFile(path, "utf-8");

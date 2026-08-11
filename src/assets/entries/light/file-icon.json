@@ -1,5 +1,17 @@
 [
     [
+        "sconstruct",
+        "#icon-monaco-editor-material-scons_light"
+    ],
+    [
+        "sconscript",
+        "#icon-monaco-editor-material-scons_light"
+    ],
+    [
+        "scsub",
+        "#icon-monaco-editor-material-scons_light"
+    ],
+    [
         ".rubocop.yml",
         "#icon-monaco-editor-material-rubocop_light"
     ],
@@ -16,6 +28,10 @@
         "#icon-monaco-editor-material-vercel_light"
     ],
     [
+        "vercel.ts",
+        "#icon-monaco-editor-material-vercel_light"
+    ],
+    [
         ".vercelignore",
         "#icon-monaco-editor-material-vercel_light"
     ],
@@ -26,6 +42,22 @@
     [
         ".nowignore",
         "#icon-monaco-editor-material-vercel_light"
+    ],
+    [
+        "payload.config.js",
+        "#icon-monaco-editor-material-payload_light"
+    ],
+    [
+        "payload.config.mjs",
+        "#icon-monaco-editor-material-payload_light"
+    ],
+    [
+        "payload.config.ts",
+        "#icon-monaco-editor-material-payload_light"
+    ],
+    [
+        "payload.config.mts",
+        "#icon-monaco-editor-material-payload_light"
     ],
     [
         "next.config.js",
@@ -53,6 +85,10 @@
     ],
     [
         "turbo.json",
+        "#icon-monaco-editor-material-turborepo_light"
+    ],
+    [
+        "turbo.jsonc",
         "#icon-monaco-editor-material-turborepo_light"
     ],
     [
@@ -92,19 +128,15 @@
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
-        "stylelint.config.js",
-        "#icon-monaco-editor-material-stylelint_light"
-    ],
-    [
-        "stylelint.config.cjs",
-        "#icon-monaco-editor-material-stylelint_light"
-    ],
-    [
-        "stylelint.config.mjs",
-        "#icon-monaco-editor-material-stylelint_light"
-    ],
-    [
         ".stylelintrc.json",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".stylelintrc.jsonc",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".stylelintrc.json5",
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
@@ -116,11 +148,131 @@
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
+        ".stylelintrc.toml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
         ".stylelintrc.js",
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
+        ".stylelintrc.mjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
         ".stylelintrc.cjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".stylelintrc.ts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".stylelintrc.mts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".stylelintrc.cts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.json",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.jsonc",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.json5",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.yaml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.yml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.toml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.js",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.mjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.cjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.ts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.mts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        ".config/stylelintrc.cts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.json",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.jsonc",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.json5",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.yaml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.yml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.toml",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.js",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.mjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.cjs",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.ts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.mts",
+        "#icon-monaco-editor-material-stylelint_light"
+    ],
+    [
+        "stylelint.config.cts",
         "#icon-monaco-editor-material-stylelint_light"
     ],
     [
@@ -148,6 +300,14 @@
         "#icon-monaco-editor-material-drone_light"
     ],
     [
+        "opencode.json",
+        "#icon-monaco-editor-material-opencode_light"
+    ],
+    [
+        "opencode.jsonc",
+        "#icon-monaco-editor-material-opencode_light"
+    ],
+    [
         ".wakatime-project",
         "#icon-monaco-editor-material-wakatime_light"
     ],
@@ -160,6 +320,18 @@
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
+        ".releaserc.json",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".releaserc.jsonc",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".releaserc.json5",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
         ".releaserc.yaml",
         "#icon-monaco-editor-material-semantic-release_light"
     ],
@@ -168,7 +340,7 @@
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
-        ".releaserc.json",
+        ".releaserc.toml",
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
@@ -176,7 +348,99 @@
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
+        ".releaserc.mjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
         ".releaserc.cjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".releaserc.ts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".releaserc.mts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".releaserc.cts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.json",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.jsonc",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.json5",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.yaml",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.yml",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.toml",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.js",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.mjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.cjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.ts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.mts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        ".config/releaserc.cts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.json",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.jsonc",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.json5",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.yaml",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.yml",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.toml",
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
@@ -184,7 +448,23 @@
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
+        "release.config.mjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
         "release.config.cjs",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.ts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.mts",
+        "#icon-monaco-editor-material-semantic-release_light"
+    ],
+    [
+        "release.config.cts",
         "#icon-monaco-editor-material-semantic-release_light"
     ],
     [
@@ -256,7 +536,31 @@
         "#icon-monaco-editor-material-pnpm_light"
     ],
     [
+        "openapi.json",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
+        "openapi.yml",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
+        "openapi.yaml",
+        "#icon-monaco-editor-material-openapi_light"
+    ],
+    [
         "bun.lockb",
+        "#icon-monaco-editor-material-bun_light"
+    ],
+    [
+        "bunfig.toml",
+        "#icon-monaco-editor-material-bun_light"
+    ],
+    [
+        ".bun-version",
+        "#icon-monaco-editor-material-bun_light"
+    ],
+    [
+        "bun.lock",
         "#icon-monaco-editor-material-bun_light"
     ],
     [
@@ -306,5 +610,109 @@
     [
         "deno.lock",
         "#icon-monaco-editor-material-deno_light"
+    ],
+    [
+        "jsr.json",
+        "#icon-monaco-editor-material-jsr_light"
+    ],
+    [
+        "jsr.jsonc",
+        "#icon-monaco-editor-material-jsr_light"
+    ],
+    [
+        "zeabur.json",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "zeabur.jsonc",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "zeabur.json5",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "zeabur.yaml",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "zeabur.yml",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "zeabur.toml",
+        "#icon-monaco-editor-material-zeabur_light"
+    ],
+    [
+        "copilot-instructions.md",
+        "#icon-monaco-editor-material-copilot_light"
+    ],
+    [
+        ".copilotignore",
+        "#icon-monaco-editor-material-copilot_light"
+    ],
+    [
+        "hosts",
+        "#icon-monaco-editor-material-hosts_light"
+    ],
+    [
+        ".cursorignore",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        ".cursorindexingignore",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        ".cursorrules",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        ".cursor",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        ".cursor.json",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        ".cursorrc",
+        "#icon-monaco-editor-material-cursor_light"
+    ],
+    [
+        "bashly-settings.yaml",
+        "#icon-monaco-editor-material-bashly-settings_light"
+    ],
+    [
+        "bashly-settings.yml",
+        "#icon-monaco-editor-material-bashly-settings_light"
+    ],
+    [
+        "src/bashly-strings.yaml",
+        "#icon-monaco-editor-material-bashly-strings_light"
+    ],
+    [
+        "src/bashly-strings.yml",
+        "#icon-monaco-editor-material-bashly-strings_light"
+    ],
+    [
+        ".shellcheckrc",
+        "#icon-monaco-editor-material-shellcheck_light"
+    ],
+    [
+        "shellcheckrc",
+        "#icon-monaco-editor-material-shellcheck_light"
+    ],
+    [
+        "warp.md",
+        "#icon-monaco-editor-material-warp_light"
+    ],
+    [
+        "eas.json",
+        "#icon-monaco-editor-material-expo_light"
+    ],
+    [
+        ".easignore",
+        "#icon-monaco-editor-material-expo_light"
     ]
 ]
