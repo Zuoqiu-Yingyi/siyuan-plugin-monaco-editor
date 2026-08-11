@@ -37,56 +37,107 @@ export default {
             targets: [
                 /* @siyuan-community/vditor */
                 {
-                    src: "./node_modules/@siyuan-community/vditor/dist/css/content-theme",
-                    dest: "./libs/vditor/css",
-                    rename: "themes",
+                    src: "./node_modules/@siyuan-community/vditor/LICENSE",
+                    dest: "./libs/vditor/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/package.json",
+                    dest: "./libs/vditor/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/README.md",
+                    dest: "./libs/vditor/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/@siyuan-community/vditor/dist/css/content-theme/",
+                    dest: "./libs/vditor/css/content-theme/",
+                    rename: { stripBase: true },
                 },
                 {
                     src: "./node_modules/@siyuan-community/vditor/dist/index.css",
-                    dest: "./libs/vditor/css",
-                    rename: "index.css",
+                    dest: "./libs/vditor/css/",
+                    rename: { stripBase: true },
                 },
                 {
-                    src: "./node_modules/@siyuan-community/vditor/dist/js/i18n",
-                    dest: "./libs/vditor/js",
-                    rename: "i18n",
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/i18n/",
+                    dest: "./libs/vditor/js/i18n/",
+                    rename: { stripBase: true },
                 },
                 {
                     src: "./node_modules/@siyuan-community/vditor/dist/js/icons",
-                    dest: "./libs/vditor/js",
-                    rename: "icons",
+                    dest: "./libs/vditor/js/icons/",
+                    rename: { stripBase: true },
                 },
                 {
                     src: "./node_modules/@siyuan-community/vditor/dist/images/logo.png",
-                    dest: "./libs/vditor/images",
-                    rename: "logo.png",
+                    dest: "./libs/vditor/images/",
+                    rename: { stripBase: true },
                 },
                 {
-                    src: "./node_modules/@siyuan-community/vditor/dist/js/mathjax",
-                    dest: "./libs/vditor/js",
-                    rename: "mathjax",
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/mathjax/",
+                    dest: "./libs/vditor/js/mathjax/",
+                    rename: { stripBase: true },
                 },
                 {
-                    src: "./node_modules/@siyuan-community/vditor/dist/js/highlight.js",
-                    dest: "./libs/vditor/js",
-                    rename: "highlight.js",
+                    src: "./node_modules/@siyuan-community/vditor/dist/js/highlight.js/",
+                    dest: "./libs/vditor/js/highlight.js/",
+                    rename: { stripBase: true },
                 },
                 {
                     src: "./node_modules/@siyuan-community/vditor/dist/method.min.js",
-                    dest: "./libs/vditor/js",
-                    rename: "method.min.js",
+                    dest: "./libs/vditor/js/",
+                    rename: { stripBase: true },
                 },
                 /* monaco-editor */
                 {
-                    src: "./node_modules/monaco-editor/min",
-                    dest: "./libs/monaco-editor",
-                    rename: "min",
+                    src: "./node_modules/monaco-editor/LICENSE",
+                    dest: "./libs/monaco-editor/",
+                    rename: { stripBase: true },
                 },
+                {
+                    src: "./node_modules/monaco-editor/package.json",
+                    dest: "./libs/monaco-editor/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/monaco-editor/README.md",
+                    dest: "./libs/monaco-editor/",
+                    rename: { stripBase: true },
+                },
+                // 不再使用 AMD loader 动态加载资源, 而是直接将 monaco-editor 资源打包到构建产物中
+                // {
+                //     src: "./node_modules/monaco-editor/min/",
+                //     dest: "./libs/monaco-editor/min/",
+                //     rename: { stripBase: 3 },
+                // },
                 /* streamsaver */
                 {
+                    src: "./node_modules/streamsaver/LICENSE",
+                    dest: "./libs/streamsaver/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/streamsaver/package.json",
+                    dest: "./libs/streamsaver/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/streamsaver/README.md",
+                    dest: "./libs/streamsaver/",
+                    rename: { stripBase: true },
+                },
+                {
+                    src: "./node_modules/streamsaver/mitm.html",
+                    dest: "./libs/streamsaver/",
+                    rename: { stripBase: true },
+                },
+                {
                     src: "./node_modules/streamsaver/sw.js",
-                    dest: "./libs/streamsaver",
-                    rename: "streamsaver-service-worker.js",
+                    dest: "./libs/streamsaver/",
+                    rename: { stripBase: true },
                 },
             ],
         }),

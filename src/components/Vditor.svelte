@@ -977,7 +977,7 @@
                          * 主题文件目录
                          * @defaultValue `${cdn}/${dist}/css/content-theme`
                          */
-                        path: `${baseURL}/css/themes`,
+                        path: `${baseURL}/css/content-theme`,
 
                     /**
                      * 主题列表

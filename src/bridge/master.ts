@@ -129,7 +129,7 @@ export class BridgeMaster<
                  * 编辑器加载完成
                  * REF: https://www.electronjs.org/zh/docs/latest/api/web-contents#event-did-finish-load
                  */
-                browser.webContents.once("did-finish-load", (_e: Electron.Event) => {
+                browser.webContents.once("did-finish-load", () => {
                     // this.plugin.logger.debug(_e);
                     this.channel.port1.start(); // 开始接受消息
 

@@ -19,11 +19,7 @@
     lang="ts"
     module
 >
-    import type {
-        IEditorHandlers,
-        IEditorProps,
-        IStandaloneEditorOptions,
-    } from "@/types/editor";
+    import type { IEditorHandlers, IEditorProps, IStandaloneEditorOptions } from "@/types/editor";
 
     export interface IProps {
         plugin: IEditorProps["plugin"];
@@ -44,22 +40,18 @@
 
 <script lang="ts">
     import loader from "@monaco-editor/loader";
+    import * as Monaco from "monaco-editor";
     import { onMount } from "svelte";
 
-    import {
-        //
-        FLAG_ELECTRON,
-        FLAG_IFRAME,
-    } from "@workspace/utils/env/native-front-end";
     import { merge } from "@workspace/utils/misc/merge";
     import { saveFileAs } from "@workspace/utils/misc/save";
 
     import { DEFAULT_EDITOR_PROPS } from "@/configs/editor";
     import { Languages } from "@/editor/language";
     import { mapLocale } from "@/utils/locale";
+    import { getMonacoEditorResourcePath } from "@/utils/url";
 
     import type { editor as Editor } from "monaco-editor";
-    import type Monaco from "monaco-editor";
 
     let {
         plugin,
@@ -171,10 +163,7 @@
         if (inited && diffEditor) {
             const model = diffEditor.getOriginalEditor().getModel();
             if (model) {
-                monaco?.editor.setModelLanguage(
-                    model,
-                    lang,
-                );
+                monaco?.editor.setModelLanguage(model, lang);
             }
         }
     }
@@ -185,10 +174,7 @@
                 if (diffEditor) {
                     const model = diffEditor.getModifiedEditor().getModel();
                     if (model) {
-                        monaco?.editor.setModelLanguage(
-                            model,
-                            lang,
-                        );
+                        monaco?.editor.setModelLanguage(model, lang);
                     }
                 }
             }
@@ -196,10 +182,7 @@
                 if (editor) {
                     const model = editor.getModel();
                     if (model) {
-                        monaco?.editor.setModelLanguage(
-                            model,
-                            lang,
-                        );
+                        monaco?.editor.setModelLanguage(model, lang);
                     }
                 }
             }
@@ -261,50 +244,19 @@
     });
 
     // monaco editor 资源目录
-    const vs = (() => {
-        switch (true) {
-            case import.meta.env.DEV: // 开发模式
-                return "node_modules/monaco-editor/min/vs";
-
-            case import.meta.env.PROD: // 生产环境
-            default:
-                if (embed) {
-                    // 嵌入到思源内部
-                    switch (true) {
-                        case FLAG_ELECTRON: {
-                            // Electron 环境
-                            return globalThis.require("node:path").resolve(window.siyuan.config!.system.workspaceDir, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
-                        // return `${window.siyuan.system.workspaceDir}/data/plugins/${plugin.name}/libs/monaco-editor/min/vs`;
-                        }
-                        default: {
-                            // 浏览器环境
-                            const url = new URL(`${globalThis.document.baseURI}plugins/${plugin.name}/libs/monaco-editor/min/vs`);
-                            return url.pathname;
-                        }
-                    }
-                }
-                else {
-                    // 通过 iframe/BrowserWindow 加载
-                    switch (true) {
-                        case FLAG_ELECTRON: // Electron BrowserWindow 环境
-                            return globalThis.require("node:path").resolve(path, `./data/plugins/${plugin.name}/libs/monaco-editor/min/vs`);
-                        case FLAG_IFRAME: // iframe 环境
-                        default: {
-                            const url = new URL(`./../libs/monaco-editor/min/vs`, globalThis.document.baseURI);
-                            return url.pathname;
-                        }
-                    }
-                }
-        }
-    })();
+    // svelte-ignore state_referenced_locally
+    const vs = getMonacoEditorResourcePath(embed, path, plugin.name);
     // plugin.logger.debug(vs);
+    void vs;
 
     // svelte-ignore state_referenced_locally
     loader.config({
-        "paths": {
-            vs,
-        },
-        // monaco,
+        // 通过 URL 加载 monaco-editor 资源
+        // "paths": {
+        //     vs,
+        // },
+        // 直接将 monaco-editor 资源打包到构建产物中
+        "monaco": Monaco,
         "vs/nls": {
             availableLanguages: {
                 "*": mapLocale(locale),
