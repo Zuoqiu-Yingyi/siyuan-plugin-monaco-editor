@@ -26,7 +26,7 @@
         "@monaco-editor/loader": "^1.7.0",
         "@siyuan-community/vditor": "^3.9.6",
         "@types/streamsaver": "^2.0.5",
-        "material-icon-theme": "^5.37.0",
+        "material-icon-theme": "^5.38.1",
         "monaco-editor": "^0.56.0",
         "streamsaver": "^2.0.6",
         "xml-js": "^1.6.11"
