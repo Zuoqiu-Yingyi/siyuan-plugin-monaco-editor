@@ -768,6 +768,10 @@
         "#icon-monaco-editor-material-swift"
     ],
     [
+        ".xcode-version",
+        "#icon-monaco-editor-material-swift"
+    ],
+    [
         "dockerfile",
         "#icon-monaco-editor-material-docker"
     ],
@@ -3149,6 +3153,10 @@
     ],
     [
         ".env.dist",
+        "#icon-monaco-editor-material-tune"
+    ],
+    [
+        ".env.preprod",
         "#icon-monaco-editor-material-tune"
     ],
     [
@@ -8112,6 +8120,10 @@
         "#icon-monaco-editor-material-lintstaged"
     ],
     [
+        "lint-staged.config.ts",
+        "#icon-monaco-editor-material-lintstaged"
+    ],
+    [
         "lint-staged.config.mjs",
         "#icon-monaco-editor-material-lintstaged"
     ],
@@ -8522,5 +8534,9 @@
     [
         ".easignore",
         "#icon-monaco-editor-material-expo"
+    ],
+    [
+        "agents.md",
+        "#icon-monaco-editor-material-agent"
     ]
 ]

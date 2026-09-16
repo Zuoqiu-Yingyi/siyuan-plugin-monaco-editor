@@ -61,6 +61,20 @@ interface IMap {
 type IEntry = [string, string];
 
 /**
+ * 写入生成的文件
+ * 生成的文件统一以换行结尾: `*.json` 映射文件受 eslint 规则 `style/eol-last` 约束,
+ * `*.symbol` 文件则与手写的同类文件保持一致
+ * @param path - 文件保存路径
+ * @param content - 文件内容 (不含结尾换行)
+ */
+async function writeGeneratedFile(
+    path: string,
+    content: string,
+): Promise<void> {
+    await asyncFs.writeFile(path, `${content}\n`);
+}
+
+/**
  * 构建图标映射
  * @param icons - icons 对象(key: 名称, value: 图标名称)
  * @param path - entries 文件保存路径
@@ -85,7 +99,7 @@ async function buildIconsMapEntries(
             entries.push([name, id]);
         }
     });
-    await asyncFs.writeFile(path, JSON.stringify(entries, null, 4));
+    await writeGeneratedFile(path, JSON.stringify(entries, null, 4));
     return entries;
 }
 
@@ -148,7 +162,7 @@ async function buildMaterialIcons() {
 
     // REF: https://www.npmjs.com/package/xml-js
     const symbols = await Promise.all(paths.map(([name, path]) => buildIconSymbol(name, path, C.ID_PREFIX_MATERIAL)));
-    await asyncFs.writeFile(C.MATERIAL_FILE_PATH_SYMBOL, symbols.join("\n"));
+    await writeGeneratedFile(C.MATERIAL_FILE_PATH_SYMBOL, symbols.join("\n"));
 }
 
 buildMaterialIcons();
