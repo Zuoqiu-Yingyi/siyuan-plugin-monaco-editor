@@ -96,6 +96,7 @@
     });
 
     /* 门店 */
+    // svelte-ignore state_referenced_locally
     const facade = new Facade(plugin);
     $effect(() => {
         facade.makeTabOptions(facadeOptions, stores).then((o) => (tabOptions = o));

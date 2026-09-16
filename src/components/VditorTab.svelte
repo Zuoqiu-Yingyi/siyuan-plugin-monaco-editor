@@ -55,8 +55,11 @@
         facadeOptions,
     }: IProps = $props();
 
+    // svelte-ignore state_referenced_locally
     const assetsDirPath: IVditorIframeProps["assetsDirPath"] = plugin.config.vditor.assetsDirPath; // 资源目录
+    // svelte-ignore state_referenced_locally
     const assetsUploadMode: IVditorIframeProps["assetsUploadMode"] = plugin.config.vditor.assetsUploadMode; // 资源目录模式
+    // svelte-ignore state_referenced_locally
     const options: IVditorIframeProps["options"] = plugin.config.vditor.options;
 
     const theme: IVditorIframeProps["theme"] = DEFAULT_VDITOR_PROPS.theme;
@@ -98,6 +101,7 @@
     });
 
     /* 门店 */
+    // svelte-ignore state_referenced_locally
     const facade = new Facade(plugin);
     $effect(() => {
         facade.makeTabOptions(facadeOptions, stores).then((o) => (tabOptions = o));

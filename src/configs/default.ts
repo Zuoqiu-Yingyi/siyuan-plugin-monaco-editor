@@ -38,7 +38,11 @@ export function siyuanConfig2EditorOptions(config: typeof window.siyuan.config =
          */
         fontFamily: getCodeFontFamily(),
         fontLigatures: config!.editor.codeLigatures,
-        mouseWheelZoom: config!.editor.fontSizeScrollZoom,
+        /**
+         * 思源已从 `config.editor` 中移除 `fontSizeScrollZoom` 设置项,
+         * 这里保留兼容读取: 旧版本思源仍存在该设置项时沿用其值, 否则关闭滚轮缩放
+         */
+        mouseWheelZoom: (config!.editor as { fontSizeScrollZoom?: boolean }).fontSizeScrollZoom ?? false,
         readOnly: config!.editor.readOnly,
         tabSize: config!.editor.codeTabSpaces,
         theme: config!.appearance.mode === 0 ? "vs" : "vs-dark",

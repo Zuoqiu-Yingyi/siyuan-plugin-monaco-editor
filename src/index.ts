@@ -315,7 +315,7 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             // plugin.logger.debug(this);
 
                             (this.element as HTMLElement).classList.add("fn__flex-column");
-                            plugin.editorDock.props = state({
+                            const props = state({
                                 plugin,
                                 editor: {
                                     modified: {
@@ -328,10 +328,11 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
                             });
                             const dock = mount(EditorDock, {
                                 target: this.element,
-                                props: plugin.editorDock.props,
+                                props,
                             });
                             plugin.editorDock.model = this;
                             plugin.editorDock.component = dock;
+                            plugin.editorDock.props = props;
                         },
                         destroy() {
                             if (plugin.editorDock.component) {
@@ -519,10 +520,12 @@ export default class MonacoEditorPlugin extends siyuan.Plugin {
     /* 在浮窗打开块 */
     public openFloatLayer(options: { id: BlockID }): void {
         if (window.siyuan.coordinates) {
+            /* 思源已将 `ids` 参数替换为 `refDefs` */
             this.addFloatLayer({
-                ids: [options.id],
+                refDefs: [{ refID: options.id }],
                 x: window.siyuan.coordinates.clientX,
                 y: window.siyuan.coordinates.clientY,
+                isBacklink: false,
             });
         }
     }

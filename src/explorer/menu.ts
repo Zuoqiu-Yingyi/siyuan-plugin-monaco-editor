@@ -203,7 +203,7 @@ export class ExplorerContextMenu {
                     menu.addItem(ExplorerContextMenu.makeSubmenuItem(item));
                     break;
                 case MenuItemType.Separator:
-                    menu.addSeparator(item.index);
+                    menu.addSeparator({ index: item.index });
                     break;
             }
         });

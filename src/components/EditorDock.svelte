@@ -63,8 +63,9 @@
         language = Language.kramdown,
     }: IProps = $props();
 
+    /* 标题栏配置 (仅使用属性的初值播种, 后续状态由 BlockIcon 的 store 维护) */
+    // svelte-ignore state_referenced_locally
     const bar: IBar = {
-        // 标题栏配置
         logo: "#iconCode",
         title: plugin.i18n.dock.title,
         icons: [
@@ -129,6 +130,7 @@
         ],
     };
 
+    // svelte-ignore state_referenced_locally
     const blockHandler = new BlockHandler(plugin);
     let handler: IBlockHandler | undefined = $state(undefined);
     let savable: boolean = $state(false);

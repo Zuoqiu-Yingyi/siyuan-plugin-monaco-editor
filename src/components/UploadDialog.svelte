@@ -51,11 +51,13 @@
     }: IEvents & IProps = $props();
 
     const cancelButtonText: string = window.siyuan.languages?.cancel ?? "Cancel"; // 取消按钮文本
+    // svelte-ignore state_referenced_locally
     let confirmButtonText: string = $state(plugin.i18n.menu.upload.tips.startUpload); // 确定按钮文本
     let confirmButtonDisabled: boolean = $state(true); // 确定按钮是否禁用
 
-    let cancel: HTMLButtonElement | undefined = $state(); // 取消按钮
-    let confirm: HTMLButtonElement | undefined = $state(); // 确认按钮
+    /* 仅用于 bind:this, 无需声明为 $state */
+    let cancel: HTMLButtonElement | undefined; // 取消按钮
+    let confirm: HTMLButtonElement | undefined; // 确认按钮
 
     void cancel;
     void confirm;
@@ -68,6 +70,8 @@
     let fold: boolean = $state(true); // 是否折叠下级列表
     let finished: boolean = $state(false); // 上传完成
 
+    /* 上传开始后待上传文件列表不再变化, 因此只需读取一次 */
+    // svelte-ignore state_referenced_locally
     const total_file = files.length; // 总文件数
     const total_byte = (() => {
         let size = 0;

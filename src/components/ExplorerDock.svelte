@@ -64,11 +64,13 @@
         onDragLeaveWindow,
     }: IProps & IHandlers = $props();
 
+    // svelte-ignore state_referenced_locally
     const explorer = new Explorer(plugin, workspace);
     const roots = explorer.createRootNodes();
     setContext<ITree>("tree", explorer);
 
-    /* 标题栏配置 */
+    /* 标题栏配置 (仅使用属性的初值播种, 后续状态由 BlockIcon 的 store 维护) */
+    // svelte-ignore state_referenced_locally
     const bar: IBar = {
         logo: ExplorerIcon.ICONS.filetree,
         title: plugin.i18n.explorer.title,

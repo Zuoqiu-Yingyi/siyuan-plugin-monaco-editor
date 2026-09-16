@@ -70,6 +70,7 @@
 
     let inited = $state(false);
 
+    // svelte-ignore state_referenced_locally
     const bridge = new EditorBridgeMaster(
         plugin, //
         EditorBridgeMaster.createChannel(true), //

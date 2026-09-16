@@ -80,9 +80,10 @@ export class BridgeMaster<
             );
         }
         else {
+            /* `close` 事件的监听函数不接收参数 */
             this.channel.port1.addListener(
                 "close",
-                (_e: Electron.MessageEvent) => {
+                () => {
                     // this.plugin.logger.info("browser window close");
                     // this.destroy();
                 },

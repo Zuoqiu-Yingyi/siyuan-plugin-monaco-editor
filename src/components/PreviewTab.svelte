@@ -44,6 +44,7 @@
     };
 
     /* 面包屑构造 */
+    // svelte-ignore state_referenced_locally
     const breadcrumb_maker = new AssetBreadcrumb(plugin);
     let breadcrumbOptions: IBreadcrumb | undefined = $state();
     $effect(() => {
