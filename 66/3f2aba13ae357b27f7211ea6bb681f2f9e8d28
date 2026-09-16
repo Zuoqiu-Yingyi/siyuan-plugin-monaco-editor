@@ -1,0 +1,55 @@
+src/breadcrumb/snippet.ts
+  s_375e4a819920b7::t_1cb77822f04d55 31,36
+src/breadcrumb/network.ts
+  s_375e4a819920b7::t_1cb77822f04d55 30,35
+src/components/ExplorerDock.svelte
+  s_375e4a819920b7::t_735409690e3b48 147-148,150-153
+  s_375e4a819920b7::t_57434dd5237b5e 37-41,138-139
+  s_375e4a819920b7::t_d7b378e31ce652 144-146,149
+src/handlers/asset.ts
+  s_375e4a819920b7::t_36ae0a80d8e883 16
+src/breadcrumb/asset.ts
+  s_375e4a819920b7::t_1cb77822f04d55 31,36
+src/components/VditorTab.svelte
+  s_375e4a819920b7::t_1cb77822f04d55 71,73-75
+  s_375e4a819920b7::t_37b2de798c72d1 136-159
+  s_375e4a819920b7::t_41324818f9bed1 40-41
+src/breadcrumb/inbox.ts
+  s_375e4a819920b7::t_1cb77822f04d55 30,35
+src/breadcrumb/snapshot.ts
+  s_375e4a819920b7::t_1cb77822f04d55 30,35
+src/components/Settings.svelte
+  s_375e4a819920b7::t_735409690e3b48 158-160,177-179,195-197,209,231-233,249-251,267-269,285-287,303-305,334-337,361-364,388-391,409-411
+  s_375e4a819920b7::t_d7b378e31ce652 143-149,151,153-154,156,162-163,165-168,170,172-173,175,181-182,184-187,189,191-192,199-207,210-228,235-246,253-264,271-282,289-300,307-333,338-360,365-387,392-408,412-419
+src/explorer/index.ts
+  s_375e4a819920b7::t_36697d85a4b049 43,255,275,339,353,386,428,457,504,516,547
+  s_375e4a819920b7::t_1c9ee875759fad 257,262,278,342,356,389,398,431,460,507,519,550,562,594
+src/breadcrumb/block.ts
+  s_375e4a819920b7::t_1cb77822f04d55 29,77
+src/components/EditorTab.svelte
+  s_375e4a819920b7::t_1cb77822f04d55 67,69-71
+  s_375e4a819920b7::t_a0dde0c4c13953 39-40
+  s_375e4a819920b7::t_37b2de798c72d1 144-166
+src/components/PreviewTab.svelte
+  s_375e4a819920b7::t_37b2de798c72d1 61-67
+src/breadcrumb/history.ts
+  s_375e4a819920b7::t_1cb77822f04d55 33,39
+src/breadcrumb/local.ts
+  s_375e4a819920b7::t_1cb77822f04d55 31,36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.44-trip",
+  "base_commit_sha": "663f2aba13ae357b27f7211ea6bb681f2f9e8d28",
+  "prompts": {},
+  "sessions": {
+    "s_375e4a819920b7": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_vmnj8i26q86q",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Yingyi / 颖逸 <49649786+Zuoqiu-Yingyi@users.noreply.github.com>"
+    }
+  }
+}
