@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { asyncPrompt } from "@workspace/components/siyuan/dialog/prompt";
+import { asyncPrompt } from "@workspace/components/siyuan/dialog/prompt.svelte.ts";
 import { CHAR_SET, CHAR_SET_LIST, UTF8_CHAR_SET } from "@workspace/utils/coder/text";
 import { detect } from "@workspace/utils/coder/text/charset";
 import { TextTranscoder } from "@workspace/utils/coder/text/transcoder";

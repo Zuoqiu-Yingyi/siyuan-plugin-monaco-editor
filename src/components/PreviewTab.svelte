@@ -58,12 +58,13 @@
     fullscreen={$fullscreen}
     {...breadcrumbOptions}
 >
-    <iframe
-        slot="content"
-        class="fn__flex fn__flex-1 preview"
-        src={pathname}
-        {title}
-    ></iframe>
+    {#snippet content()}
+        <iframe
+            class="fn__flex fn__flex-1 preview"
+            src={pathname}
+            {title}
+        ></iframe>
+    {/snippet}
 </Tab>
 
 <style>

@@ -35,8 +35,9 @@
 
     import VditorIframe from "./VditorIframe.svelte";
 
-    import type { ComponentProps } from "svelte";
     import type { Unsubscriber } from "svelte/store";
+
+    import type { IProps as ITabProps } from "@workspace/components/siyuan/tab/Tab.svelte";
 
     import type { IFacadeAssetOptions, ITabOptions } from "@/facades/facade";
     import type { IAssetHandler } from "@/handlers/asset";
@@ -67,11 +68,11 @@
     let value: IVditorIframeProps["value"] = $state();
     let changeable: IVditorIframeProps["changeable"] = $state(DEFAULT_VDITOR_PROPS.changeable);
 
-    let fullscreen: ComponentProps<Tab>["fullscreen"] = $state(false); // 是否为全屏模式
+    let fullscreen: ITabProps["fullscreen"] = $state(false); // 是否为全屏模式
 
-    let breadcrumb: ComponentProps<Tab>["breadcrumb"] = $state(false); // 是否显示面包屑
-    let breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"] = $state([]); // 面包屑项
-    let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = $state([]); // 面包屑按钮
+    let breadcrumb: ITabProps["breadcrumb"] = $state(false); // 是否显示面包屑
+    let breadcrumbItems: ITabProps["breadcrumbItems"] = $state([]); // 面包屑项
+    let breadcrumbIcons: ITabProps["breadcrumbIcons"] = $state([]); // 面包屑按钮
 
     let tabOptions: ITabOptions | undefined = $state();
     let inited: boolean = $state(false);
@@ -132,27 +133,28 @@
     {breadcrumbItems}
     {fullscreen}
 >
-    <div
-        slot="content"
-        class="fn__flex fn__flex-1"
-    >
-        {#if inited}
-            <VditorIframe
-                {assetsDirPath}
-                {assetsUploadMode}
-                {changeable}
-                {codeBlockThemeDark}
-                {codeBlockThemeLight}
-                onChanged={update}
-                onOpenLink={openLink}
-                onSave={update}
-                {options}
-                {path}
-                {plugin}
-                {theme}
-                {updatable}
-                {value}
-            />
-        {/if}
-    </div>
+    {#snippet content()}
+        <div
+            class="fn__flex fn__flex-1"
+        >
+            {#if inited}
+                <VditorIframe
+                    {assetsDirPath}
+                    {assetsUploadMode}
+                    {changeable}
+                    {codeBlockThemeDark}
+                    {codeBlockThemeLight}
+                    onChanged={update}
+                    onOpenLink={openLink}
+                    onSave={update}
+                    {options}
+                    {path}
+                    {plugin}
+                    {theme}
+                    {updatable}
+                    {value}
+                />
+            {/if}
+        </div>
+    {/snippet}
 </Tab>

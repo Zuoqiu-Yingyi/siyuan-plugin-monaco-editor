@@ -139,269 +139,284 @@
 <Panels
     focus={panels_focus_key}
     {panels}
-    let:focus={focusPanel}
 >
-    <!-- 常规设置面板 -->
-    <Panel display={panels[0]?.key === focusPanel}>
+    {#snippet children(focusPanel)}
+        <!-- 常规设置面板 -->
+        <Panel display={panels[0]?.key === focusPanel}>
+            <!-- 编辑器面板 -->
+            <Item
+                text={i18n.settings.generalSettings.editor.description}
+                title={i18n.settings.generalSettings.editor.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.dock.editor.enable = e.value;
+                            await updated();
+                            globalThis.location.reload();
+                        }}
+                        settingKey="Editor"
+                        settingValue={config.dock.editor.enable}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 资源管理器面板 -->
+            <Item
+                text={i18n.settings.generalSettings.explorer.description}
+                title={i18n.settings.generalSettings.explorer.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.dock.explorer.enable = e.value;
+                            await updated();
+                            globalThis.location.reload();
+                        }}
+                        settingKey="Explorer"
+                        settingValue={config.dock.explorer.enable}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 安全模式 -->
+            <Item
+                text={i18n.settings.generalSettings.safeMode.description}
+                title={i18n.settings.generalSettings.safeMode.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.dock.explorer.safe = e.value;
+                            await updated();
+                        }}
+                        settingKey="Safe Mode"
+                        settingValue={config.dock.explorer.safe}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 重置设置 -->
+            <Item
+                text={i18n.settings.generalSettings.reset.description}
+                title={i18n.settings.generalSettings.reset.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onClicked={resetOptions}
+                        settingKey="Reset"
+                        settingValue={i18n.settings.generalSettings.reset.text}
+                        type={ItemType.button}
+                    />
+                {/snippet}
+            </Item>
+        </Panel>
+
+        <!-- 菜单面板 -->
+        <Panel display={panels[1]?.key === focusPanel}>
+            <!-- 代码片段右键菜单 -->
+            <Item
+                text={i18n.settings.menuSettings.snippet.description}
+                title={i18n.settings.menuSettings.snippet.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.operates.menu.snippet = e.value;
+                            await updated();
+                        }}
+                        settingKey="Snippet"
+                        settingValue={config.operates.menu.snippet}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 收集箱速记右键菜单 -->
+            <Item
+                text={i18n.settings.menuSettings.shorthand.description}
+                title={i18n.settings.menuSettings.shorthand.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.operates.menu.shorthand = e.value;
+                            await updated();
+                        }}
+                        settingKey="Shorthand"
+                        settingValue={config.operates.menu.shorthand}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 文件历史面板 -->
+            <Item
+                text={i18n.settings.menuSettings.history1.description}
+                title={i18n.settings.menuSettings.history1.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.operates.menu.history1 = e.value;
+                            await updated();
+                        }}
+                        settingKey="File hostory"
+                        settingValue={config.operates.menu.history1}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 文档历史面板 -->
+            <Item
+                text={i18n.settings.menuSettings.history2.description}
+                title={i18n.settings.menuSettings.history2.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.operates.menu.history2 = e.value;
+                            await updated();
+                        }}
+                        settingKey="Document hostory"
+                        settingValue={config.operates.menu.history2}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+
+            <!-- 快照 -->
+            <Item
+                text={i18n.settings.menuSettings.snapshot.description}
+                title={i18n.settings.menuSettings.snapshot.title}
+            >
+                {#snippet input()}
+                    <Input
+                        onChanged={async (e) => {
+                            config.operates.menu.snapshot = e.value;
+                            await updated();
+                        }}
+                        settingKey="Snapshot"
+                        settingValue={config.operates.menu.snapshot}
+                        type={ItemType.checkbox}
+                    />
+                {/snippet}
+            </Item>
+        </Panel>
+
         <!-- 编辑器面板 -->
-        <Item
-            text={i18n.settings.generalSettings.editor.description}
-            title={i18n.settings.generalSettings.editor.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Editor"
-                settingValue={config.dock.editor.enable}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.dock.editor.enable = e.detail.value;
-                    await updated();
-                    globalThis.location.reload();
-                }}
-            />
-        </Item>
-
-        <!-- 资源管理器面板 -->
-        <Item
-            text={i18n.settings.generalSettings.explorer.description}
-            title={i18n.settings.generalSettings.explorer.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Explorer"
-                settingValue={config.dock.explorer.enable}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.dock.explorer.enable = e.detail.value;
-                    await updated();
-                    globalThis.location.reload();
-                }}
-            />
-        </Item>
-
-        <!-- 安全模式 -->
-        <Item
-            text={i18n.settings.generalSettings.safeMode.description}
-            title={i18n.settings.generalSettings.safeMode.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Safe Mode"
-                settingValue={config.dock.explorer.safe}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.dock.explorer.safe = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-
-        <!-- 重置设置 -->
-        <Item
-            text={i18n.settings.generalSettings.reset.description}
-            title={i18n.settings.generalSettings.reset.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Reset"
-                settingValue={i18n.settings.generalSettings.reset.text}
-                type={ItemType.button}
-                on:clicked={resetOptions}
-            />
-        </Item>
-    </Panel>
-
-    <!-- 菜单面板 -->
-    <Panel display={panels[1]?.key === focusPanel}>
-        <!-- 代码片段右键菜单 -->
-        <Item
-            text={i18n.settings.menuSettings.snippet.description}
-            title={i18n.settings.menuSettings.snippet.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Snippet"
-                settingValue={config.operates.menu.snippet}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.operates.menu.snippet = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-
-        <!-- 收集箱速记右键菜单 -->
-        <Item
-            text={i18n.settings.menuSettings.shorthand.description}
-            title={i18n.settings.menuSettings.shorthand.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Shorthand"
-                settingValue={config.operates.menu.shorthand}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.operates.menu.shorthand = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-
-        <!-- 文件历史面板 -->
-        <Item
-            text={i18n.settings.menuSettings.history1.description}
-            title={i18n.settings.menuSettings.history1.title}
-        >
-            <Input
-                slot="input"
-                settingKey="File hostory"
-                settingValue={config.operates.menu.history1}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.operates.menu.history1 = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-
-        <!-- 文档历史面板 -->
-        <Item
-            text={i18n.settings.menuSettings.history2.description}
-            title={i18n.settings.menuSettings.history2.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Document hostory"
-                settingValue={config.operates.menu.history2}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.operates.menu.history2 = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-
-        <!-- 快照 -->
-        <Item
-            text={i18n.settings.menuSettings.snapshot.description}
-            title={i18n.settings.menuSettings.snapshot.title}
-        >
-            <Input
-                slot="input"
-                settingKey="Snapshot"
-                settingValue={config.operates.menu.snapshot}
-                type={ItemType.checkbox}
-                on:changed={async (e) => {
-                    config.operates.menu.snapshot = e.detail.value;
-                    await updated();
-                }}
-            />
-        </Item>
-    </Panel>
-
-    <!-- 编辑器面板 -->
-    <Panel display={panels[2]?.key === focusPanel}>
-        <Tabs
-            focus={editor_settings_tabs_focus_key}
-            tabs={tabs.editor}
-            let:focus={focusTab}
-        >
-            <!-- 标签页 1 - 全局设置 -->
-            <div
-                class:fn__none={tabs.editor[0]?.key !== focusTab}
-                data-type={tabs.editor[0]?.name}
+        <Panel display={panels[2]?.key === focusPanel}>
+            <Tabs
+                focus={editor_settings_tabs_focus_key}
+                tabs={tabs.editor}
             >
-                <!-- Markdown 文件默认编辑器 -->
-                <Item
-                    text={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.description}
-                    title={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.title}
-                >
-                    <Input
-                        slot="input"
-                        options={default_editor_markdown_options}
-                        settingKey="open.markdown"
-                        settingValue={config.open.markdown}
-                        type={ItemType.select}
-                        on:changed={async (e) => {
-                            config.open.markdown = e.detail.value;
-                            await updated();
-                        }}
-                    />
-                </Item>
-            </div>
+                {#snippet children(focusTab)}
+                    <!-- 标签页 1 - 全局设置 -->
+                    <div
+                        class:fn__none={tabs.editor[0]?.key !== focusTab}
+                        data-type={tabs.editor[0]?.name}
+                    >
+                        <!-- Markdown 文件默认编辑器 -->
+                        <Item
+                            text={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.description}
+                            title={i18n.settings.editorSettings.globalTab.defaultEditor.markdown.title}
+                        >
+                            {#snippet input()}
+                                <Input
+                                    onChanged={async (e) => {
+                                        config.open.markdown = e.value;
+                                        await updated();
+                                    }}
+                                    options={default_editor_markdown_options}
+                                    settingKey="open.markdown"
+                                    settingValue={config.open.markdown}
+                                    type={ItemType.select}
+                                />
+                            {/snippet}
+                        </Item>
+                    </div>
 
-            <!-- 标签页 2 - Monaco 编辑器设置 -->
-            <div
-                class:fn__none={tabs.editor[1]?.key !== focusTab}
-                data-type={tabs.editor[1]?.name}
-            >
-                <!-- 自动折行方案 -->
-                <Item
-                    block={true}
-                    text={i18n.settings.editorSettings.monacoTab.wordWrap.description}
-                    title={i18n.settings.editorSettings.monacoTab.wordWrap.title}
-                >
-                    <Input
-                        slot="input"
-                        block={true}
-                        options={word_wrap_options}
-                        settingKey="editor.wordWrap"
-                        settingValue={config.editor.options.wordWrap}
-                        type={ItemType.select}
-                        on:changed={async (e) => {
-                            config.editor.options.wordWrap = e.detail.value;
-                            await updated();
-                        }}
-                    />
-                </Item>
-            </div>
+                    <!-- 标签页 2 - Monaco 编辑器设置 -->
+                    <div
+                        class:fn__none={tabs.editor[1]?.key !== focusTab}
+                        data-type={tabs.editor[1]?.name}
+                    >
+                        <!-- 自动折行方案 -->
+                        <Item
+                            block={true}
+                            text={i18n.settings.editorSettings.monacoTab.wordWrap.description}
+                            title={i18n.settings.editorSettings.monacoTab.wordWrap.title}
+                        >
+                            {#snippet input()}
+                                <Input
+                                    block={true}
+                                    onChanged={async (e) => {
+                                        config.editor.options.wordWrap = e.value;
+                                        await updated();
+                                    }}
+                                    options={word_wrap_options}
+                                    settingKey="editor.wordWrap"
+                                    settingValue={config.editor.options.wordWrap}
+                                    type={ItemType.select}
+                                />
+                            {/snippet}
+                        </Item>
+                    </div>
 
-            <!-- 标签页 3 - Vditor 编辑器设置 -->
-            <div
-                class:fn__none={tabs.editor[2]?.key !== focusTab}
-                data-type={tabs.editor[2]?.name}
-            >
-                <!-- 资源文件保存方案 -->
-                <Item
-                    block={true}
-                    text={i18n.settings.editorSettings.vditorTab.assetsUploadMode.description}
-                    title={i18n.settings.editorSettings.vditorTab.assetsUploadMode.title}
-                >
-                    <Input
-                        slot="input"
-                        block={true}
-                        options={assets_upload_mode_options}
-                        settingKey="vditor.assetsUploadMode"
-                        settingValue={config.vditor.assetsUploadMode}
-                        type={ItemType.select}
-                        on:changed={async (e) => {
-                            config.vditor.assetsUploadMode = e.detail.value;
-                            await updated();
-                        }}
-                    />
-                </Item>
+                    <!-- 标签页 3 - Vditor 编辑器设置 -->
+                    <div
+                        class:fn__none={tabs.editor[2]?.key !== focusTab}
+                        data-type={tabs.editor[2]?.name}
+                    >
+                        <!-- 资源文件保存方案 -->
+                        <Item
+                            block={true}
+                            text={i18n.settings.editorSettings.vditorTab.assetsUploadMode.description}
+                            title={i18n.settings.editorSettings.vditorTab.assetsUploadMode.title}
+                        >
+                            {#snippet input()}
+                                <Input
+                                    block={true}
+                                    onChanged={async (e) => {
+                                        config.vditor.assetsUploadMode = e.value;
+                                        await updated();
+                                    }}
+                                    options={assets_upload_mode_options}
+                                    settingKey="vditor.assetsUploadMode"
+                                    settingValue={config.vditor.assetsUploadMode}
+                                    type={ItemType.select}
+                                />
+                            {/snippet}
+                        </Item>
 
-                <!-- 资源文件保存目录 -->
-                <Item
-                    block={true}
-                    text={i18n.settings.editorSettings.vditorTab.assetsDirPath.description}
-                    title={i18n.settings.editorSettings.vditorTab.assetsDirPath.title}
-                >
-                    <Input
-                        slot="input"
-                        block={true}
-                        settingKey="vditor.assetsDirPath"
-                        settingValue={config.vditor.assetsDirPath}
-                        type={ItemType.text}
-                        on:changed={async (e) => {
-                            config.vditor.assetsDirPath = e.detail.value;
-                            await updated();
-                        }}
-                    />
-                </Item>
-            </div>
-        </Tabs>
-    </Panel>
+                        <!-- 资源文件保存目录 -->
+                        <Item
+                            block={true}
+                            text={i18n.settings.editorSettings.vditorTab.assetsDirPath.description}
+                            title={i18n.settings.editorSettings.vditorTab.assetsDirPath.title}
+                        >
+                            {#snippet input()}
+                                <Input
+                                    block={true}
+                                    onChanged={async (e) => {
+                                        config.vditor.assetsDirPath = e.value;
+                                        await updated();
+                                    }}
+                                    settingKey="vditor.assetsDirPath"
+                                    settingValue={config.vditor.assetsDirPath}
+                                    type={ItemType.text}
+                                />
+                            {/snippet}
+                        </Item>
+                    </div>
+                {/snippet}
+            </Tabs>
+        </Panel>
+    {/snippet}
 </Panels>
 
 <style lang="less">

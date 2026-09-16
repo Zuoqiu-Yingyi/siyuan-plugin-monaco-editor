@@ -34,8 +34,9 @@
 
     import EditorIframe from "./EditorIframe.svelte";
 
-    import type { ComponentProps } from "svelte";
     import type { Unsubscriber } from "svelte/store";
+
+    import type { IProps as ITabProps } from "@workspace/components/siyuan/tab/Tab.svelte";
 
     import type { IFacadeOptions, ITabOptions } from "@/facades/facade";
     import type { IEditorEvents } from "@/types/editor";
@@ -63,11 +64,11 @@
     let modified: IEditorIframeProps["modified"] = $state();
     let modifiedOptions: IEditorIframeProps["modifiedOptions"] = $state();
 
-    let fullscreen: ComponentProps<Tab>["fullscreen"] = $state(false); // 是否为全屏模式
+    let fullscreen: ITabProps["fullscreen"] = $state(false); // 是否为全屏模式
 
-    let breadcrumb: ComponentProps<Tab>["breadcrumb"] = $state(false); // 是否显示面包屑
-    let breadcrumbItems: ComponentProps<Tab>["breadcrumbItems"] = $state([]); // 面包屑项
-    let breadcrumbIcons: ComponentProps<Tab>["breadcrumbIcons"] = $state([]); // 面包屑按钮
+    let breadcrumb: ITabProps["breadcrumb"] = $state(false); // 是否显示面包屑
+    let breadcrumbItems: ITabProps["breadcrumbItems"] = $state([]); // 面包屑项
+    let breadcrumbIcons: ITabProps["breadcrumbIcons"] = $state([]); // 面包屑按钮
 
     let tabOptions: ITabOptions | undefined = $state();
     // eslint-disable-next-line prefer-const
@@ -140,26 +141,27 @@
     {breadcrumbItems}
     {fullscreen}
 >
-    <div
-        slot="content"
-        class="fn__flex fn__flex-1"
-    >
-        {#if inited}
-            <EditorIframe
-                {changeable}
-                {diff}
-                {modified}
-                {modifiedOptions}
-                onChanged={update}
-                onHover={hover}
-                onOpen={open}
-                onSave={update}
-                {options}
-                {original}
-                {originalOptions}
-                {plugin}
-                {savable}
-            />
-        {/if}
-    </div>
+    {#snippet content()}
+        <div
+            class="fn__flex fn__flex-1"
+        >
+            {#if inited}
+                <EditorIframe
+                    {changeable}
+                    {diff}
+                    {modified}
+                    {modifiedOptions}
+                    onChanged={update}
+                    onHover={hover}
+                    onOpen={open}
+                    onSave={update}
+                    {options}
+                    {original}
+                    {originalOptions}
+                    {plugin}
+                    {savable}
+                />
+            {/if}
+        </div>
+    {/snippet}
 </Tab>

@@ -34,6 +34,11 @@
     import Bar from "@workspace/components/siyuan/dock/Bar.svelte";
     import { TooltipsDirection } from "@workspace/components/siyuan/misc/tooltips";
     import FileTree from "@workspace/components/siyuan/tree/file/FileTree.svelte";
+    import {
+        preventDefault,
+        self,
+        stopPropagation,
+    } from "@workspace/utils/svelte/event";
 
     import {
         Explorer,
@@ -130,21 +135,21 @@
 </script>
 
 <svelte:window
-    on:dragenter|stopPropagation|preventDefault|capture|self={_onDragEnterWindow}
-    on:dragleave|stopPropagation|preventDefault|capture|self={_onDragLeaveWindow}
+    ondragentercapture={self(stopPropagation(preventDefault(_onDragEnterWindow)))}
+    ondragleavecapture={self(stopPropagation(preventDefault(_onDragLeaveWindow)))}
 />
 
 <Bar {...bar} />
 <FileTree
+    onDragend={explorer.dragend}
+    onDragenter={explorer.dragenter}
+    onDragleave={explorer.dragleave}
+    onDragover={explorer.dragover}
+    onDragstart={explorer.dragstart}
+    onDrop={explorer.drop}
+    onFold={explorer.fold}
+    onMenu={explorer.menu}
+    onOpen={explorer.open}
+    onUnfold={explorer.unfold}
     {roots}
-    on:menu={explorer.menu}
-    on:open={explorer.open}
-    on:fold={explorer.fold}
-    on:unfold={explorer.unfold}
-    on:dragstart={explorer.dragstart}
-    on:dragend={explorer.dragend}
-    on:dragenter={explorer.dragenter}
-    on:dragover={explorer.dragover}
-    on:dragleave={explorer.dragleave}
-    on:drop={explorer.drop}
 />

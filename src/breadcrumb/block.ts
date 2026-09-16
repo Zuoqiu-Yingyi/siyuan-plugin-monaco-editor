@@ -24,10 +24,9 @@ import {
 
 } from "./breadcrumb";
 
-import type { ComponentProps } from "svelte";
 import type { Writable } from "svelte/store";
 
-import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+import type { IProps as ITabProps } from "@workspace/components/siyuan/tab/Tab.svelte";
 import type { BlockID } from "@workspace/types/siyuan";
 
 import type { IBaseBreadcrumbOptions, IBaseStore, IBreadcrumb } from "./breadcrumb";
@@ -75,7 +74,7 @@ export const SubType2IconID = new Map<sdk.siyuan.BlockSubType, string>([
 
 export interface IBlockStore extends IBaseStore {
     changeable: Writable<IEditorIframeProps["changeable"]>; // 编辑器是否可更改
-    fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
+    fullscreen: Writable<ITabProps["fullscreen"]>; // 是否全屏显示
 }
 
 export interface IBlockBreadcrumbOptions extends IBaseBreadcrumbOptions {

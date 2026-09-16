@@ -26,15 +26,14 @@ import {
 
 } from "./breadcrumb";
 
-import type { ComponentProps } from "svelte";
 import type { Writable } from "svelte/store";
 
-import type Tab from "@workspace/components/siyuan/tab/Tab.svelte";
+import type { IProps as ITabProps } from "@workspace/components/siyuan/tab/Tab.svelte";
 
 import type { IBaseBreadcrumbOptions, IBaseStore, IBreadcrumb } from "./breadcrumb";
 
 export interface ILocalStore extends IBaseStore {
-    fullscreen: Writable<ComponentProps<Tab>["fullscreen"]>; // 是否全屏显示
+    fullscreen: Writable<ITabProps["fullscreen"]>; // 是否全屏显示
 }
 
 export interface ILocalBreadcrumbOptions extends IBaseBreadcrumbOptions {

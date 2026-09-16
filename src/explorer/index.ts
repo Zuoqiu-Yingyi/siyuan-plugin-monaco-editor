@@ -40,10 +40,7 @@ import { ExplorerContextMenu } from "./menu";
 import { Select } from "./select";
 import { ExplorerTooltip } from "./tooltip";
 
-import type { ComponentEvents } from "svelte";
-
-import type { IFileTreeNode, IFileTreeNodeStores, IFileTreeRootNode, ITree } from "@workspace/components/siyuan/tree/file";
-import type Node from "@workspace/components/siyuan/tree/file/Node.svelte";
+import type { IFileTreeEvent, IFileTreeNode, IFileTreeNodeStores, IFileTreeRootNode, ITree } from "@workspace/components/siyuan/tree/file";
 
 import type MonacoEditorPlugin from "@/index";
 
@@ -255,14 +252,14 @@ export class Explorer implements ITree {
     };
 
     /* 菜单事件 */
-    public readonly menu = (e: ComponentEvents<Node>["menu"]) => {
+    public readonly menu = (e: IFileTreeEvent["menu"]) => {
         try {
-            const node = e.detail.props;
+            const node = e.props;
             this.select.one(node);
 
             const menu = this.contextMenu.makeMenu(node);
 
-            const event = e.detail.e;
+            const event = e.e;
             menu.open({
                 x: event.clientX,
                 y: event.clientY,
@@ -275,10 +272,10 @@ export class Explorer implements ITree {
     };
 
     /* 文件打开事件 */
-    public readonly open = (e: ComponentEvents<Node>["open"]) => {
+    public readonly open = (e: IFileTreeEvent["open"]) => {
         // plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             this.select.one(node);
 
             switch (get(node.type)) {
@@ -339,10 +336,10 @@ export class Explorer implements ITree {
     };
 
     /* 折叠文件夹 */
-    public readonly fold = (e: ComponentEvents<Node>["fold"]) => {
+    public readonly fold = (e: IFileTreeEvent["fold"]) => {
         // plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             this.select.one(node);
 
             this.collapseNode(node);
@@ -353,10 +350,10 @@ export class Explorer implements ITree {
     };
 
     /* 展开文件夹 */
-    public readonly unfold = async (e: ComponentEvents<Node>["unfold"]) => {
+    public readonly unfold = async (e: IFileTreeEvent["unfold"]) => {
         // plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             this.select.one(node);
 
             switch (get(node.type)) {
@@ -386,10 +383,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽开始 */
-    public readonly dragstart = async (e: ComponentEvents<Node>["dragstart"]) => {
+    public readonly dragstart = async (e: IFileTreeEvent["dragstart"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             this.outer = false; // 重置拖拽出窗口状态
             // this.select.one(node);
 
@@ -398,7 +395,7 @@ export class Explorer implements ITree {
                 case FileTreeNodeType.File: {
                     node.dragging.set(true); // 设置为正在拖拽状态
 
-                    const dataTransfer = e.detail.e.dataTransfer!; // 拖拽数据传输对象
+                    const dataTransfer = e.e.dataTransfer!; // 拖拽数据传输对象
                     const name = get(node.name)!; // 文件名/文件夹名
                     const relative = get(node.relative)!; // 相对于工作空间目录的相对路径
                     if (isStaticWebFileServicePath(relative)) { // 静态文件服务路径
@@ -428,10 +425,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽结束 */
-    public readonly dragend = async (e: ComponentEvents<Node>["dragend"]) => {
+    public readonly dragend = async (e: IFileTreeEvent["dragend"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
 
             switch (get(node.type)) {
                 case FileTreeNodeType.Folder:
@@ -457,10 +454,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽进入 */
-    public readonly dragenter = async (e: ComponentEvents<Node>["dragenter"]) => {
+    public readonly dragenter = async (e: IFileTreeEvent["dragenter"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
 
             switch (get(node.type)) {
                 case FileTreeNodeType.Root:
@@ -504,10 +501,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽悬浮 */
-    public readonly dragover = async (e: ComponentEvents<Node>["dragover"]) => {
+    public readonly dragover = async (e: IFileTreeEvent["dragover"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             void node;
         }
         catch (error) {
@@ -516,10 +513,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽离开 */
-    public readonly dragleave = async (e: ComponentEvents<Node>["dragleave"]) => {
+    public readonly dragleave = async (e: IFileTreeEvent["dragleave"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
 
             switch (get(node.type)) {
                 case FileTreeNodeType.Root:
@@ -547,10 +544,10 @@ export class Explorer implements ITree {
     };
 
     /* 拖拽放置 */
-    public readonly drop = async (e: ComponentEvents<Node>["drop"]) => {
+    public readonly drop = async (e: IFileTreeEvent["drop"]) => {
         // this.plugin.logger.debug(e);
         try {
-            const node = e.detail.props;
+            const node = e.props;
             const directory = get(node.type) === FileTreeNodeType.File
                 ? this.map.get(get(node.directory))!
                 : node; // 放置的目录
@@ -562,7 +559,7 @@ export class Explorer implements ITree {
              * REF: https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_Access_API
              * REF: https://juejin.cn/post/6844904029349216269
              */
-            const items = Array.from(e.detail.e.dataTransfer!.items);
+            const items = Array.from(e.e.dataTransfer!.items);
             const file_items = items.filter((item) => item.kind === "file");
             if (file_items.length > 0 && directory) { // 存在拖拽的文件/文件夹
                 const path = get(directory.relative)!; // 待上传到的目录的路径
@@ -594,7 +591,7 @@ export class Explorer implements ITree {
                 this.plugin.config.dock.explorer.permission.protected,
                 ResourceOption.move,
             )) { // 允许操作
-                const dataTransfer = e.detail.e.dataTransfer; // 拖拽数据传输对象
+                const dataTransfer = e.e.dataTransfer; // 拖拽数据传输对象
                 const source_name = dataTransfer?.getData("text/name"); // 源名称
                 const source_path = dataTransfer?.getData("text/path"); // 源路径
                 const source_relative = dataTransfer?.getData("text/relative"); // 源相对路径
