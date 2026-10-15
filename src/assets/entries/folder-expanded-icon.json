@@ -6900,6 +6900,26 @@
         "#icon-monaco-editor-material-folder-benchmark-open"
     ],
     [
+        "message",
+        "#icon-monaco-editor-material-folder-messages-open"
+    ],
+    [
+        ".message",
+        "#icon-monaco-editor-material-folder-messages-open"
+    ],
+    [
+        "_message",
+        "#icon-monaco-editor-material-folder-messages-open"
+    ],
+    [
+        "-message",
+        "#icon-monaco-editor-material-folder-messages-open"
+    ],
+    [
+        "__message__",
+        "#icon-monaco-editor-material-folder-messages-open"
+    ],
+    [
         "messages",
         "#icon-monaco-editor-material-folder-messages-open"
     ],

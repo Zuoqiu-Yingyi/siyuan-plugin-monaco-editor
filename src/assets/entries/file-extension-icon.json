@@ -3200,6 +3200,14 @@
         "#icon-monaco-editor-material-test-ts"
     ],
     [
+        ".cts.snap",
+        "#icon-monaco-editor-material-test-ts"
+    ],
+    [
+        ".mts.snap",
+        "#icon-monaco-editor-material-test-ts"
+    ],
+    [
         ".spec-d.ts",
         "#icon-monaco-editor-material-test-ts"
     ],
@@ -3285,6 +3293,14 @@
     ],
     [
         ".js.snap",
+        "#icon-monaco-editor-material-test-js"
+    ],
+    [
+        ".cjs.snap",
+        "#icon-monaco-editor-material-test-js"
+    ],
+    [
+        ".mjs.snap",
         "#icon-monaco-editor-material-test-js"
     ],
     [

@@ -2836,6 +2836,30 @@
         "#icon-monaco-editor-material-webpack"
     ],
     [
+        "rstack.config.js",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstack.config.mjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstack.config.cjs",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstack.config.ts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstack.config.mts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
+        "rstack.config.cts",
+        "#icon-monaco-editor-material-rstack"
+    ],
+    [
         "rspack.config.js",
         "#icon-monaco-editor-material-rstack"
     ],
@@ -5096,11 +5120,31 @@
         "#icon-monaco-editor-material-vagrant"
     ],
     [
-        "prisma.yml",
+        "prisma.config.js",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.config.mjs",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.config.cjs",
         "#icon-monaco-editor-material-prisma"
     ],
     [
         "prisma.config.ts",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.config.mts",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.config.cts",
+        "#icon-monaco-editor-material-prisma"
+    ],
+    [
+        "prisma.yml",
         "#icon-monaco-editor-material-prisma"
     ],
     [
@@ -6365,6 +6409,14 @@
     ],
     [
         "tsconfig.declaration.json",
+        "#icon-monaco-editor-material-tsconfig"
+    ],
+    [
+        "tsconfig.dev.json",
+        "#icon-monaco-editor-material-tsconfig"
+    ],
+    [
+        "tsconfig.prod.json",
         "#icon-monaco-editor-material-tsconfig"
     ],
     [
